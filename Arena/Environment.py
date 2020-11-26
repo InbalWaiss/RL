@@ -104,7 +104,6 @@ class Environment(object):
 
         info = {f"NUM_OF_EPISODES": [NUM_OF_EPISODES],
                 f"MOVE_PENALTY": [MOVE_PENALTY],
-                f"ENEMY_PENALTY": [ENEMY_PENALTY],
                 f"WIN_REWARD": [WIN_REWARD],
                 f"LOST_PENALTY": [LOST_PENALTY],
                 f"epsilon": [START_EPSILON],

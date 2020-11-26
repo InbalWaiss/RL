@@ -7,7 +7,7 @@ from Arena.constants import AgentAction
 
 class AbsDecisionMaker(metaclass=abc.ABCMeta):
 
-    def update_context(self, new_state: State, reward: Tuple[int, int], is_terminal):
+    def update_context(self, new_state: State, reward, is_terminal):
 
         pass
 
@@ -15,6 +15,6 @@ class AbsDecisionMaker(metaclass=abc.ABCMeta):
 
         pass
 
-    def set_state(self, state: State):
+    def set_initial_state(self, state: State):
 
         pass

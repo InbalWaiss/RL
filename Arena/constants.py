@@ -13,7 +13,6 @@ SIZE_X = 15
 SIZE_Y = 15
 
 MOVE_PENALTY = 5
-ENEMY_PENALTY = 30
 WIN_REWARD = 250 #will be change to be reward for reaching controling point
 LOST_PENALTY = 250
 TIE = 0
@@ -70,12 +69,14 @@ OUTPUT_DIR = path.join(MAIN_PATH, 'Arena')
 STATS_RESULTS_RELATIVE_PATH = path.join(OUTPUT_DIR, 'statistics')
 RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'RafaelPlayer/trained_agents')
 
-EASY_AGENT = 'qtable_red-1000.pickle'
-MEDIUM_AGENT = 'qtable_red-10000.pickle'
-HARD_AGENT = 'qtable_red-100000.pickle'
+EASY_AGENT = 'easy.pickle'
+MEDIUM_AGENT = 'medium.pickle'
+HARD_AGENT = 'hard.pickle'
+
+WINS_FOR_FLAG = 150
 
 SHOW_EVERY = 1
-NUM_OF_EPISODES = 100
+NUM_OF_EPISODES = 200
 
 
 class AgentAction(IntEnum):

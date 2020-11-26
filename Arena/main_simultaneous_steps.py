@@ -25,8 +25,6 @@ if __name__ == '__main__':
 
         current_episode = Episode(episode)
 
-        print(episode)
-
         # set new start position for the players
         env.blue_player._choose_random_position()
         env.red_player._choose_random_position()
@@ -36,15 +34,13 @@ if __name__ == '__main__':
         initial_state_red: State = env.get_observation_for_red()
 
         # initialize the decision_makers for the players
-        blue_decision_maker.set_state(initial_state_blue)
-        red_decision_maker.set_state(initial_state_red)
+        blue_decision_maker.set_initial_state(initial_state_blue)
+        red_decision_maker.set_initial_state(initial_state_red)
 
         steps_current_game = 0
         for steps_current_game in range(1, MAX_STEPS_PER_EPISODE + 1):
 
             env.number_of_steps += 1
-
-
 
             # get observation
             observation_for_blue: State = env.get_observation_for_blue()
@@ -96,6 +92,10 @@ if __name__ == '__main__':
             # if we exited the loop because we reached MAX_STEPS_PER_EPISODE
             env.update_win_counters()
             current_episode.is_terminal = True
+
+        if env.wins_for_blue > WINS_FOR_FLAG:
+            print('Rafael@Technion:beware')
+
 
         # for statistics
         env.episodes_rewards.append(current_episode.episode_reward_blue)
