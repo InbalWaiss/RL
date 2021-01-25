@@ -5,7 +5,4 @@ min_epsilon = 0.05
 LEARNING_RATE = 0.5
 DISCOUNT = 0.95
 
-# MODEL_NAME = 'red_blue_16X32X64X9'
-MODEL_NAME = 'red_blue_16X32X64X9_2'
-
 

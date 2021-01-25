@@ -49,11 +49,13 @@ class ModifiedTensorBoard(TensorBoard):
         #         self.step += 1
         #         self.writer.flush()
 
-        for name, value in logs.items():
-            with self.writer:
-                tf.summary.scalar(name, value)
-                self.step += 1
-                self.writer.flush()
+        # for name, value in logs.items():
+        #     with self.writer:
+        #         tf.summary.scalar(name, value)
+        #         self.step += 1
+        #         self.writer.flush()
+
+        pass
 
 class decision_maker_DQN:
     def __init__(self, path_model_to_load=None):
@@ -119,12 +121,14 @@ class decision_maker_DQN:
 
     def create_model(self):
         model = Sequential()
-        model.add(Conv2D(256, (3, 3), input_shape=OBSERVATION_SPACE_VALUES)) # in small world 15X15X3
+        # model.add(Conv2D(256, (3, 3), input_shape=OBSERVATION_SPACE_VALUES)) # in small world 15X15X3
+        model.add(Conv2D(16, (3, 3), input_shape=OBSERVATION_SPACE_VALUES))
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2,2)))
         model.add(Dropout(0.2))
 
-        model.add(Conv2D(256, (3,3)))
+        # model.add(Conv2D(256, (3,3)))
+        model.add(Conv2D(32, (3, 3)))
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2, 2)))
         model.add(Dropout(0.2))
@@ -219,9 +223,10 @@ class decision_maker_DQN:
         return self.model.predict(np.array(state).reshape(-1, *np.array(state).shape) / 255)[0]
 
     def _get_action(self, current_state):
+        dqn_state = current_state.img
         if np.random.random() > self._epsilon:
             # Get action from network
-            action = np.argmax(self.get_qs(current_state))
+            action = np.argmax(self.get_qs(dqn_state))
         else:
             # Get random action
             action = np.random.randint(0, NUMBER_OF_ACTIONS)
@@ -232,6 +237,9 @@ class decision_maker_DQN:
 # Agent class
 class DQNAgent:
     def __init__(self, path_model_to_load=None):
+        self._previous_state = None
+        self._action = None
+        self.episode_number = 0
         self._decision_maker = decision_maker_DQN(path_model_to_load)
         self.min_reward = -np.Inf
         self._type = AgentType.DQN
@@ -239,12 +247,29 @@ class DQNAgent:
     def type(self) -> AgentType:
         return self._type
 
+    def set_initial_state(self, initial_state_blue, episode_number):
+        self.episode_number = episode_number
+        self._previous_state = initial_state_blue
+        self._decision_maker.tensorboard.step = episode_number
+        pass
+
+    def get_action(self, current_state):
+        action = self._decision_maker._get_action(current_state)
+        self._action = AgentAction(action)
+        return self._action
+
+    def update_context(self, new_state, reward, is_terminal):
+        transition = (self._previous_state.img, self._action, reward, new_state.img, is_terminal)
+        self._decision_maker.update_replay_memory(transition)
+        self._decision_maker.train(is_terminal, self.episode_number)
+        self._previous_state = new_state
+
     def save_model(self, ep_rewards, path_to_model, player_color):
 
         avg_reward = sum(ep_rewards[-SHOW_EVERY:]) / len(ep_rewards[-SHOW_EVERY:])
         min_reward = min(ep_rewards[-SHOW_EVERY:])
         max_reward = max(ep_rewards[-SHOW_EVERY:])
-        self._decision_maker.tensorboard.update_state(reward_avg = avg_reward, reward_min = min_reward, reward_max = max_reward, epsilon = epsilon)
+        #TODO: uncomment this! # self._decision_maker.tensorboard.update_state(reward_avg = avg_reward, reward_min = min_reward, reward_max = max_reward, epsilon = epsilon)
 
         episode = len(ep_rewards)
         # save model, but only when min reward is greater or equal a set value

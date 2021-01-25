@@ -46,16 +46,8 @@ if __name__ == '__main__':
         initial_state_red: State = env.get_observation_for_red()
 
         # initialize the decision_makers for the players
-        if blue_decision_maker.type() == AgentType.Q_table:
-            blue_decision_maker.set_initial_state(initial_state_blue)
-        if red_decision_maker.type() == AgentType.Q_table:
-            red_decision_maker.set_initial_state(initial_state_red)
-
-        # initialize the decision_makers for the players
-        if blue_decision_maker.type() == AgentType.DQN:
-            blue_decision_maker._decision_maker.tensorboard.step = episode
-        if red_decision_maker.type() == AgentType.Q_table:
-            red_decision_maker.set_initial_state(initial_state_red)
+        blue_decision_maker.set_initial_state(initial_state_blue, episode)
+        red_decision_maker.set_initial_state(initial_state_red, episode)
 
         for steps_current_game in range(1, MAX_STEPS_PER_EPISODE + 1):
 
@@ -74,20 +66,13 @@ if __name__ == '__main__':
                 current_episode.episode_reward_blue = 0
                 break
 
-            # blue DQN #
-            if blue_decision_maker.type() == AgentType.DQN:
-                action_blue = blue_decision_maker._decision_maker._get_action(observation_for_blue.img)
-                # action = blue_decision_maker.select_action()
-                env.blue_player.action(action_blue)  # take the action!
-
-            if blue_decision_maker.type() == AgentType.Q_table:
-                ##### Blue's turn! #####
-                action: AgentAction = blue_decision_maker.get_action(observation_for_blue)
-                env.blue_player.action(action)  # take the action!
+            ##### Blue's turn! #####
+            action_blue: AgentAction = blue_decision_maker.get_action(observation_for_blue)
+            env.blue_player.action(action_blue)  # take the action!
 
             ##### Red's turn! #####
-            action: AgentAction = red_decision_maker.get_action(observation_for_red)
-            env.red_player.action(action) # take the action!
+            action_red: AgentAction = red_decision_maker.get_action(observation_for_red)
+            env.red_player.action(action_red) # take the action!
 
             # get new observation
             new_observation_for_blue: State = env.get_observation_for_blue()
@@ -100,17 +85,10 @@ if __name__ == '__main__':
             # check terminal
             current_episode.is_terminal = env.check_terminal()
 
-            if blue_decision_maker.type() == AgentType.Q_table:
-                # update Q-table blue
-                blue_decision_maker.update_context(new_observation_for_blue,
-                                                   reward_step_blue,
-                                                   current_episode.is_terminal)
-
             # blue DQN #
-            if blue_decision_maker.type() == AgentType.DQN:
-                blue_decision_maker._decision_maker.update_replay_memory((observation_for_blue.img, action_blue, reward_step_blue, new_observation_for_blue.img, current_episode.is_terminal))
-                blue_decision_maker._decision_maker.train(current_episode.is_terminal, episode)
-
+            blue_decision_maker.update_context(new_observation_for_red,
+                                              reward_step_red,
+                                              current_episode.is_terminal)
 
             # update Q-table
             red_decision_maker.update_context(new_observation_for_red,
@@ -120,14 +98,6 @@ if __name__ == '__main__':
             current_episode.print_episode(env, steps_current_game)
             if current_episode.is_terminal:
                 env.update_win_counters()
-
-                # if blue_decision_maker.type() == AgentType.DQN:
-                #     #for DQN agent
-                #     (state, action, reward, new_state, is_terminal)
-                #     last_frame = observation_for_blue.img #blue_decision_maker.atari_processor.process_state_for_memory(observation_for_blue.img)
-                #     # action, reward, done doesn't matter here
-                #     blue_decision_maker.replay_memory.append(new_observation_for_blue, action, reward_step_blue, last_frame, current_episode.is_terminal)
-                #
 
                 break
 
