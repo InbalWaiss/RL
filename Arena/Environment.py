@@ -174,15 +174,15 @@ class Episode():
         return img
 
 
-    def print_info_of_episode(self, env, steps_current_game):
+    def print_info_of_episode(self, env, steps_current_game, blue_epsilon):
         if self.show:
             print(f"on #{self.episode_number}:")
             print(f"reward for blue player is: , {self.episode_reward_blue}")
-            print(f"epsilon is {epsilon}")
+            print(f"epsilon (blue player) is {blue_epsilon}")
             print(
                 f"mean rewards of last {SHOW_EVERY} episodes for blue player: {np.mean(env.episodes_rewards[-SHOW_EVERY:])}")
             print(
                 f"mean rewards of all episodes for blue player: {np.mean(env.episodes_rewards)}")
-            print(f"mean number of steps: , {steps_current_game/(self.episode_number)}\n")
+            print(f"mean number of steps: , {np.mean(env.steps_per_episode[-SHOW_EVERY:])}\n")
             self.print_episode(env, steps_current_game)
 

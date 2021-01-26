@@ -11,6 +11,7 @@ import argparse
 from DQN.deeprl_prj.dqn_keras import DQNAgent, save_scalar
 from DQN.deeprl_prj.core import Sample
 from DQN import DQNAgent
+from DQN import DQNAgent_keras
 
 style.use("ggplot")
 
@@ -23,15 +24,14 @@ if __name__ == '__main__':
     # red_decision_maker = RafaelDecisionMaker(EASY_AGENT)
 
     # blue_decision_maker = RafaelDecisionMaker()
-    # args, num_actions = get_args()
     # blue_decision_maker = DQNAgent(args, num_actions)
     red_decision_maker = RafaelDecisionMaker()
-    blue_decision_maker = DQNAgent.DQNAgent()
+    #blue_decision_maker = DQNAgent.DQNAgent()
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
 
     env.blue_player = Entity(blue_decision_maker)
     env.red_player = Entity(red_decision_maker)
 
-    number_of_frames = 0
 
     for episode in tqdm(range(1, NUM_OF_EPISODES + 1), ascii=True, unit='episodes'):
 
@@ -51,14 +51,13 @@ if __name__ == '__main__':
 
         for steps_current_game in range(1, MAX_STEPS_PER_EPISODE + 1):
 
-            number_of_frames += 1
             env.number_of_steps += 1
 
             # get observation
             observation_for_blue: State = env.get_observation_for_blue()
             observation_for_red: State = env.get_observation_for_red()
 
-            # check of the start state is terminal
+            # Check if the start state is terminal
             current_episode.is_terminal = env.check_terminal()
             if current_episode.is_terminal:
                 env.tie_count+=1
@@ -74,23 +73,22 @@ if __name__ == '__main__':
             action_red: AgentAction = red_decision_maker.get_action(observation_for_red)
             env.red_player.action(action_red) # take the action!
 
-            # get new observation
+            # Get new observations
             new_observation_for_blue: State = env.get_observation_for_blue()
             new_observation_for_red: State = env.get_observation_for_red()
 
-            # handle reward
+            # Handle rewards
             reward_step_blue, reward_step_red = env.handle_reward()
             current_episode.episode_reward_blue = reward_step_blue
 
-            # check terminal
+            # Check if terminal
             current_episode.is_terminal = env.check_terminal()
 
-            # blue DQN #
+            # Update models
             blue_decision_maker.update_context(new_observation_for_red,
                                               reward_step_red,
                                               current_episode.is_terminal)
 
-            # update Q-table
             red_decision_maker.update_context(new_observation_for_red,
                                               reward_step_red,
                                               current_episode.is_terminal)
@@ -112,7 +110,7 @@ if __name__ == '__main__':
         env.steps_per_episode.append(steps_current_game)
 
         # print info of episode:
-        current_episode.print_info_of_episode(env, steps_current_game)
+        current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker._decision_maker._epsilon)
 
 
     env.end_run()

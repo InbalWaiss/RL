@@ -323,7 +323,7 @@ class DQNAgent:
         """
         is_training = True
         print("Training starts.")
-        self.save_model(0)
+        # self.save_model(0)
         eval_count = 0
 
         state = env.reset()
@@ -336,8 +336,7 @@ class DQNAgent:
         episode_target_value = .0
         for t in range(self.num_burn_in + num_iterations):
             env.render()
-            action_state = self.history_processor.process_state_for_network(
-                self.atari_processor.process_state_for_network(state))
+            action_state = self.history_processor.process_state_for_network(self.atari_processor.process_state_for_network(state))
             policy_type = "UniformRandomPolicy" if burn_in else "LinearDecayGreedyEpsilonPolicy"
             action = self.select_action(action_state, is_training, policy_type = policy_type)
             processed_state = self.atari_processor.process_state_for_memory(state)

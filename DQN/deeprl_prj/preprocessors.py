@@ -2,6 +2,7 @@
 
 import numpy as np
 from PIL import Image
+import Arena
 
 from DQN.deeprl_prj import utils
 from DQN.deeprl_prj.core import Preprocessor
@@ -30,6 +31,8 @@ class HistoryPreprocessor(Preprocessor):
 
     def process_state_for_network(self, state):
         """You only want history when you're deciding the current action to take."""
+        # if type(state) == Arena.CState.State:
+        #     state = state.img
         row, col = state.shape
         if self.past_states is None:
             self.past_states = np.zeros((row, col, self.history_length))
@@ -39,6 +42,8 @@ class HistoryPreprocessor(Preprocessor):
 
     def process_state_for_network_ori(self, state):
         """You only want history when you're deciding the current action to take."""
+        if type(state) == Arena.CState.State:
+            state = state.img
         row, col, channel = state.shape
         if self.past_states_ori is None:
             self.past_states_ori = np.zeros((row, col, channel, self.history_length))
@@ -103,9 +108,15 @@ class AtariPreprocessor(Preprocessor):
         We recommend using the Python Image Library (PIL) to do the
         image conversions.
         """
-        # img = Image.fromarray(state).convert('L').resize((15, 15), Image.BILINEAR)
-        # state = np.array(img)
-        state = np.array(state)
+
+        if type(state) == Arena.CState.State:
+            state = state.img
+        img = Image.fromarray(state).convert('L').resize((15, 15), Image.BILINEAR)
+        state = np.array(img)
+
+        # if not type(state)== np.ndarray:
+        #     state = state.img
+        # state = np.array(state)
         return state
 
     def process_state_for_network(self, state):
@@ -114,6 +125,8 @@ class AtariPreprocessor(Preprocessor):
         Basically same as process state for memory, but this time
         outputs float32 images.
         """
+        # if type(state) == Arena.CState.State:
+        #     state = state.img
         return np.float32(self.process_state_for_memory(state) / 255.0)
 
     def process_state_for_network_ori(self, state):
@@ -122,6 +135,8 @@ class AtariPreprocessor(Preprocessor):
         Basically same as process state for memory, but this time
         outputs float32 images.
         """
+        # if type(state) == Arena.CState.State:
+        #     state = state.img
         img = Image.fromarray(state)
         state = np.float32(np.array(img) / 255.0)
         return state

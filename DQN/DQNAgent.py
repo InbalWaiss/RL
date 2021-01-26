@@ -100,24 +100,6 @@ class decision_maker_DQN:
         # used to determine when to update target network with main network's weights
         self.target_update_counter = 0
 
-    # def create_model(self):
-    #     model = Sequential()
-    #     model.add(Conv2D(16, (3, 3), input_shape=OBSERVATION_SPACE_VALUES)) # in small world 15X15X3
-    #     model.add(Activation('relu'))
-    #     model.add(MaxPooling2D(pool_size=(2,2)))
-    #     model.add(Dropout(0.2))
-    #
-    #     model.add(Conv2D(32, (3,3)))
-    #     model.add(Activation('relu'))
-    #     model.add(MaxPooling2D(pool_size=(2, 2)))
-    #     model.add(Dropout(0.2))
-    #
-    #     model.add(Flatten()) # this converts out 3D feature maps to 1D feature vectors
-    #     model.add(Dense(64))
-    #
-    #     model.add(Dense(NUMBER_OF_ACTIONS, activation='linear'))
-    #     model.compile(loss="mse", optimizer=Adam(lr=0.001), metrics=['accuracy'])
-    #     return model
 
     def create_model(self):
         model = Sequential()
@@ -231,6 +213,7 @@ class decision_maker_DQN:
             # Get random action
             action = np.random.randint(0, NUMBER_OF_ACTIONS)
 
+        self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
         self._action = action
         return action
 
@@ -280,6 +263,6 @@ class DQNAgent:
             elif player_color == Color.Blue:
                 color_str = "blue"
             self._decision_maker.model.save(
-                f'{path_to_model+os.sep+MODEL_NAME}_color_str_{NUM_OF_EPISODES}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
+                f'{path_to_model+os.sep+MODEL_NAME}_{color_str}_{NUM_OF_EPISODES}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
 
         return self.min_reward
