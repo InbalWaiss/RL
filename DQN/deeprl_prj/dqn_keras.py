@@ -191,7 +191,7 @@ class DQNAgent:
         self.compile()
 
         self.writer = tf.summary.FileWriter(self.output_path)
-        self._type = AgentType.DQN
+        self._type = AgentType.DQN_basic
 
     def type(self) -> AgentType:
         return self._type

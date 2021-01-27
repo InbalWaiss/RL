@@ -73,10 +73,6 @@ class decision_maker_DQN:
     def _set_epsilon(self, input_epsilon):
         self._epsilon = input_epsilon
 
-    def load_Q_matrix(self, q_table):
-        if q_table:
-            self._Q_matrix = q_table
-
     def reset_networks(self):
         self._Initialize_networks()
 
@@ -96,9 +92,6 @@ class decision_maker_DQN:
 
         # custom tesnsorboard object
         self.tensorboard = ModifiedTensorBoard(log_dir="logs/{}-{}".format(MODEL_NAME, int(time.time())))
-
-        # used to determine when to update target network with main network's weights
-        self.target_update_counter = 0
 
 
     def create_model(self):
@@ -225,7 +218,8 @@ class DQNAgent:
         self.episode_number = 0
         self._decision_maker = decision_maker_DQN(path_model_to_load)
         self.min_reward = -np.Inf
-        self._type = AgentType.DQN
+        self._type = AgentType.DQN_basic
+        self.path_model_to_load = path_model_to_load
 
     def type(self) -> AgentType:
         return self._type

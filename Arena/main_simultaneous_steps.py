@@ -130,7 +130,7 @@ if __name__ == '__main__':
                 break
 
             # blue DQN #
-            if blue_decision_maker.type() == AgentType.DQN:
+            if blue_decision_maker.type() == AgentType.DQN_basic:
                 burn_in = True
                 action_state = blue_decision_maker.history_processor.process_state_for_network(
                     blue_decision_maker.atari_processor.process_state_for_network(observation_for_blue.img))
@@ -169,7 +169,7 @@ if __name__ == '__main__':
                                                    current_episode.is_terminal)
 
             # blue DQN #
-            if blue_decision_maker.type() == AgentType.DQN:
+            if blue_decision_maker.type() == AgentType.DQN_basic:
                 # update Q-network
                 processed_next_state = blue_decision_maker.atari_processor.process_state_for_network(new_observation_for_blue.img)
                 action_next_state = np.dstack((action_state, processed_next_state))
@@ -190,7 +190,7 @@ if __name__ == '__main__':
             if current_episode.is_terminal:
                 env.update_win_counters()
 
-                if blue_decision_maker.type() == AgentType.DQN:
+                if blue_decision_maker.type() == AgentType.DQN_basic:
                     #for DQN agent
                     last_frame = blue_decision_maker.atari_processor.process_state_for_memory(observation_for_blue.img)
                     # action, reward, done doesn't matter here

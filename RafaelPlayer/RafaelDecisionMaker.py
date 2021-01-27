@@ -9,17 +9,17 @@ import pickle
 
 class RafaelDecisionMaker(AbsDecisionMaker):
 
-    def __init__(self, agent_str=None):
+    def __init__(self, path_model_to_load=None):
 
         self._previous_state = {}
         self._action = -1
         self._epsilon = epsilon
         self._type = AgentType.Q_table
         self.episode_number = 0
+        self.path_model_to_load = path_model_to_load
 
-
-        if agent_str is not None:
-            p = path.join(RELATIVE_PATH_HUMAN_VS_MACHINE_DATA, agent_str)
+        if path_model_to_load is not None:
+            p = path.join(RELATIVE_PATH_HUMAN_VS_MACHINE_DATA, path_model_to_load)
             self._Q_matrix = pickle.load(open(p, "rb"))
         else:
             self._Q_matrix = self.init_q_table()

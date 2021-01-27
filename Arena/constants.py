@@ -77,8 +77,8 @@ EASY_AGENT = 'easy.pickle'
 MEDIUM_AGENT = 'medium.pickle'
 HARD_AGENT = 'hard.pickle'
 
-SHOW_EVERY = 500
-NUM_OF_EPISODES = 100000
+SHOW_EVERY = 1000
+NUM_OF_EPISODES = 1
 
 
 class AgentAction(IntEnum):
@@ -95,7 +95,14 @@ class AgentAction(IntEnum):
 
 class AgentType(IntEnum):
     Q_table = 1
-    DQN = 2
+    DQN_basic = 2
+    DQN_keras = 3
+    DQN_temporalAttention = 4
+
+Agent_type_str = {AgentType.Q_table : "Q_table",
+                  AgentType.DQN_basic : "DQN",
+                  AgentType.DQN_keras : "DQN_keras",
+                  AgentType.DQN_temporalAttention : "DQN_temporalAttention"}
 
 class Color(IntEnum):
     Blue = 1

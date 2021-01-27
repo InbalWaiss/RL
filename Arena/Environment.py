@@ -23,7 +23,6 @@ class Environment(object):
         self.red_player = None
         self.SHOW_EVERY = SHOW_EVERY
         self.NUMBER_OF_EPISODES = NUM_OF_EPISODES
-        self.action_space = np.array([1,2,3,4,5,6,7,8,9])
 
     def update_win_counters(self):
         reward_blue, reward_red = self.handle_reward()
@@ -129,7 +128,11 @@ class Environment(object):
                 f"%Games started at Tie" : [self.starts_at_win / self.NUMBER_OF_EPISODES*100],
                 f"%WINS_BLUE": [self.wins_for_blue/self.NUMBER_OF_EPISODES*100],
                 f"%WINS_RED": [self.wins_for_red/self.NUMBER_OF_EPISODES*100],
-                f"%TIES": [self.tie_count/self.NUMBER_OF_EPISODES*100]}
+                f"%TIES": [self.tie_count/self.NUMBER_OF_EPISODES*100],
+                f"%Blue_agent_type" : [Agent_type_str[self.blue_player._decision_maker.type()]],
+                f"%Blue_agent_model_loded": [self.blue_player._decision_maker.path_model_to_load],
+                f"%Red_agent_type" : [Agent_type_str[self.red_player._decision_maker.type()]],
+                f"%Red_agent_model_loded": [self.red_player._decision_maker.path_model_to_load]}
 
 
         df = pd.DataFrame(info)

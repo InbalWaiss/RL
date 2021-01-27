@@ -25,9 +25,10 @@ if __name__ == '__main__':
 
     # blue_decision_maker = RafaelDecisionMaker()
     # blue_decision_maker = DQNAgent(args, num_actions)
-    red_decision_maker = RafaelDecisionMaker()
-    #blue_decision_maker = DQNAgent.DQNAgent()
+    # red_decision_maker = RafaelDecisionMaker('qtable_red-1000000.pickle')
+    # blue_decision_maker = DQNAgent.DQNAgent()
     blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    red_decision_maker = DQNAgent_keras.DQNAgent_keras()
 
     env.blue_player = Entity(blue_decision_maker)
     env.red_player = Entity(red_decision_maker)

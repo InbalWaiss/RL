@@ -29,7 +29,7 @@ from DQN.deeprl_prj.utils import *
 from DQN.deeprl_prj.core import  *
 
 REPLAY_MEMORY_SIZE = 50000 # how many last samples to keep for model training
-MIN_REPLAY_MEMORY_SIZE = 100 # minimum number of steps in a memory to start training
+MIN_REPLAY_MEMORY_SIZE = 1000 # minimum number of steps in a memory to start training
 MINIBATCH_SIZE = 64 # how many samples to use for training
 UPDATE_TARGET_EVERY = 15 # number of terminal states
 OBSERVATION_SPACE_VALUES = (SIZE_X, SIZE_Y, 3)
@@ -76,7 +76,7 @@ class ModifiedTensorBoard(TensorBoard):
 
         pass
 
-class decision_maker_DQN:
+class decision_maker_DQN_keras:
     def __init__(self, path_model_to_load=None):
         self._previous_stats = {}
         self._action = {}
@@ -148,10 +148,6 @@ class decision_maker_DQN:
     def _set_epsilon(self, input_epsilon):
         self._epsilon = input_epsilon
 
-    def load_Q_matrix(self, q_table):
-        if q_table:
-            self._Q_matrix = q_table
-
     def reset_networks(self):
         self._Initialize_networks()
 
@@ -201,14 +197,9 @@ class decision_maker_DQN:
             self.final_model = None
             self.compile()
 
-        # array with last n steps for training
-        self.replay_memory = deque(maxlen=REPLAY_MEMORY_SIZE)
-
         # custom tesnsorboard object
         self.tensorboard = ModifiedTensorBoard(log_dir="logs/{}-{}".format(MODEL_NAME, int(time.time())))
 
-        # used to determine when to update target network with main network's weights
-        self.target_update_counter = 0
 
     def loadModel(self, model, target_model):
         # load existing models
@@ -496,9 +487,10 @@ class DQNAgent_keras:
         self._previous_state = None
         self._action = None
         self.episode_number = 0
-        self._decision_maker = decision_maker_DQN(path_model_to_load)
+        self._decision_maker = decision_maker_DQN_keras(path_model_to_load)
         self.min_reward = -np.Inf
-        self._type = AgentType.DQN
+        self._type = AgentType.DQN_keras
+        self.path_model_to_load = path_model_to_load
 
     def type(self) -> AgentType:
         return self._type
