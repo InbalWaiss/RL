@@ -374,17 +374,6 @@ class decision_maker_DQN_keras:
             #                                                                         max_episode_length, True)
 
 
-        # max_future_q = np.max(self._Q_matrix[new_state]) # max Q value for this new observation
-        # current_q = self._Q_matrix[self._previous_stats][self._action] # current Q for our chosen action
-        #
-        # if is_terminal:
-        #     new_q = reward
-        # else:
-        #     new_q = (1- LEARNING_RATE) * current_q + LEARNING_RATE * (reward + DISCOUNT * max_future_q)
-        #
-        # self._Q_matrix[self._previous_stats][self._action] = new_q
-        #
-        # self._previous_stats = new_state
         self._previous_stats = new_state
         self.burn_in = (self.numberOfSteps < self.num_burn_in)
 

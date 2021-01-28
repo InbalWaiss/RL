@@ -94,6 +94,7 @@ class Environment(object):
             os.makedirs(save_folder_path)
 
         chcek_unvisited_states = False
+        counter_ones = 0
         if self.red_player._decision_maker.type() == AgentType.Q_table:
             Q_matrix = self.red_player._decision_maker._Q_matrix
             chcek_unvisited_states = True
@@ -103,7 +104,6 @@ class Environment(object):
         if chcek_unvisited_states:
             num_of_states = 15 * 15 * 15 * 15
             block_states = np.sum(DSM)
-            counter_ones = 0
             for x1 in range(SIZE_Y):
                 for y1 in range(SIZE_Y):
                     for x2 in range(SIZE_Y):

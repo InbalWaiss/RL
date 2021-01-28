@@ -11,7 +11,7 @@ import argparse
 from DQN.deeprl_prj.dqn_keras import DQNAgent, save_scalar
 from DQN.deeprl_prj.core import Sample
 from DQN import DQNAgent
-from DQN import DQNAgent_keras
+from DQN import DQNAgent_keras, DQNAgent_temporalAttention
 
 style.use("ggplot")
 
@@ -27,8 +27,10 @@ if __name__ == '__main__':
     # blue_decision_maker = DQNAgent(args, num_actions)
     # red_decision_maker = RafaelDecisionMaker('qtable_red-1000000.pickle')
     # blue_decision_maker = DQNAgent.DQNAgent()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    red_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
+    red_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
+
+    # red_decision_maker = RafaelDecisionMaker()
 
     env.blue_player = Entity(blue_decision_maker)
     env.red_player = Entity(red_decision_maker)
