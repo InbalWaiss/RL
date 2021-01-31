@@ -78,7 +78,7 @@ MEDIUM_AGENT = 'medium.pickle'
 HARD_AGENT = 'hard.pickle'
 
 SHOW_EVERY = 500
-NUM_OF_EPISODES = 10000
+NUM_OF_EPISODES = 100000
 
 
 class AgentAction(IntEnum):

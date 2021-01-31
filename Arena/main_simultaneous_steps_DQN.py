@@ -1,6 +1,5 @@
 
 from matplotlib import style
-
 from Arena.CState import State
 from Arena.Entity import Entity
 from RafaelPlayer.RafaelDecisionMaker import RafaelDecisionMaker
@@ -26,9 +25,10 @@ if __name__ == '__main__':
     # blue_decision_maker = RafaelDecisionMaker()
     # blue_decision_maker = DQNAgent(args, num_actions)
     # red_decision_maker = RafaelDecisionMaker('qtable_red-1000000.pickle')
-    # blue_decision_maker = DQNAgent.DQNAgent()
-    blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
-    red_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
+    red_decision_maker = DQNAgent.DQNAgent()
+    blue_decision_maker = DQNAgent.DQNAgent()
+    # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
+    # red_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
 
     # red_decision_maker = RafaelDecisionMaker()
 

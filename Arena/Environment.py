@@ -95,6 +95,7 @@ class Environment(object):
 
         chcek_unvisited_states = False
         counter_ones = 0
+        num_of_states = 15 * 15 * 15 * 15
         if self.red_player._decision_maker.type() == AgentType.Q_table:
             Q_matrix = self.red_player._decision_maker._Q_matrix
             chcek_unvisited_states = True
@@ -139,7 +140,7 @@ class Environment(object):
         df.to_csv(os.path.join(save_folder_path, 'Statistics.csv'), index=False)
 
         # save models
-        self.red_player._decision_maker.save_model(self.NUMBER_OF_EPISODES, save_folder_path, Color.Red)
+        self.red_player._decision_maker.save_model(self.episodes_rewards, save_folder_path, Color.Red)
         self.blue_player._decision_maker.save_model(self.episodes_rewards, save_folder_path, Color.Blue)
 
 

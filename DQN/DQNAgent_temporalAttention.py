@@ -540,7 +540,8 @@ class DQNAgent_temporalAttention:
                 color_str = "red"
             elif player_color == Color.Blue:
                 color_str = "blue"
-            self._decision_maker.model.save(
+            self._decision_maker.q_network.save(
                 f'{path_to_model+os.sep+MODEL_NAME}_{color_str}_{NUM_OF_EPISODES}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
 
         return self.min_reward
+

@@ -64,6 +64,7 @@ class decision_maker_DQN:
         self._epsilon = epsilon
         self.model = None
         self.target_model = None
+        self.target_update_counter = 0
 
         self._Initialize_networks(path_model_to_load)
 
