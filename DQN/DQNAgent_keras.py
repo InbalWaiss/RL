@@ -3,6 +3,7 @@ from Arena.constants import *
 from RafaelPlayer.DQN_constants import *
 import os
 import time
+import sys
 import random
 from collections import deque
 import tensorflow as tf
@@ -95,6 +96,13 @@ class decision_maker_DQN_keras:
         self._Initialize_networks(path_model_to_load)
 
 
+        # save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH,
+        #                              format(f"{str(time.strftime('%d'))}_{str(time.strftime('%m'))}_"
+        #                                     f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}"))
+        #
+        # self.writer = tf.summary.FileWriter(save_folder_path)
+
+
     def get_args(self):
         parser = argparse.ArgumentParser(description='Run DQN on Atari Breakout')
         parser.add_argument('--env', default='shoot me if you can', help='small world')
@@ -123,7 +131,7 @@ class decision_maker_DQN_keras:
         parser.add_argument('--net_mode', default='dqn', help='choose the mode of net, can be linear, dqn, duel')
         parser.add_argument('--max_episode_length', default = 10000, type=int, help = 'max length of each episode')
         parser.add_argument('--num_episodes_at_test', default = 20, type=int, help='Number of episodes the agent plays at test')
-        parser.add_argument('--ddqn', default=False, dest='ddqn', action='store_true', help='enable ddqn')
+        parser.add_argument('--ddqn', default=True, dest='ddqn', action='store_true', help='enable ddqn')
         parser.add_argument('--train', default=True, dest='train', action='store_true', help='Train mode')
         parser.add_argument('--test', dest='train', action='store_false', help='Test mode')
         parser.add_argument('--no_experience', default=False, action='store_true', help='do not use experience replay')
@@ -369,9 +377,9 @@ class decision_maker_DQN_keras:
                 self.target_network.set_weights(self.q_network.get_weights())
 
 
-            # if self.numberOfSteps % (self.eval_freq * self.train_freq) == 0:
-            #     episode_reward_mean, episode_reward_std, eval_count = self.evaluate(env, 20, eval_count,
-            #                                                                         max_episode_length, True)
+            if self.numberOfSteps % (self.eval_freq * self.train_freq) == 0:
+                episode_reward_mean, episode_reward_std, eval_count = self.evaluate(env, 20, eval_count,
+                                                                                    max_episode_length, True)
 
 
         self._previous_stats = new_state
@@ -440,6 +448,61 @@ class decision_maker_DQN_keras:
         self.memory.append(transition[0], transition[1], transition[2], transition[4])
 
 
+    def evaluate(self, env, num_episodes, eval_count, max_episode_length=None, monitor=True):
+        """Test your agent with a provided environment.
+
+        Basically run your policy on the environment and collect stats
+        like cumulative reward, average episode length, etc.
+
+        You can also call the render function here if you want to
+        visually inspect your policy.
+        """
+        print("Evaluation starts.")
+
+        is_training = False
+        if self.load_network:
+            self.q_network.load_weights(self.load_network_path)
+            print("Load network from:", self.load_network_path)
+
+        state = env.reset()
+
+        idx_episode = 1
+        episode_frames = 0
+        episode_reward = np.zeros(num_episodes)
+        t = 0
+
+        while idx_episode <= num_episodes:
+            t += 1
+            action_state = self.history_processor.process_state_for_network(
+                self.atari_processor.process_state_for_network(state))
+            action = self.select_action(action_state, is_training, policy_type = 'GreedyEpsilonPolicy')
+            state, reward, done, info = env.step(action)
+            episode_frames += 1
+            episode_reward[idx_episode-1] += reward
+            if episode_frames > max_episode_length:
+                done = True
+            if done:
+                print("Eval: time %d, episode %d, length %d, reward %.0f" %
+                    (t, idx_episode, episode_frames, episode_reward[idx_episode-1]))
+                eval_count += 1
+                save_scalar(eval_count, 'eval/eval_episode_raw_reward', episode_reward[idx_episode-1], self.writer)
+                save_scalar(eval_count, 'eval/eval_episode_raw_length', episode_frames, self.writer)
+                sys.stdout.flush()
+                state = env.reset()
+                episode_frames = 0
+                idx_episode += 1
+                self.atari_processor.reset()
+                self.history_processor.reset()
+
+        reward_mean = np.mean(episode_reward)
+        reward_std = np.std(episode_reward)
+        print("Evaluation summury: num_episodes [%d], reward_mean [%.3f], reward_std [%.3f]" %
+            (num_episodes, reward_mean, reward_std))
+        sys.stdout.flush()
+
+        return reward_mean, reward_std, eval_count
+
+
     def _get_action(self, current_state, is_training = True, **kwargs):
         dqn_state = current_state.img
         """Select the action based on the current state.
@@ -465,10 +528,11 @@ class decision_maker_DQN_keras:
             # return GreedyEpsilonPolicy(0.05).select_action(q_values)
             action = GreedyPolicy().select_action(q_values)
 
-        self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
         self._action = action
         return action
 
+    def update_epsilon(self):
+        self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
 
 # Agent class
 class DQNAgent_keras:
@@ -488,6 +552,7 @@ class DQNAgent_keras:
         self.episode_number = episode_number
         self._previous_state = initial_state_blue
         self._decision_maker.tensorboard.step = episode_number
+        self._decision_maker.update_epsilon()
         pass
 
     def get_action(self, current_state):

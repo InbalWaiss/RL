@@ -36,7 +36,7 @@ MINIBATCH_SIZE = 64 # how many samples to use for training
 UPDATE_TARGET_EVERY = 15 # number of terminal states
 OBSERVATION_SPACE_VALUES = (SIZE_X, SIZE_Y, 3)
 IS_TRAINING = True
-MODEL_NAME = 'red_blue_16X32X512X9_2'
+MODEL_NAME = 'red_blue_32(4X4)X64(3X3)X9_2'
 
 
 class Qnetwork():
@@ -57,7 +57,7 @@ class Qnetwork():
             activation_fn=tf.nn.relu, biases_initializer=None, scope=myScope + '_conv1')
         self.conv2 = tf.contrib.layers.convolution2d( \
             inputs=self.conv1, num_outputs=64, \
-            kernel_size=[4, 4], stride=[2, 2], padding='VALID', \
+            kernel_size=[3, 3], stride=[1, 1], padding='VALID', \
             activation_fn=tf.nn.relu, biases_initializer=None, scope=myScope + '_conv2')
         # self.conv3 = tf.contrib.layers.convolution2d( \
         #     inputs=self.conv2, num_outputs=64, \

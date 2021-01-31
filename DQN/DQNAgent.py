@@ -16,6 +16,7 @@ MIN_REPLAY_MEMORY_SIZE = 100 # minimum number of steps in a memory to start trai
 MINIBATCH_SIZE = 64 # how many samples to use for training
 UPDATE_TARGET_EVERY = 15 # number of terminal states
 OBSERVATION_SPACE_VALUES = (SIZE_X, SIZE_Y, 3)
+MODEL_NAME = 'red_blue_32(4X4)X64X9'
 
 
 class ModifiedTensorBoard(TensorBoard):
@@ -98,16 +99,18 @@ class decision_maker_DQN:
     def create_model(self):
         model = Sequential()
         # model.add(Conv2D(256, (3, 3), input_shape=OBSERVATION_SPACE_VALUES)) # in small world 15X15X3
-        model.add(Conv2D(16, (3, 3), input_shape=OBSERVATION_SPACE_VALUES))
+        #model.add(Conv2D(16, (3)3) input_shape=OBSERVATION_SPACE_VALUES))
+        model.add(Conv2D(32, (4, 4), input_shape=OBSERVATION_SPACE_VALUES))
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2,2)))
         model.add(Dropout(0.2))
 
-        # model.add(Conv2D(256, (3,3)))
-        model.add(Conv2D(32, (3, 3)))
-        model.add(Activation('relu'))
-        model.add(MaxPooling2D(pool_size=(2, 2)))
-        model.add(Dropout(0.2))
+        # # model.add(Conv2D(256, (3,3)))
+        # #model.add(Conv2D(32, (3, 3)))
+        # model.add(Conv2D(16, (4, 4)))
+        # model.add(Activation('relu'))
+        # model.add(MaxPooling2D(pool_size=(2, 2)))
+        # model.add(Dropout(0.2))
 
         model.add(Flatten()) # this converts out 3D feature maps to 1D feature vectors
         model.add(Dense(64))
@@ -119,20 +122,6 @@ class decision_maker_DQN:
     def loadModel(self, model, target_model):
         self.model = model
         self.target_model = target_model
-
-    def _update_context(self, new_state, reward, is_terminal):
-
-        max_future_q = np.max(self._Q_matrix[new_state]) # max Q value for this new observation
-        current_q = self._Q_matrix[self._previous_stats][self._action] # current Q for our chosen action
-
-        if is_terminal:
-            new_q = reward
-        else:
-            new_q = (1- LEARNING_RATE) * current_q + LEARNING_RATE * (reward + DISCOUNT * max_future_q)
-
-        self._Q_matrix[self._previous_stats][self._action] = new_q
-
-        self._previous_stats = new_state
 
 
     # adds step's data to memory replay array
@@ -156,7 +145,7 @@ class decision_maker_DQN:
         current_qs_list = self.model.predict(current_state)
 
         # Get future states from minibatch, the query NN model for Q values
-        # When using target network, query it, otherwise main network shoul be queried
+        # When using target network, query it, otherwise main network should be queried
         new_current_state = np.array([transition[3] for transition in minibatch]) / 255
         future_qs_list = self.model.predict(new_current_state)
 
@@ -207,9 +196,11 @@ class decision_maker_DQN:
             # Get random action
             action = np.random.randint(0, NUMBER_OF_ACTIONS)
 
-        self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
         self._action = action
         return action
+
+    def update_epsilon(self):
+        self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
 
 # Agent class
 class DQNAgent:
@@ -229,6 +220,7 @@ class DQNAgent:
         self.episode_number = episode_number
         self._previous_state = initial_state_blue
         self._decision_maker.tensorboard.step = episode_number
+        self._decision_maker.update_epsilon()
         pass
 
     def get_action(self, current_state):

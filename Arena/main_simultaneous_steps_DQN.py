@@ -6,11 +6,13 @@ from RafaelPlayer.RafaelDecisionMaker import RafaelDecisionMaker
 from Arena.Environment import Environment, Episode
 from Arena.constants import *
 from tqdm import tqdm
+import time
 import argparse
 from DQN.deeprl_prj.dqn_keras import DQNAgent, save_scalar
 from DQN.deeprl_prj.core import Sample
 from DQN import DQNAgent
 from DQN import DQNAgent_keras, DQNAgent_temporalAttention
+import os
 
 style.use("ggplot")
 
@@ -38,11 +40,11 @@ if __name__ == '__main__':
 
     env = Environment()
 
-    # red_decision_maker = RafaelDecisionMaker()
+    red_decision_maker = RafaelDecisionMaker()
     # red_decision_maker = RafaelDecisionMaker(EASY_AGENT)
-    red_decision_maker = RafaelDecisionMaker('qtable_red-1000000.pickle')
+    # red_decision_maker = RafaelDecisionMaker('qtable_red-1000000.pickle')
     # red_decision_maker = DQNAgent.DQNAgent()
-    # red_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    red_decision_maker = DQNAgent_keras.DQNAgent_keras()
     # red_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
 
     # blue_decision_maker = RafaelDecisionMaker()

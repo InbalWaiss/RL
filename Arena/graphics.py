@@ -16,15 +16,15 @@ def print_stats(array_of_results, save_folder_path, plot_every, save_figure=True
         plt.suptitle(f"Avg number of steps per episode")
         plt.ylabel(f"steps per episode {SHOW_EVERY}ma")
         if save_figure:
-            plt.savefig(save_folder_path + os.path.sep + '#steps')
+            plt.savefig(save_folder_path + os.path.sep + '#steps_'+str(len(array_of_results)))
     else:
         plt.axis([0, len(array_of_results), -WIN_REWARD-50, WIN_REWARD+50])
         plt.suptitle(f"Rewards per episode")
         plt.ylabel(f"Reward {SHOW_EVERY}ma")
         if save_figure:
-            plt.savefig(save_folder_path + os.path.sep + 'rewards')
+            plt.savefig(save_folder_path + os.path.sep + 'rewards_' + str(len(array_of_results)))
 
-    plt.show()
+    # plt.show()
 
 def print_stats_humna_player(array_of_results, save_folder_path, number_of_episodes, save_figure=True, steps=False, red_player=False):
     moving_avg = np.convolve(array_of_results, np.ones((1,)) / 1, mode='valid')

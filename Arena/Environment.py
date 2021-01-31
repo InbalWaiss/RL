@@ -23,6 +23,15 @@ class Environment(object):
         self.red_player = None
         self.SHOW_EVERY = SHOW_EVERY
         self.NUMBER_OF_EPISODES = NUM_OF_EPISODES
+        self.create_path_for_statistics()
+
+    def create_path_for_statistics(self):
+        save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH,
+                                     format(f"{str(time.strftime('%d'))}_{str(time.strftime('%m'))}_"
+                                            f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}"))
+        if not os.path.exists(save_folder_path):
+            os.makedirs(save_folder_path)
+        self.path_for_run = save_folder_path
 
     def update_win_counters(self):
         reward_blue, reward_red = self.handle_reward()
@@ -76,7 +85,8 @@ class Environment(object):
         return State(my_pos=red_pos, enemy_pos=blue_pos)
 
     def end_run(self):
-        save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH,
+        STATS_RESULTS_RELATIVE_PATH_THIS_RUN = os.path.join(self.path_for_run, STATS_RESULTS_RELATIVE_PATH)
+        save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH_THIS_RUN,
                                      format(f"{str(time.strftime('%d'))}_{str(time.strftime('%m'))}_"
                                             f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}"))
 
@@ -90,6 +100,7 @@ class Environment(object):
 
 
     def save_stats(self, save_folder_path):
+
         if not os.path.exists(save_folder_path):
             os.makedirs(save_folder_path)
 
@@ -159,6 +170,8 @@ class Episode():
     def print_episode(self, env, last_step_number):
         if self.show:
             print_episode_graphics(env, self, last_step_number)
+        if self.episode_number % SAVE_STATS_EVERY==0 and self.is_terminal:
+            env.end_run()
 
     def get_image(self, env, image_for_red = False):
         image = np.zeros((SIZE_X, SIZE_Y, 3), dtype=np.uint8) # starts an rbg of small world
