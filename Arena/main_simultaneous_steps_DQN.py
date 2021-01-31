@@ -22,7 +22,7 @@ def print_start_of_game_info(blue_decision_maker, red_decision_maker):
     else:
         print("Blue player starting tournament with trained model: " , blue_decision_maker.path_model_to_load)
 
-    print("Red player type: ", blue_decision_maker.type())
+    print("Red player type: ", red_decision_maker.type())
     if red_decision_maker.path_model_to_load==None:
         print("Red player starting with no model")
     else:
@@ -38,18 +38,20 @@ if __name__ == '__main__':
 
     env = Environment()
 
-    # blue_decision_maker = RafaelDecisionMaker(EASY_AGENT)
+    # red_decision_maker = RafaelDecisionMaker()
     # red_decision_maker = RafaelDecisionMaker(EASY_AGENT)
-
-    # blue_decision_maker = RafaelDecisionMaker()
-    # blue_decision_maker = DQNAgent(args, num_actions)
     red_decision_maker = RafaelDecisionMaker('qtable_red-1000000.pickle')
+    # red_decision_maker = DQNAgent.DQNAgent()
     # red_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
     # red_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
 
-    # red_decision_maker = RafaelDecisionMaker()
+    # blue_decision_maker = RafaelDecisionMaker()
+    # blue_decision_maker = RafaelDecisionMaker(EASY_AGENT)
+    # blue_decision_maker = DQNAgent.DQNAgent()
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
+
+
 
     env.blue_player = Entity(blue_decision_maker)
     env.red_player = Entity(red_decision_maker)
@@ -109,7 +111,7 @@ if __name__ == '__main__':
 
             # Update models
             blue_decision_maker.update_context(new_observation_for_blue,
-                                              reward_step_red,
+                                              reward_step_blue,
                                               current_episode.is_terminal)
 
             red_decision_maker.update_context(new_observation_for_red,
