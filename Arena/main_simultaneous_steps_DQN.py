@@ -25,8 +25,8 @@ if __name__ == '__main__':
     # blue_decision_maker = RafaelDecisionMaker()
     # blue_decision_maker = DQNAgent(args, num_actions)
     # red_decision_maker = RafaelDecisionMaker('qtable_red-1000000.pickle')
-    red_decision_maker = DQNAgent.DQNAgent()
-    blue_decision_maker = DQNAgent.DQNAgent()
+    red_decision_maker = DQNAgent_keras.DQNAgent()
+    blue_decision_maker = DQNAgent_keras.DQNAgent()
     # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
     # red_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
 
@@ -88,7 +88,7 @@ if __name__ == '__main__':
             current_episode.is_terminal = env.check_terminal()
 
             # Update models
-            blue_decision_maker.update_context(new_observation_for_red,
+            blue_decision_maker.update_context(new_observation_for_blue,
                                               reward_step_red,
                                               current_episode.is_terminal)
 
