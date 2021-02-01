@@ -377,9 +377,9 @@ class decision_maker_DQN_keras:
                 self.target_network.set_weights(self.q_network.get_weights())
 
 
-            if self.numberOfSteps % (self.eval_freq * self.train_freq) == 0:
-                episode_reward_mean, episode_reward_std, eval_count = self.evaluate(env, 20, eval_count,
-                                                                                    max_episode_length, True)
+            # if self.numberOfSteps % (self.eval_freq * self.train_freq) == 0:
+            #     episode_reward_mean, episode_reward_std, eval_count = self.evaluate(env, 20, eval_count,
+            #                                                                         max_episode_length, True)
 
 
         self._previous_stats = new_state
