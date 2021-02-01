@@ -8,6 +8,7 @@ import cv2
 
 def print_stats(array_of_results, save_folder_path, plot_every, save_figure=True, steps=False):
     moving_avg = np.convolve(array_of_results, np.ones((plot_every,)) / plot_every, mode='valid')
+    plt.figure()
     plt.plot([i for i in range(len(moving_avg))], moving_avg)
     plt.xlabel("episode #")
     if steps:
@@ -16,13 +17,13 @@ def print_stats(array_of_results, save_folder_path, plot_every, save_figure=True
         plt.suptitle(f"Avg number of steps per episode")
         plt.ylabel(f"steps per episode {SHOW_EVERY}ma")
         if save_figure:
-            plt.savefig(save_folder_path + os.path.sep + '#steps_'+str(len(array_of_results)))
+            plt.savefig(save_folder_path + os.path.sep + '#steps_'+str(len(array_of_results)-1))
     else:
         plt.axis([0, len(array_of_results), -WIN_REWARD-50, WIN_REWARD+50])
         plt.suptitle(f"Rewards per episode")
         plt.ylabel(f"Reward {SHOW_EVERY}ma")
         if save_figure:
-            plt.savefig(save_folder_path + os.path.sep + 'rewards_' + str(len(array_of_results)))
+            plt.savefig(save_folder_path + os.path.sep + 'rewards_' + str(len(array_of_results)-1))
 
     # plt.show()
 

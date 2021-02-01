@@ -2,7 +2,7 @@
 from matplotlib import style
 from Arena.CState import State
 from Arena.Entity import Entity
-from RafaelPlayer.RafaelDecisionMaker import RafaelDecisionMaker
+from RafaelPlayer.Qtable_DecisionMaker import Qtable_DecisionMaker
 from Arena.Environment import Environment, Episode
 from Arena.constants import *
 from tqdm import tqdm
@@ -40,15 +40,15 @@ if __name__ == '__main__':
 
     env = Environment()
 
-    red_decision_maker = RafaelDecisionMaker()
-    # red_decision_maker = RafaelDecisionMaker(EASY_AGENT)
-    # red_decision_maker = RafaelDecisionMaker('qtable_red-1000000.pickle')
+    red_decision_maker = Qtable_DecisionMaker()
+    # red_decision_maker = Qtable_DecisionMaker(EASY_AGENT)
+    # red_decision_maker = Qtable_DecisionMaker('qtable_red-1000000.pickle')
     # red_decision_maker = DQNAgent.DQNAgent()
-    red_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    # red_decision_maker = DQNAgent_keras.DQNAgent_keras()
     # red_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
 
-    # blue_decision_maker = RafaelDecisionMaker()
-    # blue_decision_maker = RafaelDecisionMaker(EASY_AGENT)
+    # blue_decision_maker = Qtable_DecisionMaker()
+    # blue_decision_maker = Qtable_DecisionMaker(EASY_AGENT)
     # blue_decision_maker = DQNAgent.DQNAgent()
     blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
     # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()

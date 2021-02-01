@@ -1,4 +1,4 @@
-from RafaelPlayer.RafaelDecisionMaker import *
+from RafaelPlayer.Qtable_DecisionMaker import *
 from RafaelPlayer.QPlayer_constants import START_EPSILON, EPSILONE_DECAY, LEARNING_RATE, DISCOUNT
 from Arena.Position import Position
 from Arena.graphics import print_stats, print_episode_graphics
@@ -170,8 +170,6 @@ class Episode():
     def print_episode(self, env, last_step_number):
         if self.show:
             print_episode_graphics(env, self, last_step_number)
-        if self.episode_number % SAVE_STATS_EVERY==0 and self.is_terminal:
-            env.end_run()
 
     def get_image(self, env, image_for_red = False):
         image = np.zeros((SIZE_X, SIZE_Y, 3), dtype=np.uint8) # starts an rbg of small world
@@ -202,4 +200,6 @@ class Episode():
                 f"mean rewards of all episodes for blue player: {np.mean(env.episodes_rewards)}")
             print(f"mean number of steps: , {np.mean(env.steps_per_episode[-SHOW_EVERY:])}\n")
             self.print_episode(env, steps_current_game)
+            if self.episode_number % SAVE_STATS_EVERY == 0 and self.is_terminal:
+                env.end_run()
 

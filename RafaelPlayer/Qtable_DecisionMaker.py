@@ -7,7 +7,7 @@ import os
 import pickle
 
 
-class RafaelDecisionMaker(AbsDecisionMaker):
+class Qtable_DecisionMaker(AbsDecisionMaker):
 
     def __init__(self, path_model_to_load=None):
 
@@ -88,7 +88,8 @@ class RafaelDecisionMaker(AbsDecisionMaker):
     def type(self) -> AgentType:
         return self._type
 
-    def save_model(self, number_of_rounds, save_folder_path, color):
+    def save_model(self, episodes_rewards, save_folder_path, color):
+        number_of_rounds = len(episodes_rewards)-1
         if self._Q_matrix != None:
             if color==Color.Blue:
                 with open(os.path.join(save_folder_path, f"qtable_blue-{number_of_rounds}.pickle"), "wb") as fb:

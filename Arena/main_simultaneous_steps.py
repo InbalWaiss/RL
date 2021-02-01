@@ -3,7 +3,7 @@ from matplotlib import style
 
 from Arena.CState import State
 from Arena.Entity import Entity
-from RafaelPlayer.RafaelDecisionMaker import RafaelDecisionMaker
+from RafaelPlayer.Qtable_DecisionMaker import Qtable_DecisionMaker
 from Arena.Environment import Environment, Episode
 from Arena.constants import *
 from tqdm import tqdm
@@ -77,10 +77,10 @@ if __name__ == '__main__':
     # blue_decision_maker = RafaelDecisionMaker(EASY_AGENT)
     # red_decision_maker = RafaelDecisionMaker(EASY_AGENT)
 
-    blue_decision_maker = RafaelDecisionMaker()
+    blue_decision_maker = Qtable_DecisionMaker()
     # args, num_actions = get_args()
     # blue_decision_maker = DQNAgent(args, num_actions)
-    red_decision_maker = RafaelDecisionMaker()
+    red_decision_maker = Qtable_DecisionMaker()
 
     env.blue_player = Entity(blue_decision_maker)
     env.red_player = Entity(red_decision_maker)
