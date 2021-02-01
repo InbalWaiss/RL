@@ -18,13 +18,13 @@ style.use("ggplot")
 
 def print_start_of_game_info(blue_decision_maker, red_decision_maker):
     print("Starting tournament!")
-    print("Blue player type: ", blue_decision_maker.type())
+    print("Blue player type: ", Agent_type_str[blue_decision_maker.type()])
     if blue_decision_maker.path_model_to_load==None:
         print("Blue player starting with no model")
     else:
         print("Blue player starting tournament with trained model: " , blue_decision_maker.path_model_to_load)
 
-    print("Red player type: ", red_decision_maker.type())
+    print("Red player type: ", Agent_type_str[red_decision_maker.type()])
     if red_decision_maker.path_model_to_load==None:
         print("Red player starting with no model")
     else:

@@ -25,6 +25,7 @@ def print_stats(array_of_results, save_folder_path, plot_every, save_figure=True
         if save_figure:
             plt.savefig(save_folder_path + os.path.sep + 'rewards_' + str(len(array_of_results)-1))
 
+    plt.close()
     # plt.show()
 
 def print_stats_humna_player(array_of_results, save_folder_path, number_of_episodes, save_figure=True, steps=False, red_player=False):

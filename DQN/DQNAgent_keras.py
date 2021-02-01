@@ -35,7 +35,7 @@ MINIBATCH_SIZE = 64 # how many samples to use for training
 UPDATE_TARGET_EVERY = 15 # number of terminal states
 OBSERVATION_SPACE_VALUES = (SIZE_X, SIZE_Y, 3)
 IS_TRAINING = True
-MODEL_NAME = 'red_blue_16X32X512X9_2'
+MODEL_NAME = 'red_blue_32X64X64X512X9'
 
 
 class ModifiedTensorBoard(TensorBoard):
@@ -263,10 +263,10 @@ class decision_maker_DQN_keras:
                 output = Dense(num_actions, name="output")(flatten_hidden)
             else:
                 if not (args.recurrent):
-                    h1 = Convolution2D(32, (3, 3), strides=4, activation="relu", name="conv1")(input_data)
+                    h1 = Convolution2D(32, (3, 3), strides=3, activation="relu", name="conv1")(input_data)
                     h2 = Convolution2D(64, (3, 3), strides=2, activation="relu", name="conv2")(h1)
-                    # h3 = Convolution2D(64, (3, 3), strides = 1, activation = "relu", name = "conv3")(h2)
-                    context = Flatten(name="flatten")(h2)
+                    h3 = Convolution2D(64, (2, 2), strides = 1, activation = "relu", name = "conv3")(h2)
+                    context = Flatten(name="flatten")(h3)
                 else:
                     print('>>>> Defining Recurrent Modules...')
                     input_data_expanded = Reshape((input_shape[0], input_shape[1], input_shape[2], 1),
