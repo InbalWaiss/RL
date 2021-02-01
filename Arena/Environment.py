@@ -33,17 +33,16 @@ class Environment(object):
             os.makedirs(save_folder_path)
         self.path_for_run = save_folder_path
 
-    def update_win_counters(self):
-        reward_blue, reward_red = self.handle_reward()
-        if reward_blue == WIN_REWARD:
+    def update_win_counters(self, steps_current_game):
+        reward_blue, reward_red, blue_dominate_red, red_dominate_blue = self.handle_reward(steps_current_game)
+        if blue_dominate_red:
             self.wins_for_blue += 1
-        elif reward_red == WIN_REWARD:
+        elif red_dominate_blue:
             self.wins_for_red += 1
         else:
             self.tie_count += 1
 
-
-    def handle_reward(self):
+    def handle_reward(self, steps_current_game):
         # handle the rewarding
         blue_dominate_red, _ = is_dominating(self.blue_player, self.red_player)
         red_dominate_blue, _ = is_dominating(self.red_player, self.blue_player)
@@ -51,13 +50,13 @@ class Environment(object):
         if blue_dominate_red and red_dominate_blue:
             reward = TIE
         elif blue_dominate_red:
-            reward = WIN_REWARD
+            reward = WIN_REWARD - steps_current_game*MOVE_PENALTY
         elif red_dominate_blue:
-            reward = -WIN_REWARD
+            reward = -WIN_REWARD + steps_current_game*MOVE_PENALTY
 
         reward_blue = reward
         reward_red = -reward
-        return reward_blue, reward_red
+        return reward_blue, reward_red, blue_dominate_red, red_dominate_blue
 
     def check_terminal(self):
         flag_red_on_blue, _ = is_dominating(self.red_player, self.blue_player)

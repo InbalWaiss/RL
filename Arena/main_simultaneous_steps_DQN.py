@@ -105,7 +105,7 @@ if __name__ == '__main__':
             new_observation_for_red: State = env.get_observation_for_red()
 
             # Handle rewards
-            reward_step_blue, reward_step_red = env.handle_reward()
+            reward_step_blue, reward_step_red, _, _ = env.handle_reward(steps_current_game)
             current_episode.episode_reward_blue = reward_step_blue
 
             # Check if terminal
@@ -122,13 +122,13 @@ if __name__ == '__main__':
 
             current_episode.print_episode(env, steps_current_game)
             if current_episode.is_terminal:
-                env.update_win_counters()
+                env.update_win_counters(steps_current_game)
 
                 break
 
         if steps_current_game == MAX_STEPS_PER_EPISODE:
             # if we exited the loop because we reached MAX_STEPS_PER_EPISODE
-            env.update_win_counters()
+            env.update_win_counters(steps_current_game)
             current_episode.is_terminal = True
 
 
@@ -137,7 +137,7 @@ if __name__ == '__main__':
         env.steps_per_episode.append(steps_current_game)
 
         # print info of episode:
-        current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker._decision_maker._epsilon)
+        current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon())
 
 
     env.end_run()

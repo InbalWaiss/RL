@@ -88,6 +88,9 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
     def type(self) -> AgentType:
         return self._type
 
+    def get_epsolon(self):
+        return self._epsilon
+
     def save_model(self, episodes_rewards, save_folder_path, color):
         number_of_rounds = len(episodes_rewards)-1
         if self._Q_matrix != None:

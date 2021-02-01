@@ -228,6 +228,9 @@ class DQNAgent:
         self._action = AgentAction(action)
         return self._action
 
+    def get_epsolon(self):
+        return self._decision_maker._epsilon
+
     def update_context(self, new_state, reward, is_terminal):
         transition = (self._previous_state.img, self._action, reward, new_state.img, is_terminal)
         self._decision_maker.update_replay_memory(transition)

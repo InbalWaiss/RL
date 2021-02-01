@@ -548,6 +548,9 @@ class DQNAgent_keras:
     def type(self) -> AgentType:
         return self._type
 
+    def get_epsolon(self):
+        return self._decision_maker._epsilon
+
     def set_initial_state(self, initial_state_blue, episode_number):
         self.episode_number = episode_number
         self._previous_state = initial_state_blue

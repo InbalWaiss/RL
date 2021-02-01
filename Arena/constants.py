@@ -12,7 +12,7 @@ USE_BRESENHAM_LINE = False
 SIZE_X = 15
 SIZE_Y = 15
 
-MOVE_PENALTY = 5
+MOVE_PENALTY = 1
 WIN_REWARD = 250 #will be change to be reward for reaching controling point
 LOST_PENALTY = 250
 TIE = 0
@@ -77,7 +77,7 @@ EASY_AGENT = 'easy.pickle'
 MEDIUM_AGENT = 'medium.pickle'
 HARD_AGENT = 'hard.pickle'
 
-SHOW_EVERY = 1000
+SHOW_EVERY = 500
 NUM_OF_EPISODES = 1000000
 SAVE_STATS_EVERY = 50000
 

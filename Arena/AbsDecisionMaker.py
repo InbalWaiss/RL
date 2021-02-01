@@ -23,6 +23,10 @@ class AbsDecisionMaker(metaclass=abc.ABCMeta):
 
         pass
 
+    def get_epsolon(self):
+
+        return -1
+
     def save_model(self, number_of_rounds):
 
         pass
