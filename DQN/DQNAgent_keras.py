@@ -77,6 +77,25 @@ class ModifiedTensorBoard(TensorBoard):
 
         pass
 
+def save_scalar(step, name, value, writer):
+    """Save a scalar value to tensorboard.
+      Parameters
+      ----------
+      step: int
+        Training step (sets the position on x-axis of tensorboard graph.
+      name: str
+        Name of variable. Will be the name of the graph in tensorboard.
+      value: float
+        The value of the variable at this step.
+      writer: tf.FileWriter
+        The tensorboard FileWriter instance.
+      """
+    summary = tf.Summary()
+    summary_value = summary.value.add()
+    summary_value.simple_value = float(value)
+    summary_value.tag = name
+    writer.add_summary(summary, step)
+
 class decision_maker_DQN_keras:
     def __init__(self, path_model_to_load=None):
         self._previous_stats = {}
@@ -588,6 +607,6 @@ class DQNAgent_keras:
             elif player_color == Color.Blue:
                 color_str = "blue"
             self._decision_maker.q_network.save(
-                f'{path_to_model+os.sep+MODEL_NAME}_{color_str}_{NUM_OF_EPISODES}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
+                f'{path_to_model+os.sep+MODEL_NAME}_{color_str}_{episode}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
 
         return self.min_reward
