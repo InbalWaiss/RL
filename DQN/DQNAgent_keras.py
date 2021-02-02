@@ -147,6 +147,34 @@ class decision_maker_DQN_keras:
     def _Initialize_networks(self, path_model_to_load = None):
         # load model
         args = self.get_args()
+        self.num_actions = NUMBER_OF_ACTIONS
+        input_shape = (args.frame_height, args.frame_width, args.num_frames)
+        self.history_processor = HistoryPreprocessor(args.num_frames - 1)
+        self.atari_processor = AtariPreprocessor()
+        self.memory = ReplayMemory(args)
+        self.exploration_steps = args.exploration_steps
+        self.policy = LinearDecayGreedyEpsilonPolicy(args.initial_epsilon, args.final_epsilon,
+                                                     args.exploration_steps)
+        self.gamma = args.gamma
+        self.target_update_freq = args.target_update_freq
+        self.num_burn_in = args.num_burn_in
+        self.train_freq = args.train_freq
+        self.batch_size = args.batch_size
+        self.learning_rate = args.learning_rate
+        self.frame_width = args.frame_width
+        self.frame_height = args.frame_height
+        self.num_frames = args.num_frames
+        self.output_path = args.output
+        self.save_freq = args.save_freq
+        self.load_network = args.load_network
+        self.load_network_path = args.load_network_path
+        self.enable_ddqn = args.ddqn
+        self.net_mode = args.net_mode
+        print(">>>> Net mode: %s, Using double dqn: %s" % (self.net_mode, self.enable_ddqn))
+        self.eval_freq = args.eval_freq
+        self.no_experience = args.no_experience
+        self.no_target = args.no_target
+        print(">>>> Target fixing: %s, Experience replay: %s" % (not self.no_target, not self.no_experience))
 
         if path_model_to_load !=None:
             p = path.join(RELATIVE_PATH_HUMAN_VS_MACHINE_DATA, path_model_to_load)
@@ -154,49 +182,16 @@ class decision_maker_DQN_keras:
             self.target_network = load_model(p)
             self.target_network.set_weights(self.q_network.get_weights())
 
-            self.history_processor = HistoryPreprocessor(args.num_frames - 1)
-            self.atari_processor = AtariPreprocessor()
-
         else: #create new model
-
-            self.num_actions = NUMBER_OF_ACTIONS
-            input_shape = (args.frame_height, args.frame_width, args.num_frames)
-            self.history_processor = HistoryPreprocessor(args.num_frames - 1)
-            self.atari_processor = AtariPreprocessor()
-            self.memory = ReplayMemory(args)
-            self.exploration_steps = args.exploration_steps
-            self.policy = LinearDecayGreedyEpsilonPolicy(args.initial_epsilon, args.final_epsilon,
-                                                         args.exploration_steps)
-            self.gamma = args.gamma
-            self.target_update_freq = args.target_update_freq
-            self.num_burn_in = args.num_burn_in
-            self.train_freq = args.train_freq
-            self.batch_size = args.batch_size
-            self.learning_rate = args.learning_rate
-            self.frame_width = args.frame_width
-            self.frame_height = args.frame_height
-            self.num_frames = args.num_frames
-            self.output_path = args.output
-            self.output_path_videos = args.output + '/videos/'
-            self.save_freq = args.save_freq
-            self.load_network = args.load_network
-            self.load_network_path = args.load_network_path
-            self.enable_ddqn = args.ddqn
-            self.net_mode = args.net_mode
             self.q_network = self.create_model(input_shape, self.num_actions, self.net_mode, args, "QNet")
             self.target_network = self.create_model(input_shape, self.num_actions, self.net_mode, args, "TargetNet")
-            print(">>>> Net mode: %s, Using double dqn: %s" % (self.net_mode, self.enable_ddqn))
-            self.eval_freq = args.eval_freq
-            self.no_experience = args.no_experience
-            self.no_target = args.no_target
-            print(">>>> Target fixing: %s, Experience replay: %s" % (not self.no_target, not self.no_experience))
 
             # initialize target network
             self.target_network.set_weights(self.q_network.get_weights())
             self.final_model = None
             self.compile()
 
-            self.writer = tf.summary.FileWriter(self.output_path)
+        self.writer = tf.summary.FileWriter(self.output_path)
 
 
     def loadModel(self, model, target_model):
