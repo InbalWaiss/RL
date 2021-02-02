@@ -28,54 +28,20 @@ from DQN.deeprl_prj.objectives import *
 from DQN.deeprl_prj.preprocessors import *
 from DQN.deeprl_prj.utils import *
 from DQN.deeprl_prj.core import  *
+from Arena.main_simultaneous_steps_DQN import IS_TRAINING
 
 REPLAY_MEMORY_SIZE = 50000 # how many last samples to keep for model training
 MIN_REPLAY_MEMORY_SIZE = 1000 # minimum number of steps in a memory to start training
 MINIBATCH_SIZE = 64 # how many samples to use for training
 UPDATE_TARGET_EVERY = 15 # number of terminal states
 OBSERVATION_SPACE_VALUES = (SIZE_X, SIZE_Y, 3)
-IS_TRAINING = True
 MODEL_NAME = 'red_blue_32X64X64X512X9'
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+config.allow_soft_placement = True
+set_session(tf.Session(config=config))
 
-class ModifiedTensorBoard(TensorBoard):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.step = 1
-        self.writer = tf.summary.FileWriter(self.log_dir)
-
-    # Overrided. saves logs with our step number. otherwise every .fit() will start writing from 0th step
-    def on_epoch_end(self, epoch, logs=None):
-        self.update_stats(**logs)
-
-    # Overrided. we train for one batch only, no need to save anythings at epoch end
-    def on_batch_end(self, batch, logs=None):
-        pass
-
-    # Overrided, so wont close writer
-    def on_train_end(self, _):
-        pass
-
-    # custom method for saving metrics
-    # creats writer, write custom metrics and close writer
-    def update_stats(self, **stats):
-        self._write_logs(stats, self.step)
-
-    def _write_logs(self, logs, index):
-        # with self.writer.as_default():
-        #     for name, value in logs.items():
-        #         with self.writer.as_default():
-        #             tf.summary.scalar(name, value, step=index)
-        #         self.step += 1
-        #         self.writer.flush()
-
-        # for name, value in logs.items():
-        #     with self.writer:
-        #         tf.summary.scalar(name, value)
-        #         self.step += 1
-        #         self.writer.flush()
-
-        pass
 
 def save_scalar(step, name, value, writer):
     """Save a scalar value to tensorboard.
@@ -180,19 +146,25 @@ class decision_maker_DQN_keras:
 
     def _Initialize_networks(self, path_model_to_load = None):
         # load model
+        args = self.get_args()
+
         if path_model_to_load !=None:
-            self.model = load_model(path_model_to_load)
-            self.target_model = load_model(path_model_to_load)
-            self.target_model.set_weights(self.model.get_weights())
+            p = path.join(RELATIVE_PATH_HUMAN_VS_MACHINE_DATA, path_model_to_load)
+            self.q_network = load_model(p)
+            self.target_network = load_model(p)
+            self.target_network.set_weights(self.q_network.get_weights())
+
+            self.history_processor = HistoryPreprocessor(args.num_frames - 1)
+            self.atari_processor = AtariPreprocessor()
 
         else: #create new model
-            args = self.get_args()
 
             self.num_actions = NUMBER_OF_ACTIONS
             input_shape = (args.frame_height, args.frame_width, args.num_frames)
             self.history_processor = HistoryPreprocessor(args.num_frames - 1)
             self.atari_processor = AtariPreprocessor()
             self.memory = ReplayMemory(args)
+            self.exploration_steps = args.exploration_steps
             self.policy = LinearDecayGreedyEpsilonPolicy(args.initial_epsilon, args.final_epsilon,
                                                          args.exploration_steps)
             self.gamma = args.gamma
@@ -224,8 +196,7 @@ class decision_maker_DQN_keras:
             self.final_model = None
             self.compile()
 
-        # custom tesnsorboard object
-        self.tensorboard = ModifiedTensorBoard(log_dir="logs/{}-{}".format(MODEL_NAME, int(time.time())))
+            self.writer = tf.summary.FileWriter(self.output_path)
 
 
     def loadModel(self, model, target_model):
@@ -539,19 +510,19 @@ class decision_maker_DQN_keras:
         q_values = self.calc_q_values(action_state) #shold be action_state
         if self.is_training:
             if policy_type == 'UniformRandomPolicy':
-                action= UniformRandomPolicy(self.num_actions).select_action()
+                action= UniformRandomPolicy(NUMBER_OF_ACTIONS).select_action()
+                self._epsilon = 1
             else:
                 # linear decay greedy epsilon policy
                 action = self.policy.select_action(q_values, is_training)
+                self._epsilon = self.policy.epsilon
         else:
             # return GreedyEpsilonPolicy(0.05).select_action(q_values)
             action = GreedyPolicy().select_action(q_values)
+            self._epsilon = 0
 
         self._action = action
         return action
-
-    def update_epsilon(self):
-        self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
 
 # Agent class
 class DQNAgent_keras:
@@ -573,8 +544,6 @@ class DQNAgent_keras:
     def set_initial_state(self, initial_state_blue, episode_number):
         self.episode_number = episode_number
         self._previous_state = initial_state_blue
-        self._decision_maker.tensorboard.step = episode_number
-        self._decision_maker.update_epsilon()
         pass
 
     def get_action(self, current_state):
@@ -587,7 +556,7 @@ class DQNAgent_keras:
         new_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(new_state)
         transition = (previous_state_for_network, self._action, reward, new_state_for_network, is_terminal)
         self._decision_maker.update_replay_memory(transition)
-        # self._decision_maker.memory(transition)
+
         self._decision_maker.train(new_state, reward, is_terminal)
         self._previous_state = new_state
 
@@ -600,13 +569,13 @@ class DQNAgent_keras:
 
         episode = len(ep_rewards)
         # save model, but only when min reward is greater or equal a set value
-        if max_reward >=self.min_reward or episode == NUM_OF_EPISODES-1:
-            self.min_reward = min_reward
-            if player_color == Color.Red:
-                color_str = "red"
-            elif player_color == Color.Blue:
-                color_str = "blue"
-            self._decision_maker.q_network.save(
-                f'{path_to_model+os.sep+MODEL_NAME}_{color_str}_{episode}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
+        # if max_reward >=self.min_reward or episode == NUM_OF_EPISODES-1:
+        self.min_reward = min_reward
+        if player_color == Color.Red:
+            color_str = "red"
+        elif player_color == Color.Blue:
+            color_str = "blue"
+        self._decision_maker.q_network.save(
+            f'{path_to_model+os.sep+MODEL_NAME}_{color_str}_{episode}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
 
         return self.min_reward

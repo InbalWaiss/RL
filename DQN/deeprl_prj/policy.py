@@ -127,6 +127,7 @@ class LinearDecayGreedyEpsilonPolicy(Policy):
         self.decay_rate = float(end_value - start_value) / num_steps
         self.end_value = end_value
         self.step = 0
+        self.epsilon = 1
 
     def select_action(self, q_values, is_training = True, **kwargs):
         """Decay parameter and select action.
@@ -147,8 +148,8 @@ class LinearDecayGreedyEpsilonPolicy(Policy):
         if is_training:
             epsilon += self.decay_rate * self.step
             self.step += 1
-        epsilon = max(epsilon, self.end_value)
-        return GreedyEpsilonPolicy(epsilon).select_action(q_values)
+        self.epsilon = max(epsilon, self.end_value)
+        return GreedyEpsilonPolicy(self.epsilon).select_action(q_values)
 
     def reset(self):
         """Start the decay over at the start value."""

@@ -81,8 +81,9 @@ class decision_maker_DQN:
     def _Initialize_networks(self, path_model_to_load = None):
         # load model
         if path_model_to_load !=None:
-            self.model = load_model(path_model_to_load)
-            self.target_model = load_model(path_model_to_load)
+            p = path.join(RELATIVE_PATH_HUMAN_VS_MACHINE_DATA, path_model_to_load)
+            self.model = load_model(p)
+            self.target_model = load_model(p)
             self.target_model.set_weights(self.model.get_weights())
 
         else: #create new model

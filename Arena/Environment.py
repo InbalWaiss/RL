@@ -8,7 +8,7 @@ from PIL import Image
 
 
 class Environment(object):
-    def __init__(self):
+    def __init__(self, TRAIN=True):
         self.episodes_rewards = []
         self.episodes_rewards.append(0)
         self.steps_per_episode = []
@@ -21,8 +21,15 @@ class Environment(object):
 
         self.blue_player = None
         self.red_player = None
-        self.SHOW_EVERY = SHOW_EVERY
-        self.NUMBER_OF_EPISODES = NUM_OF_EPISODES
+
+        if TRAIN:
+            self.SHOW_EVERY = SHOW_EVERY
+            self.NUMBER_OF_EPISODES = NUM_OF_EPISODES
+
+        else:
+            self.SHOW_EVERY = EVALUATE_SHOW_EVERY
+            self.NUMBER_OF_EPISODES = EVALUATE_NUM_OF_EPISODES
+
         self.create_path_for_statistics()
 
     def create_path_for_statistics(self):
@@ -122,7 +129,7 @@ class Environment(object):
                             if list(Q_matrix[(x1, y1), (x2, y2)]) == list(np.ones(NUMBER_OF_ACTIONS)):
                                 counter_ones += 1
 
-        print("for", NUM_OF_EPISODES, "episodes: ")
+        print("for", self.NUMBER_OF_EPISODES, "episodes: ")
         if chcek_unvisited_states:
             print("% of unseen states: ", counter_ones / (num_of_states-block_states) * 100)
         print("% of games started at win: ", self.starts_at_win / self.NUMBER_OF_EPISODES * 100)

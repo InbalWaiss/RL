@@ -16,6 +16,8 @@ import os
 
 style.use("ggplot")
 
+IS_TRAINING=True
+
 def print_start_of_game_info(blue_decision_maker, red_decision_maker):
     print("Starting tournament!")
     print("Blue player type: ", Agent_type_str[blue_decision_maker.type()])
@@ -38,7 +40,7 @@ def print_start_of_game_info(blue_decision_maker, red_decision_maker):
 # MAIN:
 if __name__ == '__main__':
 
-    env = Environment()
+    env = Environment(IS_TRAINING)
 
     # red_decision_maker = Qtable_DecisionMaker()
     # red_decision_maker = Qtable_DecisionMaker(EASY_AGENT)
@@ -47,10 +49,11 @@ if __name__ == '__main__':
     # red_decision_maker = DQNAgent_keras.DQNAgent_keras()
     # red_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
 
+    # blue_decision_maker = Qtable_DecisionMaker('qtable_blue-1000000.pickle')
     # blue_decision_maker = Qtable_DecisionMaker()
     # blue_decision_maker = Qtable_DecisionMaker(EASY_AGENT)
     # blue_decision_maker = DQNAgent.DQNAgent()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras('DQN_keras_blue_32X64X64X512X9_15000_ 249.00max_-129.27avg_-249.00min__1612262299.model')
     # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
 
 
@@ -60,9 +63,10 @@ if __name__ == '__main__':
 
     print_start_of_game_info(blue_decision_maker, red_decision_maker)
 
+    NUM_OF_EPISODES = env.NUMBER_OF_EPISODES
     for episode in tqdm(range(1, NUM_OF_EPISODES + 1), ascii=True, unit='episodes'):
 
-        current_episode = Episode(episode)
+        current_episode = Episode(episode, show_always=False if IS_TRAINING else True)
 
         # set new start position for the players
         env.blue_player._choose_random_position()
@@ -111,14 +115,15 @@ if __name__ == '__main__':
             # Check if terminal
             current_episode.is_terminal = env.check_terminal()
 
-            # Update models
-            blue_decision_maker.update_context(new_observation_for_blue,
-                                              reward_step_blue,
-                                              current_episode.is_terminal)
+            if IS_TRAINING:
+                # Update models
+                blue_decision_maker.update_context(new_observation_for_blue,
+                                                  reward_step_blue,
+                                                  current_episode.is_terminal)
 
-            red_decision_maker.update_context(new_observation_for_red,
-                                              reward_step_red,
-                                              current_episode.is_terminal)
+                red_decision_maker.update_context(new_observation_for_red,
+                                                  reward_step_red,
+                                                  current_episode.is_terminal)
 
             current_episode.print_episode(env, steps_current_game)
             if current_episode.is_terminal:
