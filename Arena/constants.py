@@ -77,7 +77,7 @@ EASY_AGENT = 'easy.pickle'
 MEDIUM_AGENT = 'medium.pickle'
 HARD_AGENT = 'hard.pickle'
 
-SHOW_EVERY = 500
+SHOW_EVERY = 1000
 NUM_OF_EPISODES = 1_000_000
 SAVE_STATS_EVERY = 50_000
 
