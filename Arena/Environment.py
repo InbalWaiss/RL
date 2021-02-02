@@ -206,6 +206,6 @@ class Episode():
                 f"mean rewards of all episodes for blue player: {np.mean(env.episodes_rewards)}")
             print(f"mean number of steps: , {np.mean(env.steps_per_episode[-SHOW_EVERY:])}\n")
             self.print_episode(env, steps_current_game)
-            if self.episode_number % SAVE_STATS_EVERY == 0:
-                env.end_run()
+        if self.episode_number % SAVE_STATS_EVERY == 0:
+            env.end_run()
 

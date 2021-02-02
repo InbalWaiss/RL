@@ -52,8 +52,8 @@ if __name__ == '__main__':
     # blue_decision_maker = Qtable_DecisionMaker('qtable_blue-1000000.pickle')
     # blue_decision_maker = Qtable_DecisionMaker()
     # blue_decision_maker = Qtable_DecisionMaker(EASY_AGENT)
-    # blue_decision_maker = DQNAgent.DQNAgent()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras('DQN_keras_blue_32X64X64X512X9_15000_ 249.00max_-129.27avg_-249.00min__1612262299.model')
+    blue_decision_maker = DQNAgent.DQNAgent('DQN_basic_blue_32(4X4)X64X9_500_ 239.00max_ -46.10avg_-249.00min__1612270007.model')
+    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras('DQN_keras_blue_32X64X64X512X9_15000_ 249.00max_-129.27avg_-249.00min__1612262299.model')
     # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
 
 

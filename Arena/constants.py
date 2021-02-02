@@ -73,9 +73,9 @@ OUTPUT_DIR = path.join(MAIN_PATH, 'Arena')
 STATS_RESULTS_RELATIVE_PATH = path.join(OUTPUT_DIR, 'statistics')
 RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'RafaelPlayer/trained_agents')
 
-EASY_AGENT = 'easy.pickle'
-MEDIUM_AGENT = 'medium.pickle'
-HARD_AGENT = 'hard.pickle'
+# EASY_AGENT = 'easy.pickle'
+# MEDIUM_AGENT = 'medium.pickle'
+HARD_AGENT = 'qtable_red-1000000.pickle'
 
 SHOW_EVERY = 1000
 NUM_OF_EPISODES = 1_000_000
@@ -107,7 +107,7 @@ class AgentType(IntEnum):
     DQN_temporalAttention = 4
 
 Agent_type_str = {AgentType.Q_table : "Q_table",
-                  AgentType.DQN_basic : "DQN",
+                  AgentType.DQN_basic : "DQN_basic",
                   AgentType.DQN_keras : "DQN_keras",
                   AgentType.DQN_temporalAttention : "DQN_temporalAttention"}
 

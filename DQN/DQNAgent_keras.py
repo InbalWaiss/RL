@@ -181,6 +181,8 @@ class decision_maker_DQN_keras:
             self.q_network = load_model(p)
             self.target_network = load_model(p)
             self.target_network.set_weights(self.q_network.get_weights())
+            self.final_model = self.target_network
+            self.compile()
 
         else: #create new model
             self.q_network = self.create_model(input_shape, self.num_actions, self.net_mode, args, "QNet")
