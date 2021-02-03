@@ -10,6 +10,7 @@ from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Conv2D, MaxPooling2D, Activation, Flatten
 from keras.optimizers import Adam
 from keras.callbacks import TensorBoard
+import sys
 
 
 from keras.models import Model
@@ -36,8 +37,27 @@ MINIBATCH_SIZE = 64 # how many samples to use for training
 UPDATE_TARGET_EVERY = 15 # number of terminal states
 OBSERVATION_SPACE_VALUES = (SIZE_X, SIZE_Y, 3)
 IS_TRAINING = True
-MODEL_NAME = 'red_blue_32(4X4)X64(3X3)X9_2'
+MODEL_NAME = '16(3X3)X32(3X1)X9_2'
 
+
+def save_scalar(step, name, value, writer):
+    """Save a scalar value to tensorboard.
+      Parameters
+      ----------
+      step: int
+        Training step (sets the position on x-axis of tensorboard graph.
+      name: str
+        Name of variable. Will be the name of the graph in tensorboard.
+      value: float
+        The value of the variable at this step.
+      writer: tf.FileWriter
+        The tensorboard FileWriter instance.
+      """
+    summary = tf.Summary()
+    summary_value = summary.value.add()
+    summary_value.simple_value = float(value)
+    summary_value.tag = name
+    writer.add_summary(summary, step)
 
 class Qnetwork():
     def __init__(self, args, h_size, num_frames, num_actions, rnn_cell_1, myScope, rnn_cell_2=None):
@@ -51,18 +71,28 @@ class Qnetwork():
         self.summary_merged = tf.summary.merge(
             [tf.summary.image('image_reshape_recoverd', self.image_reshape_recoverd, max_outputs=num_frames)])
         # self.imageIn = tf.reshape(self.scalarInput,shape=[-1,SIZE_X,SIZE_Y,1])
+
+        # # inbal: org NN
+        # self.conv1 = tf.contrib.layers.convolution2d( \
+        #     inputs=self.image_reshape,num_outputs=32,\
+        #     kernel_size=[8,8],stride=[4,4],padding='VALID', \
+        #     activation_fn=tf.nn.relu, biases_initializer=None,scope=myScope+'_conv1')
+        # self.conv2 = tf.contrib.layers.convolution2d( \
+        #     inputs=self.conv1,num_outputs=64,\
+        #     kernel_size=[4,4],stride=[2,2],padding='VALID', \
+        #     activation_fn=tf.nn.relu, biases_initializer=None,scope=myScope+'_conv2')
+        # self.conv3 = tf.contrib.layers.convolution2d( \
+        #     inputs=self.conv2,num_outputs=64,\
+        #     kernel_size=[3,3],stride=[1,1],padding='VALID', \
+        #     activation_fn=tf.nn.relu, biases_initializer=None,scope=myScope+'_conv3')
         self.conv1 = tf.contrib.layers.convolution2d( \
-            inputs=self.image_reshape, num_outputs=32, \
-            kernel_size=[4, 4], stride=[2, 2], padding='VALID', \
+            inputs=self.image_reshape, num_outputs=16, \
+            kernel_size=[3, 3], stride=[3, 3], padding='VALID', \
             activation_fn=tf.nn.relu, biases_initializer=None, scope=myScope + '_conv1')
         self.conv2 = tf.contrib.layers.convolution2d( \
-            inputs=self.conv1, num_outputs=64, \
+            inputs=self.conv1, num_outputs=32, \
             kernel_size=[3, 3], stride=[1, 1], padding='VALID', \
             activation_fn=tf.nn.relu, biases_initializer=None, scope=myScope + '_conv2')
-        # self.conv3 = tf.contrib.layers.convolution2d( \
-        #     inputs=self.conv2, num_outputs=64, \
-        #     kernel_size=[3, 3], stride=[1, 1], padding='VALID', \
-        #     activation_fn=tf.nn.relu, biases_initializer=None, scope=myScope + '_conv3')
         self.conv4 = tf.contrib.layers.fully_connected(tf.contrib.layers.flatten(self.conv2), h_size,
                                                        activation_fn=tf.nn.relu)
 
@@ -146,8 +176,6 @@ class Qnetwork():
         self.updateModel = self.trainer.minimize(self.loss)
 
 
-
-
 class decision_maker_DQN_temporalAttention:
     def __init__(self, path_model_to_load=None):
         self._previous_stats = {}
@@ -157,7 +185,7 @@ class decision_maker_DQN_temporalAttention:
         self.target_model = None
 
         self.is_training = IS_TRAINING
-        self.numberOfSteps = 0
+        self.numberOfSteps_allTournament = 0
         self.burn_in = True
 
         self.episode_number = 0
@@ -223,8 +251,9 @@ class decision_maker_DQN_temporalAttention:
     def _Initialize_networks(self, path_model_to_load = None):
         # load model
         if path_model_to_load !=None:
-            self.model = load_model(path_model_to_load)
-            self.target_model = load_model(path_model_to_load)
+            p = path.join(RELATIVE_PATH_HUMAN_VS_MACHINE_DATA, path_model_to_load)
+            self.model = load_model(p)
+            self.target_model = load_model(p)
             self.target_model.set_weights(self.model.get_weights())
 
         else: #create new model
@@ -436,25 +465,28 @@ class decision_maker_DQN_temporalAttention:
     def update_replay_memory(self, transition):
         self.memory.append(transition[0], transition[1], transition[2], transition[4])
 
-    # Trains main network every step during episode
+
+
     def train(self, new_state, reward, is_terminal):
-        self.numberOfSteps += 1
+
+        self.numberOfSteps_allTournament+=1
+        # if not self.burn_in: #the replay buffer has at least num_burn_in samples
+            # self.frames+=1
+            # self.episode_raw_reward += reward
 
         if is_terminal:
             # adding last frame only to save last state
             last_frame = self.atari_processor.process_state_for_memory(new_state)
             self.memory.append(last_frame, self._action, reward, is_terminal) #TODO in original code it was (last_frame, action, 0, is_terminal)- why 0?
+            if not self.burn_in:
+                pass
+
+            self.burn_in = (self.numberOfSteps_allTournament < self.num_burn_in)
             self.atari_processor.reset()
             self.history_processor.reset()
-            if not self.burn_in:
-                self.episode_reward = .0
-                self.episode_raw_reward = .0
-                self.episode_loss = .0
-                self.episode_target_value = .0
 
-
-        if not self.burn_in: # not enough samples in replay buffer
-            if self.numberOfSteps % self.train_freq == 0:
+        if not self.burn_in:
+            if self.numberOfSteps_allTournament % self.train_freq == 0:
                 action_state = self.history_processor.process_state_for_network(
                     self.atari_processor.process_state_for_network(new_state))
                 processed_reward = self.atari_processor.process_reward(reward)
@@ -466,30 +498,110 @@ class decision_maker_DQN_temporalAttention:
                 self.episode_loss += loss
                 self.episode_target_value += target_value
 
-            # update freq is based on train_freq
-            if self.numberOfSteps % (self.train_freq * self.target_update_freq) == 0:
-                # target updates can have the option to be hard or soft
-                # related functions are defined in deeprl_prj.utils
-                # here we use hard target update as default
-                updateTarget(self.targetOps, self.sess)
-                print("----- Synced.")
+        # update freq is based on train_freq
+        if self.numberOfSteps_allTournament % (self.train_freq * self.target_update_freq) == 0:
+            # target updates can have the option to be hard or soft
+            # related functions are defined in deeprl_prj.utils
+            # here we use hard target update as default
+            updateTarget(self.targetOps, self.sess)
+            print("----- Synced.")
 
+        # if self.numberOfSteps_allTournament % SAVE_STATS_EVERY == 0:
+        #     self.save_model(self.episode_number)
 
-            # if self.numberOfSteps % (self.eval_freq * self.train_freq) == 0:
-            #     episode_reward_mean, episode_reward_std, eval_count = self.evaluate(env, 20, eval_count,
-            #                                                                         max_episode_length, True)
+        # if t % (self.eval_freq * self.train_freq) == 0:
+        #     episode_reward_mean, episode_reward_std, eval_count = self.evaluate(env, 20, eval_count, max_episode_length,
+        #                                                                         True)
+        #     save_scalar(t, 'eval/eval_episode_reward_mean', episode_reward_mean, self.writer)
+        #     save_scalar(t, 'eval/eval_episode_reward_std', episode_reward_std, self.writer)
 
 
         self._previous_stats = new_state
-        self.burn_in = (self.numberOfSteps < self.num_burn_in)
+        # self.burn_in = (self.numberOfSteps_allTournament < self.num_burn_in) #inbal: update burn_in flag always or just in terminal state?
 
-        if is_terminal:
-            self.episode_number += 1
+        # if is_terminal:
+        #     self.episode_number += 1
+    #
+    # # Trains main network every step during episode
+    # def train(self, new_state, reward, is_terminal, numStepsInEpisode, episodeNumber):
+    #
+    #
+    #     if not self.burn_in:
+    #         self.numberOfSteps_allTournament += 1
+    #
+    #
+    #     if is_terminal:
+    #         # adding last frame only to save last state
+    #         last_frame = self.atari_processor.process_state_for_memory(new_state)
+    #         self.memory.append(last_frame, self._action, reward, is_terminal) #TODO in original code it was (last_frame, action, 0, is_terminal)- why 0?
+    #         self.atari_processor.reset()
+    #         self.history_processor.reset()
+    #         if not self.burn_in:
+    #             avg_target_value = self.episode_target_value / numStepsInEpisode
+    #             print(
+    #                 ">>> Training: time %d, episode %d, length %d, reward %.0f, raw_reward %.0f, loss %.4f, target value %.4f, policy step %d, memory cap %d" %
+    #                 (self.numberOfSteps_allTournament, episodeNumber, episode_frames, episode_reward, episode_raw_reward, episode_loss,
+    #                  avg_target_value, self.policy.step, self.memory.current))
+    #             sys.stdout.flush()
+    #             save_scalar(episodeNumber, 'train/episode_frames', episode_frames, self.writer)
+    #             save_scalar(episodeNumber, 'train/episode_reward', reward, self.writer)
+    #             save_scalar(episodeNumber, 'train/episode_raw_reward', self.episode_raw_reward, self.writer)
+    #             save_scalar(episodeNumber, 'train/episode_loss', self.episode_loss, self.writer)
+    #             save_scalar(episodeNumber, 'train_avg/avg_reward', reward / numStepsInEpisode, self.writer)
+    #             save_scalar(episodeNumber, 'train_avg/avg_target_value', avg_target_value, self.writer)
+    #             save_scalar(episodeNumber, 'train_avg/avg_loss', self.episode_loss / numStepsInEpisode, self.writer)
+    #             self.episode_raw_reward = .0
+    #             self.episode_loss = .0
+    #             self.episode_target_value = .0
+    #
+    #
+    #     if not self.burn_in: # enough samples in replay buffer
+    #         if self.numberOfSteps_allTournament % self.train_freq == 0:
+    #             action_state = self.history_processor.process_state_for_network(
+    #                 self.atari_processor.process_state_for_network(new_state))
+    #             processed_reward = self.atari_processor.process_reward(reward)
+    #             processed_next_state = self.atari_processor.process_state_for_network(new_state)
+    #             action_next_state = np.dstack((action_state, processed_next_state))
+    #             action_next_state = action_next_state[:, :, 1:]
+    #             current_sample = Sample(action_state, self._action, processed_reward, action_next_state, is_terminal)
+    #             loss, target_value = self.update_policy(current_sample)
+    #             self.episode_loss += loss
+    #             self.episode_target_value += target_value
+    #
+    #         # update freq is based on train_freq
+    #         if self.numberOfSteps_allTournament % (self.train_freq * self.target_update_freq) == 0:
+    #             # target updates can have the option to be hard or soft
+    #             # related functions are defined in deeprl_prj.utils
+    #             # here we use hard target update as default
+    #             updateTarget(self.targetOps, self.sess)
+    #             print("----- Synced.")
+    #
+    #
+    #         # if self.numberOfSteps % (self.eval_freq * self.train_freq) == 0:
+    #         #     episode_reward_mean, episode_reward_std, eval_count = self.evaluate(env, 20, eval_count,
+    #         #                                                                         max_episode_length, True)
+    #
+    #
+    #     self._previous_stats = new_state
+    #     self.burn_in = (self.numberOfSteps_allTournament < self.num_burn_in)
+    #
+    #     if is_terminal:
+    #         self.episode_number += 1
 
 
     # Queries main network for Q values given current observation space (environment state)
     def get_qs(self, state):
         return self.model.predict(np.array(state).reshape(-1, *np.array(state).shape) / 255)[0]
+
+    def save_model(self, idx_episode, path):
+        safe_path = path + "/qnet" + str(idx_episode) + ".cptk"
+        self.saver.save(self.sess, safe_path)
+        # self.q_network.save_weights(safe_path)
+        print("+++++++++ Network at", idx_episode, "saved to:", safe_path)
+
+    def restore_model(self, restore_path):
+        self.saver.restore(self.sess, restore_path)
+        print("+++++++++ Network restored from: %s", restore_path)
 
 
 
@@ -510,7 +622,6 @@ class DQNAgent_temporalAttention:
     def set_initial_state(self, initial_state_blue, episode_number):
         self.episode_number = episode_number
         self._previous_state = initial_state_blue
-        pass
 
     def get_action(self, current_state):
         action = self._decision_maker._get_action(current_state)
@@ -525,6 +636,9 @@ class DQNAgent_temporalAttention:
         self._decision_maker.train(new_state, reward, is_terminal)
         self._previous_state = new_state
 
+    def get_epsolon(self):
+        return self._decision_maker.policy.epsilon
+
     def save_model(self, ep_rewards, path_to_model, player_color):
 
         avg_reward = sum(ep_rewards[-SHOW_EVERY:]) / len(ep_rewards[-SHOW_EVERY:])
@@ -534,14 +648,15 @@ class DQNAgent_temporalAttention:
 
         episode = len(ep_rewards)
         # save model, but only when min reward is greater or equal a set value
-        if max_reward >=self.min_reward or episode == NUM_OF_EPISODES-1:
-            self.min_reward = min_reward
-            if player_color == Color.Red:
-                color_str = "red"
-            elif player_color == Color.Blue:
-                color_str = "blue"
-            self._decision_maker.q_network.save(
-                f'{path_to_model+os.sep+MODEL_NAME}_{color_str}_{NUM_OF_EPISODES}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
+        # if max_reward >=self.min_reward or episode == NUM_OF_EPISODES-1:
+        self.min_reward = min_reward
+        if player_color == Color.Red:
+            color_str = "red"
+        elif player_color == Color.Blue:
+            color_str = "blue"
+        self._decision_maker.save_model(self.episode_number, path_to_model)
+        # self._decision_maker.q_network.save(
+        #     f'{path_to_model+os.sep+MODEL_NAME}_{color_str}_{NUM_OF_EPISODES}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
 
         return self.min_reward
 
