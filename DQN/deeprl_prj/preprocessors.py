@@ -3,6 +3,8 @@
 import numpy as np
 from PIL import Image
 import Arena
+from Arena.constants import SIZE_X, SIZE_Y
+
 
 from DQN.deeprl_prj import utils
 from DQN.deeprl_prj.core import Preprocessor
@@ -111,7 +113,7 @@ class AtariPreprocessor(Preprocessor):
 
         if type(state) == Arena.CState.State:
             state = state.img
-        img = Image.fromarray(state).convert('L').resize((15, 15), Image.BILINEAR)
+        img = Image.fromarray(state).convert('L').resize((SIZE_X, SIZE_Y), Image.BILINEAR)
         state = np.array(img)
 
         # if not type(state)== np.ndarray:

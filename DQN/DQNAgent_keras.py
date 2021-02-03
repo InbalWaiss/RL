@@ -101,8 +101,8 @@ class decision_maker_DQN_keras:
         parser.add_argument('--exploration_steps', default=1000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
         parser.add_argument('--num_frames', default=4, type=int, help='Number of frames to feed to Q-Network')
-        parser.add_argument('--frame_width', default=15, type=int, help='Resized frame width')
-        parser.add_argument('--frame_height', default=15, type=int, help='Resized frame height')
+        parser.add_argument('--frame_width', default=SIZE_X, type=int, help='Resized frame width')
+        parser.add_argument('--frame_height', default=SIZE_Y, type=int, help='Resized frame height')
         parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')
         parser.add_argument('--target_update_freq', default=10000, type=int, help='The frequency with which the target network is updated')
         parser.add_argument('--train_freq', default=4, type=int, help='The frequency of actions wrt Q-network update')
@@ -244,9 +244,20 @@ class decision_maker_DQN_keras:
                                          input_shape=(args.num_frames, input_shape[0], input_shape[1], 1))(
                         input_data_TimeDistributed)
                     h2 = TimeDistributed(Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2"))(h1)
-                    h3 = TimeDistributed(Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv3"))(h2)
+                    h3 = TimeDistributed(Convolution2D(64, (2, 2), strides=1, activation="relu", name="conv3"))(h2)
                     flatten_hidden = TimeDistributed(Flatten())(h3)
                     hidden_input = TimeDistributed(Dense(512, activation='relu', name='flat_to_512'))(flatten_hidden)
+                    # print('>>>> Defining Recurrent Modules...')
+                    # input_data_expanded = Reshape((input_shape[0], input_shape[1], input_shape[2], 1),
+                    #                               input_shape=input_shape)(input_data)
+                    # input_data_TimeDistributed = Permute((3, 1, 2, 4), input_shape=input_shape)(input_data_expanded)
+                    # h1 = TimeDistributed(Convolution2D(32, (3, 3), strides=3, activation="relu", name="conv1"), \
+                    #                      input_shape=(args.num_frames, input_shape[0], input_shape[1], 1))(
+                    #     input_data_TimeDistributed)
+                    # h2 = TimeDistributed(Convolution2D(64, (3, 3), strides=2, activation="relu", name="conv2"))(h1)
+                    # h3 = TimeDistributed(Convolution2D(64, (2, 2), strides=1, activation="relu", name="conv3"))(h2)
+                    # flatten_hidden = TimeDistributed(Flatten())(h3)
+                    # hidden_input = TimeDistributed(Dense(512, activation='relu', name='flat_to_512'))(flatten_hidden)
                     if not (args.a_t):
                         context = LSTM(512, return_sequences=False, stateful=False, input_shape=(args.num_frames, 512))(
                             hidden_input)

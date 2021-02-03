@@ -75,6 +75,9 @@ def print_episode_graphics(env, episode, last_step_number):
     margin_x = 2
     margin_y = 0
 
+    if SIZE_X>15:
+        const = 20
+
     informative_env = np.zeros((const * (SIZE_X + margin_x * 2), const * (SIZE_X + margin_y * 2 ), 3), dtype=np.uint8)
 
     only_env = np.zeros((const * SIZE_X , const * SIZE_X , 3), dtype=np.uint8)
