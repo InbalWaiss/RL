@@ -30,7 +30,7 @@ class Environment(object):
             self.SHOW_EVERY = EVALUATE_SHOW_EVERY
             self.NUMBER_OF_EPISODES = EVALUATE_NUM_OF_EPISODES
 
-        # self.create_path_for_statistics()
+        self.create_path_for_statistics()
 
     def create_path_for_statistics(self):
         save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH,
