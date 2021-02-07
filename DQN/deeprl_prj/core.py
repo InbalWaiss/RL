@@ -215,6 +215,7 @@ class ReplayMemory:
         while len(indexes) < batch_size: 
             index = np.random.randint(self.history_length - 1, end)
             # sampled state shouldn't contain episode end
+            ####TODO: inbal: check why we dont learn terminal states
             if self.terminals[index - self.history_length + 1: index + 1].any():
                 continue
             indexes.append(index)

@@ -90,14 +90,14 @@ class Environment(object):
         red_pos = Position(self.red_player.x, self.red_player.y)
         return State(my_pos=red_pos, enemy_pos=blue_pos)
 
-    def end_run(self):
+    def end_run(self, UPDATE_RED_CONTEXT=True, UPDATE_BLUE_CONTEXT=True):
         STATS_RESULTS_RELATIVE_PATH_THIS_RUN = os.path.join(self.path_for_run, STATS_RESULTS_RELATIVE_PATH)
         save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH_THIS_RUN,
                                      format(f"{str(time.strftime('%d'))}_{str(time.strftime('%m'))}_"
                                             f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}_{Agent_type_str[self.blue_player._decision_maker.type()]}_{Agent_type_str[self.red_player._decision_maker.type()]}"))
 
         # save info on run
-        self.save_stats(save_folder_path)
+        self.save_stats(save_folder_path, UPDATE_RED_CONTEXT, UPDATE_BLUE_CONTEXT)
 
         # print and save figures
         print_stats(self.episodes_rewards, save_folder_path, self.SHOW_EVERY)
@@ -105,7 +105,7 @@ class Environment(object):
 
 
 
-    def save_stats(self, save_folder_path):
+    def save_stats(self, save_folder_path, UPDATE_RED_CONTEXT, UPDATE_BLUE_CONTEXT):
 
         if not os.path.exists(save_folder_path):
             os.makedirs(save_folder_path)
@@ -149,8 +149,10 @@ class Environment(object):
                 f"%TIES": [self.tie_count/self.NUMBER_OF_EPISODES*100],
                 f"%Blue_agent_type" : [Agent_type_str[self.blue_player._decision_maker.type()]],
                 f"%Blue_agent_model_loded": [self.blue_player._decision_maker.path_model_to_load],
+                f"%UPDATE_BLUE_CONTEXT" : [UPDATE_BLUE_CONTEXT],
                 f"%Red_agent_type" : [Agent_type_str[self.red_player._decision_maker.type()]],
-                f"%Red_agent_model_loded": [self.red_player._decision_maker.path_model_to_load]}
+                f"%Red_agent_model_loded": [self.red_player._decision_maker.path_model_to_load],
+                f"%UPDATE_RED_CONTEXT" : [UPDATE_RED_CONTEXT],}
 
 
         df = pd.DataFrame(info)
@@ -197,14 +199,27 @@ class Episode():
 
     def print_info_of_episode(self, env, steps_current_game, blue_epsilon):
         if self.show:
-            print(f"on #{self.episode_number}:")
+            if len(env.episodes_rewards)<env.SHOW_EVERY:
+                number_of_episodes = len(env.episodes_rewards[-env.SHOW_EVERY:]) - 1
+            else:
+                number_of_episodes = env.SHOW_EVERY
+
+            print(f"\non #{self.episode_number}:")
+
             print(f"reward for blue player is: , {self.episode_reward_blue}")
             print(f"epsilon (blue player) is {blue_epsilon}")
             print(
-                f"mean rewards of last {SHOW_EVERY} episodes for blue player: {np.mean(env.episodes_rewards[-SHOW_EVERY:])}")
-            print(
-                f"mean rewards of all episodes for blue player: {np.mean(env.episodes_rewards)}")
-            print(f"mean number of steps: , {np.mean(env.steps_per_episode[-SHOW_EVERY:])}\n")
+                f"mean number of steps of last {number_of_episodes} episodes: , {np.mean(env.steps_per_episode[-env.SHOW_EVERY:])}")
+
+            print(f"mean rewards of last {number_of_episodes} episodes for blue player: {np.mean(env.episodes_rewards[-env.SHOW_EVERY:])}")
+
+            blue_win_per_for_last_games = np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])>0)/number_of_episodes*100
+            tie_per_for_last_games = (np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])==0)-1)/number_of_episodes*100
+            red_win_per_for_last_games = np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])<0)/number_of_episodes*100
+            print(f"in the last {number_of_episodes} episodes, BLUE won: {blue_win_per_for_last_games}%, RED won {tie_per_for_last_games}%, ended in TIE: {red_win_per_for_last_games}% of games")
+
+            print(f"mean rewards of all episodes for blue player: {np.mean(env.episodes_rewards)}\n")
+
             self.print_episode(env, steps_current_game)
         if self.episode_number % SAVE_STATS_EVERY == 0:
             env.end_run()
