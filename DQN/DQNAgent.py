@@ -10,7 +10,6 @@ from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Conv2D, MaxPooling2D, Activation, Flatten
 from keras.optimizers import Adam
 from keras.callbacks import TensorBoard
-from Arena import main_simultaneous_steps_DQN
 
 REPLAY_MEMORY_SIZE = 50000 # how many last samples to keep for model training
 MIN_REPLAY_MEMORY_SIZE = 100 # minimum number of steps in a memory to start training
@@ -69,7 +68,7 @@ class decision_maker_DQN:
         self.target_update_counter = 0
 
         self._Initialize_networks(path_model_to_load)
-        self.IS_TRAINING = main_simultaneous_steps_DQN.IS_TRAINING
+        self.IS_TRAINING = IS_TRAINING
 
     def _set_previous_state(self, state):
         self._previous_stats = state

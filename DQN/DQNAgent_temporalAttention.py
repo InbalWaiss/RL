@@ -1,6 +1,5 @@
 
 from Arena.constants import *
-from Arena import main_simultaneous_steps_DQN
 from RafaelPlayer.DQN_constants import *
 import os
 import time
@@ -185,7 +184,7 @@ class decision_maker_DQN_temporalAttention:
         self.model = None
         self.target_model = None
 
-        self.is_training = main_simultaneous_steps_DQN.IS_TRAINING
+        self.is_training = IS_TRAINING
         self.numberOfSteps_allTournament = 0
         self.burn_in = True
 
@@ -212,11 +211,11 @@ class decision_maker_DQN_temporalAttention:
         parser.add_argument('--frame_width', default=15, type=int, help='Resized frame width')
         parser.add_argument('--frame_height', default=15, type=int, help='Resized frame height')
         parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')
-        parser.add_argument('--target_update_freq', default=10000, type=int, help='The frequency with which the target network is updated')
+        parser.add_argument('--target_update_freq', default=5000, type=int, help='The frequency with which the target network is updated')
         parser.add_argument('--train_freq', default=4, type=int, help='The frequency of actions wrt Q-network update')
         parser.add_argument('--save_freq', default=50000, type=int, help='The frequency with which the network is saved')
         parser.add_argument('--eval_freq', default=50000, type=int, help='The frequency with which the policy is evlauted')
-        parser.add_argument('--num_burn_in', default=50000, type=int,
+        parser.add_argument('--num_burn_in', default=10000, type=int,
                             help='Number of steps to populate the replay memory before training starts')
         parser.add_argument('--load_network', default=False, action='store_true', help='Load trained mode')
         parser.add_argument('--load_network_path', default='', help='the path to the trained mode file')
@@ -425,18 +424,23 @@ class decision_maker_DQN_temporalAttention:
         selected action
         """
         dqn_state = current_state.img
-        policy_type = 'GreedyEpsilonPolicy'
+        policy_type = "UniformRandomPolicy" if self.burn_in else "LinearDecayGreedyEpsilonPolicy"
         state_for_network = self.atari_processor.process_state_for_network(dqn_state)
         action_state = self.history_processor.process_state_for_network(state_for_network)
         q_values = self.calc_q_values(action_state)
 
-        action = None
         if self.is_training:
-            action = self.policy.select_action(q_values, self.is_training)
+            if policy_type == 'UniformRandomPolicy':
+                action =  UniformRandomPolicy(self.num_actions).select_action()
+            else:
+                # linear decay greedy epsilon policy
+                action =  self.policy.select_action(q_values, self.is_training)
         else:
-            action = GreedyPolicy().select_action(q_values)
+            # return GreedyEpsilonPolicy(0.05).select_action(q_values)
+            action =  GreedyPolicy().select_action(q_values)
 
-        self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
+
+        # self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
         self._action = action
         return action
 
@@ -575,7 +579,7 @@ class DQNAgent_temporalAttention:
             self._previous_state = new_state
 
     def get_epsolon(self):
-        if main_simultaneous_steps_DQN.IS_TRAINING:
+        if IS_TRAINING:
             return self._decision_maker.policy.epsilon
         else:
             return 0

@@ -18,6 +18,7 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
         self.episode_number = 0
         self.path_model_to_load = path_model_to_load
         self.UPDATE_CONTEXT = UPDATE_CONTEXT
+        self.IS_TRAINING = IS_TRAINING
 
         if path_model_to_load is not None:
             p = path.join(RELATIVE_PATH_HUMAN_VS_MACHINE_DATA, path_model_to_load)
@@ -67,10 +68,14 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
             self._Q_matrix[self._previous_state][action_entry] = new_q
 
             self._previous_state = state_entry
+        self.update_epsilon()
 
+
+    def update_epsilon(self):
+        if self.IS_TRAINING:
             self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
         else:
-            self._epsilon = 1
+            self._epsilon = 0
 
     def get_action(self, state: State)-> AgentAction:
 

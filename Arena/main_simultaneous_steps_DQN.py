@@ -1,28 +1,17 @@
 
 from matplotlib import style
-from Arena.CState import State
-from Arena.Entity import Entity
-from RafaelPlayer.Qtable_DecisionMaker import Qtable_DecisionMaker
-from Arena.Environment import Environment, Episode
-from Arena.constants import *
 from tqdm import tqdm
-import time
-import argparse
-from DQN.deeprl_prj.dqn_keras import DQNAgent, save_scalar
-from DQN.deeprl_prj.core import Sample
-from DQN import DQNAgent
-from DQN import DQNAgent_keras, DQNAgent_temporalAttention, DQNAgent_spatioalAttention
-import os
 
 style.use("ggplot")
 
-IS_TRAINING=True
-UPDATE_RED_CONTEXT = True
-UPDATE_BLUE_CONTEXT = True
+from Arena.CState import State
+from Arena.Entity import Entity
+from Arena.Environment import Environment, Episode
+from Arena.constants import *
+from RafaelPlayer import Qtable_DecisionMaker
+from DQN import DQNAgent_keras, DQNAgent_temporalAttention, DQNAgent_spatioalAttention
+from DQN import DQNAgent
 
-if not IS_TRAINING:
-    UPDATE_RED_CONTEXT=False
-    UPDATE_BLUE_CONTEXT=False
 
 def print_start_of_game_info(blue_decision_maker, red_decision_maker):
     print("Starting tournament!")
@@ -49,7 +38,7 @@ if __name__ == '__main__':
     env = Environment(IS_TRAINING)
 
     # red_decision_maker = Qtable_DecisionMaker()
-    red_decision_maker = Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-1000000.pickle')
+    red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-1000000.pickle')
     # red_decision_maker = Qtable_DecisionMaker('keep_training_qtable_1900000_DQNkeras_900000\qtable_red-900000.pickle')
     # red_decision_maker = DQNAgent.DQNAgent()
     # red_decision_maker = DQNAgent_keras.DQNAgent_keras()
@@ -129,13 +118,11 @@ if __name__ == '__main__':
             current_episode.is_terminal = env.check_terminal()
 
             # Update models
-            if UPDATE_BLUE_CONTEXT:
-                blue_decision_maker.update_context(new_observation_for_blue,
+            blue_decision_maker.update_context(new_observation_for_blue,
                                                   reward_step_blue,
                                                   current_episode.is_terminal)
 
-            if UPDATE_RED_CONTEXT:
-                red_decision_maker.update_context(new_observation_for_red,
+            red_decision_maker.update_context(new_observation_for_red,
                                                   reward_step_red,
                                                   current_episode.is_terminal)
 

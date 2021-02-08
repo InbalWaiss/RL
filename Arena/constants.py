@@ -100,28 +100,6 @@ DSM_30X30 =  np.array([
 ])
 
 
-#save information
-COMMON_PATH = path.dirname(path.realpath(__file__))
-MAIN_PATH = path.dirname(COMMON_PATH)
-OUTPUT_DIR = path.join(MAIN_PATH, 'Arena')
-STATS_RESULTS_RELATIVE_PATH = path.join(OUTPUT_DIR, 'statistics')
-RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'RafaelPlayer/trained_agents')
-
-# EASY_AGENT = 'easy.pickle'
-# MEDIUM_AGENT = 'medium.pickle'
-# HARD_AGENT = 'qtable_red-1000000.pickle'
-
-SHOW_EVERY = 500
-NUM_OF_EPISODES = 5_000_000
-SAVE_STATS_EVERY = 10_000
-
-# params to evaluate trained models
-EVALUATE_SHOW_EVERY = 1
-EVALUATE_NUM_OF_EPISODES = 100
-EVALUATE_SAVE_STATS_EVERY = 100
-
-UPDATE_RED_CONTEXT = False
-UPDATE_BLUE_CONTEXT =True
 
 class AgentAction(IntEnum):
 
@@ -152,6 +130,31 @@ class Color(IntEnum):
     Blue = 1
     Red = 2
 
-# DSM=DSM_30X30
-# SIZE_X = 30
-# SIZE_Y = 30
+#save information
+COMMON_PATH = path.dirname(path.realpath(__file__))
+MAIN_PATH = path.dirname(COMMON_PATH)
+OUTPUT_DIR = path.join(MAIN_PATH, 'Arena')
+STATS_RESULTS_RELATIVE_PATH = path.join(OUTPUT_DIR, 'statistics')
+RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'RafaelPlayer/trained_agents')
+
+# EASY_AGENT = 'easy.pickle'
+# MEDIUM_AGENT = 'medium.pickle'
+# HARD_AGENT = 'qtable_red-1000000.pickle'
+
+SHOW_EVERY = 500
+NUM_OF_EPISODES = 5_000_000
+SAVE_STATS_EVERY = 10_000
+
+# params to evaluate trained models
+EVALUATE_SHOW_EVERY = 1
+EVALUATE_NUM_OF_EPISODES = 100
+EVALUATE_SAVE_STATS_EVERY = 100
+
+# training mode
+IS_TRAINING=True
+UPDATE_RED_CONTEXT = True
+UPDATE_BLUE_CONTEXT = True
+
+if not IS_TRAINING:
+    UPDATE_RED_CONTEXT=False
+    UPDATE_BLUE_CONTEXT=False

@@ -1,6 +1,5 @@
 
 from Arena.constants import *
-from Arena import main_simultaneous_steps_DQN
 from RafaelPlayer.DQN_constants import *
 import os
 import time
@@ -29,7 +28,6 @@ from DQN.deeprl_prj.objectives import *
 from DQN.deeprl_prj.preprocessors import *
 from DQN.deeprl_prj.utils import *
 from DQN.deeprl_prj.core import  *
-from Arena import main_simultaneous_steps_DQN
 
 REPLAY_MEMORY_SIZE = 50000 # how many last samples to keep for model training
 MIN_REPLAY_MEMORY_SIZE = 1000 # minimum number of steps in a memory to start training
@@ -71,7 +69,7 @@ class decision_maker_DQN_keras:
         self.model = None
         self.target_model = None
 
-        self.is_training = main_simultaneous_steps_DQN.IS_TRAINING
+        self.is_training = IS_TRAINING
         self.numberOfSteps = 0
         self.burn_in = True
 
