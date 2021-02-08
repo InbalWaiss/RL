@@ -1,5 +1,6 @@
 
 from Arena.constants import *
+from Arena import main_simultaneous_steps_DQN
 from RafaelPlayer.DQN_constants import *
 import os
 import time
@@ -28,7 +29,7 @@ from DQN.deeprl_prj.objectives import *
 from DQN.deeprl_prj.preprocessors import *
 from DQN.deeprl_prj.utils import *
 from DQN.deeprl_prj.core import  *
-from Arena.main_simultaneous_steps_DQN import IS_TRAINING
+from Arena import main_simultaneous_steps_DQN
 
 REPLAY_MEMORY_SIZE = 50000 # how many last samples to keep for model training
 MIN_REPLAY_MEMORY_SIZE = 1000 # minimum number of steps in a memory to start training
@@ -70,7 +71,7 @@ class decision_maker_DQN_keras:
         self.model = None
         self.target_model = None
 
-        self.is_training = IS_TRAINING
+        self.is_training = main_simultaneous_steps_DQN.IS_TRAINING
         self.numberOfSteps = 0
         self.burn_in = True
 
@@ -501,7 +502,7 @@ class decision_maker_DQN_keras:
         return reward_mean, reward_std, eval_count
 
 
-    def _get_action(self, current_state, is_training = True, **kwargs):
+    def _get_action(self, current_state, **kwargs):
         dqn_state = current_state.img
         """Select the action based on the current state.
 
@@ -522,7 +523,7 @@ class decision_maker_DQN_keras:
                 self._epsilon = 1
             else:
                 # linear decay greedy epsilon policy
-                action = self.policy.select_action(q_values, is_training)
+                action = self.policy.select_action(q_values, self.is_training)
                 self._epsilon = self.policy.epsilon
         else:
             # return GreedyEpsilonPolicy(0.05).select_action(q_values)
@@ -534,7 +535,7 @@ class decision_maker_DQN_keras:
 
 # Agent class
 class DQNAgent_keras:
-    def __init__(self, path_model_to_load=None):
+    def __init__(self, UPDATE_CONTEXT=True, path_model_to_load=None):
         self._previous_state = None
         self._action = None
         self.episode_number = 0
@@ -542,6 +543,7 @@ class DQNAgent_keras:
         self.min_reward = -np.Inf
         self._type = AgentType.DQN_keras
         self.path_model_to_load = path_model_to_load
+        self.UPDATE_CONTEXT = UPDATE_CONTEXT
 
     def type(self) -> AgentType:
         return self._type
@@ -560,13 +562,14 @@ class DQNAgent_keras:
         return self._action
 
     def update_context(self, new_state, reward, is_terminal):
-        previous_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(self._previous_state)
-        new_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(new_state)
-        transition = (previous_state_for_network, self._action, reward, new_state_for_network, is_terminal)
-        self._decision_maker.update_replay_memory(transition)
+        if self.UPDATE_CONTEXT:
+            previous_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(self._previous_state)
+            new_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(new_state)
+            transition = (previous_state_for_network, self._action, reward, new_state_for_network, is_terminal)
+            self._decision_maker.update_replay_memory(transition)
 
-        self._decision_maker.train(new_state, reward, is_terminal)
-        self._previous_state = new_state
+            self._decision_maker.train(new_state, reward, is_terminal)
+            self._previous_state = new_state
 
     def save_model(self, ep_rewards, path_to_model, player_color):
 

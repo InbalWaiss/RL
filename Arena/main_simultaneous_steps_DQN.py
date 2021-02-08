@@ -17,6 +17,9 @@ import os
 style.use("ggplot")
 
 IS_TRAINING=True
+UPDATE_RED_CONTEXT = True
+UPDATE_BLUE_CONTEXT = True
+
 if not IS_TRAINING:
     UPDATE_RED_CONTEXT=False
     UPDATE_BLUE_CONTEXT=False
@@ -46,7 +49,7 @@ if __name__ == '__main__':
     env = Environment(IS_TRAINING)
 
     # red_decision_maker = Qtable_DecisionMaker()
-    red_decision_maker = Qtable_DecisionMaker('qtable_red-1000000.pickle')
+    red_decision_maker = Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-1000000.pickle')
     # red_decision_maker = Qtable_DecisionMaker('keep_training_qtable_1900000_DQNkeras_900000\qtable_red-900000.pickle')
     # red_decision_maker = DQNAgent.DQNAgent()
     # red_decision_maker = DQNAgent_keras.DQNAgent_keras()
@@ -55,17 +58,18 @@ if __name__ == '__main__':
 
     # blue_decision_maker = Qtable_DecisionMaker('qtable_blue-1000000.pickle')
     # blue_decision_maker = Qtable_DecisionMaker()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()#'keep_training_qtable_1900000_DQNkeras_900000/red_blue_32X64X64X512X9_blue_900001_ 249.00max_-119.56avg_-249.00min__1612465284.model')
+    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()#'keep_training_qtable_1900000_DQNkeras_900000/red_blue_32X64X64X512X9_blue_900001_ 249.00max_-119.56avg_-249.00min__1612465284.model')
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
+    # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_BLUE_CONTEXT)
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras('DQN_keras_blue_32X64X64X512X9_200001_ 249.00max_-131.98avg_-249.00min__1612271297.model')
-    # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
+    blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention(UPDATE_BLUE_CONTEXT)
 
 
-    print("num of steps per epsilon decay: 3_000_000")
+    print("num of steps per epsilon decay: 200_000")
     print("num of num_frames = 4")
     print("only blue update context")
     print("blue changed to (255,0,0)")
+    print("model_32(3X3)_64(3X3)")
 
     env.blue_player = Entity(blue_decision_maker)
     env.red_player = Entity(red_decision_maker)

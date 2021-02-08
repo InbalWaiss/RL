@@ -45,6 +45,7 @@ class UniformRandomPolicy(Policy):
     def __init__(self, num_actions):
         assert num_actions >= 1
         self.num_actions = num_actions
+        self.epsilon = 1
 
     def select_action(self, **kwargs):
         """Return a random action index.
@@ -66,6 +67,8 @@ class GreedyPolicy(Policy):
 
     This is a pure exploitation policy.
     """
+    def __init__(self):
+        self.epsilon = 0
 
     def select_action(self, q_values, **kwargs):  # noqa: D102
         return np.argmax(q_values)
@@ -149,6 +152,7 @@ class LinearDecayGreedyEpsilonPolicy(Policy):
             epsilon += self.decay_rate * self.step
             self.step += 1
         self.epsilon = max(epsilon, self.end_value)
+
         return GreedyEpsilonPolicy(self.epsilon).select_action(q_values)
 
     def reset(self):

@@ -111,9 +111,9 @@ RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'RafaelPlayer/trained
 # MEDIUM_AGENT = 'medium.pickle'
 # HARD_AGENT = 'qtable_red-1000000.pickle'
 
-SHOW_EVERY = 1000
+SHOW_EVERY = 500
 NUM_OF_EPISODES = 5_000_000
-SAVE_STATS_EVERY = 50_000
+SAVE_STATS_EVERY = 10_000
 
 # params to evaluate trained models
 EVALUATE_SHOW_EVERY = 1

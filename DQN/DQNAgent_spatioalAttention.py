@@ -1,5 +1,6 @@
 
 from Arena.constants import *
+from Arena import main_simultaneous_steps_DQN
 from RafaelPlayer.DQN_constants import *
 import os
 import time
@@ -36,7 +37,6 @@ MIN_REPLAY_MEMORY_SIZE = 1000 # minimum number of steps in a memory to start tra
 MINIBATCH_SIZE = 64 # how many samples to use for training
 UPDATE_TARGET_EVERY = 15 # number of terminal states
 OBSERVATION_SPACE_VALUES = (SIZE_X, SIZE_Y, 3)
-IS_TRAINING = True
 MODEL_NAME = 'SA_16(3X3)X32(3X1)X9_2'
 
 
@@ -84,11 +84,11 @@ class Qnetwork():
         #     kernel_size=[3, 3], stride=[1, 1], padding='VALID', \
         #     activation_fn=tf.nn.relu, biases_initializer=None, scope=myScope + '_conv3')
         self.conv1 = tf.contrib.layers.convolution2d( \
-            inputs=self.image_reshape, num_outputs=16, \
+            inputs=self.image_reshape, num_outputs=32, \
             kernel_size=[3, 3], stride=[3, 3], padding='VALID', \
             activation_fn=tf.nn.relu, biases_initializer=None, scope=myScope + '_conv1')
         self.conv2 = tf.contrib.layers.convolution2d( \
-            inputs=self.conv1, num_outputs=32, \
+            inputs=self.conv1, num_outputs=64, \
             kernel_size=[3, 3], stride=[1, 1], padding='VALID', \
             activation_fn=tf.nn.relu, biases_initializer=None, scope=myScope + '_conv2')
         self.conv4 = tf.contrib.layers.fully_connected(tf.contrib.layers.flatten(self.conv2), h_size,
@@ -177,11 +177,11 @@ class decision_maker_DQN_spatioalAttention:
     def __init__(self, path_model_to_load=None):
         self._previous_stats = {}
         self._action = {}
-        self._epsilon = epsilon
+        # self._epsilon = epsilon
         self.model = None
         self.target_model = None
 
-        self.is_training = IS_TRAINING
+        self.is_training = main_simultaneous_steps_DQN.IS_TRAINING
         self.numberOfSteps_allTournament = 0
         self.burn_in = True
 
@@ -202,13 +202,13 @@ class decision_maker_DQN_spatioalAttention:
         parser.add_argument('--learning_rate', default=0.0001, type=float, help='Learning rate')
         parser.add_argument('--initial_epsilon', default=1.0, type=float, help='Initial exploration probability in epsilon-greedy')
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
-        parser.add_argument('--exploration_steps', default=1000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
+        parser.add_argument('--exploration_steps', default=200000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
-        parser.add_argument('--num_frames', default=10, type=int, help='Number of frames to feed to Q-Network')
+        parser.add_argument('--num_frames', default=4, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=15, type=int, help='Resized frame width')
         parser.add_argument('--frame_height', default=15, type=int, help='Resized frame height')
         parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')
-        parser.add_argument('--target_update_freq', default=10000, type=int, help='The frequency with which the target network is updated')
+        parser.add_argument('--target_update_freq', default=1000, type=int, help='The frequency with which the target network is updated')
         parser.add_argument('--train_freq', default=4, type=int, help='The frequency of actions wrt Q-network update')
         parser.add_argument('--save_freq', default=50000, type=int, help='The frequency with which the network is saved')
         parser.add_argument('--eval_freq', default=50000, type=int, help='The frequency with which the policy is evlauted')
@@ -240,7 +240,8 @@ class decision_maker_DQN_spatioalAttention:
         self._previous_stats = state
 
     def _set_epsilon(self, input_epsilon):
-        self._epsilon = input_epsilon
+        # self._epsilon = input_epsilon
+        pass
 
     def reset_networks(self):
         self._Initialize_networks()
@@ -395,7 +396,7 @@ class decision_maker_DQN_spatioalAttention:
         return loss, np.mean(target)
 
 
-    def _get_action(self, current_state, is_training = True, **kwargs):
+    def _get_action(self, current_state, **kwargs):
         """Select the action based on the current state.
 
         You will probably want to vary your behavior here based on
@@ -422,18 +423,18 @@ class decision_maker_DQN_spatioalAttention:
         action_state = self.history_processor.process_state_for_network(state_for_network)
         q_values = self.calc_q_values(action_state)
 
-        if is_training:
+        if self.is_training:
             if policy_type == 'UniformRandomPolicy':
                 action =  UniformRandomPolicy(self.num_actions).select_action()
             else:
                 # linear decay greedy epsilon policy
-                action =  self.policy.select_action(q_values, is_training)
+                action =  self.policy.select_action(q_values, self.is_training)
         else:
             # return GreedyEpsilonPolicy(0.05).select_action(q_values)
             action =  GreedyPolicy().select_action(q_values)
 
 
-        self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
+        # self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
         self._action = action
         return action
 
@@ -540,7 +541,7 @@ class decision_maker_DQN_spatioalAttention:
 
 # Agent class
 class DQNAgent_spatioalAttention:
-    def __init__(self, path_model_to_load=None):
+    def __init__(self, UPDATE_CONTEXT = True, path_model_to_load=None):
         self._previous_state = None
         self._action = None
         self.episode_number = 0
@@ -548,6 +549,7 @@ class DQNAgent_spatioalAttention:
         self.min_reward = -np.Inf
         self._type = AgentType.DQNAgent_spatioalAttention
         self.path_model_to_load = path_model_to_load
+        self.UPDATE_CONTEXT =UPDATE_CONTEXT
 
     def type(self) -> AgentType:
         return self._type
@@ -562,15 +564,19 @@ class DQNAgent_spatioalAttention:
         return self._action
 
     def update_context(self, new_state, reward, is_terminal):
-        previous_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(self._previous_state)
-        new_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(new_state)
-        transition = (previous_state_for_network, self._action, reward, new_state_for_network, is_terminal)
-        self._decision_maker.update_replay_memory(transition)
-        self._decision_maker.train(new_state, reward, is_terminal)
-        self._previous_state = new_state
+        if self.UPDATE_CONTEXT:
+            previous_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(self._previous_state)
+            new_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(new_state)
+            transition = (previous_state_for_network, self._action, reward, new_state_for_network, is_terminal)
+            self._decision_maker.update_replay_memory(transition)
+            self._decision_maker.train(new_state, reward, is_terminal)
+            self._previous_state = new_state
 
     def get_epsolon(self):
-        return self._decision_maker.policy.epsilon
+        if main_simultaneous_steps_DQN.IS_TRAINING:
+            return self._decision_maker.policy.epsilon
+        else:
+            return 0
 
     def save_model(self, ep_rewards, path_to_model, player_color):
 

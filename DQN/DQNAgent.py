@@ -10,6 +10,7 @@ from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Conv2D, MaxPooling2D, Activation, Flatten
 from keras.optimizers import Adam
 from keras.callbacks import TensorBoard
+from Arena import main_simultaneous_steps_DQN
 
 REPLAY_MEMORY_SIZE = 50000 # how many last samples to keep for model training
 MIN_REPLAY_MEMORY_SIZE = 100 # minimum number of steps in a memory to start training
@@ -68,6 +69,7 @@ class decision_maker_DQN:
         self.target_update_counter = 0
 
         self._Initialize_networks(path_model_to_load)
+        self.IS_TRAINING = main_simultaneous_steps_DQN.IS_TRAINING
 
     def _set_previous_state(self, state):
         self._previous_stats = state
@@ -201,18 +203,23 @@ class decision_maker_DQN:
         return action
 
     def update_epsilon(self):
-        self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
-
+        if self.IS_TRAINING:
+            self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
+        else:
+            self._epsilon = 0 #inbal: maybe epsilon should be 0.05?
 # Agent class
 class DQNAgent:
-    def __init__(self, path_model_to_load=None):
+    def __init__(self, UPDATE_CONTEXT = True, path_model_to_load=None):
         self._previous_state = None
         self._action = None
         self.episode_number = 0
+
         self._decision_maker = decision_maker_DQN(path_model_to_load)
         self.min_reward = -np.Inf
         self._type = AgentType.DQN_basic
         self.path_model_to_load = path_model_to_load
+        self.UPDATE_CONTEXT = UPDATE_CONTEXT
+
 
     def type(self) -> AgentType:
         return self._type
@@ -233,10 +240,11 @@ class DQNAgent:
         return self._decision_maker._epsilon
 
     def update_context(self, new_state, reward, is_terminal):
-        transition = (self._previous_state.img, self._action, reward, new_state.img, is_terminal)
-        self._decision_maker.update_replay_memory(transition)
-        self._decision_maker.train(is_terminal, self.episode_number)
-        self._previous_state = new_state
+        if self.UPDATE_CONTEXT:
+            transition = (self._previous_state.img, self._action, reward, new_state.img, is_terminal)
+            self._decision_maker.update_replay_memory(transition)
+            self._decision_maker.train(is_terminal, self.episode_number)
+            self._previous_state = new_state
 
     def save_model(self, ep_rewards, path_to_model, player_color):
 

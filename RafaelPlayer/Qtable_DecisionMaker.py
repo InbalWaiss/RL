@@ -9,7 +9,7 @@ import pickle
 
 class Qtable_DecisionMaker(AbsDecisionMaker):
 
-    def __init__(self, path_model_to_load=None):
+    def __init__(self, UPDATE_CONTEXT=True , path_model_to_load=None):
 
         self._previous_state = {}
         self._action = -1
@@ -17,6 +17,7 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
         self._type = AgentType.Q_table
         self.episode_number = 0
         self.path_model_to_load = path_model_to_load
+        self.UPDATE_CONTEXT = UPDATE_CONTEXT
 
         if path_model_to_load is not None:
             p = path.join(RELATIVE_PATH_HUMAN_VS_MACHINE_DATA, path_model_to_load)
@@ -50,24 +51,26 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
         return q_table
 
     def update_context(self, new_state: State, reward, is_terminal):
+        if self.UPDATE_CONTEXT:
+            state_entry = (new_state.my_pos.get_tuple(), new_state.enemy_pos.get_tuple())
+            action_entry = int(self._action)
 
-        state_entry = (new_state.my_pos.get_tuple(), new_state.enemy_pos.get_tuple())
-        action_entry = int(self._action)
+            max_future_q = np.max(self._Q_matrix[state_entry])  # max Q value for this new observation
 
-        max_future_q = np.max(self._Q_matrix[state_entry])  # max Q value for this new observation
+            current_q = self._Q_matrix[self._previous_state][action_entry]  # current Q for our chosen action
 
-        current_q = self._Q_matrix[self._previous_state][action_entry]  # current Q for our chosen action
+            if is_terminal:
+                new_q = reward
+            else:
+                new_q = (1 - LEARNING_RATE) * current_q + LEARNING_RATE * (reward + DISCOUNT * max_future_q)
 
-        if is_terminal:
-            new_q = reward
+            self._Q_matrix[self._previous_state][action_entry] = new_q
+
+            self._previous_state = state_entry
+
+            self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
         else:
-            new_q = (1 - LEARNING_RATE) * current_q + LEARNING_RATE * (reward + DISCOUNT * max_future_q)
-
-        self._Q_matrix[self._previous_state][action_entry] = new_q
-
-        self._previous_state = state_entry
-
-        self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
+            self._epsilon = 1
 
     def get_action(self, state: State)-> AgentAction:
 

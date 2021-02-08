@@ -216,7 +216,7 @@ class Episode():
             blue_win_per_for_last_games = np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])>0)/number_of_episodes*100
             tie_per_for_last_games = (np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])==0)-1)/number_of_episodes*100
             red_win_per_for_last_games = np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])<0)/number_of_episodes*100
-            print(f"in the last {number_of_episodes} episodes, BLUE won: {blue_win_per_for_last_games}%, RED won {tie_per_for_last_games}%, ended in TIE: {red_win_per_for_last_games}% of games")
+            print(f"in the last {number_of_episodes} episodes, BLUE won: {blue_win_per_for_last_games}%, RED won {red_win_per_for_last_games}%, ended in TIE: {tie_per_for_last_games}% of games")
 
             print(f"mean rewards of all episodes for blue player: {np.mean(env.episodes_rewards)}\n")
 
