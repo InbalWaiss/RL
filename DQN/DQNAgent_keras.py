@@ -20,6 +20,7 @@ from keras.layers.wrappers import Bidirectional
 from keras.models import Model
 from keras import backend as K
 from keras.backend.tensorflow_backend import set_session
+from Arena.AbsDecisionMaker import AbsDecisionMaker
 
 import argparse
 
@@ -97,9 +98,9 @@ class decision_maker_DQN_keras:
         parser.add_argument('--learning_rate', default=0.0001, type=float, help='Learning rate')
         parser.add_argument('--initial_epsilon', default=1.0, type=float, help='Initial exploration probability in epsilon-greedy')
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
-        parser.add_argument('--exploration_steps', default=3000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
+        parser.add_argument('--exploration_steps', default=1000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
-        parser.add_argument('--num_frames', default=4, type=int, help='Number of frames to feed to Q-Network')
+        parser.add_argument('--num_frames', default=1, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=SIZE_X, type=int, help='Resized frame width')
         parser.add_argument('--frame_height', default=SIZE_Y, type=int, help='Resized frame height')
         parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')
@@ -107,7 +108,6 @@ class decision_maker_DQN_keras:
         parser.add_argument('--train_freq', default=4, type=int, help='The frequency of actions wrt Q-network update')
         parser.add_argument('--save_freq', default=50000, type=int, help='The frequency with which the network is saved')
         parser.add_argument('--eval_freq', default=50000, type=int, help='The frequency with which the policy is evlauted')
-        # parser.add_argument('--num_burn_in', default=1500, type=int, help='Number of steps to populate the replay memory before training starts')
         parser.add_argument('--num_burn_in', default=50000, type=int,
                             help='Number of steps to populate the replay memory before training starts')
         parser.add_argument('--load_network', default=False, action='store_true', help='Load trained mode')
@@ -374,10 +374,6 @@ class decision_maker_DQN_keras:
                 self.target_network.set_weights(self.q_network.get_weights())
 
 
-            # if self.numberOfSteps % (self.eval_freq * self.train_freq) == 0:
-            #     episode_reward_mean, episode_reward_std, eval_count = self.evaluate(env, 20, eval_count,
-            #                                                                         max_episode_length, True)
-
 
         self._previous_stats = new_state
         self.burn_in = (self.numberOfSteps < self.num_burn_in)
@@ -422,6 +418,7 @@ class decision_maker_DQN_keras:
 
             next_states = np.stack([x.next_state for x in samples])
             mask = np.asarray([1 - int(x.is_terminal) for x in samples])
+            # mask = np.asarray([1 for x in samples])
             rewards = np.asarray([x.reward for x in samples])
 
         if self.no_target:
@@ -444,60 +441,6 @@ class decision_maker_DQN_keras:
     def update_replay_memory(self, transition):
         self.memory.append(transition[0], transition[1], transition[2], transition[4])
 
-
-    def evaluate(self, env, num_episodes, eval_count, max_episode_length=None, monitor=True):
-        """Test your agent with a provided environment.
-
-        Basically run your policy on the environment and collect stats
-        like cumulative reward, average episode length, etc.
-
-        You can also call the render function here if you want to
-        visually inspect your policy.
-        """
-        print("Evaluation starts.")
-
-        is_training = False
-        if self.load_network:
-            self.q_network.load_weights(self.load_network_path)
-            print("Load network from:", self.load_network_path)
-
-        state = env.reset()
-
-        idx_episode = 1
-        episode_frames = 0
-        episode_reward = np.zeros(num_episodes)
-        t = 0
-
-        while idx_episode <= num_episodes:
-            t += 1
-            action_state = self.history_processor.process_state_for_network(
-                self.atari_processor.process_state_for_network(state))
-            action = self.select_action(action_state, is_training, policy_type = 'GreedyEpsilonPolicy')
-            state, reward, done, info = env.step(action)
-            episode_frames += 1
-            episode_reward[idx_episode-1] += reward
-            if episode_frames > max_episode_length:
-                done = True
-            if done:
-                print("Eval: time %d, episode %d, length %d, reward %.0f" %
-                    (t, idx_episode, episode_frames, episode_reward[idx_episode-1]))
-                eval_count += 1
-                save_scalar(eval_count, 'eval/eval_episode_raw_reward', episode_reward[idx_episode-1], self.writer)
-                save_scalar(eval_count, 'eval/eval_episode_raw_length', episode_frames, self.writer)
-                sys.stdout.flush()
-                state = env.reset()
-                episode_frames = 0
-                idx_episode += 1
-                self.atari_processor.reset()
-                self.history_processor.reset()
-
-        reward_mean = np.mean(episode_reward)
-        reward_std = np.std(episode_reward)
-        print("Evaluation summury: num_episodes [%d], reward_mean [%.3f], reward_std [%.3f]" %
-            (num_episodes, reward_mean, reward_std))
-        sys.stdout.flush()
-
-        return reward_mean, reward_std, eval_count
 
 
     def _get_action(self, current_state, **kwargs):
@@ -532,7 +475,7 @@ class decision_maker_DQN_keras:
         return action
 
 # Agent class
-class DQNAgent_keras:
+class DQNAgent_keras(AbsDecisionMaker):
     def __init__(self, UPDATE_CONTEXT=True, path_model_to_load=None):
         self._previous_state = None
         self._action = None

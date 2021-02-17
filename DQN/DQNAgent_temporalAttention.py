@@ -1,6 +1,7 @@
 
 from Arena.constants import *
 from RafaelPlayer.DQN_constants import *
+from Arena.AbsDecisionMaker import AbsDecisionMaker
 import os
 import time
 import random
@@ -205,13 +206,13 @@ class decision_maker_DQN_temporalAttention:
         parser.add_argument('--learning_rate', default=0.0001, type=float, help='Learning rate')
         parser.add_argument('--initial_epsilon', default=1.0, type=float, help='Initial exploration probability in epsilon-greedy')
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
-        parser.add_argument('--exploration_steps', default=200000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
+        parser.add_argument('--exploration_steps', default=2000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
         parser.add_argument('--num_frames', default=4, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=15, type=int, help='Resized frame width')
         parser.add_argument('--frame_height', default=15, type=int, help='Resized frame height')
         parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')
-        parser.add_argument('--target_update_freq', default=5000, type=int, help='The frequency with which the target network is updated')
+        parser.add_argument('--target_update_freq', default=50000, type=int, help='The frequency with which the target network is updated')
         parser.add_argument('--train_freq', default=4, type=int, help='The frequency of actions wrt Q-network update')
         parser.add_argument('--save_freq', default=50000, type=int, help='The frequency with which the network is saved')
         parser.add_argument('--eval_freq', default=50000, type=int, help='The frequency with which the policy is evlauted')
@@ -231,7 +232,7 @@ class decision_maker_DQN_temporalAttention:
         parser.add_argument('--task_name', default='SpatialAt_DQN', help='task name')
         parser.add_argument('--recurrent', default=True, dest='recurrent', action='store_true', help='enable recurrent DQN')
         parser.add_argument('--a_t', default=True, dest='a_t', action='store_true', help='enable temporal/spatial attention')
-        parser.add_argument('--global_a_t', default=False, dest='global_a_t', action='store_true', help='enable global temporal attention')
+        parser.add_argument('--global_a_t', default=True, dest='global_a_t', action='store_true', help='enable global temporal attention')
         parser.add_argument('--selector', default=True, dest='selector', action='store_true', help='enable selector for spatial attention')
         parser.add_argument('--bidir', default=False, dest='bidir', action='store_true', help='enable two layer bidirectional lstm')
 
@@ -251,10 +252,14 @@ class decision_maker_DQN_temporalAttention:
     def _Initialize_networks(self, path_model_to_load = None):
         # load model
         if path_model_to_load !=None:
-            p = path.join(RELATIVE_PATH_HUMAN_VS_MACHINE_DATA, path_model_to_load)
-            self.model = load_model(p)
-            self.target_model = load_model(p)
-            self.target_model.set_weights(self.model.get_weights())
+            # p = path.join(RELATIVE_PATH_HUMAN_VS_MACHINE_DATA, path_model_to_load)
+            # self.model = load_model(p)
+            # self.restore_model(p)
+
+            # self.target_model = load_model(p)
+            # self.target_model.set_weights(self.model.get_weights())
+
+            self.restore_model(path_model_to_load)
 
         else: #create new model
             args = self.get_args()
@@ -397,10 +402,6 @@ class decision_maker_DQN_temporalAttention:
 
         return loss, np.mean(target)
 
-    def loadModel(self, model, target_model):
-        # load existing models
-        self.model = model
-        self.target_model = target_model
 
     def _get_action(self, current_state, **kwargs):
         """Select the action based on the current state.
@@ -494,7 +495,7 @@ class decision_maker_DQN_temporalAttention:
             if self.numberOfSteps_allTournament % self.train_freq == 0:
                 action_state = self.history_processor.process_state_for_network(
                     self.atari_processor.process_state_for_network(new_state))
-                processed_reward = self.atari_processor.process_reward(reward)
+                processed_reward = reward#self.atari_processor.process_reward(reward)
                 processed_next_state = self.atari_processor.process_state_for_network(new_state)
                 action_next_state = np.dstack((action_state, processed_next_state))
                 action_next_state = action_next_state[:, :, 1:]
@@ -510,15 +511,6 @@ class decision_maker_DQN_temporalAttention:
             # here we use hard target update as default
             updateTarget(self.targetOps, self.sess)
             print("----- Synced.")
-
-        # if self.numberOfSteps_allTournament % SAVE_STATS_EVERY == 0:
-        #     self.save_model(self.episode_number)
-
-        # if t % (self.eval_freq * self.train_freq) == 0:
-        #     episode_reward_mean, episode_reward_std, eval_count = self.evaluate(env, 20, eval_count, max_episode_length,
-        #                                                                         True)
-        #     save_scalar(t, 'eval/eval_episode_reward_mean', episode_reward_mean, self.writer)
-        #     save_scalar(t, 'eval/eval_episode_reward_std', episode_reward_std, self.writer)
 
 
         self._previous_stats = new_state
@@ -546,7 +538,7 @@ class decision_maker_DQN_temporalAttention:
 
 
 # Agent class
-class DQNAgent_temporalAttention:
+class DQNAgent_temporalAttention(AbsDecisionMaker):
     def __init__(self, UPDATE_CONTEXT = True, path_model_to_load=None):
         self._previous_state = None
         self._action = None

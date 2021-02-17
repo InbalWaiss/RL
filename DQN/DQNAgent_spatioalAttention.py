@@ -1,5 +1,6 @@
 
 from Arena.constants import *
+from Arena.AbsDecisionMaker import AbsDecisionMaker
 from RafaelPlayer.DQN_constants import *
 import os
 import time
@@ -201,13 +202,13 @@ class decision_maker_DQN_spatioalAttention:
         parser.add_argument('--learning_rate', default=0.0001, type=float, help='Learning rate')
         parser.add_argument('--initial_epsilon', default=1.0, type=float, help='Initial exploration probability in epsilon-greedy')
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
-        parser.add_argument('--exploration_steps', default=200000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
+        parser.add_argument('--exploration_steps', default=1000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
-        parser.add_argument('--num_frames', default=4, type=int, help='Number of frames to feed to Q-Network')
+        parser.add_argument('--num_frames', default=1, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=15, type=int, help='Resized frame width')
         parser.add_argument('--frame_height', default=15, type=int, help='Resized frame height')
         parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')
-        parser.add_argument('--target_update_freq', default=5000, type=int, help='The frequency with which the target network is updated')
+        parser.add_argument('--target_update_freq', default=50000, type=int, help='The frequency with which the target network is updated')
         parser.add_argument('--train_freq', default=4, type=int, help='The frequency of actions wrt Q-network update')
         parser.add_argument('--save_freq', default=50000, type=int, help='The frequency with which the network is saved')
         parser.add_argument('--eval_freq', default=50000, type=int, help='The frequency with which the policy is evlauted')
@@ -246,80 +247,77 @@ class decision_maker_DQN_spatioalAttention:
         self._Initialize_networks()
 
     def _Initialize_networks(self, path_model_to_load = None):
-        # load model
-        if path_model_to_load !=None:
-            p = path.join(RELATIVE_PATH_HUMAN_VS_MACHINE_DATA, path_model_to_load)
-            self.model = load_model(p)
-            self.target_model = load_model(p)
-            self.target_model.set_weights(self.model.get_weights())
+        args = self.get_args()
 
-        else: #create new model
-            args = self.get_args()
+        self.num_actions = NUMBER_OF_ACTIONS
+        input_shape = (args.frame_height, args.frame_width, args.num_frames)
+        self.history_processor = HistoryPreprocessor(args.num_frames - 1)
+        self.atari_processor = AtariPreprocessor()
+        self.memory = ReplayMemory(args)
+        self.policy = LinearDecayGreedyEpsilonPolicy(args.initial_epsilon, args.final_epsilon,
+                                                     args.exploration_steps)
+        self.gamma = args.gamma
+        self.target_update_freq = args.target_update_freq
+        self.num_burn_in = args.num_burn_in
+        self.train_freq = args.train_freq
+        self.batch_size = args.batch_size
+        self.learning_rate = args.learning_rate
+        self.frame_width = args.frame_width
+        self.frame_height = args.frame_height
+        self.num_frames = args.num_frames
+        self.output_path = args.output
+        self.output_path_videos = args.output + '/videos/'
+        self.save_freq = args.save_freq
+        self.load_network = args.load_network
+        self.load_network_path = args.load_network_path
+        self.enable_ddqn = args.ddqn
+        self.net_mode = args.net_mode
+        self.no_experience = args.no_experience
+        self.no_target = args.no_target
+        self.args = args
 
-            self.num_actions = NUMBER_OF_ACTIONS
-            input_shape = (args.frame_height, args.frame_width, args.num_frames)
-            self.history_processor = HistoryPreprocessor(args.num_frames - 1)
-            self.atari_processor = AtariPreprocessor()
-            self.memory = ReplayMemory(args)
-            self.policy = LinearDecayGreedyEpsilonPolicy(args.initial_epsilon, args.final_epsilon,
-                                                         args.exploration_steps)
-            self.gamma = args.gamma
-            self.target_update_freq = args.target_update_freq
-            self.num_burn_in = args.num_burn_in
-            self.train_freq = args.train_freq
-            self.batch_size = args.batch_size
-            self.learning_rate = args.learning_rate
-            self.frame_width = args.frame_width
-            self.frame_height = args.frame_height
-            self.num_frames = args.num_frames
-            self.output_path = args.output
-            self.output_path_videos = args.output + '/videos/'
-            self.save_freq = args.save_freq
-            self.load_network = args.load_network
-            self.load_network_path = args.load_network_path
-            self.enable_ddqn = args.ddqn
-            self.net_mode = args.net_mode
-            self.no_experience = args.no_experience
-            self.no_target = args.no_target
-            self.args = args
+        self.h_size = 512
+        self.tau = 0.001
+        # self.q_network = create_model(input_shape, num_actions, self.net_mode, args, "QNet")
+        # self.target_network = create_model(input_shape, num_actions, self.net_mode, args, "TargetNet")
+        tf.reset_default_graph()
+        # We define the cells for the primary and target q-networks
+        cell = tf.contrib.rnn.BasicLSTMCell(num_units=self.h_size, state_is_tuple=True)
+        cellT = tf.contrib.rnn.BasicLSTMCell(num_units=self.h_size, state_is_tuple=True)
+        if args.bidir:
+            cell_2 = tf.contrib.rnn.BasicLSTMCell(num_units=self.h_size, state_is_tuple=True)
+            cellT_2 = tf.contrib.rnn.BasicLSTMCell(num_units=self.h_size, state_is_tuple=True)
+            self.q_network = Qnetwork(args, h_size=self.h_size, num_frames=self.num_frames,
+                                      num_actions=self.num_actions, rnn_cell_1=cell, rnn_cell_2=cell_2,
+                                      myScope="QNet")
+            self.target_network = Qnetwork(args, h_size=self.h_size, num_frames=self.num_frames,
+                                           num_actions=self.num_actions, rnn_cell_1=cellT, rnn_cell_2=cellT_2,
+                                           myScope="TargetNet")
+        else:
+            self.q_network = Qnetwork(args, h_size=self.h_size, num_frames=self.num_frames,
+                                      num_actions=self.num_actions, rnn_cell_1=cell, myScope="QNet")
+            self.target_network = Qnetwork(args, h_size=self.h_size, num_frames=self.num_frames,
+                                           num_actions=self.num_actions, rnn_cell_1=cellT, myScope="TargetNet")
 
-            self.h_size = 512
-            self.tau = 0.001
-            # self.q_network = create_model(input_shape, num_actions, self.net_mode, args, "QNet")
-            # self.target_network = create_model(input_shape, num_actions, self.net_mode, args, "TargetNet")
-            tf.reset_default_graph()
-            # We define the cells for the primary and target q-networks
-            cell = tf.contrib.rnn.BasicLSTMCell(num_units=self.h_size, state_is_tuple=True)
-            cellT = tf.contrib.rnn.BasicLSTMCell(num_units=self.h_size, state_is_tuple=True)
-            if args.bidir:
-                cell_2 = tf.contrib.rnn.BasicLSTMCell(num_units=self.h_size, state_is_tuple=True)
-                cellT_2 = tf.contrib.rnn.BasicLSTMCell(num_units=self.h_size, state_is_tuple=True)
-                self.q_network = Qnetwork(args, h_size=self.h_size, num_frames=self.num_frames,
-                                          num_actions=self.num_actions, rnn_cell_1=cell, rnn_cell_2=cell_2,
-                                          myScope="QNet")
-                self.target_network = Qnetwork(args, h_size=self.h_size, num_frames=self.num_frames,
-                                               num_actions=self.num_actions, rnn_cell_1=cellT, rnn_cell_2=cellT_2,
-                                               myScope="TargetNet")
-            else:
-                self.q_network = Qnetwork(args, h_size=self.h_size, num_frames=self.num_frames,
-                                          num_actions=self.num_actions, rnn_cell_1=cell, myScope="QNet")
-                self.target_network = Qnetwork(args, h_size=self.h_size, num_frames=self.num_frames,
-                                               num_actions=self.num_actions, rnn_cell_1=cellT, myScope="TargetNet")
+        # initialize target network
+        init = tf.global_variables_initializer()
+        self.saver = tf.train.Saver(max_to_keep=2)
+        trainables = tf.trainable_variables()
+        print(trainables, len(trainables))
+        self.targetOps = updateTargetGraph(trainables, self.tau)
 
-            # initialize target network
-            init = tf.global_variables_initializer()
-            self.saver = tf.train.Saver(max_to_keep=2)
-            trainables = tf.trainable_variables()
-            print(trainables, len(trainables))
-            self.targetOps = updateTargetGraph(trainables, self.tau)
+        config = tf.ConfigProto()
+        config.gpu_options.allow_growth = True
+        config.allow_soft_placement = True
+        self.sess = tf.Session(config=config)
+        self.sess.run(init)
+        updateTarget(self.targetOps, self.sess)
+        self.writer = tf.summary.FileWriter(self.output_path)
 
-            config = tf.ConfigProto()
-            config.gpu_options.allow_growth = True
-            config.allow_soft_placement = True
-            self.sess = tf.Session(config=config)
-            self.sess.run(init)
-            updateTarget(self.targetOps, self.sess)
-            self.writer = tf.summary.FileWriter(self.output_path)
+        if path_model_to_load!=None:
+            # path_model_to_load = 'statistics/15_02_21_29_DQNAgent_spatioalAttention_Q_table/qnet660000.cptk'
+            self.saver.restore(self.sess, path_model_to_load)
+            print("+++++++++ Network restored from: %s", path_model_to_load)
 
     def update_policy(self, current_sample):
         """Update your policy.
@@ -504,16 +502,6 @@ class decision_maker_DQN_spatioalAttention:
             updateTarget(self.targetOps, self.sess)
             print("----- Synced.")
 
-        # if self.numberOfSteps_allTournament % SAVE_STATS_EVERY == 0:
-        #     self.save_model(self.episode_number)
-
-        # if t % (self.eval_freq * self.train_freq) == 0:
-        #     episode_reward_mean, episode_reward_std, eval_count = self.evaluate(env, 20, eval_count, max_episode_length,
-        #                                                                         True)
-        #     save_scalar(t, 'eval/eval_episode_reward_mean', episode_reward_mean, self.writer)
-        #     save_scalar(t, 'eval/eval_episode_reward_std', episode_reward_std, self.writer)
-
-
         self._previous_stats = new_state
         # self.burn_in = (self.numberOfSteps_allTournament < self.num_burn_in) #inbal: update burn_in flag always or just in terminal state?
 
@@ -529,7 +517,6 @@ class decision_maker_DQN_spatioalAttention:
     def save_model(self, idx_episode, path):
         safe_path = path + "/qnet" + str(idx_episode) + ".cptk"
         self.saver.save(self.sess, safe_path)
-        # self.q_network.save_weights(safe_path)
         print("+++++++++ Network at", idx_episode, "saved to:", safe_path)
 
     def restore_model(self, restore_path):
@@ -539,7 +526,7 @@ class decision_maker_DQN_spatioalAttention:
 
 
 # Agent class
-class DQNAgent_spatioalAttention:
+class DQNAgent_spatioalAttention(AbsDecisionMaker):
     def __init__(self, UPDATE_CONTEXT = True, path_model_to_load=None):
         self._previous_state = None
         self._action = None
