@@ -19,7 +19,7 @@ numpy
 pillow
 protobuf>=3.0
 pydot-ng
-scipy
+scipy==1.4.1
 semver
 gym[atari]
 tensorflow-gpu==1.14

@@ -1,8 +1,8 @@
 from Arena.Position import Position
 import numpy as np
-from constants import *
+from Arena.constants import *
 from PIL import Image
-from helper_funcs import check_if_LOS
+from Arena.helper_funcs import check_if_LOS
 
 
 class State(object):

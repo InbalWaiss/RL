@@ -1,0 +1,2 @@
+NUM_OF_EPISODES,MOVE_PENALTY,WIN_REWARD,LOST_PENALTY,epsilon,EPSILONE_DECAY,LEARNING_RATE,DISCOUNT,% Unseen states,%Games started at Tie,%WINS_BLUE,%WINS_RED,%TIES,%Blue_agent_type,%Blue_agent_model_loded,%Red_agent_type,%Red_agent_model_loded
+5000000,1,250,250,0.5,0.99999,0.5,0.95,57.26222222222223,8.338619999999999,0.68194,3.82052,12.69708,DQNAgent_spatioalAttention,,Q_table,
