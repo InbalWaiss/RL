@@ -5,7 +5,20 @@
     "version": "0.2.0",
 
     "configurations": [
-
+        {
+            "name": "Python: Debug Console",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "internalConsole"
+       },
+       {
+        "name": "Python: Terminal (external)",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "console": "externalTerminal"
+        },
 
         {
             "name": "Python: Current File",

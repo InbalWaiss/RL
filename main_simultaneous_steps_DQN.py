@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
     # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-1000000.pickle')
-    # red_decision_maker = Qtable_DecisionMaker('keep_training_qtable_1900000_DQNkeras_900000\qtable_red-900000.pickle')
+    red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-880000_vs_SA.pickle')
     # red_decision_maker = DQNAgent.DQNAgent()
     # red_decision_maker = DQNAgent_keras.DQNAgent_keras()
     # red_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
@@ -46,9 +46,10 @@ if __name__ == '__main__':
 
     # blue_decision_maker = Qtable_DecisionMaker('qtable_blue-1000000_old_terminal_state.pickle')
     # blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=False, path_model_to_load='32X64X64X512X9_blue_70001_ 249.00max_ -97.22avg_-249.00min__1613486704.model')
-    # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=False, path_model_to_load='statistics/17_02_06_09_DQNAgent_spatioalAttention_Q_table/qnet840000.cptk')
+    # 'Arena\statistics\17_02_16_39_DQNAgent_spatioalAttention_Q_table'
+    blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=False, path_model_to_load='Arena/statistics/17_02_16_39_DQNAgent_spatioalAttention_Q_table/qnet880000.cptk')
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras('DQN_keras_blue_32X64X64X512X9_200001_ 249.00max_-131.98avg_-249.00min__1612271297.model')
     # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention(UPDATE_BLUE_CONTEXT)#
     # blue_decision_maker = DQNAgent.DQNAgent(path_model_to_load='DQN_basic_20000.model')
