@@ -47,8 +47,12 @@ class Environment(object):
         self.path_for_run = save_folder_path
 
     def reset_players_positions(self, episode_number):
-        self.blue_player._choose_random_position()
-        self.red_player._choose_random_position()
+        is_los = True
+        while is_los:
+            self.blue_player._choose_random_position()
+            self.red_player._choose_random_position()
+            is_los, _ = check_if_LOS(self.blue_player.x, self.blue_player.y, self.red_player.x, self.red_player.y)
+
 
         if self.SHOW_EVERY==1 or episode_number % (self.SHOW_EVERY-1) == 0:
             self.starts_at_win_in_last_SHOW_EVERY_games = 0
@@ -126,16 +130,17 @@ class Environment(object):
 
     def end_run(self):
         STATS_RESULTS_RELATIVE_PATH_THIS_RUN = os.path.join(self.path_for_run, STATS_RESULTS_RELATIVE_PATH)
-        save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH_THIS_RUN,
+        self.save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH_THIS_RUN,
                                      format(f"{str(time.strftime('%d'))}_{str(time.strftime('%m'))}_"
                                             f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}_{Agent_type_str[self.blue_player._decision_maker.type()]}_{Agent_type_str[self.red_player._decision_maker.type()]}"))
 
         # save info on run
-        self.save_stats(save_folder_path)
+        self.save_stats(self.save_folder_path)
 
         # print and save figures
-        print_stats(self.episodes_rewards, save_folder_path, self.SHOW_EVERY)
-        print_stats(self.steps_per_episode, save_folder_path,self.SHOW_EVERY, True, True)
+        print_stats(self.episodes_rewards, self.save_folder_path, self.SHOW_EVERY)
+        print_stats(self.steps_per_episode, self.save_folder_path,self.SHOW_EVERY, True, True)
+
 
 
 

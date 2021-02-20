@@ -208,7 +208,7 @@ class decision_maker_DQN_temporalAttention:
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
         parser.add_argument('--exploration_steps', default=2000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
-        parser.add_argument('--num_frames', default=4, type=int, help='Number of frames to feed to Q-Network')
+        parser.add_argument('--num_frames', default=2, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=15, type=int, help='Resized frame width')
         parser.add_argument('--frame_height', default=15, type=int, help='Resized frame height')
         parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')

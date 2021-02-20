@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 from Arena import Environment
 from Arena.helper_funcs import *
+from time import sleep
 
 
 def print_stats(array_of_results, save_folder_path, plot_every, save_figure=True, steps=False):
@@ -169,7 +170,7 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
             cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
                         dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
 
-            cv2.waitKey(2)
+        cv2.waitKey(2)
 
     else:  # not terminal state
         botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 45, 20)
@@ -194,3 +195,7 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
     if write_file:
         cv2.imwrite('D:\\RL\\Battle.jpg', np.array(informative_env))
     cv2.waitKey(2)
+    if is_terminal:
+        sleep(1.2)
+    else:
+        sleep(0.1)

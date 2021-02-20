@@ -3,13 +3,13 @@ from matplotlib import style
 from tqdm import tqdm
 
 style.use("ggplot")
-from Arena.constants import *
 from Arena.CState import State
 from Arena.Entity import Entity
 from Arena.Environment import Environment, Episode
-from DQN import (DQNAgent, DQNAgent_keras, DQNAgent_spatioalAttention,
-                 DQNAgent_temporalAttention)
+from Arena.constants import *
 from RafaelPlayer import Qtable_DecisionMaker
+from DQN import DQNAgent_keras, DQNAgent_temporalAttention, DQNAgent_spatioalAttention
+from DQN import DQNAgent
 
 
 def print_start_of_game_info(blue_decision_maker, red_decision_maker):
@@ -37,8 +37,9 @@ if __name__ == '__main__':
     env = Environment(IS_TRAINING)
 
     red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
-    # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-1000000.pickle')
-    red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-880000_vs_SA.pickle')
+    # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-500000_new_DSM.pickle')
+    # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-860000_VS_sa.pickle')
+    # red_decision_maker = Qtable_DecisionMaker('keep_training_qtable_1900000_DQNkeras_900000\qtable_red-900000.pickle')
     # red_decision_maker = DQNAgent.DQNAgent()
     # red_decision_maker = DQNAgent_keras.DQNAgent_keras()
     # red_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
@@ -47,12 +48,13 @@ if __name__ == '__main__':
     # blue_decision_maker = Qtable_DecisionMaker('qtable_blue-1000000_old_terminal_state.pickle')
     # blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=False, path_model_to_load='32X64X64X512X9_blue_70001_ 249.00max_ -97.22avg_-249.00min__1613486704.model')
-    # 'Arena\statistics\17_02_16_39_DQNAgent_spatioalAttention_Q_table'
-    blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=False, path_model_to_load='Arena/statistics/17_02_16_39_DQNAgent_spatioalAttention_Q_table/qnet880000.cptk')
+    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=False, path_model_to_load='32X64X64X512X9_blue_75001_ 490.00max_ -26.50avg_-495.00min__1613808042.model')
+    # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
+    # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=True, path_model_to_load='statistics/18_02_06_54_DQNAgent_spatioalAttention_Q_table_1000000/qnet1000000.cptk')
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras('DQN_keras_blue_32X64X64X512X9_200001_ 249.00max_-131.98avg_-249.00min__1612271297.model')
-    # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention(UPDATE_BLUE_CONTEXT)#
-    # blue_decision_maker = DQNAgent.DQNAgent(path_model_to_load='DQN_basic_20000.model')
+    # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()#UPDATE_BLUE_CONTEXT)#
+    blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
+
 
 
     env.blue_player = Entity(blue_decision_maker)
@@ -138,7 +140,12 @@ if __name__ == '__main__':
 
         # print info of episode:
         current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon())
+        if current_episode.episode_number % SAVE_STATS_EVERY == 0:
+            if DQNAgent.AgentType == AgentType.DQN_keras or DQNAgent.AgentType == AgentType.DQN_basic:
+                blue_decision_maker._decision_maker.print_model(initial_state_blue, episode, env.save_folder_path)
 
 
     env.end_run()
+    if DQNAgent.AgentType == AgentType.DQN_keras or DQNAgent.AgentType == AgentType.DQN_basic:
+        blue_decision_maker._decision_maker.print_model(initial_state_blue, episode, env.save_folder_path)
 

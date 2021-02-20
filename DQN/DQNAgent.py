@@ -97,9 +97,13 @@ class decision_maker_DQN():
 
         return layer_outputs
 
-    def print_model(self, state):
+    def print_model(self, state, episode_number, path_to_dir):
+        img = np.array(state.img).reshape(-1, *np.array(state.img).shape) / 255
+        path = os.path.join(path_to_dir, str(episode_number))
+        if not os.path.exists(path):
+            os.makedirs(path)
 
-        layer_outputs = self.get_layer_outputs(state)
+        layer_outputs = self.get_layer_outputs(img)
 
         layer_number = 0
 
@@ -116,12 +120,28 @@ class decision_maker_DQN():
                 for y in range(y_max):
                     L[i][x][y] = layer_outputs[layer_number][x][y][i]
 
-        # for img in L:
-        #     plt.figure()
-        #     plt.imshow(img, interpolation='nearest')
+
+        plt.figure()
+        index = 0
+        for img in L:
+            # plt.imshow(img, interpolation='nearest')
+            p = os.path.join(path, 'img_'+ str(index)+'.png')
+            plt.imsave(p, img, format='png')
+            index+=1
         # plt.figure()
         # plt.imshow(L[00])
-        #cv2.imwrite('D:\\RL\\layer0.jpg', L[00])
+        plt.close()
+
+
+        # save image
+        plt.figure()
+        org_img = img[0, :, :, :]
+        # plt.imshow(org_img)
+        p = os.path.join(path, 'state_img.png')
+        plt.imsave(p, org_img, format='png')
+        plt.close()
+
+        # cv2.imwrite('D:\\RL\\layer0.jpg', L[00])
         # plt.imsave('D:\\RL\\layer22.png', L[22], format='png')
 
     def reset_networks(self):
@@ -262,7 +282,7 @@ class decision_maker_DQN():
 
 # Agent class
 class DQNAgent():
-    def __init__(self, path_model_to_load=None):
+    def __init__(self, UPDATE_CONTEXT=True, path_model_to_load=None):
         self._previous_state = None
         self._action = None
         self.episode_number = 0
@@ -271,6 +291,7 @@ class DQNAgent():
         self._type = AgentType.DQN_basic
         self.path_model_to_load = path_model_to_load
         self.is_training = IS_TRAINING
+        self.UPDATE_CONTEXT = UPDATE_CONTEXT
 
     def type(self) -> AgentType:
         return self._type
@@ -292,7 +313,7 @@ class DQNAgent():
 
     def update_context(self, new_state, reward, is_terminal, write_file=False):
 
-        if not self.is_training:
+        if not self.is_training or not self.UPDATE_CONTEXT:
             return
 
         transition = (self._previous_state.img, self._action, reward, new_state.img, is_terminal)

@@ -24,6 +24,7 @@ from keras import backend as K
 from keras.backend.tensorflow_backend import set_session
 
 import argparse
+import matplotlib.pyplot as plt
 
 from DQN.deeprl_prj.policy import *
 from DQN.deeprl_prj.objectives import *
@@ -204,7 +205,7 @@ class decision_maker_DQN_spatioalAttention:
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
         parser.add_argument('--exploration_steps', default=1000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
-        parser.add_argument('--num_frames', default=1, type=int, help='Number of frames to feed to Q-Network')
+        parser.add_argument('--num_frames', default=2, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=15, type=int, help='Resized frame width')
         parser.add_argument('--frame_height', default=15, type=int, help='Resized frame height')
         parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')
@@ -523,7 +524,50 @@ class decision_maker_DQN_spatioalAttention:
         self.saver.restore(self.sess, restore_path)
         print("+++++++++ Network restored from: %s", restore_path)
 
+    def print_model(self, state, episode_number, path_to_dir):
+        path = os.path.join(path_to_dir, str(episode_number))
+        if not os.path.exists(path):
+            os.makedirs(path)
 
+        dqn_state = state.img
+        state_for_network = self.atari_processor.process_state_for_network(dqn_state)
+        action_state = self.history_processor.process_state_for_network(state_for_network)
+
+        # q_values = self.calc_q_values(action_state) #shold be action_state
+
+        # save image
+        plt.figure()
+        plt.imshow(dqn_state)
+        p = os.path.join(path, 'start_state_img.png')
+        plt.imsave(p, dqn_state, format='png')
+        plt.close()
+
+        inp_conv_1 = self.target_network.conv1
+        outputs = [layer.output for layer in self.target_network.layers]
+
+        inp = self.target_network.input  # input placeholder
+        outputs = [layer.output for layer in self.target_network.layers]  # all layer outputs
+        functor = K.function([inp, K.learning_phase()], outputs)  # evaluation function
+
+        t = (action_state)[np.newaxis, ...]
+        layer_outs = functor([t, 1.])
+
+        plt.figure()
+        for ind_layer in range(0,4):
+            p = os.path.join(path, 'layer_'+str(ind_layer))
+            if not os.path.exists(p):
+                os.makedirs(p)
+            layer = layer_outs[ind_layer]
+            for filter_index in range(layer.shape[-1]):
+                filter = layer[0,:,:,filter_index]
+                # shape_x = filter.shape[1]
+                # shape_y = filter.shape[2]
+                # img = out.reshape(shape_x,shape_y)
+                # plt.imshow(filter)
+                file_name = os.path.join(p, 'filter_'+ str(filter_index)+'.png')
+                plt.imsave(file_name, filter, format='png')
+
+        plt.close()
 
 # Agent class
 class DQNAgent_spatioalAttention(AbsDecisionMaker):
