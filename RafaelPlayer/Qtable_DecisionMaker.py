@@ -73,7 +73,7 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
 
     def update_epsilon(self):
         if self.IS_TRAINING:
-            self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
+            self._epsilon = max([self._epsilon * EPSILONE_DECAY, min_epsilon])  # change epsilon
         else:
             self._epsilon = 0
 

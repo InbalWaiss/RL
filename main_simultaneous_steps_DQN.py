@@ -36,8 +36,8 @@ if __name__ == '__main__':
 
     env = Environment(IS_TRAINING)
 
-    red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
-    # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-500000_new_DSM.pickle')
+    # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
+    red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=True, path_model_to_load='qtable_red-500000_new_DSM.pickle')
     # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-860000_VS_sa.pickle')
     # red_decision_maker = Qtable_DecisionMaker('keep_training_qtable_1900000_DQNkeras_900000\qtable_red-900000.pickle')
     # red_decision_maker = DQNAgent.DQNAgent()
@@ -47,15 +47,20 @@ if __name__ == '__main__':
 
     # blue_decision_maker = Qtable_DecisionMaker('qtable_blue-1000000_old_terminal_state.pickle')
     # blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
-    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=False, path_model_to_load='32X64X64X512X9_blue_75001_ 490.00max_ -26.50avg_-495.00min__1613808042.model')
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=True, path_model_to_load='statistics/18_02_06_54_DQNAgent_spatioalAttention_Q_table_1000000/qnet1000000.cptk')
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras('DQN_keras_blue_32X64X64X512X9_200001_ 249.00max_-131.98avg_-249.00min__1612271297.model')
     # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()#UPDATE_BLUE_CONTEXT)#
-    blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
+    # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
 
-
+    print("max steps = 80")
+    print("move penalty = 5")
+    print("win reward = 500")
+    print("num_frams= 2")
+    print("num conv layers= 2")
+    print("Qtable after 500_000, epsilon set to 0.33")
 
     env.blue_player = Entity(blue_decision_maker)
     env.red_player = Entity(red_decision_maker)
@@ -141,11 +146,11 @@ if __name__ == '__main__':
         # print info of episode:
         current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon())
         if current_episode.episode_number % SAVE_STATS_EVERY == 0:
-            if DQNAgent.AgentType == AgentType.DQN_keras or DQNAgent.AgentType == AgentType.DQN_basic:
+            if blue_decision_maker.type()== AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:
                 blue_decision_maker._decision_maker.print_model(initial_state_blue, episode, env.save_folder_path)
 
 
     env.end_run()
-    if DQNAgent.AgentType == AgentType.DQN_keras or DQNAgent.AgentType == AgentType.DQN_basic:
+    if blue_decision_maker.type() == AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:
         blue_decision_maker._decision_maker.print_model(initial_state_blue, episode, env.save_folder_path)
 
