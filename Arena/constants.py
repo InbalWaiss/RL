@@ -12,12 +12,12 @@ USE_BRESENHAM_LINE = False
 SIZE_X = 15
 SIZE_Y = 15
 
-MOVE_PENALTY = 1
-WIN_REWARD = 250 #will be change to be reward for reaching controling point
-LOST_PENALTY = 250
+MOVE_PENALTY = 5
+WIN_REWARD = 500 #will be change to be reward for reaching controling point
+LOST_PENALTY = 500
 TIE = 0
 
-MAX_STEPS_PER_EPISODE = 250
+MAX_STEPS_PER_EPISODE = 80# 250
 NUMBER_OF_ACTIONS = 9
 
 BLUE_N = 1 #blue player key in dict
@@ -29,6 +29,14 @@ YELLOW_N = 6 #to be used for line from blue to red
 GREY_N = 7 #obstacle key in dict
 GREEN_N = 8
 BLACK_N = 9
+
+class WinEnum(IntEnum):
+
+    Blue = 0
+    Red = 1
+    Tie = 2
+    NoWin = 3
+
 
 dict_of_colors = {1: (255, 0, 0),  #blue
                   2: (150, 100, 0), #darker blue
@@ -49,16 +57,16 @@ OBSTACLE = 1.
 DSM = np.array([
     [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
     [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
-    [0., 1., 1., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 1., 1., 0., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 0., 0., 1., 1., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+    [0., 1., 1., 0., 0., 0., 1., 0., 0., 0., 0., 0., 1., 0., 0.],
+    [0., 0., 0., 0., 0., 0., 1., 1., 0., 0., 0., 0., 1., 0., 0.],
+    [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+    [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 1., 0., 0.],
+    [0., 0., 0., 0., 1., 1., 1., 0., 0., 0., 0., 0., 1., 0., 0.],
     [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
     [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
     [0., 0., 0., 0., 0., 0., 1., 1., 1., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+    [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+    [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
     [0., 1., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
     [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 1., 1., 0.],
     [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
@@ -139,16 +147,17 @@ RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'RafaelPlayer/trained
 
 # EASY_AGENT = 'easy.pickle'
 # MEDIUM_AGENT = 'medium.pickle'
-# HARD_AGENT = 'qtable_red-1000000.pickle'
+# HARD_AGENT = 'qtable_red-1000000_old_terminal_state.pickle'
 
 SHOW_EVERY = 500
 NUM_OF_EPISODES = 5_000_000
-SAVE_STATS_EVERY = 10_000
+SAVE_STATS_EVERY = 2500
+USE_LOS_IN_STATE = True
 
 # params to evaluate trained models
 EVALUATE_SHOW_EVERY = 1
-EVALUATE_NUM_OF_EPISODES = 100
-EVALUATE_SAVE_STATS_EVERY = 100
+EVALUATE_NUM_OF_EPISODES = 200
+EVALUATE_SAVE_STATS_EVERY = 200
 
 # training mode
 IS_TRAINING=True

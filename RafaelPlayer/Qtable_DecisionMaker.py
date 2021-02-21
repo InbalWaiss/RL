@@ -1,7 +1,7 @@
 from Arena.CState import State
 from Arena.AbsDecisionMaker import AbsDecisionMaker
-from RafaelPlayer.QPlayer_constants import *
 from Arena.constants import *
+from RafaelPlayer.QPlayer_constants import *
 import numpy as np
 import os
 import pickle
@@ -73,7 +73,7 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
 
     def update_epsilon(self):
         if self.IS_TRAINING:
-            self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
+            self._epsilon = max([self._epsilon * EPSILONE_DECAY, min_epsilon])  # change epsilon
         else:
             self._epsilon = 0
 
@@ -81,8 +81,7 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
 
         state_entry = (state.my_pos.get_tuple(), state.enemy_pos.get_tuple())
 
-        # print(obs)
-        if np.random.random() > self._epsilon:
+        if np.random.random() > self._epsilon or self.UPDATE_CONTEXT == False:
             # get the action
             # TODO:  check with Inbal
             action = np.argmax(self._Q_matrix[state_entry])
