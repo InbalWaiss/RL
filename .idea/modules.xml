@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/RL.iml" filepath="$PROJECT_DIR$/.idea/RL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/SingleAgentCombat-main.iml" filepath="$PROJECT_DIR$/.idea/SingleAgentCombat-main.iml" />
     </modules>
   </component>
 </project>
