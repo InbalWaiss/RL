@@ -151,7 +151,7 @@ RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'RafaelPlayer/trained
 
 SHOW_EVERY = 500
 NUM_OF_EPISODES = 5_000_000
-SAVE_STATS_EVERY = 2500
+SAVE_STATS_EVERY = 10_000
 USE_LOS_IN_STATE = True
 
 # params to evaluate trained models

@@ -1,7 +1,7 @@
 from Arena.CState import State
 from Arena.AbsDecisionMaker import AbsDecisionMaker
-from Arena.constants import *
 from RafaelPlayer.QPlayer_constants import *
+from Arena.constants import *
 import numpy as np
 import os
 import pickle

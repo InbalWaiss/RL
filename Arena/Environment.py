@@ -230,6 +230,8 @@ class Episode():
                 if DSM[x][y] == 1.:
                     image[x][y] = dict_of_colors[GREY_N]
         img = Image.fromarray(image, 'RGB')
+        # img = img.resize((600, 600))
+        # Image._show(img)
         return img
 
 

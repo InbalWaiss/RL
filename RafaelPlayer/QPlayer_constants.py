@@ -5,6 +5,7 @@ min_epsilon = 0.05
 LEARNING_RATE = 0.5
 DISCOUNT = 0.95
 
-epsilon = 0.33 #randomness
+
+epsilon = 0.33 
 min_epsilon = 0.33
 
