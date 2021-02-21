@@ -12,7 +12,6 @@ from keras.layers import Dense, Dropout, Conv2D, MaxPooling2D, Activation, Flatt
 from keras.optimizers import Adam
 from keras.callbacks import TensorBoard
 
-from keras.models import Model
 from keras.optimizers import (Adam, RMSprop)
 from keras.layers import (Activation, Convolution2D, Dense, Flatten, Input,
         Permute, merge, multiply, Lambda, Reshape, TimeDistributed, LSTM, RepeatVector, Permute)
@@ -22,6 +21,7 @@ from keras import backend as K
 from keras.backend.tensorflow_backend import set_session
 
 import argparse
+import matplotlib.pyplot as plt
 
 from DQN.deeprl_prj.policy import *
 from DQN.deeprl_prj.objectives import *
@@ -69,6 +69,9 @@ class decision_maker_DQN_keras:
         self.model = None
         self.target_model = None
 
+        self.q_network = None
+        self.target_network = None
+
         self.is_training = IS_TRAINING
         self.numberOfSteps = 0
         self.burn_in = True
@@ -97,9 +100,9 @@ class decision_maker_DQN_keras:
         parser.add_argument('--learning_rate', default=0.0001, type=float, help='Learning rate')
         parser.add_argument('--initial_epsilon', default=1.0, type=float, help='Initial exploration probability in epsilon-greedy')
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
-        parser.add_argument('--exploration_steps', default=3000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
+        parser.add_argument('--exploration_steps', default=1000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
-        parser.add_argument('--num_frames', default=4, type=int, help='Number of frames to feed to Q-Network')
+        parser.add_argument('--num_frames', default=1, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=SIZE_X, type=int, help='Resized frame width')
         parser.add_argument('--frame_height', default=SIZE_Y, type=int, help='Resized frame height')
         parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')
@@ -107,7 +110,6 @@ class decision_maker_DQN_keras:
         parser.add_argument('--train_freq', default=4, type=int, help='The frequency of actions wrt Q-network update')
         parser.add_argument('--save_freq', default=50000, type=int, help='The frequency with which the network is saved')
         parser.add_argument('--eval_freq', default=50000, type=int, help='The frequency with which the policy is evlauted')
-        # parser.add_argument('--num_burn_in', default=1500, type=int, help='Number of steps to populate the replay memory before training starts')
         parser.add_argument('--num_burn_in', default=50000, type=int,
                             help='Number of steps to populate the replay memory before training starts')
         parser.add_argument('--load_network', default=False, action='store_true', help='Load trained mode')
@@ -232,8 +234,8 @@ class decision_maker_DQN_keras:
                 if not (args.recurrent):
                     h1 = Convolution2D(32, (3, 3), strides=3, activation="relu", name="conv1")(input_data)
                     h2 = Convolution2D(64, (3, 3), strides=2, activation="relu", name="conv2")(h1)
-                    h3 = Convolution2D(64, (2, 2), strides = 1, activation = "relu", name = "conv3")(h2)
-                    context = Flatten(name="flatten")(h3)
+                    # h3 = Convolution2D(64, (2, 2), strides = 1, activation = "relu", name = "conv3")(h2)
+                    context = Flatten(name="flatten")(h2)
                 else:
                     print('>>>> Defining Recurrent Modules...')
                     input_data_expanded = Reshape((input_shape[0], input_shape[1], input_shape[2], 1),
@@ -353,7 +355,7 @@ class decision_maker_DQN_keras:
 
 
 
-        if not self.burn_in: # not enough samples in replay buffer
+        if not self.burn_in: # enough samples in replay buffer
             if self.numberOfSteps % self.train_freq == 0:
                 action_state = self.history_processor.process_state_for_network(
                     self.atari_processor.process_state_for_network(new_state))
@@ -373,10 +375,6 @@ class decision_maker_DQN_keras:
                 # here we use hard target update as default
                 self.target_network.set_weights(self.q_network.get_weights())
 
-
-            # if self.numberOfSteps % (self.eval_freq * self.train_freq) == 0:
-            #     episode_reward_mean, episode_reward_std, eval_count = self.evaluate(env, 20, eval_count,
-            #                                                                         max_episode_length, True)
 
 
         self._previous_stats = new_state
@@ -422,6 +420,7 @@ class decision_maker_DQN_keras:
 
             next_states = np.stack([x.next_state for x in samples])
             mask = np.asarray([1 - int(x.is_terminal) for x in samples])
+            # mask = np.asarray([1 for x in samples])
             rewards = np.asarray([x.reward for x in samples])
 
         if self.no_target:
@@ -444,60 +443,6 @@ class decision_maker_DQN_keras:
     def update_replay_memory(self, transition):
         self.memory.append(transition[0], transition[1], transition[2], transition[4])
 
-
-    def evaluate(self, env, num_episodes, eval_count, max_episode_length=None, monitor=True):
-        """Test your agent with a provided environment.
-
-        Basically run your policy on the environment and collect stats
-        like cumulative reward, average episode length, etc.
-
-        You can also call the render function here if you want to
-        visually inspect your policy.
-        """
-        print("Evaluation starts.")
-
-        is_training = False
-        if self.load_network:
-            self.q_network.load_weights(self.load_network_path)
-            print("Load network from:", self.load_network_path)
-
-        state = env.reset()
-
-        idx_episode = 1
-        episode_frames = 0
-        episode_reward = np.zeros(num_episodes)
-        t = 0
-
-        while idx_episode <= num_episodes:
-            t += 1
-            action_state = self.history_processor.process_state_for_network(
-                self.atari_processor.process_state_for_network(state))
-            action = self.select_action(action_state, is_training, policy_type = 'GreedyEpsilonPolicy')
-            state, reward, done, info = env.step(action)
-            episode_frames += 1
-            episode_reward[idx_episode-1] += reward
-            if episode_frames > max_episode_length:
-                done = True
-            if done:
-                print("Eval: time %d, episode %d, length %d, reward %.0f" %
-                    (t, idx_episode, episode_frames, episode_reward[idx_episode-1]))
-                eval_count += 1
-                save_scalar(eval_count, 'eval/eval_episode_raw_reward', episode_reward[idx_episode-1], self.writer)
-                save_scalar(eval_count, 'eval/eval_episode_raw_length', episode_frames, self.writer)
-                sys.stdout.flush()
-                state = env.reset()
-                episode_frames = 0
-                idx_episode += 1
-                self.atari_processor.reset()
-                self.history_processor.reset()
-
-        reward_mean = np.mean(episode_reward)
-        reward_std = np.std(episode_reward)
-        print("Evaluation summury: num_episodes [%d], reward_mean [%.3f], reward_std [%.3f]" %
-            (num_episodes, reward_mean, reward_std))
-        sys.stdout.flush()
-
-        return reward_mean, reward_std, eval_count
 
 
     def _get_action(self, current_state, **kwargs):
@@ -530,6 +475,63 @@ class decision_maker_DQN_keras:
 
         self._action = action
         return action
+
+    def print_model(self, state, episode_number, path_to_dir):
+        path = os.path.join(path_to_dir, str(episode_number))
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        dqn_state = state.img
+        state_for_network = self.atari_processor.process_state_for_network(dqn_state)
+        action_state = self.history_processor.process_state_for_network(state_for_network)
+
+        # q_values = self.calc_q_values(action_state) #shold be action_state
+
+        # save image
+        plt.figure()
+        plt.imshow(dqn_state)
+        p = os.path.join(path, 'start_state_img.png')
+        plt.imsave(p, dqn_state, format='png')
+        plt.close()
+
+        inp = self.target_network.input  # input placeholder
+        outputs = [layer.output for layer in self.target_network.layers]  # all layer outputs
+        functor = K.function([inp, K.learning_phase()], outputs)  # evaluation function
+
+        t = (action_state)[np.newaxis, ...]
+        layer_outs = functor([t, 1.])
+
+        # ind_layer = 1
+        # layer = layer_outs[ind_layer]
+        # filter_index = 2
+        # fram = layer[:, :, :, filter_index]
+        # ff = fram[0, :]
+
+        p_fram_number = os.path.join(path, 'frams')
+        if not os.path.exists(p_fram_number):
+            os.makedirs(p_fram_number)
+        first_layer = layer_outs[0]
+        for fram_ind in range(self.num_frames):
+            fram = first_layer[0,:,:,fram_ind]
+            fram_file_name = os.path.join(p_fram_number, 'filter_' + str(fram_ind) + '.png')
+            plt.imsave(fram_file_name, fram, format='png')
+
+        for ind_layer in range(0, 3):
+            p_ind_layer = os.path.join(path, 'layer_' + str(ind_layer))
+            if not os.path.exists(p_ind_layer):
+                os.makedirs(p_ind_layer)
+            layer = layer_outs[ind_layer]
+            for filter_index in range(layer.shape[-1]):
+                fram = layer[:, :, :, filter_index]
+                p_fram_number = os.path.join(p_ind_layer, 'fram_' + str(ind_layer))
+                if not os.path.exists(p_fram_number):
+                    os.makedirs(p_fram_number)
+                filter = fram[0, :]
+                file_name = os.path.join(p_fram_number, 'filter_' + str(filter_index) + '.png')
+                plt.imsave(file_name, filter, format='png')
+
+        plt.close()
+
 
 # Agent class
 class DQNAgent_keras:

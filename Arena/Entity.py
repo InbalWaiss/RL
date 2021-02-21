@@ -1,6 +1,14 @@
+
 from Arena.AbsDecisionMaker import AbsDecisionMaker
 from Arena.constants import np, SIZE_X, SIZE_Y, DSM, AgentAction
 
+
+class CPoint:
+
+    def __init__(self, x, y):
+
+        self.x = x
+        self.y = y
 
 class Entity:
     def __init__(self, decision_maker: AbsDecisionMaker = None):

@@ -1,4 +1,7 @@
 
+import cv2
+
+from Arena.AbsDecisionMaker import AbsDecisionMaker
 from Arena.constants import *
 from RafaelPlayer.DQN_constants import *
 import os
@@ -10,6 +13,9 @@ from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Conv2D, MaxPooling2D, Activation, Flatten
 from keras.optimizers import Adam
 from keras.callbacks import TensorBoard
+import matplotlib.pyplot as plt
+from keras import backend as K
+
 
 REPLAY_MEMORY_SIZE = 50000 # how many last samples to keep for model training
 MIN_REPLAY_MEMORY_SIZE = 100 # minimum number of steps in a memory to start training
@@ -58,7 +64,7 @@ class ModifiedTensorBoard(TensorBoard):
 
         pass
 
-class decision_maker_DQN:
+class decision_maker_DQN():
     def __init__(self, path_model_to_load=None):
         self._previous_stats = {}
         self._action = {}
@@ -68,13 +74,75 @@ class decision_maker_DQN:
         self.target_update_counter = 0
 
         self._Initialize_networks(path_model_to_load)
-        self.IS_TRAINING = IS_TRAINING
 
     def _set_previous_state(self, state):
         self._previous_stats = state
 
     def _set_epsilon(self, input_epsilon):
         self._epsilon = input_epsilon
+
+    def get_layer_outputs(self, state):
+
+        outputs = [layer.output for layer in self.model.layers]  # all layer outputs
+        comp_graph = [K.function([self.model.input] + [K.learning_phase()], [output]) for output in
+                      outputs]  # evaluation functions
+
+        # Testing
+        layer_outputs_list = [op([state, 1.]) for op in comp_graph]
+        layer_outputs = []
+
+        for layer_output in layer_outputs_list:
+            print(layer_output[0][0].shape, end='\n-------------------\n')
+            layer_outputs.append(layer_output[0][0])
+
+        return layer_outputs
+
+    def print_model(self, state, episode_number, path_to_dir):
+        img = np.array(state.img).reshape(-1, *np.array(state.img).shape) / 255
+        path = os.path.join(path_to_dir, str(episode_number))
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        layer_outputs = self.get_layer_outputs(img)
+
+        layer_number = 0
+
+        x_max = layer_outputs[layer_number].shape[0]
+        y_max = layer_outputs[layer_number].shape[1]
+        n = layer_outputs[layer_number].shape[2]
+
+        L = []
+        for i in range(n):
+            L.append(np.zeros((x_max, y_max)))
+
+        for i in range(n):
+            for x in range(x_max):
+                for y in range(y_max):
+                    L[i][x][y] = layer_outputs[layer_number][x][y][i]
+
+
+        plt.figure()
+        index = 0
+        for img in L:
+            # plt.imshow(img, interpolation='nearest')
+            p = os.path.join(path, 'img_'+ str(index)+'.png')
+            plt.imsave(p, img, format='png')
+            index+=1
+        # plt.figure()
+        # plt.imshow(L[00])
+        plt.close()
+
+
+        # save image
+        plt.figure()
+        org_img = img[0, :, :, :]
+        # plt.imshow(org_img)
+        p = os.path.join(path, 'state_img.png')
+        plt.imsave(p, org_img, format='png')
+        plt.close()
+
+        # cv2.imwrite('D:\\RL\\layer0.jpg', L[00])
+        # plt.imsave('D:\\RL\\layer22.png', L[22], format='png')
 
     def reset_networks(self):
         self._Initialize_networks()
@@ -102,17 +170,22 @@ class decision_maker_DQN:
         model = Sequential()
         # model.add(Conv2D(256, (3, 3), input_shape=OBSERVATION_SPACE_VALUES)) # in small world 15X15X3
         #model.add(Conv2D(16, (3)3) input_shape=OBSERVATION_SPACE_VALUES))
-        model.add(Conv2D(32, (4, 4), input_shape=OBSERVATION_SPACE_VALUES))
+        model.add(Conv2D(64, (3, 3), input_shape=OBSERVATION_SPACE_VALUES))
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2,2)))
-        model.add(Dropout(0.2))
+        model.add(Dropout(0.3))
 
-        # # model.add(Conv2D(256, (3,3)))
-        # #model.add(Conv2D(32, (3, 3)))
-        # model.add(Conv2D(16, (4, 4)))
-        # model.add(Activation('relu'))
-        # model.add(MaxPooling2D(pool_size=(2, 2)))
-        # model.add(Dropout(0.2))
+        # model.add(Conv2D(256, (3,3)))
+        #model.add(Conv2D(32, (3, 3)))
+        model.add(Conv2D(32, (3, 3)))
+        model.add(Activation('relu'))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
+        model.add(Dropout(0.3))
+
+
+
+
+
 
         model.add(Flatten()) # this converts out 3D feature maps to 1D feature vectors
         model.add(Dense(64))
@@ -174,7 +247,10 @@ class decision_maker_DQN:
             Y.append(current_qs)
 
         # Fit on all samples as one batch, log only on terminal state
+        # start = time.time()
         self.model.fit(np.array(X) / 255, np.array(Y), batch_size = MINIBATCH_SIZE, verbose=0, shuffle=False, callbacks=[self.tensorboard] if terminal_state else None)
+        # endt = time.time()
+        # print('Fitting time == ', endt-start)
 
         # Update target network counter every episode
         if terminal_state:
@@ -189,9 +265,9 @@ class decision_maker_DQN:
     def get_qs(self, state):
         return self.model.predict(np.array(state).reshape(-1, *np.array(state).shape) / 255)[0]
 
-    def _get_action(self, current_state):
+    def _get_action(self, current_state, is_training=False):
         dqn_state = current_state.img
-        if np.random.random() > self._epsilon:
+        if np.random.random() > self._epsilon or not is_training:
             # Get action from network
             action = np.argmax(self.get_qs(dqn_state))
         else:
@@ -202,23 +278,20 @@ class decision_maker_DQN:
         return action
 
     def update_epsilon(self):
-        if self.IS_TRAINING:
-            self._epsilon = max([self._epsilon * EPSILONE_DECAY, 0.05])  # change epsilon
-        else:
-            self._epsilon = 0 #inbal: maybe epsilon should be 0.05?
+        self._epsilon = max([self._epsilon * EPSILONE_DECAY, min_epsilon])  # change epsilon
+
 # Agent class
-class DQNAgent:
-    def __init__(self, UPDATE_CONTEXT = True, path_model_to_load=None):
+class DQNAgent():
+    def __init__(self, UPDATE_CONTEXT=True, path_model_to_load=None):
         self._previous_state = None
         self._action = None
         self.episode_number = 0
-
         self._decision_maker = decision_maker_DQN(path_model_to_load)
         self.min_reward = -np.Inf
         self._type = AgentType.DQN_basic
         self.path_model_to_load = path_model_to_load
+        self.is_training = IS_TRAINING
         self.UPDATE_CONTEXT = UPDATE_CONTEXT
-
 
     def type(self) -> AgentType:
         return self._type
@@ -231,19 +304,27 @@ class DQNAgent:
         pass
 
     def get_action(self, current_state):
-        action = self._decision_maker._get_action(current_state)
+        action = self._decision_maker._get_action(current_state, is_training=self.is_training)
         self._action = AgentAction(action)
         return self._action
 
     def get_epsolon(self):
         return self._decision_maker._epsilon
 
-    def update_context(self, new_state, reward, is_terminal):
-        if self.UPDATE_CONTEXT:
-            transition = (self._previous_state.img, self._action, reward, new_state.img, is_terminal)
-            self._decision_maker.update_replay_memory(transition)
-            self._decision_maker.train(is_terminal, self.episode_number)
-            self._previous_state = new_state
+    def update_context(self, new_state, reward, is_terminal, write_file=False):
+
+        if not self.is_training or not self.UPDATE_CONTEXT:
+            return
+
+        transition = (self._previous_state.img, self._action, reward, new_state.img, is_terminal)
+        self._decision_maker.update_replay_memory(transition)
+        self._decision_maker.train(is_terminal, self.episode_number)
+
+        self._previous_state = new_state
+
+        if write_file:
+            img = np.array(new_state.img).reshape(-1, *np.array(new_state.img).shape) / 255
+            self._decision_maker.print_model(img)
 
     def save_model(self, ep_rewards, path_to_model, player_color):
 

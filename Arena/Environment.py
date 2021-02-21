@@ -1,3 +1,6 @@
+
+import time
+
 from RafaelPlayer.Qtable_DecisionMaker import *
 from RafaelPlayer.QPlayer_constants import START_EPSILON, EPSILONE_DECAY, LEARNING_RATE, DISCOUNT
 from Arena.Position import Position
@@ -5,6 +8,7 @@ from Arena.graphics import print_stats, print_episode_graphics
 from Arena.helper_funcs import *
 import numpy as np
 from PIL import Image
+import pandas as pd
 
 
 class Environment(object):
@@ -18,6 +22,8 @@ class Environment(object):
         self.wins_for_red = 0
         self.tie_count = 0
         self.starts_at_win = 0
+        self.starts_at_win_in_last_SHOW_EVERY_games = 0
+        self.win_status: WinEnum = WinEnum.NoWin
 
         self.blue_player = None
         self.red_player = None
@@ -40,41 +46,73 @@ class Environment(object):
             os.makedirs(save_folder_path)
         self.path_for_run = save_folder_path
 
+    def reset_players_positions(self, episode_number):
+        is_los = True
+        while is_los:
+            self.blue_player._choose_random_position()
+            self.red_player._choose_random_position()
+            is_los, _ = check_if_LOS(self.blue_player.x, self.blue_player.y, self.red_player.x, self.red_player.y)
+
+
+        if self.SHOW_EVERY==1 or episode_number % (self.SHOW_EVERY-1) == 0:
+            self.starts_at_win_in_last_SHOW_EVERY_games = 0
+
     def update_win_counters(self, steps_current_game):
-        reward_blue, reward_red, blue_dominate_red, red_dominate_blue = self.handle_reward(steps_current_game)
-        if blue_dominate_red:
+
+        if self.win_status == WinEnum.Blue:
             self.wins_for_blue += 1
-        elif red_dominate_blue:
+        elif self.win_status == WinEnum.Red:
             self.wins_for_red += 1
-        else:
+        elif self.win_status == WinEnum.Tie:
             self.tie_count += 1
 
     def handle_reward(self, steps_current_game):
-        # handle the rewarding
-        blue_dominate_red, _ = is_dominating(self.blue_player, self.red_player)
-        red_dominate_blue, _ = is_dominating(self.red_player, self.blue_player)
-        reward = 0
-        if blue_dominate_red and red_dominate_blue:
-            reward = TIE
-        elif blue_dominate_red:
-            reward = WIN_REWARD - steps_current_game*MOVE_PENALTY
-        elif red_dominate_blue:
-            reward = -WIN_REWARD + steps_current_game*MOVE_PENALTY
+
+        reward_value = WIN_REWARD - steps_current_game * MOVE_PENALTY
+        if self.win_status == WinEnum.Blue:
+            reward = reward_value
+        elif self.win_status == WinEnum.Red:
+            reward = -1 * reward_value
+        else:
+            reward = 0
 
         reward_blue = reward
         reward_red = -reward
-        return reward_blue, reward_red, blue_dominate_red, red_dominate_blue
+        return reward_blue, reward_red
 
-    def check_terminal(self):
-        flag_red_on_blue, _ = is_dominating(self.red_player, self.blue_player)
-        flag_blue_on_red, _ = is_dominating(self.blue_player, self.red_player)
-        if self.blue_player.x == self.red_player.x and self.blue_player.y == self.red_player.y:
-            return True
-        elif flag_red_on_blue:
-            return True
-        elif flag_blue_on_red:
-            return True
-        return False
+    def compute_terminal(self) -> WinEnum:
+        """dominating point is defined to be a point that:
+         1. has LOS to the dominated_point
+         2. there IS an action that executing it will end in a point that have no LOS to the second_player
+         3. there is NO action for the second_player to take that will end in no LOS to the first_player
+
+         The function will return True if the first player is dominating the second player
+         False otherwise"""
+
+        first_player = self.blue_player
+        second_player = self.red_player
+        win_status = WinEnum.NoWin
+        is_los, _ = check_if_LOS(first_player.x, first_player.y, second_player.x, second_player.y)
+        if not is_los:  # no LOS
+            win_status = WinEnum.NoWin
+            self.win_status = win_status
+            return win_status
+
+        can_first_escape_second, _ = can_escape(first_player, second_player)
+        can_second_escape_first, _ = can_escape(second_player, first_player)
+
+        if can_first_escape_second and not can_second_escape_first:
+            win_status = WinEnum.Blue
+
+        elif can_second_escape_first and not can_first_escape_second:
+            win_status = WinEnum.Red
+
+        else:
+            win_status = WinEnum.Tie
+
+        self.win_status = win_status
+        return win_status
+
 
     def get_observation_for_blue(self)-> State:
 
@@ -90,22 +128,23 @@ class Environment(object):
         red_pos = Position(self.red_player.x, self.red_player.y)
         return State(my_pos=red_pos, enemy_pos=blue_pos)
 
-    def end_run(self, UPDATE_RED_CONTEXT=True, UPDATE_BLUE_CONTEXT=True):
+    def end_run(self):
         STATS_RESULTS_RELATIVE_PATH_THIS_RUN = os.path.join(self.path_for_run, STATS_RESULTS_RELATIVE_PATH)
-        save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH_THIS_RUN,
+        self.save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH_THIS_RUN,
                                      format(f"{str(time.strftime('%d'))}_{str(time.strftime('%m'))}_"
                                             f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}_{Agent_type_str[self.blue_player._decision_maker.type()]}_{Agent_type_str[self.red_player._decision_maker.type()]}"))
 
         # save info on run
-        self.save_stats(save_folder_path, UPDATE_RED_CONTEXT, UPDATE_BLUE_CONTEXT)
+        self.save_stats(self.save_folder_path)
 
         # print and save figures
-        print_stats(self.episodes_rewards, save_folder_path, self.SHOW_EVERY)
-        print_stats(self.steps_per_episode, save_folder_path,self.SHOW_EVERY, True, True)
+        print_stats(self.episodes_rewards, self.save_folder_path, self.SHOW_EVERY)
+        print_stats(self.steps_per_episode, self.save_folder_path,self.SHOW_EVERY, True, True)
 
 
 
-    def save_stats(self, save_folder_path, UPDATE_RED_CONTEXT, UPDATE_BLUE_CONTEXT):
+
+    def save_stats(self, save_folder_path):
 
         if not os.path.exists(save_folder_path):
             os.makedirs(save_folder_path)
@@ -135,6 +174,7 @@ class Environment(object):
         print("% of games started at win: ", self.starts_at_win / self.NUMBER_OF_EPISODES * 100)
 
         info = {f"NUM_OF_EPISODES": [NUM_OF_EPISODES],
+                f"USE_LOS_IN_STATE": [USE_LOS_IN_STATE],
                 f"MOVE_PENALTY": [MOVE_PENALTY],
                 f"WIN_REWARD": [WIN_REWARD],
                 f"LOST_PENALTY": [LOST_PENALTY],
@@ -149,10 +189,8 @@ class Environment(object):
                 f"%TIES": [self.tie_count/self.NUMBER_OF_EPISODES*100],
                 f"%Blue_agent_type" : [Agent_type_str[self.blue_player._decision_maker.type()]],
                 f"%Blue_agent_model_loded": [self.blue_player._decision_maker.path_model_to_load],
-                f"%UPDATE_BLUE_CONTEXT" : [UPDATE_BLUE_CONTEXT],
                 f"%Red_agent_type" : [Agent_type_str[self.red_player._decision_maker.type()]],
-                f"%Red_agent_model_loded": [self.red_player._decision_maker.path_model_to_load],
-                f"%UPDATE_RED_CONTEXT" : [UPDATE_RED_CONTEXT],}
+                f"%Red_agent_model_loded": [self.red_player._decision_maker.path_model_to_load]}
 
 
         df = pd.DataFrame(info)
@@ -175,9 +213,9 @@ class Episode():
         else:
             self.show = False
 
-    def print_episode(self, env, last_step_number):
+    def print_episode(self, env, last_step_number, save_file=False):
         if self.show:
-            print_episode_graphics(env, self, last_step_number)
+            print_episode_graphics(env, self, last_step_number, save_file)
 
     def get_image(self, env, image_for_red = False):
         image = np.zeros((SIZE_X, SIZE_Y, 3), dtype=np.uint8) # starts an rbg of small world
@@ -192,8 +230,6 @@ class Episode():
                 if DSM[x][y] == 1.:
                     image[x][y] = dict_of_colors[GREY_N]
         img = Image.fromarray(image, 'RGB')
-        # img = img.resize((600, 600))
-        # Image._show(img)
         return img
 
 
@@ -216,11 +252,13 @@ class Episode():
             blue_win_per_for_last_games = np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])>0)/number_of_episodes*100
             tie_per_for_last_games = (np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])==0)-1)/number_of_episodes*100
             red_win_per_for_last_games = np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])<0)/number_of_episodes*100
-            print(f"in the last {number_of_episodes} episodes, BLUE won: {blue_win_per_for_last_games}%, RED won {red_win_per_for_last_games}%, ended in TIE: {tie_per_for_last_games}% of games")
+            print(f"in the last {number_of_episodes} episodes, BLUE won: {blue_win_per_for_last_games}%, RED won {red_win_per_for_last_games}%, ended in TIE: {tie_per_for_last_games}%, started at TIE: {env.starts_at_win_in_last_SHOW_EVERY_games}% of games")
 
             print(f"mean rewards of all episodes for blue player: {np.mean(env.episodes_rewards)}\n")
 
             self.print_episode(env, steps_current_game)
+
+
         if self.episode_number % SAVE_STATS_EVERY == 0:
             env.end_run()
 
