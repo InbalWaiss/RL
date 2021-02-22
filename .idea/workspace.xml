@@ -2,33 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="training mode">
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/DSM_excel.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/.vscode/launch.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/.vscode/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/#steps_860000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/checkpoint" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/qnet860000.cptk.data-00000-of-00001" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/qnet860000.cptk.index" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/qnet860000.cptk.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/qtable_red-860000.pickle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/rewards_860000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/qtable_red-880000_vs_SA.pickle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/AbsDecisionMaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/AbsDecisionMaker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Entity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Position.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Position.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/geometry.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/geometry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/helper_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/helper_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/main_simultaneous_steps_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/dqn_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/dqn_keras.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/dqn_tf_spatialAt.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/dqn_tf_spatialAt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/dqn_tf_temporalAt.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/dqn_tf_temporalAt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/objectives.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/objectives.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/policy.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/policy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/preprocessors.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/preprocessors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/dqn_atari.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/dqn_atari.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/DQN_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/DQN_constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/QPlayer_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/QPlayer_constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/Qtable_DecisionMaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/Qtable_DecisionMaker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,8 +176,8 @@
       <item itemvalue="Python.DQNAgent_keras" />
       <item itemvalue="Python.DQNAgent_spatioalAttention" />
       <item itemvalue="Python.load_network" />
-      <item itemvalue="Python.main_simultaneous_steps_DQN" />
       <item itemvalue="Python.main_simultaneous_steps_DQN (1)" />
+      <item itemvalue="Python.main_simultaneous_steps_DQN" />
     </list>
     <recent_temporary>
       <list>
