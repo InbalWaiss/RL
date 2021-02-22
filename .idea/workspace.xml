@@ -12,10 +12,8 @@
       <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/qtable_red-860000.pickle" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/rewards_860000.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/qtable_red-880000_vs_SA.pickle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/QPlayer_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/QPlayer_constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -398,7 +396,8 @@
     <MESSAGE value="training mode" />
     <MESSAGE value="changes" />
     <MESSAGE value="packages" />
-    <option name="LAST_COMMIT_MESSAGE" value="packages" />
+    <MESSAGE value="networks" />
+    <option name="LAST_COMMIT_MESSAGE" value="networks" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
