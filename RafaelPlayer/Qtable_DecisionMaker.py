@@ -82,8 +82,6 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
         state_entry = (state.my_pos.get_tuple(), state.enemy_pos.get_tuple())
 
         if np.random.random() > self._epsilon or self.UPDATE_CONTEXT == False:
-            # get the action
-            # TODO:  check with Inbal
             action = np.argmax(self._Q_matrix[state_entry])
         else:
             action = np.random.randint(0, NUMBER_OF_ACTIONS)
