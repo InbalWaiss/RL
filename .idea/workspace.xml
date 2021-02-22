@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="training mode">
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/.vscode/launch.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/.vscode/settings.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/#steps_860000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/checkpoint" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/qnet860000.cptk.data-00000-of-00001" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/qnet860000.cptk.index" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/qnet860000.cptk.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/qtable_red-860000.pickle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/rewards_860000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/qtable_red-880000_vs_SA.pickle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/QPlayer_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/QPlayer_constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/DQN_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/DQN_constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/Qtable_DecisionMaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/Qtable_DecisionMaker.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -174,8 +166,8 @@
       <item itemvalue="Python.DQNAgent_keras" />
       <item itemvalue="Python.DQNAgent_spatioalAttention" />
       <item itemvalue="Python.load_network" />
-      <item itemvalue="Python.main_simultaneous_steps_DQN (1)" />
       <item itemvalue="Python.main_simultaneous_steps_DQN" />
+      <item itemvalue="Python.main_simultaneous_steps_DQN (1)" />
     </list>
     <recent_temporary>
       <list>
@@ -358,7 +350,13 @@
       <option name="presentableId" value="LOCAL‎00027" />
       <updated>1613913272796</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL‎00028" summary="networks">
+      <created>1613981919862</created>
+      <option name="number" value="LOCAL‎00028" />
+      <option name="presentableId" value="LOCAL‎00028" />
+      <updated>1613981919862</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
