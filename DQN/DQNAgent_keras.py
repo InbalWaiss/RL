@@ -232,7 +232,7 @@ class decision_maker_DQN_keras:
                 output = Dense(num_actions, name="output")(flatten_hidden)
             else:
                 if not (args.recurrent):
-                    h1 = Convolution2D(32, (3, 3), strides=3, activation="relu", name="conv1")(input_data)
+                    h1 = Convolution2D(32, (3, 3), strides=1, activation="relu", name="conv1")(input_data)
                     h2 = Convolution2D(64, (3, 3), strides=2, activation="relu", name="conv2")(h1)
                     # h3 = Convolution2D(64, (2, 2), strides = 1, activation = "relu", name = "conv3")(h2)
                     context = Flatten(name="flatten")(h2)
@@ -498,6 +498,8 @@ class decision_maker_DQN_keras:
         outputs = [layer.output for layer in self.target_network.layers]  # all layer outputs
         functor = K.function([inp, K.learning_phase()], outputs)  # evaluation function
 
+        # test = np.random.random(input_shape)[np.newaxis, ...]
+        # layer_outs = [func([test, 1.]) for func in functor]
         t = (action_state)[np.newaxis, ...]
         layer_outs = functor([t, 1.])
 

@@ -37,31 +37,21 @@ if __name__ == '__main__':
 
     env = Environment(IS_TRAINING)
 
-    # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
-    red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-500000_new_DSM.pickle')
-    # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-860000_VS_sa.pickle')
+    red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
+    # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-500000_new_DSM.pickle')
     # red_decision_maker = Qtable_DecisionMaker('keep_training_qtable_1900000_DQNkeras_900000\qtable_red-900000.pickle')
-    # red_decision_maker = DQNAgent.DQNAgent()
-    # red_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    # red_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
 
 
-    # blue_decision_maker = Qtable_DecisionMaker('qtable_blue-1000000_old_terminal_state.pickle')
     # blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
-    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=False, path_model_to_load='32X64X64X512X9_blue_75001_ 490.00max_ -26.50avg_-495.00min__1613808042.model')
-    blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
-    # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=True, path_model_to_load='statistics/18_02_06_54_DQNAgent_spatioalAttention_Q_table_1000000/qnet1000000.cptk')
-    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras('DQN_keras_blue_32X64X64X512X9_200001_ 249.00max_-131.98avg_-249.00min__1612271297.model')
-    # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()#UPDATE_BLUE_CONTEXT)#
+    # blue_decision_maker = Qtable_DecisionMaker('qtable_blue-1000000_old_terminal_state.pickle')
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
-
-    print("max steps = 80")
-    print("move penalty = 5")
-    print("win reward = 500")
-    print("num_frams= 2")
-    print("num conv layers= 2")
-    print("Qtable after 500_000, epsilon set to 0.33")
+    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras('DQN_keras_blue_32X64X64X512X9_200001_ 249.00max_-131.98avg_-249.00min__1612271297.model')
+    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=False, path_model_to_load='32X64X64X512X9_blue_75001_ 490.00max_ -26.50avg_-495.00min__1613808042.model')
+    # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
+    # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=True, path_model_to_load='statistics/18_02_06_54_DQNAgent_spatioalAttention_Q_table_1000000/qnet1000000.cptk')
+    blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()#UPDATE_BLUE_CONTEXT)#
+    # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
 
     env.blue_player = Entity(blue_decision_maker)
     env.red_player = Entity(red_decision_maker)
@@ -95,10 +85,12 @@ if __name__ == '__main__':
             # Check if the start state is terminal
             current_episode.is_terminal = (env.compute_terminal() is not WinEnum.NoWin)
             if current_episode.is_terminal:
-                env.tie_count+=1
+                env.update_win_counters(steps_current_game)
                 env.starts_at_win += 1
                 env.starts_at_win_in_last_SHOW_EVERY_games +=1
-                current_episode.episode_reward_blue = 0
+                reward_step_blue, reward_step_red = env.handle_reward(steps_current_game)
+                current_episode.episode_reward_blue = reward_step_blue
+                current_episode.episode_reward_red = reward_step_red
                 break
 
             ##### Blue's turn! #####
@@ -119,6 +111,7 @@ if __name__ == '__main__':
             # Handle rewards
             reward_step_blue, reward_step_red = env.handle_reward(steps_current_game)
             current_episode.episode_reward_blue = reward_step_blue
+            current_episode.episode_reward_red = reward_step_red
 
             # Update models
             blue_decision_maker.update_context(new_observation_for_blue,
@@ -132,7 +125,6 @@ if __name__ == '__main__':
             current_episode.print_episode(env, steps_current_game)
             if current_episode.is_terminal:
                 env.update_win_counters(steps_current_game)
-
                 break
 
         if steps_current_game == MAX_STEPS_PER_EPISODE:
@@ -141,7 +133,8 @@ if __name__ == '__main__':
             current_episode.is_terminal = True
 
         # for statistics
-        env.episodes_rewards.append(current_episode.episode_reward_blue)
+        env.episodes_rewards_blue.append(current_episode.episode_reward_blue)
+        env.episodes_rewards_red.append(current_episode.episode_reward_red)
         env.steps_per_episode.append(steps_current_game)
 
         # print info of episode:

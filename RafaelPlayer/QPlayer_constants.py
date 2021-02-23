@@ -6,6 +6,6 @@ LEARNING_RATE = 0.5
 DISCOUNT = 0.95
 
 
-epsilon = 0.15
+epsilon = 1
 min_epsilon = 0.15
 

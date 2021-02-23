@@ -13,8 +13,10 @@ import pandas as pd
 
 class Environment(object):
     def __init__(self, TRAIN=True):
-        self.episodes_rewards = []
-        self.episodes_rewards.append(0)
+        self.episodes_rewards_blue = []
+        self.episodes_rewards_blue.append(0)
+        self.episodes_rewards_red = []
+        self.episodes_rewards_red.append(0)
         self.steps_per_episode = []
         self.steps_per_episode.append(0)
         self.number_of_steps = 0
@@ -67,13 +69,14 @@ class Environment(object):
             self.tie_count += 1
 
     def handle_reward(self, steps_current_game):
-
         reward_value = WIN_REWARD - steps_current_game * MOVE_PENALTY
         if self.win_status == WinEnum.Blue:
             reward = reward_value
         elif self.win_status == WinEnum.Red:
             reward = -1 * reward_value
-        else:
+        elif self.win_status == WinEnum.Tie or steps_current_game==MAX_STEPS_PER_EPISODE:
+            return -steps_current_game, -steps_current_game
+        else: #self.win_status == WinEnum.NoWin
             reward = 0
 
         reward_blue = reward
@@ -138,8 +141,9 @@ class Environment(object):
         self.save_stats(self.save_folder_path)
 
         # print and save figures
-        print_stats(self.episodes_rewards, self.save_folder_path, self.SHOW_EVERY)
-        print_stats(self.steps_per_episode, self.save_folder_path,self.SHOW_EVERY, True, True)
+        print_stats(self.episodes_rewards_blue, self.save_folder_path, self.SHOW_EVERY, player=Color.Blue)
+        print_stats(self.episodes_rewards_red, self.save_folder_path, self.SHOW_EVERY, player=Color.Red)
+        print_stats(self.steps_per_episode, self.save_folder_path,self.SHOW_EVERY, save_figure=True, steps=True, player=Color.Blue)
 
 
 
@@ -197,8 +201,8 @@ class Environment(object):
         df.to_csv(os.path.join(save_folder_path, 'Statistics.csv'), index=False)
 
         # save models
-        self.red_player._decision_maker.save_model(self.episodes_rewards, save_folder_path, Color.Red)
-        self.blue_player._decision_maker.save_model(self.episodes_rewards, save_folder_path, Color.Blue)
+        self.red_player._decision_maker.save_model(self.episodes_rewards_blue, save_folder_path, Color.Red)
+        self.blue_player._decision_maker.save_model(self.episodes_rewards_blue, save_folder_path, Color.Blue)
 
 
 class Episode():
@@ -237,8 +241,8 @@ class Episode():
 
     def print_info_of_episode(self, env, steps_current_game, blue_epsilon):
         if self.show:
-            if len(env.episodes_rewards)<env.SHOW_EVERY:
-                number_of_episodes = len(env.episodes_rewards[-env.SHOW_EVERY:]) - 1
+            if len(env.episodes_rewards_blue)<env.SHOW_EVERY:
+                number_of_episodes = len(env.episodes_rewards_blue[-env.SHOW_EVERY:]) - 1
             else:
                 number_of_episodes = env.SHOW_EVERY
 
@@ -249,14 +253,14 @@ class Episode():
             print(
                 f"mean number of steps of last {number_of_episodes} episodes: , {np.mean(env.steps_per_episode[-env.SHOW_EVERY:])}")
 
-            print(f"mean rewards of last {number_of_episodes} episodes for blue player: {np.mean(env.episodes_rewards[-env.SHOW_EVERY:])}")
+            print(f"mean rewards of last {number_of_episodes} episodes for blue player: {np.mean(env.episodes_rewards_blue[-env.SHOW_EVERY:])}")
 
-            blue_win_per_for_last_games = np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])>0)/number_of_episodes*100
-            tie_per_for_last_games = (np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])==0)-1)/number_of_episodes*100
-            red_win_per_for_last_games = np.sum(np.array(env.episodes_rewards[-env.SHOW_EVERY:])<0)/number_of_episodes*100
+            blue_win_per_for_last_games = np.sum(np.array(env.episodes_rewards_blue[-env.SHOW_EVERY:]) > 0) / number_of_episodes * 100
+            tie_per_for_last_games = (np.sum(np.array(env.episodes_rewards_blue[-env.SHOW_EVERY:]) == 0) - 1) / number_of_episodes * 100
+            red_win_per_for_last_games = np.sum(np.array(env.episodes_rewards_blue[-env.SHOW_EVERY:]) < 0) / number_of_episodes * 100
             print(f"in the last {number_of_episodes} episodes, BLUE won: {blue_win_per_for_last_games}%, RED won {red_win_per_for_last_games}%, ended in TIE: {tie_per_for_last_games}%, started at TIE: {env.starts_at_win_in_last_SHOW_EVERY_games}% of games")
 
-            print(f"mean rewards of all episodes for blue player: {np.mean(env.episodes_rewards)}\n")
+            print(f"mean rewards of all episodes for blue player: {np.mean(env.episodes_rewards_blue)}\n")
 
             self.print_episode(env, steps_current_game)
 

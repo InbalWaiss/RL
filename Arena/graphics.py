@@ -8,7 +8,7 @@ from Arena.helper_funcs import *
 from time import sleep
 
 
-def print_stats(array_of_results, save_folder_path, plot_every, save_figure=True, steps=False):
+def print_stats(array_of_results, save_folder_path, plot_every, save_figure=True, steps=False, player=Color.Blue):
     moving_avg = np.convolve(array_of_results, np.ones((plot_every,)) / plot_every, mode='valid')
     plt.figure()
     plt.plot([i for i in range(len(moving_avg))], moving_avg)
@@ -22,11 +22,16 @@ def print_stats(array_of_results, save_folder_path, plot_every, save_figure=True
             plt.savefig(save_folder_path + os.path.sep + '#steps_' + str(len(array_of_results) - 1))
     else:
         plt.axis([0, len(array_of_results), -WIN_REWARD - 50, WIN_REWARD + 50])
-        plt.suptitle(f"Rewards per episode")
+        if player == Color.Blue:
+            plt.suptitle(f"Rewards per episode for BLUE player")
+        if player == Color.Red:
+                plt.suptitle(f"Rewards per episode for RED player")
         plt.ylabel(f"Reward {SHOW_EVERY}ma")
         if save_figure:
-            plt.savefig(save_folder_path + os.path.sep + 'rewards_' + str(len(array_of_results) - 1))
-
+            if player == Color.Blue:
+                plt.savefig(save_folder_path + os.path.sep + 'rewards_BLUE' + str(len(array_of_results) - 1))
+            else:
+                plt.savefig(save_folder_path + os.path.sep + 'rewards_RED' + str(len(array_of_results) - 1))
     plt.close()
     # plt.show()
 

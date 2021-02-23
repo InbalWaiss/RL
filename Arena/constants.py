@@ -15,6 +15,7 @@ SIZE_Y = 15
 MOVE_PENALTY = 5
 WIN_REWARD = 500 #will be change to be reward for reaching controling point
 LOST_PENALTY = 500
+MAX_STEPS_PER_EPISODE_PENALTY = 50
 TIE = 0
 
 MAX_STEPS_PER_EPISODE = 80# 250
