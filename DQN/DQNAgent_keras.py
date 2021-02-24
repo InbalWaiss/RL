@@ -34,7 +34,7 @@ MIN_REPLAY_MEMORY_SIZE = 1000 # minimum number of steps in a memory to start tra
 MINIBATCH_SIZE = 64 # how many samples to use for training
 UPDATE_TARGET_EVERY = 15 # number of terminal states
 OBSERVATION_SPACE_VALUES = (SIZE_X, SIZE_Y, 3)
-MODEL_NAME = '32X64X64X512X9'
+MODEL_NAME = '64(4,4,_1)X64X512X9'
 
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -100,9 +100,9 @@ class decision_maker_DQN_keras:
         parser.add_argument('--learning_rate', default=0.0001, type=float, help='Learning rate')
         parser.add_argument('--initial_epsilon', default=1.0, type=float, help='Initial exploration probability in epsilon-greedy')
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
-        parser.add_argument('--exploration_steps', default=1000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
+        parser.add_argument('--exploration_steps', default=2000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
-        parser.add_argument('--num_frames', default=2, type=int, help='Number of frames to feed to Q-Network')
+        parser.add_argument('--num_frames', default=1, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=SIZE_X, type=int, help='Resized frame width')
         parser.add_argument('--frame_height', default=SIZE_Y, type=int, help='Resized frame height')
         parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')
@@ -232,10 +232,12 @@ class decision_maker_DQN_keras:
                 output = Dense(num_actions, name="output")(flatten_hidden)
             else:
                 if not (args.recurrent):
-                    h1 = Convolution2D(32, (3, 3), strides=1, activation="relu", name="conv1")(input_data)
-                    h2 = Convolution2D(64, (3, 3), strides=2, activation="relu", name="conv2")(h1)
-                    # h3 = Convolution2D(64, (2, 2), strides = 1, activation = "relu", name = "conv3")(h2)
-                    context = Flatten(name="flatten")(h2)
+                    # h1 = Convolution2D(32, (3, 3), strides=1, activation="relu", name="conv1")(input_data)
+                    # h2 = Convolution2D(64, (3, 3), strides=2, activation="relu", name="conv2")(h1)
+                    # # h3 = Convolution2D(64, (2, 2), strides = 1, activation = "relu", name = "conv3")(h2)
+                    # context = Flatten(name="flatten")(h2)
+                    h1 = Convolution2D(64, (4, 4), strides=1, activation="relu", name="conv1")(input_data)
+                    context = Flatten(name="flatten")(h1)
                 else:
                     print('>>>> Defining Recurrent Modules...')
                     input_data_expanded = Reshape((input_shape[0], input_shape[1], input_shape[2], 1),
