@@ -511,6 +511,8 @@ class decision_maker_DQN_keras:
         # fram = layer[:, :, :, filter_index]
         # ff = fram[0, :]
 
+        num_of_conv_layers = 1
+
         p_fram_number = os.path.join(path, 'frams')
         if not os.path.exists(p_fram_number):
             os.makedirs(p_fram_number)
@@ -520,7 +522,7 @@ class decision_maker_DQN_keras:
             fram_file_name = os.path.join(p_fram_number, 'filter_' + str(fram_ind) + '.png')
             plt.imsave(fram_file_name, fram, format='png')
 
-        for ind_layer in range(0, 3):
+        for ind_layer in range(0, num_of_conv_layers+1):
             p_ind_layer = os.path.join(path, 'layer_' + str(ind_layer))
             if not os.path.exists(p_ind_layer):
                 os.makedirs(p_ind_layer)
