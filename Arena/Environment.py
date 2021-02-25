@@ -17,6 +17,7 @@ class Environment(object):
         self.episodes_rewards_blue.append(0)
         self.episodes_rewards_red = []
         self.episodes_rewards_red.append(0)
+        self.win_array = []
         self.steps_per_episode = []
         self.steps_per_episode.append(0)
         self.number_of_steps = 0
@@ -60,13 +61,17 @@ class Environment(object):
             self.starts_at_win_in_last_SHOW_EVERY_games = 0
 
     def update_win_counters(self, steps_current_game):
-
+        if steps_current_game==MAX_STEPS_PER_EPISODE:
+            self.win_array.append(WinEnum.NoWin)
         if self.win_status == WinEnum.Blue:
             self.wins_for_blue += 1
+            self.win_array.append(WinEnum.Blue)
         elif self.win_status == WinEnum.Red:
             self.wins_for_red += 1
+            self.win_array.append(WinEnum.Red)
         elif self.win_status == WinEnum.Tie:
             self.tie_count += 1
+            self.win_array.append(WinEnum.Tie)
 
     def handle_reward(self, steps_current_game):
         reward_value = WIN_REWARD - steps_current_game * MOVE_PENALTY
@@ -74,8 +79,8 @@ class Environment(object):
             reward = reward_value
         elif self.win_status == WinEnum.Red:
             reward = -1 * reward_value
-        elif self.win_status == WinEnum.Tie or steps_current_game==MAX_STEPS_PER_EPISODE:
-            return -steps_current_game, -steps_current_game
+        # elif self.win_status == WinEnum.Tie or steps_current_game==MAX_STEPS_PER_EPISODE:
+        #     return -steps_current_game, -steps_current_game
         else: #self.win_status == WinEnum.NoWin
             reward = 0
 
@@ -255,11 +260,19 @@ class Episode():
 
             print(f"mean rewards of last {number_of_episodes} episodes for blue player: {np.mean(env.episodes_rewards_blue[-env.SHOW_EVERY:])}")
 
-            blue_sub_red_rewards = env.episodes_rewards_blue-env.episodes_rewards_red[-env.SHOW_EVERY:]
-            blue_win_per_for_last_games = np.sum(np.array(blue_sub_red_rewards) > 0) / number_of_episodes * 100
-            tie_per_for_last_games = (np.sum(np.array(blue_sub_red_rewards) == 0) - 1) / number_of_episodes * 100
-            red_win_per_for_last_games = np.sum(np.array(blue_sub_red_rewards) < 0) / number_of_episodes * 100
-            print(f"in the last {number_of_episodes} episodes, BLUE won: {blue_win_per_for_last_games}%, RED won {red_win_per_for_last_games}%, ended in TIE: {tie_per_for_last_games}%, started at TIE: {env.starts_at_win_in_last_SHOW_EVERY_games}% of games")
+            # blue_sub_red_rewards = env.episodes_rewards_blue[-env.SHOW_EVERY:]
+            # blue_win_per_for_last_games = np.sum(np.array(blue_sub_red_rewards) > 0) / number_of_episodes * 100
+            # tie_per_for_last_games = (np.sum(np.array(blue_sub_red_rewards) == 0) - 1) / number_of_episodes * 100
+            # red_win_per_for_last_games = np.sum(np.array(blue_sub_red_rewards) < 0) / number_of_episodes * 100
+
+            win_array = np.array(env.win_array[-env.SHOW_EVERY:])
+            blue_win_per_for_last_games = np.sum(win_array==WinEnum.Blue) / number_of_episodes * 100
+            red_win_per_for_last_games = np.sum(win_array == WinEnum.Red) / number_of_episodes * 100
+            ties_LOS = np.sum(win_array==WinEnum.Tie) / number_of_episodes * 100
+            ties_num_of_steps = np.sum(win_array == WinEnum.NoWin) / number_of_episodes * 100
+
+
+            print(f"in the last {number_of_episodes} episodes, BLUE won: {blue_win_per_for_last_games}%, RED won {red_win_per_for_last_games}%, ended in TIE do to LOS: {ties_LOS}%, ended in TIE do to steps: {ties_num_of_steps}% of games")
 
             print(f"mean rewards of all episodes for blue player: {np.mean(env.episodes_rewards_blue)}\n")
 
