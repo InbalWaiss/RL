@@ -13,6 +13,7 @@ from DQN import DQNAgent
 
 
 
+
 def print_start_of_game_info(blue_decision_maker, red_decision_maker):
     print("Starting tournament!")
     print("Blue player type: ", Agent_type_str[blue_decision_maker.type()])
@@ -38,23 +39,32 @@ if __name__ == '__main__':
     env = Environment(IS_TRAINING)
 
     red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
+    #red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker("qtable_red-1000000_old_terminal_state.pickle")
     # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False, path_model_to_load='qtable_red-500000_new_DSM.pickle')
     # red_decision_maker = Qtable_DecisionMaker('keep_training_qtable_1900000_DQNkeras_900000\qtable_red-900000.pickle')
 
 
     # blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
-    # blue_decision_maker = Qtable_DecisionMaker('qtable_blue-1000000_old_terminal_state.pickle')
+    # blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker('qtable_blue-1000000_old_terminal_state.pickle')
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
-    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras('DQN_keras_blue_32X64X64X512X9_200001_ 249.00max_-131.98avg_-249.00min__1612271297.model')
-    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=False, path_model_to_load='32X64X64X512X9_blue_75001_ 490.00max_ -26.50avg_-495.00min__1613808042.model')
+    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='64(4,4,_1)X64X512X9_blue_30001_ 495.00max_  28.03avg_-495.00min__1614379917.model')
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=True, path_model_to_load='statistics/18_02_06_54_DQNAgent_spatioalAttention_Q_table_1000000/qnet1000000.cptk')
-    blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()#UPDATE_BLUE_CONTEXT)#
+    # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()#UPDATE_BLUE_CONTEXT)#
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
 
     env.blue_player = Entity(blue_decision_maker)
     env.red_player = Entity(red_decision_maker)
+
+    print("")
+    print("red dosent move")
+    print("h2 = Convolution2D(32, (4, 4), strides=1")
+    print("both get -MAX_NUMBER_OF_STEPS when TIE")
+    print("use danger zone from red!")
+    print("MINIMUM_DIST_FOR_GAME_END_FLAG=True, MINIMUM_DIST_FOR_GAME_END=7")
+    print("")
 
     print_start_of_game_info(blue_decision_maker, red_decision_maker)
 
@@ -80,7 +90,8 @@ if __name__ == '__main__':
 
             # get observation
             observation_for_blue: State = env.get_observation_for_blue()
-            observation_for_red: State = env.get_observation_for_red()
+            if RED_PLAYER_MOVES:
+                observation_for_red: State = env.get_observation_for_red()
 
             # Check if the start state is terminal
             current_episode.is_terminal = (env.compute_terminal() is not WinEnum.NoWin)
@@ -97,13 +108,15 @@ if __name__ == '__main__':
             action_blue: AgentAction = blue_decision_maker.get_action(observation_for_blue)
             env.blue_player.action(action_blue)  # take the action!
 
-            ##### Red's turn! #####
-            action_red: AgentAction = red_decision_maker.get_action(observation_for_red)
-            env.red_player.action(action_red) # take the action!
+            if RED_PLAYER_MOVES:
+                ##### Red's turn! #####
+                action_red: AgentAction = red_decision_maker.get_action(observation_for_red)
+                env.red_player.action(action_red) # take the action!
 
             # Get new observations
             new_observation_for_blue: State = env.get_observation_for_blue()
-            new_observation_for_red: State = env.get_observation_for_red()
+            if RED_PLAYER_MOVES:
+                new_observation_for_red: State = env.get_observation_for_red()
 
             # Check if terminal
             current_episode.is_terminal = (env.compute_terminal() is not WinEnum.NoWin)
@@ -118,9 +131,10 @@ if __name__ == '__main__':
                                                   reward_step_blue,
                                                   current_episode.is_terminal)
 
-            red_decision_maker.update_context(new_observation_for_red,
-                                                  reward_step_red,
-                                                  current_episode.is_terminal)
+            if RED_PLAYER_MOVES:
+                red_decision_maker.update_context(new_observation_for_red,
+                                                      reward_step_red,
+                                                      current_episode.is_terminal)
 
             current_episode.print_episode(env, steps_current_game)
             if current_episode.is_terminal:

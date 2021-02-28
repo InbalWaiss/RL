@@ -34,8 +34,9 @@ def can_escape(first_player, second_player):
         first_player.set_coordinatess(org_cor_first_player_x, org_cor_first_player_y)
         first_player.action(action)
         first_player_after_action_x, first_player_after_action_y = first_player.get_coordinates()
-        is_los, _ = check_if_LOS(first_player_after_action_x, first_player_after_action_y,
-                                 org_cor_second_player_x, org_cor_second_player_y)
+
+        is_los = (org_cor_second_player_x, org_cor_second_player_y) in DICT_POS_LOS[(first_player.x, first_player.y)]
+
         if not is_los:
             ret_val = True
             winnig_point = (first_player_after_action_x, first_player_after_action_y)

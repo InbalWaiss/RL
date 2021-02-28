@@ -54,7 +54,7 @@ class Environment(object):
         while is_los:
             self.blue_player._choose_random_position()
             self.red_player._choose_random_position()
-            is_los, _ = check_if_LOS(self.blue_player.x, self.blue_player.y, self.red_player.x, self.red_player.y)
+            is_los = (self.red_player.x, self.red_player.y) in DICT_POS_LOS[(self.blue_player.x, self.blue_player.y)]
 
 
         if self.SHOW_EVERY==1 or episode_number % (self.SHOW_EVERY-1) == 0:
@@ -79,8 +79,8 @@ class Environment(object):
             reward = reward_value
         elif self.win_status == WinEnum.Red:
             reward = -1 * reward_value
-        # elif self.win_status == WinEnum.Tie or steps_current_game==MAX_STEPS_PER_EPISODE:
-        #     return -steps_current_game, -steps_current_game
+        elif self.win_status == WinEnum.Tie or steps_current_game==MAX_STEPS_PER_EPISODE:
+            return -steps_current_game, -steps_current_game
         else: #self.win_status == WinEnum.NoWin
             reward = 0
 
@@ -100,11 +100,19 @@ class Environment(object):
         first_player = self.blue_player
         second_player = self.red_player
         win_status = WinEnum.NoWin
-        is_los, _ = check_if_LOS(first_player.x, first_player.y, second_player.x, second_player.y)
+        is_los = (second_player.x, second_player.y) in DICT_POS_LOS[(first_player.x, first_player.y)]
+
         if not is_los:  # no LOS
             win_status = WinEnum.NoWin
             self.win_status = win_status
             return win_status
+
+        if MINIMUM_DIST_FOR_GAME_END_FLAG:
+            dist = np.linalg.norm(np.array([first_player.x, first_player.y]) - np.array([second_player.x, second_player.y]))
+            if dist>MINIMUM_DIST_FOR_GAME_END:
+                win_status = WinEnum.NoWin
+                self.win_status = win_status
+                return win_status
 
         can_first_escape_second, _ = can_escape(first_player, second_player)
         can_second_escape_first, _ = can_escape(second_player, first_player)
@@ -259,11 +267,6 @@ class Episode():
                 f"mean number of steps of last {number_of_episodes} episodes: , {np.mean(env.steps_per_episode[-env.SHOW_EVERY:])}")
 
             print(f"mean rewards of last {number_of_episodes} episodes for blue player: {np.mean(env.episodes_rewards_blue[-env.SHOW_EVERY:])}")
-
-            # blue_sub_red_rewards = env.episodes_rewards_blue[-env.SHOW_EVERY:]
-            # blue_win_per_for_last_games = np.sum(np.array(blue_sub_red_rewards) > 0) / number_of_episodes * 100
-            # tie_per_for_last_games = (np.sum(np.array(blue_sub_red_rewards) == 0) - 1) / number_of_episodes * 100
-            # red_win_per_for_last_games = np.sum(np.array(blue_sub_red_rewards) < 0) / number_of_episodes * 100
 
             win_array = np.array(env.win_array[-env.SHOW_EVERY:])
             blue_win_per_for_last_games = np.sum(win_array==WinEnum.Blue) / number_of_episodes * 100
