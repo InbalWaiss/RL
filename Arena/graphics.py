@@ -36,6 +36,40 @@ def print_stats(array_of_results, save_folder_path, plot_every, save_figure=True
     # plt.show()
 
 
+def save_win_statistics(win_array, save_folder_path, plot_every):
+    win_array = np.array(win_array)
+    win_array_blue = (win_array == WinEnum.Blue) * 100
+    moving_avg_win_blue = np.convolve(win_array_blue, np.ones((plot_every,)) / plot_every, mode='valid')
+    win_array_red = (win_array == WinEnum.Red) * 100
+    moving_avg_win_red = np.convolve(win_array_red, np.ones((plot_every,)) / plot_every, mode='valid')
+    win_array_NoWin = (win_array == WinEnum.NoWin) * 100
+    moving_avg_win_NoWin = np.convolve(win_array_NoWin, np.ones((plot_every,)) / plot_every, mode='valid')
+    win_array_Tie = (win_array == WinEnum.Tie) * 100
+    moving_avg_win_Tie = np.convolve(win_array_Tie, np.ones((plot_every,)) / plot_every, mode='valid')
+
+    fig, axs = plt.subplots(2, 2)
+    fig.tight_layout()
+    plt.subplots_adjust(hspace=.4, top=0.9)
+    axs[0, 0].plot(moving_avg_win_blue)
+    axs[0, 0].set_title('%Blue_win', fontsize=12, fontweight='bold', color='blue')
+    axs[0, 0].axis([0, len(moving_avg_win_blue), 0, 100])
+
+    axs[0, 1].plot(moving_avg_win_red)
+    axs[0, 1].set_title('%Red_win', fontsize=12, fontweight='bold', color='red')
+    axs[0, 1].axis([0, len(moving_avg_win_blue), 0, 100])
+
+    axs[1, 0].plot(moving_avg_win_NoWin)
+    axs[1, 0].set_title('%Tie_LOS', fontsize=12, fontweight='bold')
+    axs[1, 0].axis([0, len(moving_avg_win_blue), 0, 100])
+
+    axs[1, 1].plot(moving_avg_win_Tie)
+    axs[1, 1].set_title('%Tie_max_num_steps', fontsize=12, fontweight='bold')
+    axs[1, 1].axis([0, len(moving_avg_win_blue), 0, 100])
+    plt.savefig(save_folder_path + os.path.sep + 'win_statistics' + str(len(win_array) - 1))
+    plt.close()
+    # plt.show()
+
+
 def print_stats_humna_player(array_of_results, save_folder_path, number_of_episodes, save_figure=True, steps=False,
                              red_player=False):
     moving_avg = np.convolve(array_of_results, np.ones((1,)) / 1, mode='valid')

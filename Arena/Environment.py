@@ -4,7 +4,7 @@ import time
 from RafaelPlayer.Qtable_DecisionMaker import *
 from RafaelPlayer.QPlayer_constants import START_EPSILON, EPSILONE_DECAY, LEARNING_RATE, DISCOUNT
 from Arena.Position import Position
-from Arena.graphics import print_stats, print_episode_graphics
+from Arena.graphics import print_stats, print_episode_graphics, save_win_statistics
 from Arena.helper_funcs import *
 import numpy as np
 from PIL import Image
@@ -158,8 +158,7 @@ class Environment(object):
         print_stats(self.episodes_rewards_red, self.save_folder_path, self.SHOW_EVERY, player=Color.Red)
         print_stats(self.steps_per_episode, self.save_folder_path,self.SHOW_EVERY, save_figure=True, steps=True, player=Color.Blue)
 
-
-
+        save_win_statistics(self.win_array, self.save_folder_path, self.SHOW_EVERY)
 
     def save_stats(self, save_folder_path):
 
