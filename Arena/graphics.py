@@ -101,6 +101,13 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
     informative_env[margin_x * const: (margin_x + SIZE_X) * const,
     margin_y * const: (margin_y + SIZE_Y) * const] = only_env
 
+    if DANGER_ZONE_IN_STATE:
+        points_in_enemy_los = DICT_POS_LOS[(red.x, red.y)]
+        for point in points_in_enemy_los:
+            informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
+            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors[BRIGHT_RED]
+
+
     points_in_LOS = []
     # paint the tiles in line from blue to red in yellow
     _, points_in_LOS = check_if_LOS(blue.x, blue.y, red.x, red.y)

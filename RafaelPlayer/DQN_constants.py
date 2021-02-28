@@ -8,6 +8,3 @@ DISCOUNT = 0.99
 # MODEL_NAME = 'red_blue_16X32X64X9'
 MODEL_NAME = 'red_blue_16X32X64X9_2'
 
-
-START_EPSILON = 0.15 #for statistics
-min_epsilon = 0.15

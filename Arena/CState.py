@@ -23,6 +23,11 @@ class State(object):
             for point in points_in_LOS:
                 env[point[0]][point[1]]= dict_of_colors[GREEN_N]
 
+        if DANGER_ZONE_IN_STATE:
+            points_in_enemy_los = DICT_POS_LOS[(self.enemy_pos._x, self.enemy_pos._y)]
+            for point in points_in_enemy_los:
+                env[point[0]][point[1]] = dict_of_colors[BRIGHT_RED]
+
         env[self.my_pos._x][self.my_pos._y] = dict_of_colors[BLUE_N]
         env[self.enemy_pos._x][self.enemy_pos._y] = dict_of_colors[RED_N]
         for x in range(SIZE_X):
