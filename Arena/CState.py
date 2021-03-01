@@ -28,6 +28,11 @@ class State(object):
             for point in points_in_enemy_los:
                 env[point[0]][point[1]] = dict_of_colors[BRIGHT_RED]
 
+        if DOMINATING_POINTS_IN_STATE:
+            points_in_enemy_los = DICT_DOMINATING_POINTS[(self.enemy_pos._x, self.enemy_pos._y)]
+            for point in points_in_enemy_los:
+                env[point[0]][point[1]] = dict_of_colors[GREEN_N]
+
         env[self.my_pos._x][self.my_pos._y] = dict_of_colors[BLUE_N]
         env[self.enemy_pos._x][self.enemy_pos._y] = dict_of_colors[RED_N]
         for x in range(SIZE_X):

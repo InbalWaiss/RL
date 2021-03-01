@@ -141,6 +141,11 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
             informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
             (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors[BRIGHT_RED]
 
+    if DOMINATING_POINTS_IN_STATE:
+        points_dom_points = DICT_DOMINATING_POINTS[(red.x, red.y)]
+        for point in points_dom_points:
+            informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
+            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors[GREEN_N]
 
     points_in_LOS = []
     # paint the tiles in line from blue to red in yellow

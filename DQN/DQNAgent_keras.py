@@ -34,7 +34,7 @@ MIN_REPLAY_MEMORY_SIZE = 1000 # minimum number of steps in a memory to start tra
 MINIBATCH_SIZE = 64 # how many samples to use for training
 UPDATE_TARGET_EVERY = 15 # number of terminal states
 OBSERVATION_SPACE_VALUES = (SIZE_X, SIZE_Y, 3)
-MODEL_NAME = '64(4,4,_1)X64X512X9'
+MODEL_NAME = '32(4,4,_1)X64X512X9'
 
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -236,7 +236,7 @@ class decision_maker_DQN_keras:
                     # h2 = Convolution2D(64, (3, 3), strides=2, activation="relu", name="conv2")(h1)
                     # # h3 = Convolution2D(64, (2, 2), strides = 1, activation = "relu", name = "conv3")(h2)
                     # context = Flatten(name="flatten")(h2)
-                    h1 = Convolution2D(64, (4, 4), strides=1, activation="relu", name="conv1")(input_data)
+                    h1 = Convolution2D(32, (4, 4), strides=1, activation="relu", name="conv1")(input_data)
                     context = Flatten(name="flatten")(h1)
                 else:
                     print('>>>> Defining Recurrent Modules...')

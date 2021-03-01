@@ -9,6 +9,8 @@ PRINT_TILES_IN_LOS = True
 USE_BRESENHAM_LINE = False
 USE_LOS_IN_STATE = False
 DANGER_ZONE_IN_STATE = True
+DOMINATING_POINTS_IN_STATE = True
+
 RED_PLAYER_MOVES = False
 MINIMUM_DIST_FOR_GAME_END_FLAG = True
 MINIMUM_DIST_FOR_GAME_END = 7
@@ -17,15 +19,31 @@ try:
     with open('Arena/dictionary_position_los.pkl', 'rb') as f:
         DICT_POS_LOS = pickle.load(f)
 except:
-    with open('dictionary_position_los.pkl', 'rb') as f:
-        DICT_POS_LOS = pickle.load(f)
+    try:
+        with open('dictionary_position_los.pkl', 'rb') as f:
+            DICT_POS_LOS = pickle.load(f)
+    except:
+        pass
 
 try:
     with open('Arena/dictionary_position_no_los.pkl', 'rb') as f:
         DICT_POS_NO_LOS = pickle.load(f)
 except:
-    with open('dictionary_position_no_los.pkl', 'rb') as f:
-        DICT_POS_NO_LOS = pickle.load(f)
+    try:
+        with open('dictionary_position_no_los.pkl', 'rb') as f:
+            DICT_POS_NO_LOS = pickle.load(f)
+    except:
+        pass
+
+try:
+    with open('Arena/dictionary_dominating_points.pkl', 'rb') as f:
+        DICT_DOMINATING_POINTS = pickle.load(f)
+except:
+    try:
+        with open('dictionary_dominating_points.pkl', 'rb') as f:
+            DICT_DOMINATING_POINTS = pickle.load(f)
+    except:
+        pass
 
 SIZE_X = 15
 SIZE_Y = 15
@@ -172,7 +190,7 @@ RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'RafaelPlayer/trained
 
 SHOW_EVERY = 500
 NUM_OF_EPISODES = 5_000_000
-SAVE_STATS_EVERY = 5000
+SAVE_STATS_EVERY = 2500
 
 
 # params to evaluate trained models
