@@ -75,14 +75,23 @@ class Environment(object):
 
     def handle_reward(self, steps_current_game):
         reward_value = WIN_REWARD - steps_current_game * MOVE_PENALTY
-        if self.win_status == WinEnum.Blue:
-            reward = reward_value
-        elif self.win_status == WinEnum.Red:
-            reward = -1 * reward_value
-        elif self.win_status == WinEnum.Tie or steps_current_game==MAX_STEPS_PER_EPISODE:
-            return -steps_current_game, -steps_current_game
-        else: #self.win_status == WinEnum.NoWin
-            reward = 0
+            
+        if ZERO_SUM_GAME:
+            if self.win_status == WinEnum.Blue:
+                reward = reward_value
+            elif self.win_status == WinEnum.Red:
+                reward = -1 * reward_value
+            else:
+                reward = 0
+        else:
+            if self.win_status == WinEnum.Blue:
+                reward = reward_value
+            elif self.win_status == WinEnum.Red:
+                reward = -1 * reward_value
+            elif self.win_status == WinEnum.Tie or steps_current_game==MAX_STEPS_PER_EPISODE:
+                return -steps_current_game, -steps_current_game
+            else: #self.win_status == WinEnum.NoWin
+                reward = 0
 
         reward_blue = reward
         reward_red = -reward

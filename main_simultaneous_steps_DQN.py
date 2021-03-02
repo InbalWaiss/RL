@@ -58,13 +58,15 @@ if __name__ == '__main__':
     env.blue_player = Entity(blue_decision_maker)
     env.red_player = Entity(red_decision_maker)
 
-    print("")
-    print("red dosent move")
-    print("h2 = Convolution2D(32, (4, 4), strides=1")
-    print("both get -MAX_NUMBER_OF_STEPS when TIE")
-    print("use danger zone from red!")
-    print("MINIMUM_DIST_FOR_GAME_END_FLAG=True, MINIMUM_DIST_FOR_GAME_END=7")
-    print("")
+    # print("")
+    # print("red dosent move")
+    # print("h2 = Convolution2D(32, (4, 4), strides=1")
+    # print("both get -MAX_NUMBER_OF_STEPS when TIE")
+    # print("use danger zone from red!")
+    # print("MINIMUM_DIST_FOR_GAME_END_FLAG=True, MINIMUM_DIST_FOR_GAME_END=7")
+    # print("")
+
+    print("random walk")
 
     print_start_of_game_info(blue_decision_maker, red_decision_maker)
 

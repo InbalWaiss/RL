@@ -8,12 +8,15 @@ WITH_LOS = True
 PRINT_TILES_IN_LOS = True
 USE_BRESENHAM_LINE = False
 USE_LOS_IN_STATE = False
+
 DANGER_ZONE_IN_STATE = True
 DOMINATING_POINTS_IN_STATE = True
 
 RED_PLAYER_MOVES = False
 MINIMUM_DIST_FOR_GAME_END_FLAG = True
 MINIMUM_DIST_FOR_GAME_END = 7
+
+ZERO_SUM_GAME = False
 
 try:
     with open('Arena/dictionary_position_los.pkl', 'rb') as f:
