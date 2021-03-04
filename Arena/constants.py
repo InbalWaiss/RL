@@ -71,6 +71,7 @@ GREY_N = 7 #obstacle key in dict
 GREEN_N = 8
 BLACK_N = 9
 BRIGHT_RED = 10
+BRIGHT_BRIGHT_RED = 11
 
 class WinEnum(IntEnum):
 
@@ -80,16 +81,17 @@ class WinEnum(IntEnum):
     NoWin = 3
 
 
-dict_of_colors = {1: (255, 0, 0),  #blue
-                  2: (150, 100, 0), #darker blue
-                  3: (0, 0, 255), # red
-                  4: (0, 0, 150), #dark red
+dict_of_colors = {1: (0, 0, 255),  #blue
+                  2: (0, 0, 150), #darker blue
+                  3: (255, 0, 0), # red
+                  4: (150, 0, 0), #dark red
                   5: (230, 100, 150), #purple
                   6: (60, 255, 255), #yellow
                   7: (100, 100, 100),#grey
                   8: (0, 255, 0),#green
                   9: (0, 0, 0), #black
-                  10: (0, 0, 75) #bright red
+                  10: (75, 0, 0), #bright red
+                  11: (25, 0, 0) #bright bright red
                   }
 
 
@@ -192,6 +194,7 @@ RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'RafaelPlayer/trained
 # MEDIUM_AGENT = 'medium.pickle'
 # HARD_AGENT = 'qtable_red-1000000_old_terminal_state.pickle'
 
+USE_DISPLAY = True
 SHOW_EVERY = 500
 NUM_OF_EPISODES = 5_000_000
 SAVE_STATS_EVERY = 2500

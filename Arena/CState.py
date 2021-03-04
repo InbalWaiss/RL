@@ -3,6 +3,7 @@ import numpy as np
 from Arena.constants import *
 from PIL import Image
 from Arena.helper_funcs import check_if_LOS
+import matplotlib.pyplot as plt
 
 
 class State(object):
@@ -39,6 +40,10 @@ class State(object):
             for y in range(SIZE_Y):
                 if DSM[x][y] == 1.:
                     env[x][y] = dict_of_colors[GREY_N]
+        if False:
+            # print state for debug
+            plt.matshow(env)
+            plt.show()
 
         # img = Image.fromarray(env).convert('L').resize((SIZE_X, SIZE_Y), Image.BILINEAR)
         # img = Image.fromarray(env, 'RGB')
