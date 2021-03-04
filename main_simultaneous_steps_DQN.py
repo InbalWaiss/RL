@@ -48,7 +48,7 @@ if __name__ == '__main__':
     # blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker('qtable_blue-1000000_old_terminal_state.pickle')
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras('32(4,4,_1)X64X512X9_blue_35001_ 460.00max_ -60.30avg_-420.00min__1614584205.model')
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras('32(4,4,_1)X64X512X9_blue_15001_ 460.00max_ -24.99avg_ -80.00min__1614842147.model')
     #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='64(4,4,_1)X64X512X9_blue_30001_ 495.00max_  28.03avg_-495.00min__1614379917.model')
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=True, path_model_to_load='statistics/18_02_06_54_DQNAgent_spatioalAttention_Q_table_1000000/qnet1000000.cptk')
@@ -66,7 +66,7 @@ if __name__ == '__main__':
     # print("MINIMUM_DIST_FOR_GAME_END_FLAG=True, MINIMUM_DIST_FOR_GAME_END=7")
     # print("")
 
-    print("random walk")
+    print("linear 2 layers")
 
     print_start_of_game_info(blue_decision_maker, red_decision_maker)
 
@@ -77,6 +77,13 @@ if __name__ == '__main__':
 
         # set new start position for the players
         env.reset_players_positions(episode)
+
+        if FIXED_START_POINTS:
+            env.red_player.x = 10
+            env.red_player.y = 3
+
+            env.blue_player.x = 3
+            env.blue_player.y = 10
 
         # get observation
         initial_state_blue: State = env.get_observation_for_blue()
@@ -149,9 +156,7 @@ if __name__ == '__main__':
             current_episode.is_terminal = True
 
         # for statistics
-        env.episodes_rewards_blue.append(current_episode.episode_reward_blue)
-        env.episodes_rewards_red.append(current_episode.episode_reward_red)
-        env.steps_per_episode.append(steps_current_game)
+        env.data_for_statistics(current_episode.episode_reward_blue, current_episode.episode_reward_red, steps_current_game, blue_decision_maker.get_epsolon())
 
         # print info of episode:
         current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon())

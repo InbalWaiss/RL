@@ -4,7 +4,7 @@ import time
 from RafaelPlayer.Qtable_DecisionMaker import *
 from RafaelPlayer.QPlayer_constants import START_EPSILON, EPSILONE_DECAY, LEARNING_RATE, DISCOUNT
 from Arena.Position import Position
-from Arena.graphics import print_stats, print_episode_graphics, save_win_statistics
+from Arena.graphics import print_stats, print_episode_graphics, save_win_statistics, save_reward_stats
 from Arena.helper_funcs import *
 import numpy as np
 from PIL import Image
@@ -27,6 +27,9 @@ class Environment(object):
         self.starts_at_win = 0
         self.starts_at_win_in_last_SHOW_EVERY_games = 0
         self.win_status: WinEnum = WinEnum.NoWin
+
+        self.blue_epsilon_values = []
+        self.blue_epsilon_values.append(1)
 
         self.blue_player = None
         self.red_player = None
@@ -167,7 +170,16 @@ class Environment(object):
         print_stats(self.episodes_rewards_red, self.save_folder_path, self.SHOW_EVERY, player=Color.Red)
         print_stats(self.steps_per_episode, self.save_folder_path,self.SHOW_EVERY, save_figure=True, steps=True, player=Color.Blue)
 
-        save_win_statistics(self.win_array, self.save_folder_path, self.SHOW_EVERY)
+        save_reward_stats(self.save_folder_path, self.SHOW_EVERY, self.episodes_rewards_blue, self.episodes_rewards_red, self.steps_per_episode, self.blue_epsilon_values)
+
+        save_win_statistics(self.win_array, self.save_folder_path, self.SHOW_EVERY, self.steps_per_episode, self.blue_epsilon_values)
+
+    def data_for_statistics(self, episode_reward_blue, episode_reward_red, steps_current_game, blue_epsilon):
+        self.episodes_rewards_blue.append(episode_reward_blue)
+        self.episodes_rewards_red.append(episode_reward_red)
+        self.steps_per_episode.append(steps_current_game)
+        self.blue_epsilon_values.append(blue_epsilon)
+
 
     def save_stats(self, save_folder_path):
 

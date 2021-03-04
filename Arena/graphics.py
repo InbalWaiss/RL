@@ -35,6 +35,41 @@ def print_stats(array_of_results, save_folder_path, plot_every, save_figure=True
     plt.close()
     # plt.show()
 
+def save_reward_stats(save_folder_path, plot_every,  win_array_blue, win_array_red, steps_per_episode, blue_epsilon_values):
+    fig, axs = plt.subplots(2, 2)
+    fig.tight_layout()
+    plt.subplots_adjust(hspace=.4, top=0.9)
+    # Blue reward:
+    moving_avg = np.convolve(win_array_blue, np.ones((plot_every,)) / plot_every, mode='valid')
+    axs[0, 0].plot([i for i in range(len(moving_avg))], moving_avg)
+    axs[0, 0].set_title(f"Rewards per episode for BLUE player", fontsize=12, fontweight='bold', color='blue')
+    axs[0, 0].axis([0, len(win_array_blue), -WIN_REWARD - 50, WIN_REWARD + 50])
+    axs[0, 0].set(xlabel="episode #", ylabel=f"Reward {SHOW_EVERY}ma")
+
+    # Red reward:
+    moving_avg = np.convolve(win_array_red, np.ones((plot_every,)) / plot_every, mode='valid')
+    axs[0, 1].plot([i for i in range(len(moving_avg))], moving_avg)
+    axs[0, 1].set_title(f"Rewards per episode for RED player", fontsize=12, fontweight='bold', color='red')
+    axs[0, 1].axis([0, len(win_array_red), -WIN_REWARD - 50, WIN_REWARD + 50])
+    axs[0, 1].set(xlabel="episode #", ylabel=f"Reward {SHOW_EVERY}ma")
+
+    # Steps:
+    moving_avg = np.convolve(steps_per_episode, np.ones((plot_every,)) / plot_every, mode='valid')
+    axs[1, 0].plot([i for i in range(len(moving_avg))], moving_avg)
+    axs[1, 0].set_title(f"Avg number of steps per episode", fontsize=12, fontweight='bold', color='black')
+    axs[1, 0].axis([0, len(steps_per_episode), -WIN_REWARD - 50, WIN_REWARD + 50])
+    axs[1, 0].set(xlabel="episode #", ylabel=f"steps per episode {SHOW_EVERY}ma")
+
+    # Epsilon:
+    moving_avg = np.convolve(blue_epsilon_values, np.ones((plot_every,)) / plot_every, mode='valid')
+    axs[1, 1].plot([i for i in range(len(moving_avg))], moving_avg)
+    axs[1, 1].set_title(f"Epsilon value per episode", fontsize=12, fontweight='bold', color='black')
+    axs[1, 1].axis([0, len(steps_per_episode),-0.1, 1.1])
+    axs[1, 1].set(xlabel="episode", ylabel="epsilon")
+
+    plt.savefig(save_folder_path + os.path.sep + 'reward_statistics' + str(len(blue_epsilon_values) - 1))
+    plt.close()
+    # plt.show()
 
 def save_win_statistics(win_array, save_folder_path, plot_every):
     win_array = np.array(win_array)
