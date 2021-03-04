@@ -59,11 +59,11 @@ def save_win_statistics(win_array, save_folder_path, plot_every):
     axs[0, 1].axis([0, len(moving_avg_win_blue), 0, 100])
 
     axs[1, 0].plot(moving_avg_win_NoWin)
-    axs[1, 0].set_title('%Tie_LOS', fontsize=12, fontweight='bold')
+    axs[1, 0].set_title('%Tie_max_num_steps', fontsize=12, fontweight='bold')
     axs[1, 0].axis([0, len(moving_avg_win_blue), 0, 100])
 
     axs[1, 1].plot(moving_avg_win_Tie)
-    axs[1, 1].set_title('%Tie_max_num_steps', fontsize=12, fontweight='bold')
+    axs[1, 1].set_title('%Tie_LOS', fontsize=12, fontweight='bold')
     axs[1, 1].axis([0, len(moving_avg_win_blue), 0, 100])
     plt.savefig(save_folder_path + os.path.sep + 'win_statistics' + str(len(win_array) - 1))
     plt.close()

@@ -14,9 +14,6 @@ scikit-image
 attrs
 h5py
 keras==2.0.8
-matplotlib
-numpy
-pillow
 protobuf>=3.0
 pydot-ng
 scipy

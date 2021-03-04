@@ -239,7 +239,7 @@ class Episode():
             self.show = False
 
     def print_episode(self, env, last_step_number, save_file=False):
-        if self.show:
+        if self.show and USE_DISPLAY:
             print_episode_graphics(env, self, last_step_number, save_file)
 
     def get_image(self, env, image_for_red = False):

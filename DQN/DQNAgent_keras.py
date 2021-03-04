@@ -82,6 +82,7 @@ class decision_maker_DQN_keras:
 
         self._Initialize_networks(path_model_to_load)
 
+        self.MODEL_NAME = self.set_model_name()
 
         # save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH,
         #                              format(f"{str(time.strftime('%d'))}_{str(time.strftime('%m'))}_"
@@ -100,7 +101,7 @@ class decision_maker_DQN_keras:
         parser.add_argument('--learning_rate', default=0.0001, type=float, help='Learning rate')
         parser.add_argument('--initial_epsilon', default=1.0, type=float, help='Initial exploration probability in epsilon-greedy')
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
-        parser.add_argument('--exploration_steps', default=2000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
+        parser.add_argument('--exploration_steps', default=1000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
         parser.add_argument('--num_frames', default=1, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=SIZE_X, type=int, help='Resized frame width')
@@ -115,6 +116,7 @@ class decision_maker_DQN_keras:
         parser.add_argument('--load_network', default=False, action='store_true', help='Load trained mode')
         parser.add_argument('--load_network_path', default='', help='the path to the trained mode file')
         parser.add_argument('--net_mode', default='dqn', help='choose the mode of net, can be linear, dqn, duel')
+        # parser.add_argument('--net_mode', default='linear', help='choose the mode of net, can be linear, dqn, duel')
         parser.add_argument('--max_episode_length', default = 10000, type=int, help = 'max length of each episode')
         parser.add_argument('--num_episodes_at_test', default = 20, type=int, help='Number of episodes the agent plays at test')
         parser.add_argument('--ddqn', default=True, dest='ddqn', action='store_true', help='enable ddqn')
@@ -196,6 +198,17 @@ class decision_maker_DQN_keras:
 
         self.writer = tf.summary.FileWriter(self.output_path)
 
+    def set_model_name(self):
+        s = ''
+        for i in range(1, len(self.q_network.layers) - 1):
+            layer = self.q_network.layers[i]
+            s = s + str(layer.name)
+            if isinstance(layer, Convolution2D):
+                layer_shape = layer.kernel.shape
+                s = s + '(' + str(layer_shape[0]) + '_' + str(layer_shape[1]) + '_' + str(layer_shape[2]) + '_' + str(
+                    layer_shape[3]) + ')'
+            s = s + '_'
+            return s
 
     def loadModel(self, model, target_model):
         # load existing models
@@ -229,7 +242,9 @@ class decision_maker_DQN_keras:
             input_data = Input(shape=input_shape, name="input")
             if mode == "linear":
                 flatten_hidden = Flatten(name="flatten")(input_data)
-                output = Dense(num_actions, name="output")(flatten_hidden)
+                # output = Dense(num_actions, name="output")(flatten_hidden)
+                FC = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
+                output = Dense(num_actions, name="output")(FC)
             else:
                 if not (args.recurrent):
                     # h1 = Convolution2D(32, (3, 3), strides=1, activation="relu", name="conv1")(input_data)
@@ -593,6 +608,6 @@ class DQNAgent_keras:
         elif player_color == Color.Blue:
             color_str = "blue"
         self._decision_maker.q_network.save(
-            f'{path_to_model+os.sep+MODEL_NAME}_{color_str}_{episode}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
+            f'{path_to_model+os.sep+self._decision_maker.MODEL_NAME}_{color_str}_{episode}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
 
         return self.min_reward
