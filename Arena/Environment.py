@@ -125,9 +125,9 @@ class Environment(object):
             self.win_status = win_status
             return win_status
 
-        if MINIMUM_DIST_FOR_GAME_END_FLAG:
+        if FIRE_RANGE_FLAG:
             dist = np.linalg.norm(np.array([first_player.x, first_player.y]) - np.array([second_player.x, second_player.y]))
-            if dist>MINIMUM_DIST_FOR_GAME_END:
+            if dist>FIRE_RANGE:
                 win_status = WinEnum.NoWin
                 self.win_status = win_status
                 return win_status
@@ -178,7 +178,7 @@ class Environment(object):
 
         save_reward_stats(self.save_folder_path, self.SHOW_EVERY, self.episodes_rewards_blue, self.episodes_rewards_red, self.steps_per_episode, self.blue_epsilon_values)
 
-        save_win_statistics(self.win_array, self.save_folder_path, self.SHOW_EVERY, self.steps_per_episode, self.blue_epsilon_values)
+        save_win_statistics(self.win_array, self.save_folder_path, self.SHOW_EVERY)
 
     def data_for_statistics(self, episode_reward_blue, episode_reward_red, steps_current_game, blue_epsilon):
         self.episodes_rewards_blue.append(episode_reward_blue)

@@ -57,7 +57,7 @@ def save_reward_stats(save_folder_path, plot_every,  win_array_blue, win_array_r
     moving_avg = np.convolve(steps_per_episode, np.ones((plot_every,)) / plot_every, mode='valid')
     axs[1, 0].plot([i for i in range(len(moving_avg))], moving_avg)
     axs[1, 0].set_title(f"Avg number of steps per episode", fontsize=12, fontweight='bold', color='black')
-    axs[1, 0].axis([0, len(steps_per_episode), -WIN_REWARD - 50, WIN_REWARD + 50])
+    axs[1, 0].axis([0, len(steps_per_episode), 0, MAX_STEPS_PER_EPISODE])
     axs[1, 0].set(xlabel="episode #", ylabel=f"steps per episode {SHOW_EVERY}ma")
 
     # Epsilon:

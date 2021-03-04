@@ -44,11 +44,11 @@ if __name__ == '__main__':
     # red_decision_maker = Qtable_DecisionMaker('keep_training_qtable_1900000_DQNkeras_900000\qtable_red-900000.pickle')
 
 
-    # blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
+    blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
     # blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker('qtable_blue-1000000_old_terminal_state.pickle')
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras('32(4,4,_1)X64X512X9_blue_15001_ 460.00max_ -24.99avg_ -80.00min__1614842147.model')
+    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras('32(4,4,_1)X64X512X9_blue_15001_ 460.00max_ -24.99avg_ -80.00min__1614842147.model')
     #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='64(4,4,_1)X64X512X9_blue_30001_ 495.00max_  28.03avg_-495.00min__1614379917.model')
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=True, path_model_to_load='statistics/18_02_06_54_DQNAgent_spatioalAttention_Q_table_1000000/qnet1000000.cptk')
@@ -161,11 +161,11 @@ if __name__ == '__main__':
         # print info of episode:
         current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon())
         if current_episode.episode_number % SAVE_STATS_EVERY == 0:
-            if blue_decision_maker.type()== AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:
+            if False:#blue_decision_maker.type()== AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:
                 blue_decision_maker._decision_maker.print_model(initial_state_blue, episode, env.save_folder_path)
 
 
     env.end_run()
-    if blue_decision_maker.type() == AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:
+    if False: #blue_decision_maker.type() == AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:
         blue_decision_maker._decision_maker.print_model(initial_state_blue, episode, env.save_folder_path)
 

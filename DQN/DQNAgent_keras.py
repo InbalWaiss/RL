@@ -115,8 +115,8 @@ class decision_maker_DQN_keras:
                             help='Number of steps to populate the replay memory before training starts')
         parser.add_argument('--load_network', default=False, action='store_true', help='Load trained mode')
         parser.add_argument('--load_network_path', default='', help='the path to the trained mode file')
-        parser.add_argument('--net_mode', default='dqn', help='choose the mode of net, can be linear, dqn, duel')
-        # parser.add_argument('--net_mode', default='linear', help='choose the mode of net, can be linear, dqn, duel')
+        #parser.add_argument('--net_mode', default='dqn', help='choose the mode of net, can be linear, dqn, duel')
+        parser.add_argument('--net_mode', default='linear', help='choose the mode of net, can be linear, dqn, duel')
         parser.add_argument('--max_episode_length', default = 10000, type=int, help = 'max length of each episode')
         parser.add_argument('--num_episodes_at_test', default = 20, type=int, help='Number of episodes the agent plays at test')
         parser.add_argument('--ddqn', default=True, dest='ddqn', action='store_true', help='enable ddqn')
@@ -241,18 +241,40 @@ class decision_maker_DQN_keras:
         with tf.variable_scope(model_name):
             input_data = Input(shape=input_shape, name="input")
             if mode == "linear":
-                flatten_hidden = Flatten(name="flatten")(input_data)
+                # # version 1:
+                # flatten_hidden = Flatten(name="flatten")(input_data)
                 # output = Dense(num_actions, name="output")(flatten_hidden)
+
+                # version 2:
+                flatten_hidden = Flatten(name="flatten")(input_data)
                 FC = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
                 output = Dense(num_actions, name="output")(FC)
+
+                #version 3:
+                flatten_hidden = Flatten(name="flatten")(input_data)
+                FC_1 = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
+                FC_2 = Dense(512, activation='relu', name='action_fc')(FC_1)
+                output = Dense(num_actions, name="output")(FC_2)
+
+                #version 4:
+                flatten_hidden = Flatten(name="flatten")(input_data)
+                FC_1 = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
+                FC_2 = Dense(512, activation='relu', name='action_fc')(FC_1)
+                FC_3 = Dense(512, activation='relu', name='action_fc')(FC_2)
+                output = Dense(num_actions, name="output")(FC_3)
+
+
             else:
+
                 if not (args.recurrent):
-                    # h1 = Convolution2D(32, (3, 3), strides=1, activation="relu", name="conv1")(input_data)
-                    # h2 = Convolution2D(64, (3, 3), strides=2, activation="relu", name="conv2")(h1)
-                    # # h3 = Convolution2D(64, (2, 2), strides = 1, activation = "relu", name = "conv3")(h2)
-                    # context = Flatten(name="flatten")(h2)
-                    h1 = Convolution2D(32, (4, 4), strides=1, activation="relu", name="conv1")(input_data)
-                    context = Flatten(name="flatten")(h1)
+                    # version 1:
+                    h1 = Convolution2D(128, (8, 8), strides=1, activation="relu", name="conv1")(input_data)
+                    h2 = Convolution2D(256, (4, 4), strides=2, activation="relu", name="conv2")(h1)
+                    context = Flatten(name="flatten")(h2)
+
+                    ## version 2:
+                    # h1 = Convolution2D(512, (8, 8), strides=1, activation="relu", name="conv1")(input_data)
+                    # context = Flatten(name="flatten")(h1)
                 else:
                     print('>>>> Defining Recurrent Modules...')
                     input_data_expanded = Reshape((input_shape[0], input_shape[1], input_shape[2], 1),

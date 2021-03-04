@@ -18,7 +18,8 @@ def creat_and_save_dictionaries():
             for x2 in range(0, SIZE_X):
                 for y2 in range(0, SIZE_Y):
                     is_los, _ = check_if_LOS(x1, y1, x2, y2)
-                    if is_los:
+                    dist = np.linalg.norm(np.array([x1, y1]) - np.array([x2, y2]))
+                    if is_los and dist<=FIRE_RANGE:
                         los_from_pos[(x1, y1)].append((x2, y2))
                     else:
                         if DSM[x2, y2]!=1:
@@ -35,9 +36,9 @@ def show_LOS_from_point(x1,y1):
 
     points_in_LOS = DICT_POS_LOS[(x1,y1)]
     for point in points_in_LOS:
-        env[point[0]][point[1]] = (100, 0, 0)
+        env[point[0]][point[1]] = dict_of_colors[BRIGHT_RED]
 
-    env[x1][y1] = dict_of_colors[BLUE_N]
+    env[x1][y1] = dict_of_colors[RED_N]
 
     for x in range(SIZE_X):
         for y in range(SIZE_Y):
@@ -71,8 +72,8 @@ def find_closest_point_not_in_los(x1,y1):
     env = np.zeros((SIZE_X, SIZE_Y, 3), dtype=np.uint8)  # starts an rbg of small world
     points_in_LOS = DICT_POS_LOS[(x1, y1)]
     for point in points_in_LOS:
-        env[point[0]][point[1]] = (100, 0, 0)  # dict_of_colors[GREEN_N]
-    env[x1][y1] = dict_of_colors[BLUE_N]
+        env[point[0]][point[1]] = dict_of_colors[DARK_RED_N]
+    env[x1][y1] = dict_of_colors[RED_N]
     env[closest_point_no_loss[0]][closest_point_no_loss[1]] = (200, 200, 200)
     for x in range(SIZE_X):
         for y in range(SIZE_Y):
@@ -107,24 +108,20 @@ def find_dominating_point(x1, y1):
     for p in arr:
         if can_escape_by_one_step(point1, p):
             goal_points.append(p)
-
     if True:
         img_env = np.zeros((SIZE_X, SIZE_Y, 3), dtype=np.uint8)  # starts an rbg of small world
         points_in_LOS = DICT_POS_LOS[(x1, y1)]
         for point in points_in_LOS:
-            img_env[point[0]][point[1]] = (100, 0, 0)  # dict_of_colors[GREEN_N]
-        img_env[x1][y1] = dict_of_colors[BLUE_N]
-
+            img_env[point[0]][point[1]] = dict_of_colors[DARK_RED_N]
+        img_env[x1][y1] = dict_of_colors[RED_N]
         for x in range(SIZE_X):
             for y in range(SIZE_Y):
                 if DSM[x][y] == 1.:
                     img_env[x][y] = dict_of_colors[GREY_N]
         fig, axs = plt.subplots(1, 2)
         axs[0].imshow(img_env)
-
         for point in goal_points:
             img_env[point[0]][point[1]] = dict_of_colors[GREEN_N]
-
         axs[1].imshow(img_env)
         plt.show()
     print("end ", x1, y1)

@@ -45,8 +45,5 @@ class State(object):
             plt.matshow(env)
             plt.show()
 
-        # img = Image.fromarray(env).convert('L').resize((SIZE_X, SIZE_Y), Image.BILINEAR)
-        # img = Image.fromarray(env, 'RGB')
-        # Image._show(img)
         return env
 
