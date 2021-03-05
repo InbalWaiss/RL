@@ -241,27 +241,27 @@ class decision_maker_DQN_keras:
         with tf.variable_scope(model_name):
             input_data = Input(shape=input_shape, name="input")
             if mode == "linear":
-                # # version 1:
+                # version 1:
+                flatten_hidden = Flatten(name="flatten")(input_data)
+                output = Dense(num_actions, name="output")(flatten_hidden)
+
+                # # version 2:
                 # flatten_hidden = Flatten(name="flatten")(input_data)
-                # output = Dense(num_actions, name="output")(flatten_hidden)
-
-                # version 2:
-                flatten_hidden = Flatten(name="flatten")(input_data)
-                FC = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
-                output = Dense(num_actions, name="output")(FC)
-
-                #version 3:
-                flatten_hidden = Flatten(name="flatten")(input_data)
-                FC_1 = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
-                FC_2 = Dense(512, activation='relu', name='action_fc')(FC_1)
-                output = Dense(num_actions, name="output")(FC_2)
-
-                #version 4:
-                flatten_hidden = Flatten(name="flatten")(input_data)
-                FC_1 = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
-                FC_2 = Dense(512, activation='relu', name='action_fc')(FC_1)
-                FC_3 = Dense(512, activation='relu', name='action_fc')(FC_2)
-                output = Dense(num_actions, name="output")(FC_3)
+                # FC = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
+                # output = Dense(num_actions, name="output")(FC)
+                #
+                # #version 3:
+                # flatten_hidden = Flatten(name="flatten")(input_data)
+                # FC_1 = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
+                # FC_2 = Dense(512, activation='relu', name='action_fc')(FC_1)
+                # output = Dense(num_actions, name="output")(FC_2)
+                #
+                # #version 4:
+                # flatten_hidden = Flatten(name="flatten")(input_data)
+                # FC_1 = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
+                # FC_2 = Dense(512, activation='relu', name='action_fc')(FC_1)
+                # FC_3 = Dense(512, activation='relu', name='action_fc')(FC_2)
+                # output = Dense(num_actions, name="output")(FC_3)
 
 
             else:

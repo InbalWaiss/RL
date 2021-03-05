@@ -212,8 +212,6 @@ class Environment(object):
                                 counter_ones += 1
 
         print("for", self.NUMBER_OF_EPISODES, "episodes: ")
-        if chcek_unvisited_states:
-            print("% of unseen states: ", counter_ones / (num_of_states-block_states) * 100)
         print("% of games started at win: ", self.starts_at_win / self.NUMBER_OF_EPISODES * 100)
 
         info = {f"NUM_OF_EPISODES": [NUM_OF_EPISODES],

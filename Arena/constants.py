@@ -94,6 +94,19 @@ dict_of_colors = {1: (0, 0, 255),  #blue
                   11: (25, 0, 0) #bright bright red
                   }
 
+# dict_of_colors = {1: (255, 0, 0),  #blue
+#                   2: (150, 0, 0), #darker blue
+#                   3: (0, 0, 255), # red
+#                   4: (0, 0, 150), #dark red
+#                   5: (230, 100, 150), #purple
+#                   6: (60, 255, 255), #yellow
+#                   7: (100, 100, 100),#grey
+#                   8: (0, 255, 0),#green
+#                   9: (0, 0, 0), #black
+#                   10: (0, 0, 75), #bright red
+#                   11: (0, 0, 25) #bright bright red
+#                   }
+
 
 
 OBSTACLE = 1.
@@ -206,7 +219,7 @@ EVALUATE_NUM_OF_EPISODES = 500
 EVALUATE_SAVE_STATS_EVERY = 500
 
 # training mode
-IS_TRAINING=True
+IS_TRAINING=False
 UPDATE_RED_CONTEXT = True
 UPDATE_BLUE_CONTEXT = True
 
