@@ -3,7 +3,7 @@
 import numpy as np
 from PIL import Image
 import Arena
-from Arena.constants import SIZE_X, SIZE_Y
+from Arena.constants import SIZE_X, SIZE_Y, CLIP_REWARD_1
 
 
 from DQN.deeprl_prj import utils
@@ -116,9 +116,6 @@ class AtariPreprocessor(Preprocessor):
         img = Image.fromarray(state).convert('L').resize((SIZE_X, SIZE_Y), Image.BILINEAR)
         state = np.array(img)
 
-        # if not type(state)== np.ndarray:
-        #     state = state.img
-        # state = np.array(state)
         return state
 
     def process_state_for_network(self, state):
@@ -129,7 +126,7 @@ class AtariPreprocessor(Preprocessor):
         """
         # if type(state) == Arena.CState.State:
         #     state = state.img
-        return np.float32(self.process_state_for_memory(state) / 255.0)
+        return np.float32(self.process_state_for_memory(state)/ 255.0)
 
     def process_state_for_network_ori(self, state):
         """Scale, convert to greyscale and store as float32.
@@ -137,8 +134,8 @@ class AtariPreprocessor(Preprocessor):
         Basically same as process state for memory, but this time
         outputs float32 images.
         """
-        # if type(state) == Arena.CState.State:
-        #     state = state.img
+        if type(state) == Arena.CState.State:
+            state = state.img
         img = Image.fromarray(state)
         state = np.float32(np.array(img) / 255.0)
         return state
@@ -158,8 +155,10 @@ class AtariPreprocessor(Preprocessor):
 
     def process_reward(self, reward):
         """Clip reward between -1 and 1."""
-        # return np.clip(reward, -1, 1)
-        return reward
+        if CLIP_REWARD_1:
+            return np.clip(reward, -1, 1)
+        else:
+            return reward
     
     def reset(self):
         self.last_state = None

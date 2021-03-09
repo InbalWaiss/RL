@@ -6,6 +6,7 @@ from RafaelPlayer.QPlayer_constants import START_EPSILON, EPSILONE_DECAY, LEARNI
 from Arena.Position import Position
 from Arena.graphics import print_stats, print_episode_graphics, save_win_statistics, save_reward_stats
 from Arena.helper_funcs import *
+from Arena.constants import *
 import numpy as np
 from PIL import Image
 import pandas as pd
@@ -116,6 +117,13 @@ class Environment(object):
          False otherwise"""
 
         first_player = self.blue_player
+
+        if FIXED_END_POINT_10_10:
+            if self.blue_player.x==10 and self.blue_player.y==10:
+                win_status = WinEnum.Blue
+                self.win_status = win_status
+                return win_status
+
         second_player = self.red_player
         win_status = WinEnum.NoWin
         is_los = (second_player.x, second_player.y) in DICT_POS_LOS[(first_player.x, first_player.y)]
@@ -223,6 +231,16 @@ class Environment(object):
                 f"EPSILONE_DECAY": [EPSILONE_DECAY],
                 f"LEARNING_RATE": [LEARNING_RATE],
                 f"DISCOUNT": [DISCOUNT],
+                f"DANGER_ZONE_IN_STATE": [DANGER_ZONE_IN_STATE],
+                f"DOMINATING_POINTS_IN_STATE": [DOMINATING_POINTS_IN_STATE],
+                f"FIXED_END_POINT_10_10": [FIXED_END_POINT_10_10],
+                f"FIXED_START_POINT_RED": [FIXED_START_POINT_RED],
+                f"FIXED_START_POINT_BLUE": [FIXED_START_POINT_BLUE],
+                f"ACTION_SPACE_9": [ACTION_SPACE_9],
+                f"RED_PLAYER_MOVES": [RED_PLAYER_MOVES],
+                f"FIRE_RANGE_FLAG": [FIRE_RANGE_FLAG],
+                f"FIRE_RANGE": [FIRE_RANGE],
+                f"ZERO_SUM_GAME": [ZERO_SUM_GAME],
                 f"% Unseen states": [counter_ones / num_of_states * 100],
                 f"%Games started at Tie" : [self.starts_at_win / self.NUMBER_OF_EPISODES*100],
                 f"%WINS_BLUE": [self.wins_for_blue/self.NUMBER_OF_EPISODES*100],
@@ -233,6 +251,22 @@ class Environment(object):
                 f"%Red_agent_type" : [Agent_type_str[self.red_player._decision_maker.type()]],
                 f"%Red_agent_model_loded": [self.red_player._decision_maker.path_model_to_load]}
 
+        DANGER_ZONE_IN_STATE = True
+        DOMINATING_POINTS_IN_STATE = True
+        FIXED_END_POINT_10_10 = False
+        ACTION_SPACE_9 = True
+        ACTION_SPACE_4 = False
+
+
+        RED_PLAYER_MOVES = False
+        FIXED_START_POINT_RED = True
+        FIXED_START_POINT_BLUE = True
+
+        FIRE_RANGE_FLAG = True
+
+        FIRE_RANGE = 7
+
+        ZERO_SUM_GAME = False
 
         df = pd.DataFrame(info)
         df.to_csv(os.path.join(save_folder_path, 'Statistics.csv'), index=False)
@@ -246,7 +280,7 @@ class Episode():
     def __init__(self, episode_number, show_always=False):
         self.episode_number = episode_number
         self.episode_reward_blue = 0
-        self.episode_reward_blue_array = []
+        self.episode_reward_red = 0
         self.is_terminal = False
 
         if episode_number % SHOW_EVERY == 0 or episode_number == 1 or show_always:
