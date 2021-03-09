@@ -1,6 +1,6 @@
 
 from Arena.AbsDecisionMaker import AbsDecisionMaker
-from Arena.constants import np, SIZE_X, SIZE_Y, DSM, AgentAction
+from Arena.constants import np, SIZE_X, SIZE_Y, DSM, AgentAction, NUMBER_OF_ACTIONS
 
 
 class CPoint:
@@ -86,23 +86,34 @@ class Entity:
         return False
 
     def action(self, a: AgentAction):
+        if NUMBER_OF_ACTIONS==9:
+            """9 possible moves!"""
+            if a == AgentAction.TopRight: #1
+                self.move(x=1, y=-1)
+            elif a == AgentAction.Right: #2
+                self.move(x=1, y=0)
+            elif a == AgentAction.BottomRight: #3
+                self.move(x=1, y=1)
+            elif a == AgentAction.Bottom: # 4
+                self.move(x=0, y=-1)
+            elif a == AgentAction.Stay:  # 5 - stay in place!
+                self.move(x=0, y=0)
+            elif a == AgentAction.Top: # 6
+                self.move(x=0, y=1)
+            elif a == AgentAction.BottomLeft: # 7
+                self.move(x=-1, y=-1)
+            elif a==AgentAction.Left: #8
+                self.move(x=-1, y=0)
+            elif a == AgentAction.TopLeft: #0
+                self.move(x=-1, y=1)
 
-        """9 possible moves!"""
-        if a == AgentAction.TopRight:
-            self.move(x=1, y=-1)
-        elif a == AgentAction.Right:
-            self.move(x=1, y=0)
-        elif a == AgentAction.BottomRight:
-            self.move(x=1, y=1)
-        elif a == AgentAction.Bottom:
-            self.move(x=0, y=-1)
-        elif a == AgentAction.Stay:  # stay in place!
-            self.move(x=0, y=0)
-        elif a == AgentAction.Top:
-            self.move(x=0, y=1)
-        elif a == AgentAction.BottomLeft:
-            self.move(x=-1, y=-1)
-        elif a==AgentAction.Left:
-            self.move(x=-1, y=0)
-        elif a == AgentAction.TopLeft:
-            self.move(x=-1, y=1)
+        else:
+            """4 possible moves!"""
+            if a == AgentAction.Right:
+                self.move(x=1, y=0)
+            elif a == AgentAction.Bottom:
+                self.move(x=0, y=-1)
+            elif a == AgentAction.Top:
+                self.move(x=0, y=1)
+            elif a == AgentAction.Left:
+                self.move(x=-1, y=0)
