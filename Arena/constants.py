@@ -11,13 +11,21 @@ USE_LOS_IN_STATE = False
 
 DANGER_ZONE_IN_STATE = True
 DOMINATING_POINTS_IN_STATE = True
+FIXED_END_POINT_10_10 = False
+ACTION_SPACE_9 = True
+ACTION_SPACE_4 = False
+if not ACTION_SPACE_9:
+    ACTION_SPACE_4 = True
 
 RED_PLAYER_MOVES = False
-FIXED_START_POINTS = True
+FIXED_START_POINT_RED = True
+FIXED_START_POINT_BLUE = True
+
 FIRE_RANGE_FLAG = True
 FIRE_RANGE = 7
 
 ZERO_SUM_GAME = False
+CLIP_REWARD_1 = False
 
 try:
     with open('Arena/dictionary_position_los.pkl', 'rb') as f:
@@ -53,12 +61,12 @@ SIZE_X = 15
 SIZE_Y = 15
 
 MOVE_PENALTY = 5
-WIN_REWARD = 500 #will be change to be reward for reaching controling point
-LOST_PENALTY = 500
+WIN_REWARD = 100 #will be change to be reward for reaching controling point
+LOST_PENALTY = -WIN_REWARD
 MAX_STEPS_PER_EPISODE_PENALTY = 50
 TIE = 0
 
-MAX_STEPS_PER_EPISODE = 80# 250
+MAX_STEPS_PER_EPISODE = 80
 NUMBER_OF_ACTIONS = 9
 
 BLUE_N = 1 #blue player key in dict
@@ -81,17 +89,17 @@ class WinEnum(IntEnum):
     NoWin = 3
 
 
-dict_of_colors = {1: (0, 0, 255),  #blue
-                  2: (0, 0, 150), #darker blue
-                  3: (255, 0, 0), # red
-                  4: (150, 0, 0), #dark red
+dict_of_colors = {1: (255, 0, 0),  #blue
+                  2: (150, 0, 0), #darker blue
+                  3: (0, 0, 255), # red
+                  4: (0, 0, 150), #dark red
                   5: (230, 100, 150), #purple
                   6: (60, 255, 255), #yellow
                   7: (100, 100, 100),#grey
                   8: (0, 255, 0),#green
                   9: (0, 0, 0), #black
-                  10: (75, 0, 0), #bright red
-                  11: (25, 0, 0) #bright bright red
+                  10: (0, 0, 75), #bright red
+                  11: (0, 0, 25) #bright bright red
                   }
 
 # dict_of_colors = {1: (255, 0, 0),  #blue
@@ -166,18 +174,28 @@ DSM_30X30 =  np.array([
 ])
 
 
+if ACTION_SPACE_9:
+    NUMBER_OF_ACTIONS = 9
+    class AgentAction(IntEnum):
+        TopRight = 1
+        Right = 2
+        BottomRight = 3
+        Bottom = 4
+        Stay = 5
+        Top = 6
+        BottomLeft = 7
+        Left = 8
+        TopLeft = 0
 
-class AgentAction(IntEnum):
 
-    TopRight = 1
-    Right = 2
-    BottomRight = 3
-    Bottom = 4
-    Stay = 5
-    Top = 6
-    BottomLeft = 7
-    Left = 8
-    TopLeft = 0
+else: # ACTION_SPACE = 4
+    NUMBER_OF_ACTIONS = 4
+    class AgentAction(IntEnum):
+        Right = 0
+        Bottom = 1
+        Top = 2
+        Left = 3
+
 
 class AgentType(IntEnum):
     Q_table = 1
@@ -209,17 +227,17 @@ RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'RafaelPlayer/trained
 
 USE_DISPLAY = True
 SHOW_EVERY = 500
-NUM_OF_EPISODES = 5_000_000
+NUM_OF_EPISODES = 1_000_000
 SAVE_STATS_EVERY = 2500
 
 
 # params to evaluate trained models
 EVALUATE_SHOW_EVERY = 1
-EVALUATE_NUM_OF_EPISODES = 500
-EVALUATE_SAVE_STATS_EVERY = 500
+EVALUATE_NUM_OF_EPISODES = 100
+EVALUATE_SAVE_STATS_EVERY = 100
 
 # training mode
-IS_TRAINING=False
+IS_TRAINING=True
 UPDATE_RED_CONTEXT = True
 UPDATE_BLUE_CONTEXT = True
 

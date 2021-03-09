@@ -208,7 +208,7 @@ class decision_maker_DQN_keras:
                 s = s + '(' + str(layer_shape[0]) + '_' + str(layer_shape[1]) + '_' + str(layer_shape[2]) + '_' + str(
                     layer_shape[3]) + ')'
             s = s + '_'
-            return s
+        return s
 
     def loadModel(self, model, target_model):
         # load existing models
@@ -241,27 +241,16 @@ class decision_maker_DQN_keras:
         with tf.variable_scope(model_name):
             input_data = Input(shape=input_shape, name="input")
             if mode == "linear":
-                # version 1:
-                flatten_hidden = Flatten(name="flatten")(input_data)
-                output = Dense(num_actions, name="output")(flatten_hidden)
+                # # version 1:
+                # flatten_hidden = Flatten(name="flatten")(input_data)
+                # output = Dense(num_actions, name="output")(flatten_hidden)
 
-                # # version 2:
-                # flatten_hidden = Flatten(name="flatten")(input_data)
-                # FC = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
-                # output = Dense(num_actions, name="output")(FC)
-                #
-                # #version 3:
-                # flatten_hidden = Flatten(name="flatten")(input_data)
-                # FC_1 = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
-                # FC_2 = Dense(512, activation='relu', name='action_fc')(FC_1)
-                # output = Dense(num_actions, name="output")(FC_2)
-                #
-                # #version 4:
-                # flatten_hidden = Flatten(name="flatten")(input_data)
-                # FC_1 = Dense(512, activation='relu', name='action_fc')(flatten_hidden)
-                # FC_2 = Dense(512, activation='relu', name='action_fc')(FC_1)
-                # FC_3 = Dense(512, activation='relu', name='action_fc')(FC_2)
-                # output = Dense(num_actions, name="output")(FC_3)
+                #version 4 elu:
+                flatten_hidden = Flatten(name="flatten")(input_data)
+                FC_1 = Dense(512, activation='elu', name='FC1-elu')(flatten_hidden)
+                FC_2 = Dense(512, activation='elu', name='FC2-elu')(FC_1)
+                FC_3 = Dense(512, activation='elu', name='FC3-elu')(FC_2)
+                output = Dense(num_actions, activation='softmax', name="output")(FC_3)
 
 
             else:
@@ -459,7 +448,6 @@ class decision_maker_DQN_keras:
 
             next_states = np.stack([x.next_state for x in samples])
             mask = np.asarray([1 - int(x.is_terminal) for x in samples])
-            # mask = np.asarray([1 for x in samples])
             rewards = np.asarray([x.reward for x in samples])
 
         if self.no_target:
@@ -537,16 +525,8 @@ class decision_maker_DQN_keras:
         outputs = [layer.output for layer in self.target_network.layers]  # all layer outputs
         functor = K.function([inp, K.learning_phase()], outputs)  # evaluation function
 
-        # test = np.random.random(input_shape)[np.newaxis, ...]
-        # layer_outs = [func([test, 1.]) for func in functor]
         t = (action_state)[np.newaxis, ...]
         layer_outs = functor([t, 1.])
-
-        # ind_layer = 1
-        # layer = layer_outs[ind_layer]
-        # filter_index = 2
-        # fram = layer[:, :, :, filter_index]
-        # ff = fram[0, :]
 
         num_of_conv_layers = 1
 

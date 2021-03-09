@@ -34,6 +34,9 @@ class State(object):
             for point in points_in_enemy_los:
                 env[point[0]][point[1]] = dict_of_colors[GREEN_N]
 
+        if FIXED_END_POINT_10_10:
+            env[10][10]=dict_of_colors[GREEN_N]
+
         env[self.my_pos._x][self.my_pos._y] = dict_of_colors[BLUE_N]
         env[self.enemy_pos._x][self.enemy_pos._y] = dict_of_colors[RED_N]
         for x in range(SIZE_X):

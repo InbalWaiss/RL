@@ -22,7 +22,7 @@ MIN_REPLAY_MEMORY_SIZE = 100 # minimum number of steps in a memory to start trai
 MINIBATCH_SIZE = 64 # how many samples to use for training
 UPDATE_TARGET_EVERY = 15 # number of terminal states
 OBSERVATION_SPACE_VALUES = (SIZE_X, SIZE_Y, 3)
-# MODEL_NAME = 'red_blue_32(4X4)X64X9'
+MODEL_NAME = 'red_blue_32(4X4)X64X9'
 
 
 class ModifiedTensorBoard(TensorBoard):
@@ -154,7 +154,6 @@ class decision_maker_DQN():
             self.model = load_model(p)
             self.target_model = load_model(p)
             self.target_model.set_weights(self.model.get_weights())
-            self.MODEL_NAME=path_model_to_load
 
         else: #create new model
             self.model = self.create_model() # main model
@@ -164,51 +163,48 @@ class decision_maker_DQN():
         self.replay_memory = deque(maxlen=REPLAY_MEMORY_SIZE)
 
         # custom tesnsorboard object
-        self.tensorboard = ModifiedTensorBoard(log_dir="logs/{}-{}".format(self.MODEL_NAME, int(time.time())))
+        self.tensorboard = ModifiedTensorBoard(log_dir="logs/{}-{}".format(MODEL_NAME, int(time.time())))
 
 
-    def create_model(self):
+    def create_model_conv(self):
         model = Sequential()
 
         # model.add(Conv2D(256, (3, 3), input_shape=OBSERVATION_SPACE_VALUES)) # in small world 15X15X3
         #model.add(Conv2D(16, (3)3) input_shape=OBSERVATION_SPACE_VALUES))
-        model.add(Conv2D(128, (8, 8), input_shape=OBSERVATION_SPACE_VALUES))
+        model.add(Conv2D(64, (3, 3), input_shape=OBSERVATION_SPACE_VALUES))
         model.add(Activation('relu'))
-        model.add(MaxPooling2D(pool_size=(1,1)))
+        model.add(MaxPooling2D(pool_size=(2,2)))
         model.add(Dropout(0.3))
 
         # model.add(Conv2D(256, (3,3)))
         #model.add(Conv2D(32, (3, 3)))
-        model.add(Conv2D(64, (1, 1)))
+        model.add(Conv2D(32, (3, 3)))
         model.add(Activation('relu'))
-        model.add(MaxPooling2D(pool_size=(1, 1)))
+        model.add(MaxPooling2D(pool_size=(2, 2)))
         model.add(Dropout(0.3))
 
 
         model.add(Flatten()) # this converts out 3D feature maps to 1D feature vectors
-        model.add(Dense(512))
+        model.add(Dense(64))
 
         model.add(Dense(NUMBER_OF_ACTIONS, activation='linear'))
         model.compile(loss="mse", optimizer=Adam(lr=0.001), metrics=['accuracy'])
-        self.MODEL_NAME = 'Conv2D(128(8,8)(1,1)_Conv2D64(1,1)(1,1)_Dense512'
         return model
 
 
-    def create_model_FC(self):
+    def create_model(self):
         model = Sequential()
-        model.add(Dense(512, activation="relu", input_shape=OBSERVATION_SPACE_VALUES))
-        model.add(Activation('relu'))
+        model.add(Dense(128, activation="softmax", input_shape=OBSERVATION_SPACE_VALUES))
+        #model.add(Activation('relu'))
 
         # model.add(Dense(128, activation="relu"))
         # model.add(Activation('relu'))
 
-        #model.add(Flatten())  # this converts out 3D feature maps to 1D feature vectors
-        model.add(Dense(512))
-        model.add(Activation('relu'))
+        model.add(Flatten())  # this converts out 3D feature maps to 1D feature vectors
+        model.add(Dense(64))
 
         model.add(Dense(NUMBER_OF_ACTIONS, activation='linear'))
         model.compile(loss="mse", optimizer=Adam(lr=0.001), metrics=['accuracy'])
-        self.MODEL_NAME = 'Dense(128(8,8)(1,1)Dense(1,1)(1,1)'
         return model
 
     def loadModel(self, model, target_model):
@@ -359,6 +355,6 @@ class DQNAgent():
             elif player_color == Color.Blue:
                 color_str = "blue"
             self._decision_maker.model.save(
-                f'{path_to_model+os.sep+self.MODEL_NAME}_{color_str}_{NUM_OF_EPISODES}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
+                f'{path_to_model+os.sep+MODEL_NAME}_{color_str}_{NUM_OF_EPISODES}_{max_reward: >7.2f}max_{avg_reward: >7.2f}avg_{min_reward: >7.2f}min__{int(time.time())}.model')
 
         return self.min_reward
