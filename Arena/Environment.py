@@ -7,6 +7,7 @@ from Arena.Position import Position
 from Arena.graphics import print_stats, print_episode_graphics, save_win_statistics, save_reward_stats
 from Arena.helper_funcs import *
 from Arena.constants import *
+
 import numpy as np
 from PIL import Image
 import pandas as pd
@@ -251,22 +252,6 @@ class Environment(object):
                 f"%Red_agent_type" : [Agent_type_str[self.red_player._decision_maker.type()]],
                 f"%Red_agent_model_loded": [self.red_player._decision_maker.path_model_to_load]}
 
-        DANGER_ZONE_IN_STATE = True
-        DOMINATING_POINTS_IN_STATE = True
-        FIXED_END_POINT_10_10 = False
-        ACTION_SPACE_9 = True
-        ACTION_SPACE_4 = False
-
-
-        RED_PLAYER_MOVES = False
-        FIXED_START_POINT_RED = True
-        FIXED_START_POINT_BLUE = True
-
-        FIRE_RANGE_FLAG = True
-
-        FIRE_RANGE = 7
-
-        ZERO_SUM_GAME = False
 
         df = pd.DataFrame(info)
         df.to_csv(os.path.join(save_folder_path, 'Statistics.csv'), index=False)
