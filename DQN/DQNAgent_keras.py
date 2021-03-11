@@ -20,6 +20,8 @@ from keras.models import Model
 from keras import backend as K
 from keras.backend.tensorflow_backend import set_session
 
+from keras import losses
+
 import argparse
 import matplotlib.pyplot as plt
 
@@ -185,7 +187,7 @@ class decision_maker_DQN_keras:
             self.target_network = load_model(p)
             self.target_network.set_weights(self.q_network.get_weights())
             self.final_model = self.target_network
-            self.compile()
+            # self.compile()
 
         else: #create new model
             self.q_network = self.create_model(input_shape, self.num_actions, self.net_mode, args, "QNet")
@@ -250,8 +252,8 @@ class decision_maker_DQN_keras:
                 FC_1 = Dense(512, activation='elu', name='FC1-elu')(flatten_hidden)
                 FC_2 = Dense(512, activation='elu', name='FC2-elu')(FC_1)
                 FC_3 = Dense(512, activation='elu', name='FC3-elu')(FC_2)
-                output = Dense(num_actions, activation='softmax', name="output")(FC_3)
-
+                FC_4 = Dense(512, activation='elu', name='FC4-elu')(FC_3)
+                output = Dense(num_actions, activation='softmax', name="output")(FC_4)
 
             else:
 
@@ -350,8 +352,12 @@ class decision_maker_DQN_keras:
             qa_value = merge([qa_value, action_mask], mode = 'mul', name = "multiply")
             qa_value = Lambda(lambda x: tf.reduce_sum(x, axis=1, keep_dims = True), name = "sum")(qa_value)
 
+        loss_func = losses.mean_squared_error
+        # loss_func = losses.kullback_leibler_divergence
         self.final_model = Model(inputs = [state, action_mask], outputs = qa_value)
         self.final_model.compile(loss=loss_func, optimizer=optimizer)
+
+
 
     def calc_q_values(self, state):
         """Given a state (or batch of states) calculate the Q-values.

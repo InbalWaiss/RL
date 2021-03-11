@@ -11,6 +11,7 @@ USE_LOS_IN_STATE = False
 
 DANGER_ZONE_IN_STATE = True
 DOMINATING_POINTS_IN_STATE = True
+LOSE_POINTS_IN_STATE = True
 FIXED_END_POINT_10_10 = False
 ACTION_SPACE_9 = True
 ACTION_SPACE_4 = False
@@ -54,6 +55,16 @@ except:
     try:
         with open('dictionary_dominating_points.pkl', 'rb') as f:
             DICT_DOMINATING_POINTS = pickle.load(f)
+    except:
+        pass
+
+try:
+    with open('Arena/dictionary_lose_points.pkl', 'rb') as f:
+        DICT_LOSE_POINTS = pickle.load(f)
+except:
+    try:
+        with open('dictionary_lose_points.pkl', 'rb') as f:
+            DICT_LOSE_POINTS = pickle.load(f)
     except:
         pass
 

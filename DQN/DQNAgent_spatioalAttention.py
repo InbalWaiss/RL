@@ -513,7 +513,8 @@ class decision_maker_DQN_spatioalAttention:
 
     # Queries main network for Q values given current observation space (environment state)
     def get_qs(self, state):
-        return self.model.predict(np.array(state).reshape(-1, *np.array(state).shape) / 255)[0]
+        #return self.model.predict(np.array(state).reshape(-1, *np.array(state).shape) / 255)[0]
+        return self.model.predict(np.array(state).reshape(-1, *np.array(state).shape))[0]
 
     def save_model(self, idx_episode, path):
         safe_path = path + "/qnet" + str(idx_episode) + ".cptk"

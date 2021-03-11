@@ -2,6 +2,8 @@
 
 import tensorflow as tf
 import semver
+import numpy as np
+import keras as K
 
 def huber_loss(y_true, y_pred, max_grad=1.):
     """Calculate the huber loss.
@@ -51,3 +53,5 @@ def mean_huber_loss(y_true, y_pred, max_grad=1.):
       The mean huber loss.
     """
     return tf.reduce_mean(huber_loss(y_true, y_pred, max_grad))
+
+

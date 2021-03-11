@@ -100,6 +100,15 @@ def calc_and_save_dominating_points():
 
     save_obj(dominating_points_dict, "dictionary_dominating_points")
 
+def calc_and_save_lose_points():
+    lose_points_dict = {}
+    for x1 in range(0, SIZE_X):
+        for y1 in range(0, SIZE_Y):
+            goal_points = find_lose_points(x1, y1)
+            lose_points_dict[(x1,y1)] = goal_points
+
+    save_obj(lose_points_dict, "dictionary_lose_points")
+
 
 def find_dominating_point(x1, y1):
     point1 = (x1, y1)
@@ -146,7 +155,35 @@ def can_escape_by_one_step(point1, point2):
     return False
 
 
+def find_lose_points(x1, y1):
+    point1 = (x1, y1)
+    arr = DICT_POS_LOS[(x1, y1)]
+    goal_points = []
+    for p in arr:
+        if can_escape_by_one_step(p, point1):
+            goal_points.append(p)
+    if False:
+        img_env = np.zeros((SIZE_X, SIZE_Y, 3), dtype=np.uint8)  # starts an rbg of small world
+        points_in_LOS = DICT_POS_LOS[(x1, y1)]
+        for point in points_in_LOS:
+            img_env[point[0]][point[1]] = dict_of_colors[DARK_RED_N]
+        img_env[x1][y1] = dict_of_colors[RED_N]
+        for x in range(SIZE_X):
+            for y in range(SIZE_Y):
+                if DSM[x][y] == 1.:
+                    img_env[x][y] = dict_of_colors[GREY_N]
+        fig, axs = plt.subplots(1, 2)
+        axs[0].imshow(img_env)
+        for point in goal_points:
+            img_env[point[0]][point[1]] = dict_of_colors[GREEN_N]
+        axs[1].imshow(img_env)
+        plt.show()
+    print("end ", x1, y1)
+    return goal_points
+
+
 if __name__ == '__main__':
-    show_LOS_from_point(5, 5)
-    find_closest_point_not_in_los(5, 5)
-    find_dominating_point(5, 5)
+    # show_LOS_from_point(5, 5)
+    # find_closest_point_not_in_los(5, 5)
+    # find_dominating_point(5, 5)
+    find_lose_points(5,5) #{red_pos : points that is blus is in blue will lose!}

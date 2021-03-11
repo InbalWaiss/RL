@@ -109,11 +109,12 @@ class Entity:
 
         else:
             """4 possible moves!"""
-            if a == AgentAction.Right:
+            if a == AgentAction.Right: #0
                 self.move(x=1, y=0)
-            elif a == AgentAction.Bottom:
+            elif a == AgentAction.Bottom: #1
                 self.move(x=0, y=-1)
-            elif a == AgentAction.Top:
+            elif a == AgentAction.Top: #2
                 self.move(x=0, y=1)
-            elif a == AgentAction.Left:
+            elif a == AgentAction.Left: #3
                 self.move(x=-1, y=0)
+

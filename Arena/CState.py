@@ -34,6 +34,11 @@ class State(object):
             for point in points_in_enemy_los:
                 env[point[0]][point[1]] = dict_of_colors[GREEN_N]
 
+        if LOSE_POINTS_IN_STATE:
+            lose_points = DICT_LOSE_POINTS[(self.enemy_pos._x, self.enemy_pos._y)]
+            for point in lose_points:
+                env[point[0]][point[1]] = dict_of_colors[DARK_RED_N]
+
         if FIXED_END_POINT_10_10:
             env[10][10]=dict_of_colors[GREEN_N]
 
