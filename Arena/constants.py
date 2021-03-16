@@ -4,21 +4,19 @@ import numpy as np
 from os import path
 import pickle
 
-WITH_LOS = True
-PRINT_TILES_IN_LOS = True
+PRINT_TILES_IN_LOS = False
 USE_BRESENHAM_LINE = False
 USE_LOS_IN_STATE = False
 
 DANGER_ZONE_IN_STATE = True
-DOMINATING_POINTS_IN_STATE = True
-LOSE_POINTS_IN_STATE = True
-FIXED_END_POINT_10_10 = False
+DOMINATING_POINTS_IN_STATE = False
+LOSE_POINTS_IN_STATE = False
 ACTION_SPACE_9 = True
 ACTION_SPACE_4 = False
 if not ACTION_SPACE_9:
     ACTION_SPACE_4 = True
 
-RED_PLAYER_MOVES = False
+RED_PLAYER_MOVES = True
 FIXED_START_POINT_RED = True
 FIXED_START_POINT_BLUE = True
 
@@ -36,7 +34,11 @@ except:
         with open('dictionary_position_los.pkl', 'rb') as f:
             DICT_POS_LOS = pickle.load(f)
     except:
-        pass
+        try:
+            with open('../Arena/dictionary_position_los.pkl', 'rb') as f:
+                DICT_POS_LOS = pickle.load(f)
+        except:
+            pass
 
 try:
     with open('Arena/dictionary_position_no_los.pkl', 'rb') as f:
@@ -46,7 +48,11 @@ except:
         with open('dictionary_position_no_los.pkl', 'rb') as f:
             DICT_POS_NO_LOS = pickle.load(f)
     except:
-        pass
+        try:
+            with open('../Arena/dictionary_position_no_los.pkl', 'rb') as f:
+                DICT_POS_NO_LOS = pickle.load(f)
+        except:
+            pass
 
 try:
     with open('Arena/dictionary_dominating_points.pkl', 'rb') as f:
@@ -56,7 +62,11 @@ except:
         with open('dictionary_dominating_points.pkl', 'rb') as f:
             DICT_DOMINATING_POINTS = pickle.load(f)
     except:
-        pass
+        try:
+            with open('../Arena/dictionary_dominating_points.pkl', 'rb') as f:
+                DICT_DOMINATING_POINTS = pickle.load(f)
+        except:
+            pass
 
 try:
     with open('Arena/dictionary_lose_points.pkl', 'rb') as f:
@@ -66,18 +76,21 @@ except:
         with open('dictionary_lose_points.pkl', 'rb') as f:
             DICT_LOSE_POINTS = pickle.load(f)
     except:
-        pass
+        try:
+            with open('../Arena/dictionary_lose_points.pkl', 'rb') as f:
+                DICT_LOSE_POINTS = pickle.load(f)
+        except:
+            pass
 
 SIZE_X = 15
 SIZE_Y = 15
 
-MOVE_PENALTY = 5
-WIN_REWARD = 100 #will be change to be reward for reaching controling point
+MOVE_PENALTY = 1
+WIN_REWARD = 120 #will be change to be reward for reaching controling point
 LOST_PENALTY = -WIN_REWARD
-MAX_STEPS_PER_EPISODE_PENALTY = 50
 TIE = 0
 
-MAX_STEPS_PER_EPISODE = 80
+MAX_STEPS_PER_EPISODE = 200
 NUMBER_OF_ACTIONS = 9
 
 BLUE_N = 1 #blue player key in dict
@@ -98,12 +111,13 @@ class WinEnum(IntEnum):
     Red = 1
     Tie = 2
     NoWin = 3
+    Done = 4
 
 
 dict_of_colors = {1: (255, 0, 0),  #blue
-                  2: (150, 0, 0), #darker blue
+                  2: (230, 0, 0), #darker blue
                   3: (0, 0, 255), # red
-                  4: (0, 0, 150), #dark red
+                  4: (0, 0, 230), #dark red
                   5: (230, 100, 150), #purple
                   6: (60, 255, 255), #yellow
                   7: (100, 100, 100),#grey
@@ -214,12 +228,14 @@ class AgentType(IntEnum):
     DQN_keras = 3
     DQN_temporalAttention = 4
     DQNAgent_spatioalAttention = 5
+    Greedy = 6
 
 Agent_type_str = {AgentType.Q_table : "Q_table",
                   AgentType.DQN_basic : "DQN_basic",
                   AgentType.DQN_keras : "DQN_keras",
                   AgentType.DQN_temporalAttention : "DQN_temporalAttention",
-                  AgentType.DQNAgent_spatioalAttention : "DQNAgent_spatioalAttention"}
+                  AgentType.DQNAgent_spatioalAttention : "DQNAgent_spatioalAttention",
+                  AgentType.Greedy : "Greedy_player"}
 
 class Color(IntEnum):
     Blue = 1
@@ -232,12 +248,9 @@ OUTPUT_DIR = path.join(MAIN_PATH, 'Arena')
 STATS_RESULTS_RELATIVE_PATH = path.join(OUTPUT_DIR, 'statistics')
 RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'RafaelPlayer/trained_agents')
 
-# EASY_AGENT = 'easy.pickle'
-# MEDIUM_AGENT = 'medium.pickle'
-# HARD_AGENT = 'qtable_red-1000000_old_terminal_state.pickle'
 
 USE_DISPLAY = True
-SHOW_EVERY = 500
+SHOW_EVERY = 50
 NUM_OF_EPISODES = 1_000_000
 SAVE_STATS_EVERY = 2500
 
@@ -247,8 +260,10 @@ EVALUATE_SHOW_EVERY = 1
 EVALUATE_NUM_OF_EPISODES = 100
 EVALUATE_SAVE_STATS_EVERY = 100
 
+EVALUATE_PLAYERS_EVERY = 50
+
 # training mode
-IS_TRAINING=True
+IS_TRAINING = True
 UPDATE_RED_CONTEXT = True
 UPDATE_BLUE_CONTEXT = True
 

@@ -51,8 +51,8 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
 
         return q_table
 
-    def update_context(self, new_state: State, reward, is_terminal):
-        if self.UPDATE_CONTEXT:
+    def update_context(self, new_state: State, reward, is_terminal, EVALUATE=True):
+        if self.UPDATE_CONTEXT and not EVALUATE:
             state_entry = (new_state.my_pos.get_tuple(), new_state.enemy_pos.get_tuple())
             action_entry = int(self._action)
 
@@ -77,11 +77,11 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
         else:
             self._epsilon = 0
 
-    def get_action(self, state: State)-> AgentAction:
+    def get_action(self, state: State, evaluate=False)-> AgentAction:
 
         state_entry = (state.my_pos.get_tuple(), state.enemy_pos.get_tuple())
 
-        if np.random.random() > self._epsilon or self.UPDATE_CONTEXT == False:
+        if np.random.random() > self._epsilon or self.UPDATE_CONTEXT == False or evaluate:
             action = np.argmax(self._Q_matrix[state_entry])
         else:
             action = np.random.randint(0, NUMBER_OF_ACTIONS)

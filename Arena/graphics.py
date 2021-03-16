@@ -188,11 +188,6 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
             informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
             (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors[DARK_RED_N]
 
-    if FIXED_END_POINT_10_10:
-        point = [10,10]
-        informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
-        (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors[GREEN_N]
-
 
     points_in_LOS = []
     # paint the tiles in line from blue to red in yellow
@@ -225,56 +220,96 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
     cv2.putText(informative_env, f"episode #{game_number}", botoomLeftCornerOfText, font, 0.7, color, thickness,
                 cv2.LINE_AA)
 
-    if env.win_status != WinEnum.NoWin:
-        # print the dominating point
+    if env.win_status == WinEnum.NoWin:
+        # not terminal state
+        botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 45, 20)
+        cv2.putText(informative_env, f"steps: {number_of_steps}", botoomLeftCornerOfText, font, fontScale,
+                    dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
 
-        if env.win_status == WinEnum.Red:
-            ret_val, red_over_blue_point = can_escape(red, blue)
-            informative_env[
-            (red_over_blue_point[0] + margin_x) * const + 3: -3 + (red_over_blue_point[0] + margin_x) * const + const,
-            (red_over_blue_point[1] + margin_y) * const + 3: -3 + (red_over_blue_point[1] + margin_y) * const + const] = \
-            dict_of_colors[DARK_RED_N]
-        if env.win_status == WinEnum.Blue:
-            ret_val, blue_over_red_point = can_escape(blue, red)
-            informative_env[
-            (blue_over_red_point[0] + margin_x) * const + 3: -3 + (blue_over_red_point[0] + margin_x) * const + const,
-            (blue_over_red_point[1] + margin_y) * const + 3: -3 + (blue_over_red_point[1] + margin_y) * const + const] = \
-            dict_of_colors[DARK_BLUE_N]
-
+    elif env.win_status == WinEnum.Done:
         # print who won
         thickness = 2
         botoomLeftCornerOfText_steps = (int(np.floor(SIZE_Y / 2)) * const - 79, 55)
-        if env.win_status == WinEnum.Tie:
-            botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 38, 30)
-            cv2.putText(informative_env, f"TIE!", botoomLeftCornerOfText, font, fontScale, dict_of_colors[PURPLE_N],
-                        thickness, cv2.LINE_AA)
-            cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
-                        dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
-        elif env.win_status == WinEnum.Red:
-            botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 55, 30)
-            cv2.putText(informative_env, f"RED WON!", botoomLeftCornerOfText, font, fontScale, dict_of_colors[RED_N],
-                        thickness - 1, cv2.LINE_AA)
-            cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
-                        dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
-        elif env.win_status == WinEnum.Blue:
-            botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 50, 30)
-            cv2.putText(informative_env, f"BLUE WON!", botoomLeftCornerOfText, font, fontScale, dict_of_colors[BLUE_N],
-                        thickness - 1, cv2.LINE_AA)
-            cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
-                        dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
-        else:  # both lost...
+        if number_of_steps==MAX_STEPS_PER_EPISODE:
             botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 60, 30)
             cv2.putText(informative_env, f"both lost...", botoomLeftCornerOfText, font, fontScale,
                         dict_of_colors[PURPLE_N], thickness - 1, cv2.LINE_AA)
             cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
                         dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
-
+        else:
+            whos_turn = env.whos_turn(number_of_steps)
+            if whos_turn == Color.Blue:
+                botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 50, 30)
+                cv2.putText(informative_env, f"BLUE WON!", botoomLeftCornerOfText, font, fontScale,
+                            dict_of_colors[BLUE_N],
+                            thickness - 1, cv2.LINE_AA)
+                cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
+                            dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
+            else: #reds turn:
+                botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 55, 30)
+                cv2.putText(informative_env, f"RED WON!", botoomLeftCornerOfText, font, fontScale,
+                            dict_of_colors[RED_N],
+                            thickness - 1, cv2.LINE_AA)
+                cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
+                            dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
         cv2.waitKey(2)
 
-    else:  # not terminal state
-        botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 45, 20)
-        cv2.putText(informative_env, f"steps: {number_of_steps}", botoomLeftCornerOfText, font, fontScale,
-                    dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
+
+    else:
+        print("who won??")
+        print("env.win_status ==", env.win_status)
+
+
+    # if env.win_status != WinEnum.NoWin:
+    #     # print the dominating point
+    #
+    #     if env.win_status == WinEnum.Red:
+    #         ret_val, red_over_blue_point = can_escape(red, blue)
+    #         informative_env[
+    #         (red_over_blue_point[0] + margin_x) * const + 3: -3 + (red_over_blue_point[0] + margin_x) * const + const,
+    #         (red_over_blue_point[1] + margin_y) * const + 3: -3 + (red_over_blue_point[1] + margin_y) * const + const] = \
+    #         dict_of_colors[DARK_RED_N]
+    #     if env.win_status == WinEnum.Blue:
+    #         ret_val, blue_over_red_point = can_escape(blue, red)
+    #         informative_env[
+    #         (blue_over_red_point[0] + margin_x) * const + 3: -3 + (blue_over_red_point[0] + margin_x) * const + const,
+    #         (blue_over_red_point[1] + margin_y) * const + 3: -3 + (blue_over_red_point[1] + margin_y) * const + const] = \
+    #         dict_of_colors[DARK_BLUE_N]
+
+        # print who won
+        # thickness = 2
+        # botoomLeftCornerOfText_steps = (int(np.floor(SIZE_Y / 2)) * const - 79, 55)
+        # if env.win_status == WinEnum.Tie:
+        #     botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 38, 30)
+        #     cv2.putText(informative_env, f"TIE!", botoomLeftCornerOfText, font, fontScale, dict_of_colors[PURPLE_N],
+        #                 thickness, cv2.LINE_AA)
+        #     cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
+        #                 dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
+        # elif env.win_status == WinEnum.Red:
+        #     botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 55, 30)
+        #     cv2.putText(informative_env, f"RED WON!", botoomLeftCornerOfText, font, fontScale, dict_of_colors[RED_N],
+        #                 thickness - 1, cv2.LINE_AA)
+        #     cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
+        #                 dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
+        # elif env.win_status == WinEnum.Blue:
+        #     botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 50, 30)
+        #     cv2.putText(informative_env, f"BLUE WON!", botoomLeftCornerOfText, font, fontScale, dict_of_colors[BLUE_N],
+        #                 thickness - 1, cv2.LINE_AA)
+        #     cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
+        #                 dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
+        # else:  # both lost...
+        #     botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 60, 30)
+        #     cv2.putText(informative_env, f"both lost...", botoomLeftCornerOfText, font, fontScale,
+        #                 dict_of_colors[PURPLE_N], thickness - 1, cv2.LINE_AA)
+        #     cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
+        #                 dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
+        #
+        # cv2.waitKey(2)
+
+    # else:  # not terminal state
+    #     botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 45, 20)
+    #     cv2.putText(informative_env, f"steps: {number_of_steps}", botoomLeftCornerOfText, font, fontScale,
+    #                 dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
 
     # print number of wins
     botoomLeftCornerOfText = (5, 15)

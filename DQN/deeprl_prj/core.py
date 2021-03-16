@@ -185,7 +185,8 @@ class ReplayMemory:
         self.history_length = args.num_frames
         self.actions = np.zeros(self.memory_size, dtype = np.int8)
         self.rewards = np.zeros(self.memory_size, dtype = np.int8)
-        self.screens = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype = np.uint8)
+        #self.screens = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype = np.uint8)
+        self.screens = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype=np.uint16)
         self.terminals = np.zeros(self.memory_size, dtype = np.bool)
         self.current = 0
 
@@ -215,9 +216,11 @@ class ReplayMemory:
         while len(indexes) < batch_size: 
             index = np.random.randint(self.history_length - 1, end)
             # sampled state shouldn't contain episode end
-            # ####TODO: inbal: check why we dont learn terminal states
+            ####TODO: inbal: check why we dont learn terminal states
             # if self.terminals[index - self.history_length + 1: index + 1].any():
             #     continue
+            if self.terminals[index - self.history_length + 1: index].any():
+                continue
             indexes.append(index)
 
         for idx in indexes:

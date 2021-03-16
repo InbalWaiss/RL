@@ -39,8 +39,8 @@ if __name__ == '__main__':
     env = Environment(IS_TRAINING)
 
     ### Red Decision Maker
-    # red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
-    red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False , path_model_to_load="qtable_red-1000000_old_terminal_state.pickle")
+    red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
+    #red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False , path_model_to_load="qtable_red-1000000_old_terminal_state.pickle")
 
     ### Blue Decision Maker
     # --Qtable:
@@ -50,8 +50,8 @@ if __name__ == '__main__':
     # blue_decision_maker = DQNAgent.DQNAgent()
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # --DQN Keras
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_100001_  93.00max_ -18.74avg_ -80.00min__1615450735.model')
+    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_32501_  -7.00max_ -76.19avg_-100.00min__1615542592.model')
     # --DQN Attention
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=True, path_model_to_load='statistics/18_02_06_54_DQNAgent_spatioalAttention_Q_table_1000000/qnet1000000.cptk')

@@ -27,11 +27,11 @@ class State(object):
         if DANGER_ZONE_IN_STATE:
             points_in_enemy_los = DICT_POS_LOS[(self.enemy_pos._x, self.enemy_pos._y)]
             for point in points_in_enemy_los:
-                env[point[0]][point[1]] = dict_of_colors[BRIGHT_RED]
+                env[point[0]][point[1]] = dict_of_colors[DARK_RED_N]
 
         if DOMINATING_POINTS_IN_STATE:
-            points_in_enemy_los = DICT_DOMINATING_POINTS[(self.enemy_pos._x, self.enemy_pos._y)]
-            for point in points_in_enemy_los:
+            dominating_points = DICT_DOMINATING_POINTS[(self.enemy_pos._x, self.enemy_pos._y)]
+            for point in dominating_points:
                 env[point[0]][point[1]] = dict_of_colors[GREEN_N]
 
         if LOSE_POINTS_IN_STATE:
@@ -39,8 +39,6 @@ class State(object):
             for point in lose_points:
                 env[point[0]][point[1]] = dict_of_colors[DARK_RED_N]
 
-        if FIXED_END_POINT_10_10:
-            env[10][10]=dict_of_colors[GREEN_N]
 
         env[self.my_pos._x][self.my_pos._y] = dict_of_colors[BLUE_N]
         env[self.enemy_pos._x][self.enemy_pos._y] = dict_of_colors[RED_N]

@@ -55,60 +55,76 @@ class Environment(object):
         self.path_for_run = save_folder_path
 
     def reset_players_positions(self, episode_number):
+
         is_los = True
         while is_los:
             self.blue_player._choose_random_position()
             self.red_player._choose_random_position()
             is_los = (self.red_player.x, self.red_player.y) in DICT_POS_LOS[(self.blue_player.x, self.blue_player.y)]
 
+        if FIXED_START_POINT_RED:
+            self.red_player.x = 10
+            self.red_player.y = 3
+
+        if FIXED_START_POINT_BLUE:
+            self.blue_player.x = 3
+            self.blue_player.y = 10
+
 
         if self.SHOW_EVERY==1 or episode_number % (self.SHOW_EVERY-1) == 0:
             self.starts_at_win_in_last_SHOW_EVERY_games = 0
 
+    def whos_turn(self, steps_current_game)-> Color:
+        if steps_current_game%2==0:
+            return Color.Blue
+        else:
+            return Color.Red
+
+
     def update_win_counters(self, steps_current_game):
         if steps_current_game==MAX_STEPS_PER_EPISODE:
             self.win_array.append(WinEnum.NoWin)
-        if self.win_status == WinEnum.Blue:
+            return
+        whos_turn = self.whos_turn(steps_current_game)
+        if whos_turn==Color.Blue:
             self.wins_for_blue += 1
             self.win_array.append(WinEnum.Blue)
-        elif self.win_status == WinEnum.Red:
+        else:
             self.wins_for_red += 1
             self.win_array.append(WinEnum.Red)
-        elif self.win_status == WinEnum.Tie:
-            self.tie_count += 1
-            self.win_array.append(WinEnum.Tie)
+
 
     def handle_reward(self, steps_current_game):
-        reward_value = WIN_REWARD - steps_current_game * MOVE_PENALTY
-            
-        if ZERO_SUM_GAME:
-            if self.win_status == WinEnum.Blue:
-                reward = reward_value
-            elif self.win_status == WinEnum.Red:
-                reward = -1 * reward_value
-            else:
-                reward = 0
+        if self.win_status == WinEnum.Done:
+            return WIN_REWARD
         else:
-            if self.win_status == WinEnum.Blue:
-                reward_blue = WIN_REWARD
-                reward_red = -WIN_REWARD
-                return reward_blue, reward_red
-            elif self.win_status == WinEnum.Red:
-                reward_blue = -WIN_REWARD
-                reward_red = WIN_REWARD
-                return reward_blue, reward_red
-            else:
-                return -1, -1
-            # elif self.win_status == WinEnum.Tie or steps_current_game==MAX_STEPS_PER_EPISODE:
-            #     return -steps_current_game, -steps_current_game
-            # else: #self.win_status == WinEnum.NoWin
-            #     reward = 0
+            return -MOVE_PENALTY
 
-        reward_blue = reward
-        reward_red = -reward
-        return reward_blue, reward_red
+    def compute_terminal(self)-> WinEnum:
+        first_player = self.blue_player
+        second_player = self.red_player
+        win_status = WinEnum.NoWin
 
-    def compute_terminal(self) -> WinEnum:
+
+        is_los = (second_player.x, second_player.y) in DICT_POS_LOS[(first_player.x, first_player.y)]
+        if not is_los:  # no LOS
+            win_status = WinEnum.NoWin
+            self.win_status = win_status
+            return win_status
+
+        if FIRE_RANGE_FLAG:
+            dist = np.linalg.norm(np.array([first_player.x, first_player.y]) - np.array([second_player.x, second_player.y]))
+            if dist>FIRE_RANGE:
+                win_status = WinEnum.NoWin
+                self.win_status = win_status
+                return win_status
+
+        win_status = WinEnum.Done
+        self.win_status = win_status
+        return win_status
+
+
+    def compute_terminal_with_escape(self) -> WinEnum:
         """dominating point is defined to be a point that:
          1. has LOS to the dominated_point
          2. there IS an action that executing it will end in a point that have no LOS to the second_player
@@ -118,15 +134,10 @@ class Environment(object):
          False otherwise"""
 
         first_player = self.blue_player
-
-        if FIXED_END_POINT_10_10:
-            if self.blue_player.x==10 and self.blue_player.y==10:
-                win_status = WinEnum.Blue
-                self.win_status = win_status
-                return win_status
-
         second_player = self.red_player
         win_status = WinEnum.NoWin
+
+
         is_los = (second_player.x, second_player.y) in DICT_POS_LOS[(first_player.x, first_player.y)]
 
         if not is_los:  # no LOS
@@ -166,7 +177,6 @@ class Environment(object):
         return ret_val
 
     def get_observation_for_red(self)-> State:
-
         blue_pos = Position(self.blue_player.x, self.blue_player.y)
         red_pos = Position(self.red_player.x, self.red_player.y)
         return State(my_pos=red_pos, enemy_pos=blue_pos)
@@ -234,7 +244,6 @@ class Environment(object):
                 f"DISCOUNT": [DISCOUNT],
                 f"DANGER_ZONE_IN_STATE": [DANGER_ZONE_IN_STATE],
                 f"DOMINATING_POINTS_IN_STATE": [DOMINATING_POINTS_IN_STATE],
-                f"FIXED_END_POINT_10_10": [FIXED_END_POINT_10_10],
                 f"FIXED_START_POINT_RED": [FIXED_START_POINT_RED],
                 f"FIXED_START_POINT_BLUE": [FIXED_START_POINT_BLUE],
                 f"ACTION_SPACE_9": [ACTION_SPACE_9],

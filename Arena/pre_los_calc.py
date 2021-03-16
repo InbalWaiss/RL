@@ -117,7 +117,7 @@ def find_dominating_point(x1, y1):
     for p in arr:
         if can_escape_by_one_step(point1, p):
             goal_points.append(p)
-    if True:
+    if False:
         img_env = np.zeros((SIZE_X, SIZE_Y, 3), dtype=np.uint8)  # starts an rbg of small world
         points_in_LOS = DICT_POS_LOS[(x1, y1)]
         for point in points_in_LOS:
@@ -183,7 +183,10 @@ def find_lose_points(x1, y1):
 
 
 if __name__ == '__main__':
+    creat_and_save_dictionaries()
+    calc_and_save_dominating_points()
+    calc_and_save_lose_points()
     # show_LOS_from_point(5, 5)
     # find_closest_point_not_in_los(5, 5)
     # find_dominating_point(5, 5)
-    find_lose_points(5,5) #{red_pos : points that is blus is in blue will lose!}
+    # find_lose_points(5,5) #{red_pos : points that is blus is in blue will lose!}

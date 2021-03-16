@@ -31,13 +31,6 @@ from DQN.deeprl_prj.preprocessors import *
 from DQN.deeprl_prj.utils import *
 from DQN.deeprl_prj.core import  *
 
-REPLAY_MEMORY_SIZE = 50000 # how many last samples to keep for model training
-MIN_REPLAY_MEMORY_SIZE = 1000 # minimum number of steps in a memory to start training
-MINIBATCH_SIZE = 64 # how many samples to use for training
-UPDATE_TARGET_EVERY = 15 # number of terminal states
-OBSERVATION_SPACE_VALUES = (SIZE_X, SIZE_Y, 3)
-MODEL_NAME = '32(4,4,_1)X64X512X9'
-
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 config.allow_soft_placement = True
@@ -110,7 +103,7 @@ class decision_maker_DQN_keras:
         parser.add_argument('--frame_height', default=SIZE_Y, type=int, help='Resized frame height')
         parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')
         parser.add_argument('--target_update_freq', default=10000, type=int, help='The frequency with which the target network is updated')
-        parser.add_argument('--train_freq', default=4, type=int, help='The frequency of actions wrt Q-network update')
+        parser.add_argument('--train_freq', default=1, type=int, help='The frequency of actions wrt Q-network update')
         parser.add_argument('--save_freq', default=50000, type=int, help='The frequency with which the network is saved')
         parser.add_argument('--eval_freq', default=50000, type=int, help='The frequency with which the policy is evlauted')
         parser.add_argument('--num_burn_in', default=50000, type=int,
@@ -187,7 +180,7 @@ class decision_maker_DQN_keras:
             self.target_network = load_model(p)
             self.target_network.set_weights(self.q_network.get_weights())
             self.final_model = self.target_network
-            # self.compile()
+            self.compile()
 
         else: #create new model
             self.q_network = self.create_model(input_shape, self.num_actions, self.net_mode, args, "QNet")
@@ -253,7 +246,7 @@ class decision_maker_DQN_keras:
                 FC_2 = Dense(512, activation='elu', name='FC2-elu')(FC_1)
                 FC_3 = Dense(512, activation='elu', name='FC3-elu')(FC_2)
                 FC_4 = Dense(512, activation='elu', name='FC4-elu')(FC_3)
-                output = Dense(num_actions, activation='softmax', name="output")(FC_4)
+                output = Dense(num_actions, activation='elu', name="output")(FC_4)
 
             else:
 
@@ -340,8 +333,8 @@ class decision_maker_DQN_keras:
         loss function and any placeholders.
         """
         if loss_func is None:
-            loss_func = mean_huber_loss
-            # loss_func = 'mse'
+            #loss_func = mean_huber_loss
+            loss_func = 'mse'
         if optimizer is None:
             optimizer = Adam(lr = self.learning_rate)
             # optimizer = RMSprop(lr=0.00025)
@@ -352,8 +345,7 @@ class decision_maker_DQN_keras:
             qa_value = merge([qa_value, action_mask], mode = 'mul', name = "multiply")
             qa_value = Lambda(lambda x: tf.reduce_sum(x, axis=1, keep_dims = True), name = "sum")(qa_value)
 
-        loss_func = losses.mean_squared_error
-        # loss_func = losses.kullback_leibler_divergence
+        #loss_func = losses.mean_squared_error
         self.final_model = Model(inputs = [state, action_mask], outputs = qa_value)
         self.final_model.compile(loss=loss_func, optimizer=optimizer)
 
@@ -391,8 +383,7 @@ class decision_maker_DQN_keras:
 
         if not self.burn_in: # enough samples in replay buffer
             if self.numberOfSteps % self.train_freq == 0:
-                action_state = self.history_processor.process_state_for_network(
-                    self.atari_processor.process_state_for_network(new_state))
+                action_state = self.history_processor.process_state_for_network(self.atari_processor.process_state_for_network(new_state))
                 processed_reward = self.atari_processor.process_reward(reward)
                 processed_next_state = self.atari_processor.process_state_for_network(new_state)
                 action_next_state = np.dstack((action_state, processed_next_state))
@@ -478,7 +469,7 @@ class decision_maker_DQN_keras:
 
 
 
-    def _get_action(self, current_state, **kwargs):
+    def _get_action(self, current_state, evaluate=False, **kwargs):
         dqn_state = current_state.img
         """Select the action based on the current state.
 
@@ -493,7 +484,7 @@ class decision_maker_DQN_keras:
 
         action = None
         q_values = self.calc_q_values(action_state) #shold be action_state
-        if self.is_training:
+        if self.is_training and not evaluate:
             if policy_type == 'UniformRandomPolicy':
                 action= UniformRandomPolicy(NUMBER_OF_ACTIONS).select_action()
                 self._epsilon = 1
@@ -504,7 +495,8 @@ class decision_maker_DQN_keras:
         else:
             # return GreedyEpsilonPolicy(0.05).select_action(q_values)
             action = GreedyPolicy().select_action(q_values)
-            self._epsilon = 0
+            if not evaluate:
+                self._epsilon = 0
 
         self._action = action
         return action
@@ -562,6 +554,7 @@ class decision_maker_DQN_keras:
         plt.close()
 
 
+
 # Agent class
 class DQNAgent_keras:
     def __init__(self, UPDATE_CONTEXT=True, path_model_to_load=None):
@@ -585,13 +578,13 @@ class DQNAgent_keras:
         self._previous_state = initial_state_blue
         pass
 
-    def get_action(self, current_state):
-        action = self._decision_maker._get_action(current_state)
+    def get_action(self, current_state, evaluate=False):
+        action = self._decision_maker._get_action(current_state, evaluate)
         self._action = AgentAction(action)
         return self._action
 
-    def update_context(self, new_state, reward, is_terminal):
-        if self.UPDATE_CONTEXT:
+    def update_context(self, new_state, reward, is_terminal, EVALUATE=True):
+        if self.UPDATE_CONTEXT and not EVALUATE:
             previous_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(self._previous_state)
             new_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(new_state)
             transition = (previous_state_for_network, self._action, reward, new_state_for_network, is_terminal)
@@ -599,6 +592,7 @@ class DQNAgent_keras:
 
             self._decision_maker.train(new_state, reward, is_terminal)
             self._previous_state = new_state
+
 
     def save_model(self, ep_rewards, path_to_model, player_color):
 

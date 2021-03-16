@@ -194,16 +194,18 @@ class decision_maker_DQN():
 
     def create_model(self):
         model = Sequential()
-        model.add(Dense(128, activation="softmax", input_shape=OBSERVATION_SPACE_VALUES))
+        model.add(Dense(128, activation="elu", input_shape=OBSERVATION_SPACE_VALUES))
         #model.add(Activation('relu'))
 
         # model.add(Dense(128, activation="relu"))
         # model.add(Activation('relu'))
 
         model.add(Flatten())  # this converts out 3D feature maps to 1D feature vectors
-        model.add(Dense(64))
+        model.add(Dense(128, activation="elu"))
+        # model.add(Dense(512, activation="elu"))
+        # model.add(Dense(512, activation="elu"))
 
-        model.add(Dense(NUMBER_OF_ACTIONS, activation='linear'))
+        model.add(Dense(NUMBER_OF_ACTIONS, activation='softmax'))
         model.compile(loss="mse", optimizer=Adam(lr=0.001), metrics=['accuracy'])
         return model
 
@@ -278,9 +280,9 @@ class decision_maker_DQN():
     def get_qs(self, state):
         return self.model.predict(np.array(state).reshape(-1, *np.array(state).shape) / 255)[0]
 
-    def _get_action(self, current_state, is_training=False):
+    def _get_action(self, current_state, is_training=False, EVALUATE=False):
         dqn_state = current_state.img
-        if np.random.random() > self._epsilon or not is_training:
+        if np.random.random() > self._epsilon or not is_training or EVALUATE:
             # Get action from network
             action = np.argmax(self.get_qs(dqn_state))
         else:
@@ -316,17 +318,17 @@ class DQNAgent():
         self._decision_maker.update_epsilon()
         pass
 
-    def get_action(self, current_state):
-        action = self._decision_maker._get_action(current_state, is_training=self.is_training)
+    def get_action(self, current_state, EVALUATE=False):
+        action = self._decision_maker._get_action(current_state=current_state, is_training=self.is_training, EVALUATE=EVALUATE)
         self._action = AgentAction(action)
         return self._action
 
     def get_epsolon(self):
         return self._decision_maker._epsilon
 
-    def update_context(self, new_state, reward, is_terminal, write_file=False):
+    def update_context(self, new_state, reward, is_terminal, EVALUATE=False):
 
-        if not self.is_training or not self.UPDATE_CONTEXT:
+        if not self.is_training or not self.UPDATE_CONTEXT:# or not EVALUATE:
             return
 
         transition = (self._previous_state.img, self._action, reward, new_state.img, is_terminal)
@@ -335,9 +337,6 @@ class DQNAgent():
 
         self._previous_state = new_state
 
-        if write_file:
-            img = np.array(new_state.img).reshape(-1, *np.array(new_state.img).shape) / 255
-            self._decision_maker.print_model(img)
 
     def save_model(self, ep_rewards, path_to_model, player_color):
 
