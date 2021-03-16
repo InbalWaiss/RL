@@ -1,6 +1,6 @@
 import unittest
 
-from Arena.constants import *
+from Common.constants import *
 from Arena.geometry import LOS, bresenham
 
 

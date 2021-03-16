@@ -6,10 +6,8 @@ style.use("ggplot")
 from Arena.CState import State
 from Arena.Entity import Entity
 from Arena.Environment import Environment, Episode
-from Arena.constants import *
-from RafaelPlayer import Qtable_DecisionMaker
-from DQN import DQNAgent_keras, DQNAgent_temporalAttention, DQNAgent_spatioalAttention
-from DQN import DQNAgent
+from Common.constants import *
+from Qtable import Qtable_DecisionMaker
 from Greedy import Greedy_player
 
 
@@ -47,16 +45,17 @@ if __name__ == '__main__':
     env = Environment(IS_TRAINING)
 
     ### Red Decision Maker
-    #red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
-    red_decision_maker = Greedy_player.Greedy_player()
+    red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
+    #red_decision_maker = Greedy_player.Greedy_player()
     #red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False , path_model_to_load="qtable_red-1000000.pickle")
     #red_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=False,
     #                                                    path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__red_25001_  -6.00max_ -72.99avg_-100.00min__1615541339.model')
     #red_decision_maker = DQNAgent_keras.DQNAgent_keras()
 
     ### Blue Decision Maker
+    #--Greedy:
+    blue_decision_maker = Greedy_player.Greedy_player()
     # --Qtable:
-    # blue_decision_maker = Greedy_player.Greedy_player()
     #blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
     # blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker('qtable_blue-1000000_old_terminal_state.pickle')
     # --DQN Basic:
@@ -64,7 +63,7 @@ if __name__ == '__main__':
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # --DQN Keras
     #blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123.model')
+    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123.model')
     # --DQN Attention
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=True, path_model_to_load='statistics/18_02_06_54_DQNAgent_spatioalAttention_Q_table_1000000/qnet1000000.cptk')
@@ -159,7 +158,7 @@ if __name__ == '__main__':
         # for statistics
         env.data_for_statistics(current_episode.episode_reward_blue, current_episode.episode_reward_red, steps_current_game, blue_decision_maker.get_epsolon())
 
-        # print info of episode:
+        # print info of episode_to_enemy:
         current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon())
         if current_episode.episode_number % SAVE_STATS_EVERY == 0:
             if False:#blue_decision_maker.type()== AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:

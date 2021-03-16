@@ -1,12 +1,12 @@
 
 import time
 
-from RafaelPlayer.Qtable_DecisionMaker import *
-from RafaelPlayer.QPlayer_constants import START_EPSILON, EPSILONE_DECAY, LEARNING_RATE, DISCOUNT
+from Qtable.Qtable_DecisionMaker import *
+from Qtable.QPlayer_constants import START_EPSILON, EPSILONE_DECAY, LEARNING_RATE, DISCOUNT
 from Arena.Position import Position
 from Arena.graphics import print_stats, print_episode_graphics, save_win_statistics, save_reward_stats
 from Arena.helper_funcs import *
-from Arena.constants import *
+from Common.constants import *
 
 import numpy as np
 from PIL import Image

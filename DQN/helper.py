@@ -33,7 +33,7 @@ def updateTarget(op_holder,sess):
     else:
         print("Target Set Failed")
         
-#Record performance metrics and episode logs for the Control Center.
+#Record performance metrics and episode_to_enemy logs for the Control Center.
 def saveToCenter(i,rList,jList,bufferArray,summaryLength,h_size,sess,mainQN,time_per_step):
     with open('./Center/log.csv', 'a') as myfile:
         state_display = (np.zeros([1,h_size]),np.zeros([1,h_size]))
@@ -67,7 +67,7 @@ def saveToCenter(i,rList,jList,bufferArray,summaryLength,h_size,sess,mainQN,time
             feed_dict={mainQN.scalarInput:np.vstack(bufferArray[:,0])/255.0,mainQN.trainLength:len(bufferArray),mainQN.state_in:state_train,mainQN.batch_size:1})
         wr.writerows(zip(bufferArray[:,1],bufferArray[:,2],a[:,0],a[:,1],a[:,2],a[:,3],v[:,0]))
     
-#This code allows gifs to be saved of the training episode for use in the Control Center.
+#This code allows gifs to be saved of the training episode_to_enemy for use in the Control Center.
 def make_gif(images, fname, duration=2, true_image=False,salience=False,salIMGS=None):
   import moviepy.editor as mpy
   

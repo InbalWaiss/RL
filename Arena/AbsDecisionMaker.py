@@ -1,8 +1,7 @@
 import abc
-from typing import Tuple
 
 from Arena.CState import State
-from Arena.constants import AgentAction, AgentType
+from Common.constants import AgentAction, AgentType
 
 
 class AbsDecisionMaker(metaclass=abc.ABCMeta):

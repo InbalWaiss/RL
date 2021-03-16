@@ -6,12 +6,9 @@ style.use("ggplot")
 from Arena.CState import State
 from Arena.Entity import Entity
 from Arena.Environment import Environment, Episode
-from Arena.constants import *
-from RafaelPlayer import Qtable_DecisionMaker
-from DQN import DQNAgent_keras, DQNAgent_temporalAttention, DQNAgent_spatioalAttention
-from DQN import DQNAgent
-
-
+from Common.constants import *
+from Qtable import Qtable_DecisionMaker
+from DQN import DQNAgent_keras
 
 
 def print_start_of_game_info(blue_decision_maker, red_decision_maker):
@@ -152,7 +149,7 @@ if __name__ == '__main__':
         # for statistics
         env.data_for_statistics(current_episode.episode_reward_blue, current_episode.episode_reward_red, steps_current_game, blue_decision_maker.get_epsolon())
 
-        # print info of episode:
+        # print info of episode_to_enemy:
         current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon())
         if current_episode.episode_number % SAVE_STATS_EVERY == 0:
             if False:#blue_decision_maker.type()== AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:

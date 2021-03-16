@@ -3,7 +3,7 @@ import networkx as nx
 from Arena.Position import Position
 from Arena.CState import State
 from Arena.AbsDecisionMaker import AbsDecisionMaker
-from Arena.constants import *
+from Common.constants import *
 import numpy as np
 
 PRINT_FLAG = False
@@ -62,7 +62,7 @@ class Greedy_player(AbsDecisionMaker):
             nx.draw_networkx_nodes(G, pos, nodelist=[path[0]], node_color='b')
             nx.draw_networkx_nodes(G, pos, nodelist=[path[1]], node_color='black')
             nx.draw_networkx_nodes(G, pos, nodelist=[path[-1]], node_color='r')
-            # nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='r', width=10)
+            nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='black', width=3)
             plt.axis('equal')
             plt.show()
 
@@ -109,14 +109,14 @@ class Greedy_player(AbsDecisionMaker):
             pos = dict((n, n) for n in self.G.nodes())  # Dictionary of all positions
             labels = dict(((i, j), (i, j)) for i, j in self.G.nodes())
             path_to_closest_enemy_los = path_to_closest_target
-            points_in_enemy_los_edges = set(zip(points_in_enemy_los, points_in_enemy_los[1:]))
+            points_in_enemy_los_edges = set(zip(path_to_closest_target, path_to_closest_target[1:]))
             nx.draw_networkx(self.G, pos=pos, labels=labels, font_size=5, with_labels=True, node_size=50)
             nx.draw_networkx_nodes(self.G, pos, nodelist=points_in_enemy_los, node_color='r')
             nx.draw_networkx_nodes(self.G, pos, nodelist=path_to_closest_enemy_los, node_color='g')
             nx.draw_networkx_nodes(self.G, pos, nodelist=[my_pos], node_color='b')
             nx.draw_networkx_nodes(self.G, pos, nodelist=[first_step], node_color='black')
             nx.draw_networkx_nodes(self.G, pos, nodelist=[closest_target], node_color='y')
-            # nx.draw_networkx_edges(self.G, pos, edgelist=points_in_enemy_los_edges, edge_color='r', width=10)
+            nx.draw_networkx_edges(self.G, pos, edgelist=points_in_enemy_los_edges, edge_color='black', width=3)
             plt.axis('equal')
             plt.show()
 

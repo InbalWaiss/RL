@@ -1,9 +1,5 @@
-
-import cv2
-
-from Arena.AbsDecisionMaker import AbsDecisionMaker
-from Arena.constants import *
-from RafaelPlayer.DQN_constants import *
+from Common.constants import *
+from DQN.DQN_constants import *
 import os
 import time
 import random
@@ -220,7 +216,7 @@ class decision_maker_DQN():
         self.replay_memory.append(transition)
 
 
-    # Trains main network every step during episode
+    # Trains main network every step during episode_to_enemy
     def train(self, terminal_state, step):
 
         # Start training only if certain number of samples is already saved
@@ -267,7 +263,7 @@ class decision_maker_DQN():
         # endt = time.time()
         # print('Fitting time == ', endt-start)
 
-        # Update target network counter every episode
+        # Update target network counter every episode_to_enemy
         if terminal_state:
             self.target_update_counter += 1
 

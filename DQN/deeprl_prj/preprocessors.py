@@ -3,10 +3,8 @@
 import numpy as np
 from PIL import Image
 import Arena
-from Arena.constants import SIZE_X, SIZE_Y, CLIP_REWARD_1
+from Common.constants import SIZE_X, SIZE_Y, CLIP_REWARD_1
 
-
-from DQN.deeprl_prj import utils
 from DQN.deeprl_prj.core import Preprocessor
 
 
@@ -56,7 +54,7 @@ class HistoryPreprocessor(Preprocessor):
     def reset(self):
         """Reset the history sequence.
 
-        Useful when you start a new episode.
+        Useful when you start a new episode_to_enemy.
         """
         self.past_states = None
         self.past_states_ori = None 

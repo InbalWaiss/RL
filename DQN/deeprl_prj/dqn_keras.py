@@ -3,13 +3,12 @@
 from DQN.deeprl_prj.policy import *
 from DQN.deeprl_prj.objectives import *
 from DQN.deeprl_prj.preprocessors import *
-from DQN.deeprl_prj.utils import *
 from DQN.deeprl_prj.core import  *
 
 import keras
-from keras.optimizers import (Adam, RMSprop)
+from keras.optimizers import (Adam)
 from keras.layers import (Activation, Convolution2D, Dense, Flatten, Input,
-        Permute, merge, multiply, Lambda, Reshape, TimeDistributed, LSTM, RepeatVector, Permute)
+                          merge, Lambda, Reshape, TimeDistributed, LSTM, RepeatVector, Permute)
 from keras.layers.wrappers import Bidirectional
 from keras.models import Model
 from keras import backend as K
@@ -20,7 +19,7 @@ from gym import wrappers
 import tensorflow as tf
 import numpy as np
 
-from Arena.constants import AgentType
+from Common.constants import AgentType
 
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -318,7 +317,7 @@ class DQNAgent:
         num_iterations: int
           How many samples/updates to perform.
         max_episode_length: int
-          How long a single episode should last before the agent
+          How long a single episode_to_enemy should last before the agent
           resets. Can help exploration.
         """
         is_training = True
@@ -366,7 +365,7 @@ class DQNAgent:
                 self.memory.append(last_frame, action, 0, done)
                 if not burn_in:
                     avg_target_value = episode_target_value / episode_frames
-                    print(">>> Training: time %d, episode %d, length %d, reward %.0f, raw_reward %.0f, loss %.4f, target value %.4f, policy step %d, memory cap %d" % 
+                    print(">>> Training: time %d, episode_to_enemy %d, length %d, reward %.0f, raw_reward %.0f, loss %.4f, target value %.4f, policy step %d, memory cap %d" %
                         (t, idx_episode, episode_frames, episode_reward, episode_raw_reward, episode_loss, 
                         avg_target_value, self.policy.step, self.memory.current))
                     sys.stdout.flush()
@@ -419,7 +418,7 @@ class DQNAgent:
         """Test your agent with a provided environment.
 
         Basically run your policy on the environment and collect stats
-        like cumulative reward, average episode length, etc.
+        like cumulative reward, average episode_to_enemy length, etc.
 
         You can also call the render function here if you want to
         visually inspect your policy.
@@ -450,7 +449,7 @@ class DQNAgent:
             if episode_frames > max_episode_length:
                 done = True
             if done:
-                print("Eval: time %d, episode %d, length %d, reward %.0f" %
+                print("Eval: time %d, episode_to_enemy %d, length %d, reward %.0f" %
                     (t, idx_episode, episode_frames, episode_reward[idx_episode-1]))
                 eval_count += 1
                 save_scalar(eval_count, 'eval/eval_episode_raw_reward', episode_reward[idx_episode-1], self.writer)

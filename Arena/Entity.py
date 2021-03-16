@@ -1,6 +1,6 @@
 
 from Arena.AbsDecisionMaker import AbsDecisionMaker
-from Arena.constants import np, SIZE_X, SIZE_Y, DSM, AgentAction, NUMBER_OF_ACTIONS
+from Common.constants import np, SIZE_X, SIZE_Y, DSM, AgentAction, NUMBER_OF_ACTIONS
 
 
 class CPoint:

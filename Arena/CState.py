@@ -1,7 +1,5 @@
 from Arena.Position import Position
-import numpy as np
-from Arena.constants import *
-from PIL import Image
+from Common.constants import *
 from Arena.helper_funcs import check_if_LOS
 import matplotlib.pyplot as plt
 

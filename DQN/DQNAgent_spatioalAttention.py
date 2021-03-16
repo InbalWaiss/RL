@@ -1,27 +1,9 @@
 
-from Arena.constants import *
+from Common.constants import *
 from Arena.AbsDecisionMaker import AbsDecisionMaker
-from RafaelPlayer.DQN_constants import *
 import os
-import time
-import random
-from collections import deque
-import tensorflow as tf
-from keras.models import Sequential, load_model
-from keras.layers import Dense, Dropout, Conv2D, MaxPooling2D, Activation, Flatten
-from keras.optimizers import Adam
-from keras.callbacks import TensorBoard
-import sys
 
-
-from keras.models import Model
-from keras.optimizers import (Adam, RMSprop)
-from keras.layers import (Activation, Convolution2D, Dense, Flatten, Input,
-        Permute, merge, multiply, Lambda, Reshape, TimeDistributed, LSTM, RepeatVector, Permute)
-from keras.layers.wrappers import Bidirectional
-from keras.models import Model
 from keras import backend as K
-from keras.backend.tensorflow_backend import set_session
 
 import argparse
 import matplotlib.pyplot as plt
@@ -218,7 +200,7 @@ class decision_maker_DQN_spatioalAttention:
         parser.add_argument('--load_network', default=False, action='store_true', help='Load trained mode')
         parser.add_argument('--load_network_path', default='', help='the path to the trained mode file')
         parser.add_argument('--net_mode', default='dqn', help='choose the mode of net, can be linear, dqn, duel')
-        parser.add_argument('--max_episode_length', default = 10000, type=int, help = 'max length of each episode')
+        parser.add_argument('--max_episode_length', default = 10000, type=int, help = 'max length of each episode_to_enemy')
         parser.add_argument('--num_episodes_at_test', default = 20, type=int, help='Number of episodes the agent plays at test')
         parser.add_argument('--ddqn', default=False, dest='ddqn', action='store_true', help='enable ddqn')
         parser.add_argument('--train', default=True, dest='train', action='store_true', help='Train mode')
@@ -618,7 +600,7 @@ class DQNAgent_spatioalAttention(AbsDecisionMaker):
 
         episode = len(ep_rewards)
         # save model, but only when min reward is greater or equal a set value
-        # if max_reward >=self.min_reward or episode == NUM_OF_EPISODES-1:
+        # if max_reward >=self.min_reward or episode_to_enemy == NUM_OF_EPISODES-1:
         self.min_reward = min_reward
         if player_color == Color.Red:
             color_str = "red"
