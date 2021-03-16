@@ -74,18 +74,12 @@ class Environment(object):
         if self.SHOW_EVERY==1 or episode_number % (self.SHOW_EVERY-1) == 0:
             self.starts_at_win_in_last_SHOW_EVERY_games = 0
 
-    def whos_turn(self, steps_current_game)-> Color:
-        if steps_current_game%2==0:
-            return Color.Blue
-        else:
-            return Color.Red
 
-
-    def update_win_counters(self, steps_current_game):
+    def update_win_counters(self, steps_current_game, whos_turn):
         if steps_current_game==MAX_STEPS_PER_EPISODE:
             self.win_array.append(WinEnum.NoWin)
             return
-        whos_turn = self.whos_turn(steps_current_game)
+
         if whos_turn==Color.Blue:
             self.wins_for_blue += 1
             self.win_array.append(WinEnum.Blue)
@@ -177,6 +171,8 @@ class Environment(object):
         return ret_val
 
     def get_observation_for_red(self)-> State:
+        if not RED_PLAYER_MOVES:
+            return
         blue_pos = Position(self.blue_player.x, self.blue_player.y)
         red_pos = Position(self.red_player.x, self.red_player.y)
         return State(my_pos=red_pos, enemy_pos=blue_pos)
@@ -279,6 +275,21 @@ class Episode():
             self.show = True
         else:
             self.show = False
+
+        self.Blue_starts = np.random.random() >= 0.5 # for even statistics
+
+    def whos_turn(self, steps_current_game)-> Color:
+        if self.Blue_starts:
+            if steps_current_game % 2 == 1:
+                return Color.Blue
+            else:
+                return Color.Red
+
+        else:
+            if steps_current_game % 2 == 1:
+                return Color.Red
+            else:
+                return Color.Blue
 
     def print_episode(self, env, last_step_number, save_file=False):
         if self.show and USE_DISPLAY:

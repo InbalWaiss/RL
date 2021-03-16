@@ -227,10 +227,6 @@ class decision_maker_DQN_keras:
         with tf.variable_scope(model_name):
             input_data = Input(shape=input_shape, name="input")
             if mode == "linear":
-                # # version 1:
-                # flatten_hidden = Flatten(name="flatten")(input_data)
-                # output = Dense(num_actions, name="output")(flatten_hidden)
-
                 #version 4 elu:
                 flatten_hidden = Flatten(name="flatten")(input_data)
                 FC_1 = Dense(512, activation='elu', name='FC1-elu')(flatten_hidden)
@@ -240,16 +236,11 @@ class decision_maker_DQN_keras:
                 output = Dense(num_actions, activation='elu', name="output")(FC_4)
 
             else:
-
                 if not (args.recurrent):
                     # version 1:
                     h1 = Convolution2D(128, (8, 8), strides=1, activation="relu", name="conv1")(input_data)
                     h2 = Convolution2D(256, (4, 4), strides=2, activation="relu", name="conv2")(h1)
                     context = Flatten(name="flatten")(h2)
-
-                    ## version 2:
-                    # h1 = Convolution2D(512, (8, 8), strides=1, activation="relu", name="conv1")(input_data)
-                    # context = Flatten(name="flatten")(h1)
                 else:
                     print('>>>> Defining Recurrent Modules...')
                     input_data_expanded = Reshape((input_shape[0], input_shape[1], input_shape[2], 1),
@@ -262,17 +253,6 @@ class decision_maker_DQN_keras:
                     h3 = TimeDistributed(Convolution2D(64, (2, 2), strides=1, activation="relu", name="conv3"))(h2)
                     flatten_hidden = TimeDistributed(Flatten())(h3)
                     hidden_input = TimeDistributed(Dense(512, activation='relu', name='flat_to_512'))(flatten_hidden)
-                    # print('>>>> Defining Recurrent Modules...')
-                    # input_data_expanded = Reshape((input_shape[0], input_shape[1], input_shape[2], 1),
-                    #                               input_shape=input_shape)(input_data)
-                    # input_data_TimeDistributed = Permute((3, 1, 2, 4), input_shape=input_shape)(input_data_expanded)
-                    # h1 = TimeDistributed(Convolution2D(32, (3, 3), strides=3, activation="relu", name="conv1"), \
-                    #                      input_shape=(args.num_frames, input_shape[0], input_shape[1], 1))(
-                    #     input_data_TimeDistributed)
-                    # h2 = TimeDistributed(Convolution2D(64, (3, 3), strides=2, activation="relu", name="conv2"))(h1)
-                    # h3 = TimeDistributed(Convolution2D(64, (2, 2), strides=1, activation="relu", name="conv3"))(h2)
-                    # flatten_hidden = TimeDistributed(Flatten())(h3)
-                    # hidden_input = TimeDistributed(Dense(512, activation='relu', name='flat_to_512'))(flatten_hidden)
                     if not (args.a_t):
                         context = LSTM(512, return_sequences=False, stateful=False, input_shape=(args.num_frames, 512))(
                             hidden_input)
@@ -361,7 +341,7 @@ class decision_maker_DQN_keras:
         if is_terminal:
             # adding last frame only to save last state
             last_frame = self.atari_processor.process_state_for_memory(new_state)
-            self.memory.append(last_frame, self._action, reward, is_terminal) #TODO in original code it was (last_frame, action, 0, is_terminal)- why 0?
+            self.memory.append(last_frame, self._action, reward, is_terminal)
             self.atari_processor.reset()
             self.history_processor.reset()
             if not self.burn_in:
@@ -369,8 +349,6 @@ class decision_maker_DQN_keras:
                 self.episode_raw_reward = .0
                 self.episode_loss = .0
                 self.episode_target_value = .0
-
-
 
         if not self.burn_in: # enough samples in replay buffer
             if self.numberOfSteps % self.train_freq == 0:

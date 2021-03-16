@@ -237,7 +237,7 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
             cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
                         dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
         else:
-            whos_turn = env.whos_turn(number_of_steps)
+            whos_turn : Color = episode.whos_turn(number_of_steps)
             if whos_turn == Color.Blue:
                 botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 50, 30)
                 cv2.putText(informative_env, f"BLUE WON!", botoomLeftCornerOfText, font, fontScale,

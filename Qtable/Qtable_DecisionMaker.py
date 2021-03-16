@@ -26,11 +26,10 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
         else:
             self._Q_matrix = self.init_q_table()
 
-    def set_initial_state(self, state: State, episode_number, input_epsilon=0.5):
+    def set_initial_state(self, state: State, episode_number):
 
         state_entry = (state.my_pos.get_tuple(), state.enemy_pos.get_tuple())
         self._previous_state = state_entry
-        self._epsilon = input_epsilon
         self.episode_number = episode_number
 
     def init_q_table(self, start_q_table=None):

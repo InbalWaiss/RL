@@ -165,15 +165,11 @@ class decision_maker_DQN():
     def create_model_conv(self):
         model = Sequential()
 
-        # model.add(Conv2D(256, (3, 3), input_shape=OBSERVATION_SPACE_VALUES)) # in small world 15X15X3
-        #model.add(Conv2D(16, (3)3) input_shape=OBSERVATION_SPACE_VALUES))
         model.add(Conv2D(64, (3, 3), input_shape=OBSERVATION_SPACE_VALUES))
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2,2)))
         model.add(Dropout(0.3))
 
-        # model.add(Conv2D(256, (3,3)))
-        #model.add(Conv2D(32, (3, 3)))
         model.add(Conv2D(32, (3, 3)))
         model.add(Activation('relu'))
         model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -191,17 +187,14 @@ class decision_maker_DQN():
     def create_model(self):
         model = Sequential()
         model.add(Dense(128, activation="elu", input_shape=OBSERVATION_SPACE_VALUES))
-        #model.add(Activation('relu'))
 
-        # model.add(Dense(128, activation="relu"))
-        # model.add(Activation('relu'))
 
         model.add(Flatten())  # this converts out 3D feature maps to 1D feature vectors
         model.add(Dense(128, activation="elu"))
-        # model.add(Dense(512, activation="elu"))
-        # model.add(Dense(512, activation="elu"))
+        model.add(Dense(128, activation="elu"))
+        model.add(Dense(128, activation="elu"))
 
-        model.add(Dense(NUMBER_OF_ACTIONS, activation='softmax'))
+        model.add(Dense(NUMBER_OF_ACTIONS, activation='elu'))
         model.compile(loss="mse", optimizer=Adam(lr=0.001), metrics=['accuracy'])
         return model
 
@@ -210,15 +203,15 @@ class decision_maker_DQN():
         self.target_model = target_model
 
 
-    # adds step's data to memory replay array
-    # (state, action, reward, new_state, is_terminal)
+
     def update_replay_memory(self, transition):
+        # adds step's data to memory replay array
+        # (state, action, reward, new_state, is_terminal)
         self.replay_memory.append(transition)
 
 
-    # Trains main network every step during episode_to_enemy
     def train(self, terminal_state, step):
-
+        # Trains main network every step during episode_to_enemy
         # Start training only if certain number of samples is already saved
         if len(self.replay_memory) < MIN_REPLAY_MEMORY_SIZE:
             return
