@@ -6,6 +6,8 @@ from Arena.AbsDecisionMaker import AbsDecisionMaker
 from Arena.constants import *
 import numpy as np
 
+PRINT_FLAG = False
+
 
 class Greedy_player(AbsDecisionMaker):
 
@@ -14,9 +16,14 @@ class Greedy_player(AbsDecisionMaker):
         self._action = -1
         self._type = AgentType.Greedy
         self.episode_number = 0
-        self.G = self.create_graph()
         self._epsilon = 0
         self.path_model_to_load = None
+
+        self.all_pairs_distances = {}
+        self.all_pairs_shortest_path = {}
+        self.G = self.create_graph()
+
+
 
     def create_graph(self):
         G = nx.grid_2d_graph(SIZE_X, SIZE_Y)
@@ -42,17 +49,20 @@ class Greedy_player(AbsDecisionMaker):
                 if DSM[x][y] == 1.:
                     G.remove_node((x, y))
 
+        self.all_pairs_distances = nx.floyd_warshall(G)
+        self.all_pairs_shortest_path = dict(nx.all_pairs_dijkstra_path(G))
 
 
-
-        if False:
-            path = nx.shortest_path(G, source=(0, 0), target=(14, 14))
+        if PRINT_FLAG:
+            path = self.all_pairs_shortest_path[(3,10)][(10,3)]
             path_edges = set(zip(path, path[1:]))
             nx.draw_networkx(G, pos=pos, labels=labels, font_size=5, with_labels=True, node_size=50)
 
-            nx.draw_networkx_nodes(G, pos, nodelist=path, node_color='r')
-            nx.draw_networkx_nodes(G, pos, nodelist=[path[1]], node_color='y')
-            nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='r', width=10)
+            nx.draw_networkx_nodes(G, pos, nodelist=path, node_color='g')
+            nx.draw_networkx_nodes(G, pos, nodelist=[path[0]], node_color='b')
+            nx.draw_networkx_nodes(G, pos, nodelist=[path[1]], node_color='black')
+            nx.draw_networkx_nodes(G, pos, nodelist=[path[-1]], node_color='r')
+            # nx.draw_networkx_edges(G, pos, edgelist=path_edges, edge_color='r', width=10)
             plt.axis('equal')
             plt.show()
 
@@ -70,19 +80,20 @@ class Greedy_player(AbsDecisionMaker):
         my_pos = state.my_pos.get_tuple()
         enemy_pos = state.enemy_pos.get_tuple()
 
+        # all potential targets
         points_in_enemy_los = DICT_POS_LOS[enemy_pos]
-        all_paths = nx.single_source_shortest_path_length(self.G, my_pos)
 
         # find closest point in enemy line of sight
         best_distance = np.inf
         closest_target = None
         for point in points_in_enemy_los:
-            if all_paths[(point[0], point[1])] < best_distance:
-                best_distance = all_paths[(point[0], point[1])]
+            dist_me_point = self.all_pairs_distances[my_pos][point]
+            if dist_me_point < best_distance:
+                best_distance = dist_me_point
                 closest_target = point
 
         # get first step in path to closest_target
-        path_to_closest_target = nx.shortest_path(self.G,source=my_pos,target=closest_target)
+        path_to_closest_target = self.all_pairs_shortest_path[my_pos][closest_target]
         first_step = path_to_closest_target[1]
         delta_x =  first_step[0]-my_pos[0]
         delta_y = first_step[1] - my_pos[1]
@@ -93,7 +104,8 @@ class Greedy_player(AbsDecisionMaker):
         else:
             a = self.get_action_4_actions(delta_x, delta_y)
 
-        if False:
+        if PRINT_FLAG:
+            # print graph for debug
             pos = dict((n, n) for n in self.G.nodes())  # Dictionary of all positions
             labels = dict(((i, j), (i, j)) for i, j in self.G.nodes())
             path_to_closest_enemy_los = path_to_closest_target
@@ -104,7 +116,7 @@ class Greedy_player(AbsDecisionMaker):
             nx.draw_networkx_nodes(self.G, pos, nodelist=[my_pos], node_color='b')
             nx.draw_networkx_nodes(self.G, pos, nodelist=[first_step], node_color='black')
             nx.draw_networkx_nodes(self.G, pos, nodelist=[closest_target], node_color='y')
-            nx.draw_networkx_edges(self.G, pos, edgelist=points_in_enemy_los_edges, edge_color='r', width=10)
+            # nx.draw_networkx_edges(self.G, pos, edgelist=points_in_enemy_los_edges, edge_color='r', width=10)
             plt.axis('equal')
             plt.show()
 
@@ -157,10 +169,12 @@ class Greedy_player(AbsDecisionMaker):
 
 
 if __name__ == '__main__':
+    PRINT_FLAG = True
     GP = Greedy_player()
 
     blue_pos = Position(3, 10)
     red_pos = Position(10, 3)
     ret_val = State(my_pos=blue_pos, enemy_pos=red_pos)
 
-    GP.get_action(ret_val)
+    a = GP.get_action(ret_val)
+    print("The action to take is: ", a)

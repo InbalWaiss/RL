@@ -231,7 +231,6 @@ class Environment(object):
                                 counter_ones += 1
 
         print("for", self.NUMBER_OF_EPISODES, "episodes: ")
-        print("% of games started at win: ", self.starts_at_win / self.NUMBER_OF_EPISODES * 100)
 
         info = {f"NUM_OF_EPISODES": [NUM_OF_EPISODES],
                 f"USE_LOS_IN_STATE": [USE_LOS_IN_STATE],
@@ -242,16 +241,15 @@ class Environment(object):
                 f"EPSILONE_DECAY": [EPSILONE_DECAY],
                 f"LEARNING_RATE": [LEARNING_RATE],
                 f"DISCOUNT": [DISCOUNT],
+                f"ACTION_SPACE_9": [ACTION_SPACE_9],
                 f"DANGER_ZONE_IN_STATE": [DANGER_ZONE_IN_STATE],
                 f"DOMINATING_POINTS_IN_STATE": [DOMINATING_POINTS_IN_STATE],
-                f"FIXED_START_POINT_RED": [FIXED_START_POINT_RED],
-                f"FIXED_START_POINT_BLUE": [FIXED_START_POINT_BLUE],
-                f"ACTION_SPACE_9": [ACTION_SPACE_9],
-                f"RED_PLAYER_MOVES": [RED_PLAYER_MOVES],
                 f"FIRE_RANGE_FLAG": [FIRE_RANGE_FLAG],
                 f"FIRE_RANGE": [FIRE_RANGE],
                 f"ZERO_SUM_GAME": [ZERO_SUM_GAME],
-                f"% Unseen states": [counter_ones / num_of_states * 100],
+                f"RED_PLAYER_MOVES": [RED_PLAYER_MOVES],
+                f"FIXED_START_POINT_RED": [FIXED_START_POINT_RED],
+                f"FIXED_START_POINT_BLUE": [FIXED_START_POINT_BLUE],
                 f"%Games started at Tie" : [self.starts_at_win / self.NUMBER_OF_EPISODES*100],
                 f"%WINS_BLUE": [self.wins_for_blue/self.NUMBER_OF_EPISODES*100],
                 f"%WINS_RED": [self.wins_for_red/self.NUMBER_OF_EPISODES*100],
