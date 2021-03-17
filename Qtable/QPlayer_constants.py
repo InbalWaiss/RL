@@ -1,5 +1,5 @@
 
-EPSILONE_DECAY = 0.99999 #every episode_to_enemy will be epsilon*EPISODE_DECAY
+EPSILONE_DECAY = 0.999999 #every episode_to_enemy will be epsilon*EPISODE_DECAY
 LEARNING_RATE = 0.5
 DISCOUNT = 0.95
 

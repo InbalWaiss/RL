@@ -17,8 +17,8 @@ if not ACTION_SPACE_9:
     ACTION_SPACE_4 = True
 
 RED_PLAYER_MOVES = True
-FIXED_START_POINT_RED = False
-FIXED_START_POINT_BLUE = False
+FIXED_START_POINT_RED = True
+FIXED_START_POINT_BLUE = True
 
 FIRE_RANGE_FLAG = True
 FIRE_RANGE = 7
@@ -111,7 +111,7 @@ class WinEnum(IntEnum):
     Red = 1
     Tie = 2
     NoWin = 3
-    Done = 4
+    #Done = 4
 
 
 dict_of_colors = {1: (255, 0, 0),  #blue
@@ -251,8 +251,8 @@ RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'Qtable/trained_agent
 
 USE_DISPLAY = True
 SHOW_EVERY = 500
-NUM_OF_EPISODES = 1_000_000
-SAVE_STATS_EVERY = 100000
+NUM_OF_EPISODES = 3_000_000
+SAVE_STATS_EVERY = 10000
 
 # params to evaluate trained models
 EVALUATE_SHOW_EVERY = 1

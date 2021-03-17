@@ -75,7 +75,7 @@ class Environment(object):
             self.starts_at_win_in_last_SHOW_EVERY_games = 0
 
 
-    def update_win_counters(self, steps_current_game, whos_turn):
+    def update_win_counters(self, steps_current_game, whos_turn=None):
         if steps_current_game==MAX_STEPS_PER_EPISODE:
             self.win_array.append(WinEnum.NoWin)
             return
@@ -83,18 +83,36 @@ class Environment(object):
         if whos_turn==Color.Blue:
             self.wins_for_blue += 1
             self.win_array.append(WinEnum.Blue)
-        else:
+        elif whos_turn==Color.Red:
             self.wins_for_red += 1
             self.win_array.append(WinEnum.Red)
-
-
-    def handle_reward(self, steps_current_game):
-        if self.win_status == WinEnum.Done:
-            return WIN_REWARD
         else:
-            return -MOVE_PENALTY
+            print("Bug in update_win_counters- WHOS TURN?")
 
-    def compute_terminal(self)-> WinEnum:
+
+    def handle_reward(self, steps_current_game, is_terminal, whos_turn=None):
+        if not is_terminal or whos_turn==None or steps_current_game==MAX_STEPS_PER_EPISODE:
+            reward_step_blue = -MOVE_PENALTY
+            reward_step_red = -MOVE_PENALTY
+            return reward_step_blue, reward_step_red
+
+        if whos_turn==Color.Blue:
+            reward_step_blue = WIN_REWARD
+            reward_step_red = -WIN_REWARD
+
+        elif whos_turn==Color.Red:
+            reward_step_blue = -WIN_REWARD
+            reward_step_red = WIN_REWARD
+
+        else:
+            reward_step_blue = 0
+            reward_step_red = 0
+            print("Bug in handle_reward- WHOS TURN?")
+
+        return reward_step_blue, reward_step_red
+
+
+    def compute_terminal(self, whos_turn=None)-> WinEnum:
         first_player = self.blue_player
         second_player = self.red_player
         win_status = WinEnum.NoWin
@@ -113,7 +131,12 @@ class Environment(object):
                 self.win_status = win_status
                 return win_status
 
-        win_status = WinEnum.Done
+        if whos_turn == Color.Blue:
+            win_status = WinEnum.Blue
+        elif whos_turn == Color.Red:
+            win_status = WinEnum.Red
+        else:
+            print("Bug in compute_terminal- whos turn???")
         self.win_status = win_status
         return win_status
 
@@ -276,7 +299,7 @@ class Episode():
         else:
             self.show = False
 
-        self.Blue_starts = np.random.random() >= 0.5 # for even statistics
+        self.Blue_starts = True#np.random.random() >= 0.5 # for even statistics
 
     def whos_turn(self, steps_current_game)-> Color:
         if self.Blue_starts:

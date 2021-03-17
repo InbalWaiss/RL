@@ -94,6 +94,11 @@ class Greedy_player(AbsDecisionMaker):
 
         # get first step in path to closest_target
         path_to_closest_target = self.all_pairs_shortest_path[my_pos][closest_target]
+        if len(path_to_closest_target)<=1:
+            # return random move
+            a = np.random.randint(0, NUMBER_OF_ACTIONS)
+            return AgentAction(a)
+
         first_step = path_to_closest_target[1]
         delta_x =  first_step[0]-my_pos[0]
         delta_y = first_step[1] - my_pos[1]

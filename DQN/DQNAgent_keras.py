@@ -97,7 +97,7 @@ class decision_maker_DQN_keras:
         parser.add_argument('--train_freq', default=1, type=int, help='The frequency of actions wrt Q-network update')
         parser.add_argument('--save_freq', default=50000, type=int, help='The frequency with which the network is saved')
         parser.add_argument('--eval_freq', default=50000, type=int, help='The frequency with which the policy is evlauted')
-        parser.add_argument('--num_burn_in', default=50000, type=int,
+        parser.add_argument('--num_burn_in', default=10000, type=int,
                             help='Number of steps to populate the replay memory before training starts')
         parser.add_argument('--load_network', default=False, action='store_true', help='Load trained mode')
         parser.add_argument('--load_network_path', default='', help='the path to the trained mode file')
@@ -440,6 +440,9 @@ class decision_maker_DQN_keras:
 
     def _get_action(self, current_state, evaluate=False, **kwargs):
         dqn_state = current_state.img
+        if False:
+            plt.matshow(dqn_state)
+            plt.show()
         """Select the action based on the current state.
 
         Returns
@@ -547,8 +550,8 @@ class DQNAgent_keras:
         self._previous_state = initial_state_blue
         pass
 
-    def get_action(self, current_state, evaluate=False):
-        action = self._decision_maker._get_action(current_state, evaluate)
+    def get_action(self, current_state, EVALUATE=False):
+        action = self._decision_maker._get_action(current_state, EVALUATE)
         self._action = AgentAction(action)
         return self._action
 
