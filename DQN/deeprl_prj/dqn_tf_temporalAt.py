@@ -374,7 +374,7 @@ class DQNAgent:
         num_iterations: int
           How many samples/updates to perform.
         max_episode_length: int
-          How long a single episode_to_enemy should last before the agent
+          How long a single episode should last before the agent
           resets. Can help exploration.
         """
         is_training = True
@@ -423,7 +423,7 @@ class DQNAgent:
                 self.memory.append(last_frame, action, 0, done)
                 if not burn_in:
                     avg_target_value = episode_target_value / episode_frames
-                    print(">>> Training: time %d, episode_to_enemy %d, length %d, reward %.0f, raw_reward %.0f, loss %.4f, target value %.4f, policy step %d, memory cap %d" %
+                    print(">>> Training: time %d, episode %d, length %d, reward %.0f, raw_reward %.0f, loss %.4f, target value %.4f, policy step %d, memory cap %d" %
                         (t, idx_episode, episode_frames, episode_reward, episode_raw_reward, episode_loss, 
                         avg_target_value, self.policy.step, self.memory.current))
                     sys.stdout.flush()
@@ -483,7 +483,7 @@ class DQNAgent:
         (such as dropout or batch norm), you should set them to test.
 
         Basically run your policy on the environment and collect stats
-        like cumulative reward, average episode_to_enemy length, etc.
+        like cumulative reward, average episode length, etc.
 
         You can also call the render function here if you want to
         visually inspect your policy.
@@ -541,7 +541,7 @@ class DQNAgent:
             if episode_frames > max_episode_length:
                 done = True
             if done:
-                print("Eval: time %d, episode_to_enemy %d, length %d, reward %.0f. @eval_count %s" %
+                print("Eval: time %d, episode %d, length %d, reward %.0f. @eval_count %s" %
                     (t, idx_episode, episode_frames, episode_reward[idx_episode-1], eval_count))
                 eval_count += 1
                 save_scalar(eval_count, 'eval/eval_episode_raw_reward', episode_reward[idx_episode-1], self.writer)

@@ -27,7 +27,7 @@ class Sample:
       `action` in `state`. Expected to be the same type/dimensions as
       the state.
     is_terminal: boolean
-      True if this action finished the episode_to_enemy. False otherwise.
+      True if this action finished the episode. False otherwise.
     """
     def __init__(self, state, action, reward, next_state, is_terminal):
         self.state = state
@@ -52,8 +52,8 @@ class Preprocessor:
 
     If you're using internal states, such as for keeping a sequence of
     inputs like in Atari, you should probably call reset when a new
-    episode_to_enemy begins so that state doesn't leak in from episode_to_enemy to
-    episode_to_enemy.
+    episode begins so that state doesn't leak in from episode to
+    episode.
     """
 
     def process_state_for_network(self, state):
@@ -146,7 +146,7 @@ class Preprocessor:
     def reset(self):
         """Reset any internal state.
 
-        Will be called at the start of every new episode_to_enemy. Makes it
+        Will be called at the start of every new episode. Makes it
         possible to do history snapshots.
         """
         pass
@@ -159,10 +159,10 @@ class ReplayMemory:
     append(state, action, reward, debug_info=None)
       Add a sample to the replay memory. 
     end_episode(final_state, is_terminal, debug_info=None)
-      Set the final state of an episode_to_enemy and mark whether it was a true
+      Set the final state of an episode and mark whether it was a true
       terminal state (i.e. the env returned is_terminal=True), of it
-      is an artificial terminal state (i.e. agent quit the episode_to_enemy
-      early, but agent could have kept running episode_to_enemy).
+      is an artificial terminal state (i.e. agent quit the episode
+      early, but agent could have kept running episode).
     sample(batch_size, indexes=None)
       Return list of samples from the memory. Each class will
       implement a different method of choosing the
@@ -215,7 +215,7 @@ class ReplayMemory:
 
         while len(indexes) < batch_size: 
             index = np.random.randint(self.history_length - 1, end)
-            # sampled state shouldn't contain episode_to_enemy end
+            # sampled state shouldn't contain episode end
             ####TODO: inbal: check why we dont learn terminal states
             # if self.terminals[index - self.history_length + 1: index + 1].any():
             #     continue

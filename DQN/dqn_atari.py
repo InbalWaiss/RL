@@ -93,7 +93,7 @@ def main():
     parser.add_argument('--load_network', default=False, action='store_true', help='Load trained mode')
     parser.add_argument('--load_network_path', default='', help='the path to the trained mode file')
     parser.add_argument('--net_mode', default='dqn', help='choose the mode of net, can be linear, dqn, duel')
-    parser.add_argument('--max_episode_length', default = 10000, type=int, help = 'max length of each episode_to_enemy')
+    parser.add_argument('--max_episode_length', default = 10000, type=int, help = 'max length of each episode')
     parser.add_argument('--num_episodes_at_test', default = 20, type=int, help='Number of episodes the agent plays at test')
     parser.add_argument('--ddqn', default=False, dest='ddqn', action='store_true', help='enable ddqn')
     parser.add_argument('--train', default=True, dest='train', action='store_true', help='Train mode')

@@ -211,7 +211,7 @@ class decision_maker_DQN():
 
 
     def train(self, terminal_state, step):
-        # Trains main network every step during episode_to_enemy
+        # Trains main network every step during episode
         # Start training only if certain number of samples is already saved
         if len(self.replay_memory) < MIN_REPLAY_MEMORY_SIZE:
             return
@@ -256,7 +256,7 @@ class decision_maker_DQN():
         # endt = time.time()
         # print('Fitting time == ', endt-start)
 
-        # Update target network counter every episode_to_enemy
+        # Update target network counter every episode
         if terminal_state:
             self.target_update_counter += 1
 

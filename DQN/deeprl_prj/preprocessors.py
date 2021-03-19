@@ -54,7 +54,7 @@ class HistoryPreprocessor(Preprocessor):
     def reset(self):
         """Reset the history sequence.
 
-        Useful when you start a new episode_to_enemy.
+        Useful when you start a new episode.
         """
         self.past_states = None
         self.past_states_ori = None 

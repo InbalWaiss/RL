@@ -6,7 +6,7 @@ from Common.constants import AgentAction, AgentType
 
 class AbsDecisionMaker(metaclass=abc.ABCMeta):
 
-    def update_context(self, new_state: State, reward, is_terminal):
+    def update_context(self, state: State, action: AgentAction, new_state: State, reward, is_terminal):
 
         pass
 

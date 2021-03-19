@@ -50,7 +50,7 @@ def save_scalar(step, name, value, writer):
 class decision_maker_DQN_keras:
     def __init__(self, path_model_to_load=None):
         self._previous_stats = {}
-        self._action = {}
+
         self._epsilon = epsilon
         self.model = None
         self.target_model = None
@@ -103,7 +103,7 @@ class decision_maker_DQN_keras:
         parser.add_argument('--load_network_path', default='', help='the path to the trained mode file')
         #parser.add_argument('--net_mode', default='dqn', help='choose the mode of net, can be linear, dqn, duel')
         parser.add_argument('--net_mode', default='linear', help='choose the mode of net, can be linear, dqn, duel')
-        parser.add_argument('--max_episode_length', default = 10000, type=int, help = 'max length of each episode_to_enemy')
+        parser.add_argument('--max_episode_length', default = 10000, type=int, help = 'max length of each episode')
         parser.add_argument('--num_episodes_at_test', default = 20, type=int, help='Number of episodes the agent plays at test')
         parser.add_argument('--ddqn', default=True, dest='ddqn', action='store_true', help='enable ddqn')
         parser.add_argument('--train', default=True, dest='train', action='store_true', help='Train mode')
@@ -334,14 +334,14 @@ class decision_maker_DQN_keras:
         state = state[None, :, :, :]
         return self.q_network.predict_on_batch(state)
 
-    def train(self, new_state, reward, is_terminal):
+    def train(self, state, action, new_state, reward, is_terminal):
 
         self.numberOfSteps += 1
 
         if is_terminal:
             # adding last frame only to save last state
             last_frame = self.atari_processor.process_state_for_memory(new_state)
-            self.memory.append(last_frame, self._action, reward, is_terminal)
+            self.memory.append(last_frame, action, reward, is_terminal)
             self.atari_processor.reset()
             self.history_processor.reset()
             if not self.burn_in:
@@ -357,7 +357,7 @@ class decision_maker_DQN_keras:
                 processed_next_state = self.atari_processor.process_state_for_network(new_state)
                 action_next_state = np.dstack((action_state, processed_next_state))
                 action_next_state = action_next_state[:, :, 1:]
-                current_sample = Sample(action_state, self._action, processed_reward, action_next_state, is_terminal)
+                current_sample = Sample(action_state, action, processed_reward, action_next_state, is_terminal)
                 loss, target_value = self.update_policy(current_sample)
                 self.episode_loss += loss
                 self.episode_target_value += target_value
@@ -455,7 +455,7 @@ class decision_maker_DQN_keras:
         action_state = self.history_processor.process_state_for_network(state_for_network)
 
         action = None
-        q_values = self.calc_q_values(action_state) #shold be action_state
+        q_values = self.calc_q_values(action_state) #shuld be action_state
         if self.is_training and not evaluate:
             if policy_type == 'UniformRandomPolicy':
                 action= UniformRandomPolicy(NUMBER_OF_ACTIONS).select_action()
@@ -470,7 +470,6 @@ class decision_maker_DQN_keras:
             if not evaluate:
                 self._epsilon = 0
 
-        self._action = action
         return action
 
     def print_model(self, state, episode_number, path_to_dir):
@@ -530,8 +529,8 @@ class decision_maker_DQN_keras:
 # Agent class
 class DQNAgent_keras:
     def __init__(self, UPDATE_CONTEXT=True, path_model_to_load=None):
-        self._previous_state = None
-        self._action = None
+
+
         self.episode_number = 0
         self._decision_maker = decision_maker_DQN_keras(path_model_to_load)
         self.min_reward = -np.Inf
@@ -547,23 +546,22 @@ class DQNAgent_keras:
 
     def set_initial_state(self, initial_state_blue, episode_number):
         self.episode_number = episode_number
-        self._previous_state = initial_state_blue
+
         pass
 
     def get_action(self, current_state, EVALUATE=False):
         action = self._decision_maker._get_action(current_state, EVALUATE)
-        self._action = AgentAction(action)
-        return self._action
+        return AgentAction(action)
 
-    def update_context(self, new_state, reward, is_terminal, EVALUATE=True):
+    def update_context(self, state, action, new_state, reward, is_terminal, EVALUATE=True):
         if self.UPDATE_CONTEXT and not EVALUATE:
-            previous_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(self._previous_state)
+            previous_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(state)
             new_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(new_state)
-            transition = (previous_state_for_network, self._action, reward, new_state_for_network, is_terminal)
+            transition = (previous_state_for_network, action, reward, new_state_for_network, is_terminal)
             self._decision_maker.update_replay_memory(transition)
 
-            self._decision_maker.train(new_state, reward, is_terminal)
-            self._previous_state = new_state
+            self._decision_maker.train(state, action, new_state, reward, is_terminal)
+
 
 
     def save_model(self, ep_rewards, path_to_model, player_color):
@@ -575,7 +573,7 @@ class DQNAgent_keras:
 
         episode = len(ep_rewards)
         # save model, but only when min reward is greater or equal a set value
-        # if max_reward >=self.min_reward or episode_to_enemy == NUM_OF_EPISODES-1:
+        # if max_reward >=self.min_reward or episode == NUM_OF_EPISODES-1:
         self.min_reward = min_reward
         if player_color == Color.Red:
             color_str = "red"

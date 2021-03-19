@@ -163,7 +163,7 @@ if __name__ == '__main__':
         # for statistics
         env.data_for_statistics(current_episode.episode_reward_blue, current_episode.episode_reward_red, steps_current_game, blue_decision_maker.get_epsolon())
 
-        # print info of episode_to_enemy:
+        # print info of episode:
         current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon())
         if current_episode.episode_number % SAVE_STATS_EVERY == 0:
             if False:#blue_decision_maker.type()== AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:

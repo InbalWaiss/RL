@@ -77,7 +77,8 @@ class Environment(object):
 
     def update_win_counters(self, steps_current_game, whos_turn=None):
         if steps_current_game==MAX_STEPS_PER_EPISODE:
-            self.win_array.append(WinEnum.NoWin)
+            self.win_array.append(WinEnum.Tie)
+            self.tie_count+=1
             return
 
         if whos_turn==Color.Blue:

@@ -11,8 +11,6 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
 
     def __init__(self, UPDATE_CONTEXT=True , path_model_to_load=None):
 
-        self._previous_state = {}
-        self._action = -1
         self._epsilon = QPlayer_constants.epsilon
         self._type = AgentType.Q_table
         self.episode_number = 0
@@ -29,7 +27,6 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
     def set_initial_state(self, state: State, episode_number):
 
         state_entry = (state.my_pos.get_tuple(), state.enemy_pos.get_tuple())
-        self._previous_state = state_entry
         self.episode_number = episode_number
 
     def init_q_table(self, start_q_table=None):
@@ -50,14 +47,15 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
 
         return q_table
 
-    def update_context(self, new_state: State, reward, is_terminal, EVALUATE=True):
+    def update_context(self, curr_state: State, action: AgentAction, new_state: State, reward, is_terminal, EVALUATE=True):
         if self.UPDATE_CONTEXT and not EVALUATE:
-            state_entry = (new_state.my_pos.get_tuple(), new_state.enemy_pos.get_tuple())
-            action_entry = int(self._action)
+            curr_state_entry = (curr_state.my_pos.get_tuple(), curr_state.enemy_pos.get_tuple())
+            new_state_entry = (new_state.my_pos.get_tuple(), new_state.enemy_pos.get_tuple())
+            action_entry = int(action)
 
-            max_future_q = np.max(self._Q_matrix[state_entry])  # max Q value for this new observation
+            max_future_q = np.max(self._Q_matrix[new_state_entry])  # max Q value for this new observation
 
-            current_q = self._Q_matrix[self._previous_state][action_entry]  # current Q for our chosen action
+            current_q = self._Q_matrix[curr_state_entry][action_entry]  # current Q for our chosen action
 
             if is_terminal:
                 new_q = reward
@@ -65,9 +63,8 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
                 LEARNING_RATE = QPlayer_constants.LEARNING_RATE
                 new_q = (1 - LEARNING_RATE) * current_q + LEARNING_RATE * (reward + QPlayer_constants.DISCOUNT * max_future_q)
 
-            self._Q_matrix[self._previous_state][action_entry] = new_q
+            self._Q_matrix[curr_state_entry][action_entry] = new_q
 
-            self._previous_state = state_entry
         self.update_epsilon()
 
 
@@ -86,9 +83,9 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
         else:
             action = np.random.randint(0, NUMBER_OF_ACTIONS)
 
-        self._action = AgentAction(action)
+        action = AgentAction(action)
 
-        return self._action
+        return action
 
     def type(self) -> AgentType:
         return self._type
