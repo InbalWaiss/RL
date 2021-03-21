@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="training mode">
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/dictionary_position_los.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/dictionary_position_no_los.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/pre_los_calc.py" afterDir="false" />
+    <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="learning not to lose">
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/PPO/PPO1/defaults.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/PPO/PPO1/model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/PPO/PPO1/run.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/PPO/PPOAgent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/PPO/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/PPO/ppo_cartpole/PPOAgent.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/PPO/ppo_cartpole/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/PPO/ppo_cartpole/ppo_torch.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/PPO/ppo_cartpole/tmp/ppo/actor_torch_ppo" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/PPO/ppo_cartpole/tmp/ppo/critic_torch_ppo" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/PPO/ppo_torch.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_10001_   0.00max_-102.18avg_-134.00min__1616153907.model" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_20001_  -4.00max_-113.77avg_-137.00min__1616155192.model" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_20001_ 116.00max_ -99.54avg_-135.00min__1616232409.model" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_400001_ 115.00max_  96.28avg_-132.00min__1616089826.model" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_450001_ 115.00max_ 101.00avg_-131.00min__1616094541.model" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_550001_ 116.00max_ 107.56avg_-139.00min__1616106644.model" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_800001_ 116.00max_  -6.80avg_-361.00min__1616132768.model" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_one_step_into_the_future.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue_2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/helper_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/helper_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/load_network.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/DQN_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/DQN_constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/QPlayer_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/QPlayer_constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/Qtable_DecisionMaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/Qtable_DecisionMaker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/RafaelPlayer/trained_agents/17_02_13_49_DQNAgent_spatioalAttention_Q_table/qtable_red-860000.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/preprocessors.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/preprocessors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/Qtable_DecisionMaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/Qtable_DecisionMaker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_semi_simultaneous_steps.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_semi_simultaneous_steps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +58,9 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="1nKJdW62NQf2lJAmGxYlJmoS5Af" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -51,25 +68,27 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/PycharmProjects/baselines" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/SingleAgentCombat-main" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\RafaelPlayer\trained_agents" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\RafaelPlayer" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\DQN" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Qtable\trained_agents" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Arena" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\RafaelPlayer\trained_agents" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\PPO" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Arena\statistics\18_02_09_17_DQNAgent_spatioalAttention_Q_table" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Arena\statistics\01_02_10_38" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Arena" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common\Preprocessing" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Greedy\docs" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Greedy\pics" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.pre_los_calc">
-    <configuration name="Environment" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.main_only_blue_2">
+    <configuration name="main_one_step_into_the_future" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
       <module name="SingleAgentCombat-main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -77,11 +96,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main/Arena" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/main_one_step_into_the_future.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -90,7 +109,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="constants" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main_only_blue" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
       <module name="SingleAgentCombat-main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -98,11 +117,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main/Arena" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/Arena/constants.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -111,7 +130,49 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_simultaneous_steps_DQN (1)" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
+    <configuration name="main_only_blue_2" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
+      <module name="SingleAgentCombat-main" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue_2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main_semi_simultaneous_steps" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
+      <module name="SingleAgentCombat-main" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/main_semi_simultaneous_steps.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main_simultaneous_steps_DQN" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
       <module name="SingleAgentCombat-main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -132,61 +193,19 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_simultaneous_steps_DQN" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
-      <module name="SingleAgentCombat-main" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main/Arena" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/Arena/main_simultaneous_steps_DQN.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="pre_los_calc" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="SingleAgentCombat-main" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main/Arena" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/Arena/pre_los_calc.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.main_simultaneous_steps_DQN" />
-      <item itemvalue="Python.main_simultaneous_steps_DQN (1)" />
-      <item itemvalue="Python.Environment" />
-      <item itemvalue="Python.pre_los_calc" />
-      <item itemvalue="Python.constants" />
+      <item itemvalue="Python.main_semi_simultaneous_steps" />
+      <item itemvalue="Python.main_one_step_into_the_future" />
+      <item itemvalue="Python.main_only_blue" />
+      <item itemvalue="Python.main_only_blue_2" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.pre_los_calc" />
-        <item itemvalue="Python.main_simultaneous_steps_DQN (1)" />
-        <item itemvalue="Python.constants" />
-        <item itemvalue="Python.Environment" />
+        <item itemvalue="Python.main_only_blue_2" />
+        <item itemvalue="Python.main_only_blue" />
+        <item itemvalue="Python.main_one_step_into_the_future" />
+        <item itemvalue="Python.main_semi_simultaneous_steps" />
         <item itemvalue="Python.main_simultaneous_steps_DQN" />
       </list>
     </recent_temporary>
@@ -199,90 +218,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1611132936949</updated>
-    </task>
-    <task id="LOCAL‎00001" summary="temporalAttention v0">
-      <created>1612067998903</created>
-      <option name="number" value="LOCAL‎00001" />
-      <option name="presentableId" value="LOCAL‎00001" />
-      <updated>1612067998903</updated>
-    </task>
-    <task id="LOCAL‎00002" summary="temporalAttention v0">
-      <created>1612068957760</created>
-      <option name="number" value="LOCAL‎00002" />
-      <option name="presentableId" value="LOCAL‎00002" />
-      <updated>1612068957760</updated>
-    </task>
-    <task id="LOCAL‎00003" summary="print game info func added">
-      <created>1612071230961</created>
-      <option name="number" value="LOCAL‎00003" />
-      <option name="presentableId" value="LOCAL‎00003" />
-      <updated>1612071230961</updated>
-    </task>
-    <task id="LOCAL‎00004" summary="print game info func added">
-      <created>1612074070749</created>
-      <option name="number" value="LOCAL‎00004" />
-      <option name="presentableId" value="LOCAL‎00004" />
-      <updated>1612074070749</updated>
-    </task>
-    <task id="LOCAL‎00005" summary="save model every 50_000 episodes">
-      <created>1612105455154</created>
-      <option name="number" value="LOCAL‎00005" />
-      <option name="presentableId" value="LOCAL‎00005" />
-      <updated>1612105455154</updated>
-    </task>
-    <task id="LOCAL‎00006" summary="save model every 50_000 episodes">
-      <created>1612154572910</created>
-      <option name="number" value="LOCAL‎00006" />
-      <option name="presentableId" value="LOCAL‎00006" />
-      <updated>1612154572910</updated>
-    </task>
-    <task id="LOCAL‎00007" summary="save model every 50_000 episodes">
-      <created>1612163469471</created>
-      <option name="number" value="LOCAL‎00007" />
-      <option name="presentableId" value="LOCAL‎00007" />
-      <updated>1612163469471</updated>
-    </task>
-    <task id="LOCAL‎00008" summary="reward factors MOVE_PENALTY">
-      <created>1612165763796</created>
-      <option name="number" value="LOCAL‎00008" />
-      <option name="presentableId" value="LOCAL‎00008" />
-      <updated>1612165763796</updated>
-    </task>
-    <task id="LOCAL‎00009" summary="reward factors MOVE_PENALTY">
-      <created>1612169570706</created>
-      <option name="number" value="LOCAL‎00009" />
-      <option name="presentableId" value="LOCAL‎00009" />
-      <updated>1612169570706</updated>
-    </task>
-    <task id="LOCAL‎00010" summary="qtable-650_000">
-      <created>1612186624955</created>
-      <option name="number" value="LOCAL‎00010" />
-      <option name="presentableId" value="LOCAL‎00010" />
-      <updated>1612186624955</updated>
-    </task>
-    <task id="LOCAL‎00011" summary="qtable-650_000">
-      <created>1612243188678</created>
-      <option name="number" value="LOCAL‎00011" />
-      <option name="presentableId" value="LOCAL‎00011" />
-      <updated>1612243188678</updated>
-    </task>
-    <task id="LOCAL‎00012" summary="qtable-650_000">
-      <created>1612243235640</created>
-      <option name="number" value="LOCAL‎00012" />
-      <option name="presentableId" value="LOCAL‎00012" />
-      <updated>1612243235640</updated>
-    </task>
-    <task id="LOCAL‎00013" summary="qtable-1_000_000">
-      <created>1612243250190</created>
-      <option name="number" value="LOCAL‎00013" />
-      <option name="presentableId" value="LOCAL‎00013" />
-      <updated>1612243250190</updated>
-    </task>
-    <task id="LOCAL‎00014" summary="evaluation mode added">
-      <created>1612266020567</created>
-      <option name="number" value="LOCAL‎00014" />
-      <option name="presentableId" value="LOCAL‎00014" />
-      <updated>1612266020567</updated>
     </task>
     <task id="LOCAL‎00015" summary="evaluation mode added">
       <created>1612266769769</created>
@@ -404,7 +339,181 @@
       <option name="presentableId" value="LOCAL‎00034" />
       <updated>1614276186398</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL‎00035" summary="use danger zone in state">
+      <created>1614490240886</created>
+      <option name="number" value="LOCAL‎00035" />
+      <option name="presentableId" value="LOCAL‎00035" />
+      <updated>1614490240886</updated>
+    </task>
+    <task id="LOCAL‎00036" summary="1. not sum zero game&#10;2. flag RED_PLAYER_MOVES&#10;3. less LOS calcs">
+      <created>1614490823415</created>
+      <option name="number" value="LOCAL‎00036" />
+      <option name="presentableId" value="LOCAL‎00036" />
+      <updated>1614490823415</updated>
+    </task>
+    <task id="LOCAL‎00037" summary="save_win_statistics added">
+      <created>1614504673409</created>
+      <option name="number" value="LOCAL‎00037" />
+      <option name="presentableId" value="LOCAL‎00037" />
+      <updated>1614504673409</updated>
+    </task>
+    <task id="LOCAL‎00038" summary="dominating points added to state">
+      <created>1614605481546</created>
+      <option name="number" value="LOCAL‎00038" />
+      <option name="presentableId" value="LOCAL‎00038" />
+      <updated>1614605481546</updated>
+    </task>
+    <task id="LOCAL‎00039" summary="dominating_points pics">
+      <created>1614680929414</created>
+      <option name="number" value="LOCAL‎00039" />
+      <option name="presentableId" value="LOCAL‎00039" />
+      <updated>1614680929414</updated>
+    </task>
+    <task id="LOCAL‎00040" summary="dominating_points pics">
+      <created>1614681251785</created>
+      <option name="number" value="LOCAL‎00040" />
+      <option name="presentableId" value="LOCAL‎00040" />
+      <updated>1614681251785</updated>
+    </task>
+    <task id="LOCAL‎00041" summary="DQNkeras set_model_name">
+      <created>1614843909698</created>
+      <option name="number" value="LOCAL‎00041" />
+      <option name="presentableId" value="LOCAL‎00041" />
+      <updated>1614843909699</updated>
+    </task>
+    <task id="LOCAL‎00042" summary="save_reward_stats">
+      <created>1614853353211</created>
+      <option name="number" value="LOCAL‎00042" />
+      <option name="presentableId" value="LOCAL‎00042" />
+      <updated>1614853353211</updated>
+    </task>
+    <task id="LOCAL‎00043" summary="reward change">
+      <created>1614860904298</created>
+      <option name="number" value="LOCAL‎00043" />
+      <option name="presentableId" value="LOCAL‎00043" />
+      <updated>1614860904298</updated>
+    </task>
+    <task id="LOCAL‎00044" summary="fire range">
+      <created>1614872367504</created>
+      <option name="number" value="LOCAL‎00044" />
+      <option name="presentableId" value="LOCAL‎00044" />
+      <updated>1614872367504</updated>
+    </task>
+    <task id="LOCAL‎00045" summary="fire range">
+      <created>1614929802120</created>
+      <option name="number" value="LOCAL‎00045" />
+      <option name="presentableId" value="LOCAL‎00045" />
+      <updated>1614929802120</updated>
+    </task>
+    <task id="LOCAL‎00046" summary="1.names of models">
+      <created>1615276089947</created>
+      <option name="number" value="LOCAL‎00046" />
+      <option name="presentableId" value="LOCAL‎00046" />
+      <updated>1615276089947</updated>
+    </task>
+    <task id="LOCAL‎00047" summary="4 actions \ 9 actions">
+      <created>1615276223947</created>
+      <option name="number" value="LOCAL‎00047" />
+      <option name="presentableId" value="LOCAL‎00047" />
+      <updated>1615276223947</updated>
+    </task>
+    <task id="LOCAL‎00048" summary="more flags">
+      <created>1615279960367</created>
+      <option name="number" value="LOCAL‎00048" />
+      <option name="presentableId" value="LOCAL‎00048" />
+      <updated>1615279960368</updated>
+    </task>
+    <task id="LOCAL‎00049" summary="&quot;&quot;">
+      <created>1615285784368</created>
+      <option name="number" value="LOCAL‎00049" />
+      <option name="presentableId" value="LOCAL‎00049" />
+      <updated>1615285784368</updated>
+    </task>
+    <task id="LOCAL‎00050" summary="azure installation">
+      <created>1615289095772</created>
+      <option name="number" value="LOCAL‎00050" />
+      <option name="presentableId" value="LOCAL‎00050" />
+      <updated>1615289095773</updated>
+    </task>
+    <task id="LOCAL‎00051" summary="FC red not moving">
+      <created>1615296894676</created>
+      <option name="number" value="LOCAL‎00051" />
+      <option name="presentableId" value="LOCAL‎00051" />
+      <updated>1615296894676</updated>
+    </task>
+    <task id="LOCAL‎00052" summary="FC red not moving">
+      <created>1615296975439</created>
+      <option name="number" value="LOCAL‎00052" />
+      <option name="presentableId" value="LOCAL‎00052" />
+      <updated>1615296975440</updated>
+    </task>
+    <task id="LOCAL‎00053" summary="before changing game to be turn by turn, and terminal state to be only LOS">
+      <created>1615461034834</created>
+      <option name="number" value="LOCAL‎00053" />
+      <option name="presentableId" value="LOCAL‎00053" />
+      <updated>1615461034834</updated>
+    </task>
+    <task id="LOCAL‎00054" summary="Greedy player">
+      <created>1615874311001</created>
+      <option name="number" value="LOCAL‎00054" />
+      <option name="presentableId" value="LOCAL‎00054" />
+      <updated>1615874311001</updated>
+    </task>
+    <task id="LOCAL‎00055" summary="results">
+      <created>1615874593558</created>
+      <option name="number" value="LOCAL‎00055" />
+      <option name="presentableId" value="LOCAL‎00055" />
+      <updated>1615874593558</updated>
+    </task>
+    <task id="LOCAL‎00056" summary="results">
+      <created>1615878934147</created>
+      <option name="number" value="LOCAL‎00056" />
+      <option name="presentableId" value="LOCAL‎00056" />
+      <updated>1615878934150</updated>
+    </task>
+    <task id="LOCAL‎00057" summary="results">
+      <created>1615879878942</created>
+      <option name="number" value="LOCAL‎00057" />
+      <option name="presentableId" value="LOCAL‎00057" />
+      <updated>1615879878942</updated>
+    </task>
+    <task id="LOCAL‎00058" summary="results">
+      <created>1615880316848</created>
+      <option name="number" value="LOCAL‎00058" />
+      <option name="presentableId" value="LOCAL‎00058" />
+      <updated>1615880316849</updated>
+    </task>
+    <task id="LOCAL‎00059" summary="refactor">
+      <created>1615885884769</created>
+      <option name="number" value="LOCAL‎00059" />
+      <option name="presentableId" value="LOCAL‎00059" />
+      <updated>1615885884769</updated>
+    </task>
+    <task id="LOCAL‎00060" summary="random start player">
+      <created>1615903853902</created>
+      <option name="number" value="LOCAL‎00060" />
+      <option name="presentableId" value="LOCAL‎00060" />
+      <updated>1615903853903</updated>
+    </task>
+    <task id="LOCAL‎00061" summary="Greedy(Red)_vs_Random(Blue)">
+      <created>1615904829861</created>
+      <option name="number" value="LOCAL‎00061" />
+      <option name="presentableId" value="LOCAL‎00061" />
+      <updated>1615904829861</updated>
+    </task>
+    <task id="LOCAL‎00062" summary="learning not to lose">
+      <created>1615998031906</created>
+      <option name="number" value="LOCAL‎00062" />
+      <option name="presentableId" value="LOCAL‎00062" />
+      <updated>1615998031906</updated>
+    </task>
+    <task id="LOCAL‎00063" summary="semi simultaneous steps">
+      <created>1616160427958</created>
+      <option name="number" value="LOCAL‎00063" />
+      <option name="presentableId" value="LOCAL‎00063" />
+      <updated>1616160427960</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -427,62 +536,98 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="temporalAttention v0" />
-    <MESSAGE value="print game info func added" />
-    <MESSAGE value="save model every 50_000 episodes" />
-    <MESSAGE value="reward factors MOVE_PENALTY" />
-    <MESSAGE value="qtable-650_000" />
-    <MESSAGE value="qtable-1_000_000" />
-    <MESSAGE value="evaluation mode added" />
-    <MESSAGE value="DQN_basic and DQN_keras models for evaluation" />
-    <MESSAGE value="python ==3.7" />
-    <MESSAGE value="DQNAgent_temporalAttention working" />
-    <MESSAGE value="big DSM" />
-    <MESSAGE value="DQNAgent_spatioalAttention working" />
-    <MESSAGE value="training mode" />
-    <MESSAGE value="changes" />
-    <MESSAGE value="packages" />
-    <MESSAGE value="networks" />
-    <MESSAGE value="set Qtable epsilon to be 0.15" />
-    <MESSAGE value="no clip reward" />
-    <MESSAGE value="change in reward" />
     <MESSAGE value="change DQNkeras network to be 1 layer" />
     <MESSAGE value="win_array added" />
-    <option name="LAST_COMMIT_MESSAGE" value="win_array added" />
+    <MESSAGE value="use danger zone in state" />
+    <MESSAGE value="1. not sum zero game&#10;2. flag RED_PLAYER_MOVES&#10;3. less LOS calcs" />
+    <MESSAGE value="save_win_statistics added" />
+    <MESSAGE value="dominating points added to state" />
+    <MESSAGE value="dominating_points pics" />
+    <MESSAGE value="DQNkeras set_model_name" />
+    <MESSAGE value="save_reward_stats" />
+    <MESSAGE value="reward change" />
+    <MESSAGE value="fire range" />
+    <MESSAGE value="1.names of models" />
+    <MESSAGE value="4 actions \ 9 actions" />
+    <MESSAGE value="more flags" />
+    <MESSAGE value="&quot;&quot;" />
+    <MESSAGE value="azure installation" />
+    <MESSAGE value="FC red not moving" />
+    <MESSAGE value="before changing game to be turn by turn, and terminal state to be only LOS" />
+    <MESSAGE value="Greedy player" />
+    <MESSAGE value="results" />
+    <MESSAGE value="refactor" />
+    <MESSAGE value="random start player" />
+    <MESSAGE value="Greedy(Red)_vs_Random(Blue)" />
+    <MESSAGE value="learning not to lose" />
+    <MESSAGE value="semi simultaneous steps" />
+    <option name="LAST_COMMIT_MESSAGE" value="semi simultaneous steps" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py</url>
-          <line>47</line>
-          <option name="timeStamp" value="2" />
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/PPO/ppo_cartpole/main.py</url>
+          <line>22</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent.py</url>
+          <line>165</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/pre_los_calc.py</url>
+          <line>157</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../Attention-DQN-master/venv/Lib/site-packages/keras/models.py</url>
+          <line>926</line>
+          <option name="timeStamp" value="207" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Arena/pre_los_calc.py</url>
-          <line>86</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/pre_los_calc.py</url>
+          <line>190</line>
+          <option name="timeStamp" value="282" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Arena/pre_los_calc.py</url>
-          <line>9</line>
-          <option name="timeStamp" value="6" />
+          <condition expression="red_won_the_game==True" language="Python" />
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/main_semi_simultaneous_steps.py</url>
+          <line>122</line>
+          <option name="timeStamp" value="386" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <condition expression="np.max(self._Q_matrix[state_entry])&gt;120" language="Python" />
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Qtable/Qtable_DecisionMaker.py</url>
+          <line>85</line>
+          <option name="timeStamp" value="484" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py</url>
-          <line>20</line>
-          <option name="timeStamp" value="10" />
+          <condition expression="np.max(next_qa_value)&gt;1" language="Python" />
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py</url>
+          <line>433</line>
+          <option name="timeStamp" value="486" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Arena/pre_los_calc.py</url>
-          <line>94</line>
-          <option name="timeStamp" value="12" />
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Qtable/Qtable_DecisionMaker.py</url>
+          <line>81</line>
+          <option name="timeStamp" value="515" />
         </line-breakpoint>
       </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="__py_debug_temp_var_1819433364" />
+        <watch expression="q_values" />
+        <watch expression="np.max(next_qa_value)" language="Python" />
+        <watch expression="self._Q_matrix[state_entry]" />
       </configuration>
     </watches-manager>
   </component>
