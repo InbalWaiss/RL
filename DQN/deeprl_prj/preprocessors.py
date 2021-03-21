@@ -111,9 +111,11 @@ class AtariPreprocessor(Preprocessor):
 
         if type(state) == Arena.CState.State:
             state = state.img
-        img = Image.fromarray(state).convert('L').resize((SIZE_X, SIZE_Y), Image.BILINEAR)
-        state = np.array(img)
 
+        #img = Image.fromarray(state).convert('L').resize((SIZE_X, SIZE_Y), Image.BILINEAR)
+        img = Image.fromarray(state).convert('P').resize((SIZE_X, SIZE_Y), Image.BILINEAR)
+        state = np.array(img)
+        #img.show()
         return state
 
     def process_state_for_network(self, state):
@@ -124,7 +126,9 @@ class AtariPreprocessor(Preprocessor):
         """
         # if type(state) == Arena.CState.State:
         #     state = state.img
-        return np.float32(self.process_state_for_memory(state)/ 255.0)
+        #return np.float32(self.process_state_for_memory(state)/ 255.0)
+
+        return np.float32(self.process_state_for_memory(state))
 
     def process_state_for_network_ori(self, state):
         """Scale, convert to greyscale and store as float32.
@@ -135,7 +139,8 @@ class AtariPreprocessor(Preprocessor):
         if type(state) == Arena.CState.State:
             state = state.img
         img = Image.fromarray(state)
-        state = np.float32(np.array(img) / 255.0)
+        #state = np.float32(np.array(img) / 255.0)
+        state = np.float32(np.array(img))
         return state
 
     def process_batch(self, samples):
@@ -149,6 +154,13 @@ class AtariPreprocessor(Preprocessor):
         for i in range(batch_size):
             samples[i].state = np.float32(samples[i].state / 255.0)
             samples[i].next_state = np.float32(samples[i].next_state / 255.0)
+
+            if False:
+                import matplotlib.pyplot as plt
+                plt.matshow(samples[i].state)
+                plt.show()
+                plt.matshow(samples[i].next_state)
+                plt.show()
         return samples
 
     def process_reward(self, reward):

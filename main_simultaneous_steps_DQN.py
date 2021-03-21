@@ -62,8 +62,8 @@ if __name__ == '__main__':
     #blue_decision_maker = DQNAgent.DQNAgent()
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # --DQN Keras
-    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123.model')
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_800001_ 116.00max_  -6.80avg_-361.00min__1616132768.model')
 
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
     #                                                     path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_157501_ 120.00max_   4.80avg_   0.00min__1615952583.model')
@@ -103,17 +103,18 @@ if __name__ == '__main__':
             observation_for_blue: State = env.get_observation_for_blue()
             observation_for_red: State = env.get_observation_for_red()
 
-            # Check if the start state is terminal
-            if not End_Game_Flag:
-                current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Red) is not WinEnum.NoWin)
-                if current_episode.is_terminal:
-                    reward_step_blue, reward_step_red = env.handle_reward(steps_current_game, current_episode.is_terminal, whos_turn=Color.Red)
-                    env.update_win_counters(steps_current_game, whos_turn=Color.Red)
-                    End_Game_Flag = True
+            # # Check if the start state is terminal
+            # if not End_Game_Flag:
+            #     current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Red) is not WinEnum.NoWin)
+            #     if current_episode.is_terminal:
+            #         reward_step_blue, reward_step_red = env.handle_reward(steps_current_game, current_episode.is_terminal, whos_turn=Color.Red)
+            #         env.update_win_counters(steps_current_game, whos_turn=Color.Red)
+            #         End_Game_Flag = True
 
-            ##### Blue's turn! #####
-            action_blue: AgentAction = blue_decision_maker.get_action(observation_for_blue, EVALUATE)
-            env.blue_player.action(action_blue)  # take the action!
+            if not End_Game_Flag:
+                ##### Blue's turn! #####
+                action_blue: AgentAction = blue_decision_maker.get_action(observation_for_blue, EVALUATE)
+                env.blue_player.action(action_blue)  # take the action!
 
             if not End_Game_Flag:
             # check if terminal. if true: reward_blue=win_reward, reward_red = -win_reward
@@ -125,15 +126,17 @@ if __name__ == '__main__':
 
             current_episode.print_episode(env, steps_current_game)
 
-            ##### Red's turn! #####
-            action_red: AgentAction = red_decision_maker.get_action(observation_for_red, EVALUATE)
-            env.red_player.action(action_red) # take the action!
+            if not End_Game_Flag:
+                ##### Red's turn! #####
+                action_red: AgentAction = red_decision_maker.get_action(observation_for_red, EVALUATE)
+                env.red_player.action(action_red) # take the action!
 
             # Check if terminal
             if not End_Game_Flag:
                 current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Red) is not WinEnum.NoWin)
                 if current_episode.is_terminal:
                     reward_step_blue, reward_step_red = env.handle_reward(steps_current_game, current_episode.is_terminal, whos_turn=Color.Red)
+                    current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Red) is not WinEnum.NoWin)
                     env.update_win_counters(steps_current_game, whos_turn=Color.Red)
                     End_Game_Flag = True
 
@@ -171,7 +174,7 @@ if __name__ == '__main__':
         # for statistics
         env.data_for_statistics(current_episode.episode_reward_blue, current_episode.episode_reward_red, steps_current_game, blue_decision_maker.get_epsolon())
 
-        # print info of episode_to_enemy:
+        # print info of episode:
         current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon())
         if current_episode.episode_number % SAVE_STATS_EVERY == 0:
             if False:#blue_decision_maker.type()== AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:

@@ -115,9 +115,9 @@ class WinEnum(IntEnum):
 
 
 dict_of_colors = {1: (255, 0, 0),  #blue
-                  2: (230, 0, 0), #darker blue
+                  2: (180, 0, 0), #darker blue
                   3: (0, 0, 255), # red
-                  4: (0, 0, 230), #dark red
+                  4: (0, 0, 180), #dark red
                   5: (230, 100, 150), #purple
                   6: (60, 255, 255), #yellow
                   7: (100, 100, 100),#grey

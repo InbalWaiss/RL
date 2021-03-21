@@ -187,13 +187,25 @@ class ReplayMemory:
         self.rewards = np.zeros(self.memory_size, dtype = np.int8)
         #self.screens = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype = np.uint8)
         self.screens = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype=np.uint16)
+        self.next_screens = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype=np.uint16)
         self.terminals = np.zeros(self.memory_size, dtype = np.bool)
         self.current = 0
 
-    def append(self, state, action, reward, is_terminal):
+    # def append(self, state, action, reward, is_terminal):
+    #     self.actions[self.current % self.memory_size] = action
+    #     self.rewards[self.current % self.memory_size] = reward
+    #     self.screens[self.current % self.memory_size] = state
+    #     self.terminals[self.current % self.memory_size] = is_terminal
+    #     # img = Image.fromarray(state, mode = 'L')
+    #     # path = "./tmp/%05d-%s.png" % (self.current, is_terminal)
+    #     # img.save(path)
+    #     self.current += 1
+
+    def append(self, state, action, reward, next_state, is_terminal):
         self.actions[self.current % self.memory_size] = action
         self.rewards[self.current % self.memory_size] = reward
         self.screens[self.current % self.memory_size] = state
+        self.next_screens[self.current % self.memory_size] = next_state
         self.terminals[self.current % self.memory_size] = is_terminal
         # img = Image.fromarray(state, mode = 'L')
         # path = "./tmp/%05d-%s.png" % (self.current, is_terminal)
@@ -205,6 +217,12 @@ class ReplayMemory:
         # history dimention last
         return np.transpose(state, (1, 2, 0)) 
 
+    def get_state_next(self, index):
+        state = self.next_screens[index - self.history_length + 1:index + 1, :, :]
+        # history dimention last
+        return np.transpose(state, (1, 2, 0))
+
+
     def sample(self, batch_size):
         samples = []
         indexes = []
@@ -213,19 +231,30 @@ class ReplayMemory:
         # -1 because still need next frame
         end = min(self.current, self.memory_size) - 1
 
-        while len(indexes) < batch_size: 
-            index = np.random.randint(self.history_length - 1, end)
-            # sampled state shouldn't contain episode end
-            ####TODO: inbal: check why we dont learn terminal states
-            # if self.terminals[index - self.history_length + 1: index + 1].any():
-            #     continue
-            if self.terminals[index - self.history_length + 1: index].any():
-                continue
-            indexes.append(index)
+        has_positive_value = False
+        counter = 0
+        while has_positive_value==False and counter<10:
+            while len(indexes) < batch_size:
+                index = np.random.randint(self.history_length - 1, end)
+                # sampled state shouldn't contain episode end
+                ####TODO: inbal: check why we dont learn terminal states
+                # if self.terminals[index - self.history_length + 1: index + 1].any():
+                #     continue
+                if self.terminals[index - self.history_length + 1: index].any():
+                    continue
+                if self.rewards[index]>0:
+                    has_positive_value= True
+                counter+=1
+                indexes.append(index)
+
+        # for idx in indexes:
+        #     new_sample = Sample(self.get_state(idx), self.actions[idx],
+        #         self.rewards[idx], self.get_state(idx + 1), self.terminals[idx])
+        #     samples.append(new_sample)
 
         for idx in indexes:
             new_sample = Sample(self.get_state(idx), self.actions[idx],
-                self.rewards[idx], self.get_state(idx + 1), self.terminals[idx])
+                self.rewards[idx], self.get_state_next(idx), self.terminals[idx])
             samples.append(new_sample)
         return samples
 
