@@ -1,0 +1,21 @@
+ארכיטקטורת רשת:
+                flatten_hidden = Flatten(name="flatten")(input_data)
+                FC_1 = Dense(512, activation='elu', name='FC1-elu')(flatten_hidden)
+                FC_2 = Dense(512, activation='elu', name='FC2-elu')(FC_1)
+                FC_3 = Dense(512, activation='elu', name='FC3-elu')(FC_2)
+                FC_4 = Dense(512, activation='elu', name='FC4-elu')(FC_3)
+                output = Dense(num_actions, activation='elu', name="output")(FC_4)
+
+5 מליון צעדי אקספלורציה
+(0, 0, 230), #dark red
+
+יצוג הstate:
+מכשולים, מיקום השחקנים, קווי ראיה של האויב
+
+פונקצית פרס:
+500 על ניצחון
+-1 על כל דבר אחר
+
+
+
+
