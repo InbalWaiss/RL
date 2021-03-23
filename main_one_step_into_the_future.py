@@ -123,8 +123,8 @@ if __name__ == '__main__':
                                                                           can_red_win,
                                                                           whos_turn=Color.Red)
                     # Update model for Blue player
-                    blue_decision_maker.update_context(observation_for_blue_s0, action_blue, lossing_blue_state_obs,
-                                                       reward_step_blue, can_red_win, EVALUATE)
+                    blue_decision_maker.update_context(observation_for_blue_s0, action_blue, reward_step_blue, lossing_blue_state_obs,
+                                                       can_red_win, EVALUATE)
 
                     if False:
                         import matplotlib.pyplot as plt
@@ -153,8 +153,8 @@ if __name__ == '__main__':
 
                 # Update model for Blue player
                 observation_for_blue_s1: State = env.get_observation_for_blue()
-                blue_decision_maker.update_context(observation_for_blue_s0, action_blue, observation_for_blue_s1,
-                                                   reward_step_blue, current_episode.is_terminal, EVALUATE)
+                blue_decision_maker.update_context(observation_for_blue_s0, action_blue, reward_step_blue, observation_for_blue_s1,
+                                                   current_episode.is_terminal, EVALUATE)
                 break
 
 
@@ -172,8 +172,8 @@ if __name__ == '__main__':
                                                                  whos_turn=Color.Red)
 
             # Update model for Blue player
-            blue_decision_maker.update_context(observation_for_blue_s0, action_blue, observation_for_blue_s1,
-                                               reward_step_blue, current_episode.is_terminal, EVALUATE)
+            blue_decision_maker.update_context(observation_for_blue_s0, action_blue, reward_step_blue, observation_for_blue_s1,
+                                             current_episode.is_terminal, EVALUATE)
 
             current_episode.episode_reward_blue += reward_step_blue
             if current_episode.is_terminal:

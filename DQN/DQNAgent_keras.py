@@ -340,9 +340,9 @@ class decision_maker_DQN_keras:
 
         if is_terminal:
             # adding last frame only to save last state
-            state_frame = self.atari_processor.process_state_for_memory(state)
-            new_state_fram = self.atari_processor.process_state_for_memory(new_state)
-            self.memory.append(state_frame, action, reward, new_state_fram, is_terminal)
+            last_frame_state = self.atari_processor.process_state_for_memory(state)
+            last_frame_new_state = self.atari_processor.process_state_for_memory(new_state)
+            self.memory.append(last_frame_state, action, reward, last_frame_new_state, is_terminal)
             self.atari_processor.reset()
             self.history_processor.reset()
             if not self.burn_in:
@@ -353,16 +353,29 @@ class decision_maker_DQN_keras:
 
         if not self.burn_in: # enough samples in replay buffer
             if self.numberOfSteps % self.train_freq == 0:
-                action_state = self.history_processor.process_state_for_network(
-                    self.atari_processor.process_state_for_network(state))
-                processed_reward = self.atari_processor.process_reward(reward)
-                processed_next_state = self.atari_processor.process_state_for_network(new_state)
-                action_next_state = np.dstack((action_state, processed_next_state))
-                action_next_state = action_next_state[:, :, 1:]
-                current_sample = Sample(action_state, action, processed_reward, action_next_state, is_terminal)
+                # action_state = self.history_processor.process_state_for_network(self.atari_processor.process_state_for_network(state))
+                # processed_reward = self.atari_processor.process_reward(reward)
+                # processed_next_state = self.atari_processor.process_state_for_network(new_state)
+                # action_next_state = np.dstack((action_state, processed_next_state))
+                # action_next_state = action_next_state[:, :, 1:]
+                # current_sample = Sample(action_state, int(action), processed_reward, action_next_state, is_terminal)
+
+
+                last_frame_state = self.atari_processor.process_state_for_memory(state)
+                last_frame_new_state = self.atari_processor.process_state_for_memory(new_state)
+                current_sample = Sample(last_frame_state, int(action), reward, last_frame_new_state, is_terminal)
                 loss, target_value = self.update_policy(current_sample)
                 self.episode_loss += loss
                 self.episode_target_value += target_value
+
+                if False:
+                    import matplotlib.pyplot as plt
+
+                    plt.matshow(last_frame_state)
+                    plt.show()
+
+                    plt.matshow(last_frame_new_state)
+                    plt.show()
 
             # update freq is based on train_freq
             if self.numberOfSteps % (self.train_freq * self.target_update_freq) == 0:
@@ -436,11 +449,7 @@ class decision_maker_DQN_keras:
     # adds step's data to memory replay array
     # (state, action, reward, new_state, is_terminal)
     def update_replay_memory(self, state, action, reward, new_state, is_terminal):
-
-        previous_state_for_network = self.atari_processor.process_state_for_memory(state)
-        new_state_for_network = self.atari_processor.process_state_for_memory(new_state)
-
-        self.memory.append(previous_state_for_network, action, reward, new_state_for_network, is_terminal)
+        self.memory.append(state, action, reward, new_state, is_terminal)
 
 
 
@@ -461,7 +470,7 @@ class decision_maker_DQN_keras:
         action_state = self.history_processor.process_state_for_network(state_for_network)
 
         action = None
-        q_values = self.calc_q_values(action_state) #should be action_state
+        q_values = self.calc_q_values(action_state) #shuld be action_state
         if self.is_training and not evaluate:
             if policy_type == 'UniformRandomPolicy':
                 action= UniformRandomPolicy(NUMBER_OF_ACTIONS).select_action()
@@ -561,10 +570,14 @@ class DQNAgent_keras:
 
     def update_context(self, state, action, reward, new_state, is_terminal, EVALUATE=True):
         if self.UPDATE_CONTEXT and not EVALUATE:
-
-            self._decision_maker.update_replay_memory(state, action, reward, new_state, is_terminal)
+            previous_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(state)
+            new_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(new_state)
+            transition = (previous_state_for_network, action, reward, new_state_for_network, is_terminal)
+            self._decision_maker.update_replay_memory(previous_state_for_network, action, reward, new_state_for_network, is_terminal)
 
             self._decision_maker.train(state, action, reward, new_state, is_terminal)
+
+
 
 
 

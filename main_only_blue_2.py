@@ -73,7 +73,7 @@ if __name__ == '__main__':
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # --DQN Keras
     blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_20001_ 116.00max_ -99.54avg_-135.00min__1616232409.model')
+    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_800001_ 116.00max_  -6.80avg_-361.00min__1616132768.model')
     #flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
     #                                                     path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_157501_ 120.00max_   4.80avg_   0.00min__1615952583.model')
@@ -111,10 +111,8 @@ if __name__ == '__main__':
 
         blue_won_the_game = False
         red_won_the_game = False
+        steps_current_game = 0
         for steps_current_game in range(1, MAX_STEPS_PER_EPISODE + 1):
-
-            reward_step_blue = -MOVE_PENALTY
-            reward_step_red = -MOVE_PENALTY
 
             ##### Blue's turn! #####
             observation_for_blue_s0: State = env.get_observation_for_blue()
@@ -134,14 +132,15 @@ if __name__ == '__main__':
                 action_red: AgentAction = red_decision_maker.get_action(observation_for_red_s0, EVALUATE)
                 env.red_player.action(action_red)  # take the action!
                 current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Red) is not WinEnum.NoWin)
+                current_episode.print_episode(env, steps_current_game)
                 if current_episode.is_terminal:
                     red_won_the_game = True
 
 
             observation_for_blue_s1: State = env.get_observation_for_blue()
-            current_episode.print_episode(env, steps_current_game)
 
-
+            reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
+                                                                  current_episode.is_terminal)
             if current_episode.is_terminal:
                 if blue_won_the_game:
                     reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
@@ -153,10 +152,6 @@ if __name__ == '__main__':
                                                                           current_episode.is_terminal,
                                                                           whos_turn=Color.Red)
                     env.update_win_counters(steps_current_game, whos_turn=Color.Red)
-                else:
-                    reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
-                                                                          current_episode.is_terminal)
-
 
 
 

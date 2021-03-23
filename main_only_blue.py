@@ -10,6 +10,7 @@ from Common.constants import *
 from Qtable import Qtable_DecisionMaker
 from DQN import DQNAgent_keras
 from Greedy import Greedy_player
+import matplotlib.pyplot as plt
 
 
 def print_start_of_game_info(blue_decision_maker, red_decision_maker):
@@ -38,6 +39,13 @@ def evaluate(episode_number):
         EVALUATE = False
     return EVALUATE
 
+def print_states(observation_for_blue_s0, observation_for_blue_s1):
+    import matplotlib.pyplot as plt
+    plt.matshow(observation_for_blue_s0.img)
+    plt.show()
+
+    plt.matshow(observation_for_blue_s1.img)
+    plt.show()
 
 # MAIN:
 if __name__ == '__main__':
@@ -56,15 +64,14 @@ if __name__ == '__main__':
     #--Greedy:
     #blue_decision_maker = Greedy_player.Greedy_player()
     # --Qtable:
-    blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
+    #blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
     #blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker('qtable_blue-600000_penalty_move_-1.pickle')
     # --DQN Basic:
     #blue_decision_maker = DQNAgent.DQNAgent()
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # --DQN Keras
     #blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_20001_ 116.00max_ -99.54avg_-135.00min__1616232409.model')
-    #flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_450001_  18.00max_  16.32avg_ -25.00min__1616509369.model')
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
     #                                                     path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_157501_ 120.00max_   4.80avg_   0.00min__1615952583.model')
 
@@ -119,13 +126,14 @@ if __name__ == '__main__':
             if not current_episode.is_terminal:
                 can_red_win, lossing_blue_state_obs = env.can_red_win()
                 if can_red_win:
+                    current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Red) is not WinEnum.NoWin) #to update env.win_status
                     reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
                                                                           can_red_win,
                                                                           whos_turn=Color.Red)
                     # Update model for Blue player
                     assert reward_step_blue == -WIN_REWARD
-                    blue_decision_maker.update_context(observation_for_blue_s0, action_blue, lossing_blue_state_obs,
-                                                       reward_step_blue, can_red_win, EVALUATE)
+                    blue_decision_maker.update_context(observation_for_blue_s0, action_blue, reward_step_blue, lossing_blue_state_obs,
+                                                       can_red_win, EVALUATE)
 
                     if False:
                         import matplotlib.pyplot as plt
@@ -137,76 +145,59 @@ if __name__ == '__main__':
                         plt.show()
 
                     current_episode.episode_reward_blue += reward_step_blue
+
+                    env.update_win_counters(steps_current_game, whos_turn=Color.Red)
                     current_episode.print_episode(env, steps_current_game)
-                    break #inbal: should break here???
+                    break
 
-
-
-
-            reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
-                                                                 current_episode.is_terminal,
-                                                                 whos_turn=Color.Blue)
-
-            current_episode.episode_reward_red += reward_step_red
 
 
             if current_episode.is_terminal:# Blue won the game!
-                env.update_win_counters(steps_current_game, whos_turn=Color.Blue)
-                current_episode.episode_reward_blue += reward_step_blue
-
-                # env.red_player.action(AgentAction(np.random.randint(0, NUMBER_OF_ACTIONS)))
+                blue_won_the_game=True
 
 
-                # Update model for Blue player- red player doesnt move!
-                observation_for_blue_s1: State = env.get_observation_for_blue()
-                assert reward_step_blue == WIN_REWARD
-                blue_decision_maker.update_context(observation_for_blue_s0, action_blue, observation_for_blue_s1,
-                                                   reward_step_blue, current_episode.is_terminal, EVALUATE)
-                if False:
-                    import matplotlib.pyplot as plt
+            if not blue_won_the_game and RED_PLAYER_MOVES:
+                ##### Red's turn! #####
+                observation_for_red_s0: State = env.get_observation_for_red()
+                action_red: AgentAction = red_decision_maker.get_action(observation_for_red_s0, EVALUATE)
+                env.red_player.action(action_red)  # take the action!
 
-                    plt.matshow(observation_for_blue_s0.img)
-                    plt.show()
-                    plt.matshow(observation_for_blue_s1.img)
-                    plt.show()
-                current_episode.print_episode(env, steps_current_game)
-                break
+                current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Red) is not WinEnum.NoWin)
+                if current_episode.is_terminal:
+                    red_won_the_game = True
 
 
-            ##### Red's turn! #####
-            observation_for_red_s0: State = env.get_observation_for_red()
-            action_red: AgentAction = red_decision_maker.get_action(observation_for_red_s0, EVALUATE)
-            env.red_player.action(action_red)  # take the action!
-
-            observation_for_blue_s1: State = env.get_observation_for_blue()
             current_episode.print_episode(env, steps_current_game)
 
 
-            current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Red) is not WinEnum.NoWin)
             reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
-                                                                 current_episode.is_terminal,
-                                                                 whos_turn=Color.Red)
-
-            # Update model for Blue player
-            # blue did not win last move, and red did not (and could not) win last move
-            assert reward_step_blue==-MOVE_PENALTY or reward_step_blue==-WIN_REWARD
-            blue_decision_maker.update_context(observation_for_blue_s0, action_blue, observation_for_blue_s1,
-                                               reward_step_blue, current_episode.is_terminal, EVALUATE)
-
-            current_episode.episode_reward_blue += reward_step_blue
+                                                                  current_episode.is_terminal)
             if current_episode.is_terminal:
-                env.update_win_counters(steps_current_game, whos_turn=Color.Red)
+                if blue_won_the_game:
+                    reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
+                                                                          current_episode.is_terminal,
+                                                                          whos_turn=Color.Blue)
+                    env.update_win_counters(steps_current_game, whos_turn=Color.Blue)
+                elif red_won_the_game:
+                    reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
+                                                                          current_episode.is_terminal,
+                                                                          whos_turn=Color.Red)
+                    env.update_win_counters(steps_current_game, whos_turn=Color.Red)
 
-                # # Update model for Red player
-                # red_decision_maker.update_context(observation_for_red_s0, action_red, observation_for_red_s1,
-                #                                   reward_step_red,
-                #                                   current_episode.is_terminal, EVALUATE)
 
 
-                current_episode.episode_reward_red += reward_step_red
-                current_episode.print_episode(env, steps_current_game)
+            assert reward_step_blue==-MOVE_PENALTY or reward_step_blue==WIN_REWARD
+            observation_for_blue_s1: State = env.get_observation_for_blue()
+            blue_decision_maker.update_context(observation_for_blue_s0, action_blue, reward_step_blue, observation_for_blue_s1,
+                                               current_episode.is_terminal, EVALUATE)
+
+
+
+            current_episode.episode_reward_red += reward_step_red
+            current_episode.episode_reward_blue += reward_step_blue
+
+            if blue_won_the_game:
                 break
-
 
 
 

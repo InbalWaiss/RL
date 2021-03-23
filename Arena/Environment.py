@@ -215,7 +215,10 @@ class Environment(object):
         winning_point_for_red = [-1, -1]
         winning_state = self.get_observation_for_blue()
 
-        for action in range(1, NUMBER_OF_ACTIONS + 1):
+        if not RED_PLAYER_MOVES:
+            return ret_val, winning_state
+
+        for action in range(0, NUMBER_OF_ACTIONS):
 
             red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
             red_player.action(action)
@@ -228,15 +231,18 @@ class Environment(object):
             if is_los:
                 if FIRE_RANGE_FLAG:
                     dist = np.linalg.norm(np.array([blue_player.x, blue_player.y]) - np.array([red_player.x, red_player.y]))
-                    if dist <= FIRE_RANGE:
-                        ret_val = True
+                else:
+                    dist = -np.inf
+                if not FIRE_RANGE_FLAG or dist<=FIRE_RANGE:
 
-                        winning_point_for_red = (red_player.x, red_player.y)
-                        blue_pos = Position(blue_player.x, blue_player.y)
-                        red_pos = Position(winning_point_for_red[0], winning_point_for_red[1])
-                        winning_state = State(my_pos=blue_pos, enemy_pos=red_pos)
+                    ret_val = True
 
-                        break
+                    winning_point_for_red = (red_player.x, red_player.y)
+                    blue_pos = Position(blue_player.x, blue_player.y)
+                    red_pos = Position(winning_point_for_red[0], winning_point_for_red[1])
+                    winning_state = State(my_pos=blue_pos, enemy_pos=red_pos)
+                    # Red Takes winning move!!!
+                    return ret_val, winning_state
 
         red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
         if False:
@@ -262,7 +268,7 @@ class Environment(object):
         STATS_RESULTS_RELATIVE_PATH_THIS_RUN = os.path.join(self.path_for_run, STATS_RESULTS_RELATIVE_PATH)
         self.save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH_THIS_RUN,
                                      format(f"{str(time.strftime('%d'))}_{str(time.strftime('%m'))}_"
-                                            f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}_{Agent_type_str[self.blue_player._decision_maker.type()]}_{Agent_type_str[self.red_player._decision_maker.type()]}"))
+                                            f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}_{Agent_type_str[self.blue_player._decision_maker.type()]}_{Agent_type_str[self.red_player._decision_maker.type()]}_{str(STR_FOLDER_NAME)}"))
 
         # save info on run
         self.save_stats(self.save_folder_path)
@@ -318,6 +324,7 @@ class Environment(object):
                 f"EPSILONE_DECAY": [EPSILONE_DECAY],
                 f"LEARNING_RATE": [LEARNING_RATE],
                 f"DISCOUNT": [DISCOUNT],
+                f"IMG_STATE_MODE": [IMG_STATE_MODE],
                 f"ACTION_SPACE_9": [ACTION_SPACE_9],
                 f"DANGER_ZONE_IN_STATE": [DANGER_ZONE_IN_STATE],
                 f"DOMINATING_POINTS_IN_STATE": [DOMINATING_POINTS_IN_STATE],
