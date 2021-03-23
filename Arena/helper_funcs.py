@@ -29,7 +29,7 @@ def can_escape(first_player, second_player):
     org_cor_second_player_x, org_cor_second_player_y = second_player.get_coordinates()
     winnig_point = (-1, -1)
     ret_val = False
-    for action in range(0, NUMBER_OF_ACTIONS):
+    for action in range(1, NUMBER_OF_ACTIONS + 1):
 
         first_player.set_coordinatess(org_cor_first_player_x, org_cor_first_player_y)
         first_player.action(action)

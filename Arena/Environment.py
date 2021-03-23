@@ -74,53 +74,37 @@ class Environment(object):
         if self.SHOW_EVERY==1 or episode_number % (self.SHOW_EVERY-1) == 0:
             self.starts_at_win_in_last_SHOW_EVERY_games = 0
 
+    def whos_turn(self, steps_current_game)-> Color:
+        if steps_current_game%2==0:
+            return Color.Blue
+        else:
+            return Color.Red
 
-    def update_win_counters(self, steps_current_game, whos_turn=None):
+
+    def update_win_counters(self, steps_current_game):
         if steps_current_game==MAX_STEPS_PER_EPISODE:
-            self.win_array.append(WinEnum.Tie)
-            self.tie_count+=1
+            self.win_array.append(WinEnum.NoWin)
             return
-
+        whos_turn = self.whos_turn(steps_current_game)
         if whos_turn==Color.Blue:
             self.wins_for_blue += 1
             self.win_array.append(WinEnum.Blue)
-        elif whos_turn==Color.Red:
+        else:
             self.wins_for_red += 1
             self.win_array.append(WinEnum.Red)
+
+
+    def handle_reward(self, steps_current_game):
+        if self.win_status == WinEnum.Done:
+            return WIN_REWARD
         else:
-            print("Bug in update_win_counters- WHOS TURN?")
+            return -MOVE_PENALTY
 
-
-    def handle_reward(self, steps_current_game, is_terminal, whos_turn=None):
-        if not is_terminal or whos_turn==None or steps_current_game==MAX_STEPS_PER_EPISODE:
-            reward_step_blue = -MOVE_PENALTY
-            reward_step_red = -MOVE_PENALTY
-            return reward_step_blue, reward_step_red
-
-        if whos_turn==Color.Blue:
-            reward_step_blue = WIN_REWARD
-            reward_step_red = -WIN_REWARD
-
-        elif whos_turn==Color.Red:
-            reward_step_blue = -WIN_REWARD
-            reward_step_red = WIN_REWARD
-
-        else:
-            reward_step_blue = 0
-            reward_step_red = 0
-            print("Bug in handle_reward- WHOS TURN?")
-
-        return reward_step_blue, reward_step_red
-
-
-    def compute_terminal(self, whos_turn=None)-> WinEnum:
+    def compute_terminal(self)-> WinEnum:
         first_player = self.blue_player
         second_player = self.red_player
         win_status = WinEnum.NoWin
 
-        is_los_first_second = (second_player.x, second_player.y) in DICT_POS_LOS[(first_player.x, first_player.y)]
-        is_los_second_first = (first_player.x, first_player.y) in DICT_POS_LOS[(second_player.x, second_player.y)]
-        assert is_los_first_second==is_los_second_first
 
         is_los = (second_player.x, second_player.y) in DICT_POS_LOS[(first_player.x, first_player.y)]
         if not is_los:  # no LOS
@@ -135,12 +119,7 @@ class Environment(object):
                 self.win_status = win_status
                 return win_status
 
-        if whos_turn == Color.Blue:
-            win_status = WinEnum.Blue
-        elif whos_turn == Color.Red:
-            win_status = WinEnum.Red
-        else:
-            print("Bug in compute_terminal- whos turn???")
+        win_status = WinEnum.Done
         self.win_status = win_status
         return win_status
 
@@ -198,77 +177,15 @@ class Environment(object):
         return ret_val
 
     def get_observation_for_red(self)-> State:
-        if not RED_PLAYER_MOVES:
-            return
         blue_pos = Position(self.blue_player.x, self.blue_player.y)
         red_pos = Position(self.red_player.x, self.red_player.y)
         return State(my_pos=red_pos, enemy_pos=blue_pos)
-
-    def can_red_win(self):
-        blue_player = self.blue_player
-        red_player = self.red_player
-
-        org_cor_blue_player_x, org_cor_blue_player_y = blue_player.get_coordinates()
-        org_cor_red_player_x, org_cor_red_player_y = red_player.get_coordinates()
-
-        ret_val = False
-        winning_point_for_red = [-1, -1]
-        winning_state = self.get_observation_for_blue()
-
-        if not RED_PLAYER_MOVES:
-            return ret_val, winning_state
-
-        for action in range(0, NUMBER_OF_ACTIONS):
-
-            red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
-            red_player.action(action)
-            org_cor_blue_player_x, org_cor_blue_player_y = blue_player.get_coordinates()
-
-            is_los = (org_cor_blue_player_x, org_cor_blue_player_y) in DICT_POS_LOS[
-                (red_player.x, red_player.y)]
-
-
-            if is_los:
-                if FIRE_RANGE_FLAG:
-                    dist = np.linalg.norm(np.array([blue_player.x, blue_player.y]) - np.array([red_player.x, red_player.y]))
-                else:
-                    dist = -np.inf
-                if not FIRE_RANGE_FLAG or dist<=FIRE_RANGE:
-
-                    ret_val = True
-
-                    winning_point_for_red = (red_player.x, red_player.y)
-                    blue_pos = Position(blue_player.x, blue_player.y)
-                    red_pos = Position(winning_point_for_red[0], winning_point_for_red[1])
-                    winning_state = State(my_pos=blue_pos, enemy_pos=red_pos)
-                    # Red Takes winning move!!!
-                    return ret_val, winning_state
-
-        red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
-        if False:
-            red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
-            import matplotlib.pyplot as plt
-            blue_obs_satrt = self.get_observation_for_blue()
-            plt.matshow(blue_obs_satrt.img)
-            plt.show()
-
-            blue_pos = Position(blue_player.x, blue_player.y)
-            red_pos = Position(winning_point_for_red[0], winning_point_for_red[1])
-            winning_state = State(my_pos=blue_pos, enemy_pos=red_pos)
-            plt.matshow(winning_state.img)
-            plt.show()
-
-        return ret_val, winning_state
-
-
-
-
 
     def end_run(self):
         STATS_RESULTS_RELATIVE_PATH_THIS_RUN = os.path.join(self.path_for_run, STATS_RESULTS_RELATIVE_PATH)
         self.save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH_THIS_RUN,
                                      format(f"{str(time.strftime('%d'))}_{str(time.strftime('%m'))}_"
-                                            f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}_{Agent_type_str[self.blue_player._decision_maker.type()]}_{Agent_type_str[self.red_player._decision_maker.type()]}_{str(STR_FOLDER_NAME)}"))
+                                            f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}_{Agent_type_str[self.blue_player._decision_maker.type()]}_{Agent_type_str[self.red_player._decision_maker.type()]}"))
 
         # save info on run
         self.save_stats(self.save_folder_path)
@@ -324,7 +241,6 @@ class Environment(object):
                 f"EPSILONE_DECAY": [EPSILONE_DECAY],
                 f"LEARNING_RATE": [LEARNING_RATE],
                 f"DISCOUNT": [DISCOUNT],
-                f"IMG_STATE_MODE": [IMG_STATE_MODE],
                 f"ACTION_SPACE_9": [ACTION_SPACE_9],
                 f"DANGER_ZONE_IN_STATE": [DANGER_ZONE_IN_STATE],
                 f"DOMINATING_POINTS_IN_STATE": [DOMINATING_POINTS_IN_STATE],
@@ -363,21 +279,6 @@ class Episode():
             self.show = True
         else:
             self.show = False
-
-        self.Blue_starts = True#np.random.random() >= 0.5 # for even statistics
-
-    def whos_turn(self, steps_current_game)-> Color:
-        if self.Blue_starts:
-            if steps_current_game % 2 == 1:
-                return Color.Blue
-            else:
-                return Color.Red
-
-        else:
-            if steps_current_game % 2 == 1:
-                return Color.Red
-            else:
-                return Color.Blue
 
     def print_episode(self, env, last_step_number, save_file=False):
         if self.show and USE_DISPLAY:

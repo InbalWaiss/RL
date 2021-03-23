@@ -46,7 +46,6 @@ class State(object):
                     env[x][y] = dict_of_colors[GREY_N]
         if False:
             # print state for debug
-            import matplotlib.pyplot as plt
             plt.matshow(env)
             plt.show()
 
