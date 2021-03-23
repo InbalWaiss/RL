@@ -17,8 +17,8 @@ if not ACTION_SPACE_9:
     ACTION_SPACE_4 = True
 
 RED_PLAYER_MOVES = True
-FIXED_START_POINT_RED = False
-FIXED_START_POINT_BLUE = False
+FIXED_START_POINT_RED = True
+FIXED_START_POINT_BLUE = True
 
 FIRE_RANGE_FLAG = True
 FIRE_RANGE = 7
@@ -30,7 +30,7 @@ CLIP_REWARD_1 = False
 IMG_STATE_MODE = 'L'
 #IMG_STATE_MODE= 'P'
 
-STR_FOLDER_NAME = "_image_L"
+STR_FOLDER_NAME = ""
 
 try:
     with open('Common/Preprocessing/dictionary_position_los.pkl', 'rb') as f:
@@ -41,7 +41,7 @@ except:
             DICT_POS_LOS = pickle.load(f)
     except:
         try:
-            with open('../../../../../../קוד עם באג רשת מתכנסת ל-1/Common/Preprocessing/dictionary_position_los.pkl', 'rb') as f:
+            with open('../Common/Preprocessing/dictionary_position_los.pkl', 'rb') as f:
                 DICT_POS_LOS = pickle.load(f)
         except:
             pass
@@ -55,7 +55,7 @@ except:
             DICT_POS_NO_LOS = pickle.load(f)
     except:
         try:
-            with open('../../../../../../קוד עם באג רשת מתכנסת ל-1/Common/Preprocessing/dictionary_position_no_los.pkl', 'rb') as f:
+            with open('../Common/Preprocessing/dictionary_position_no_los.pkl', 'rb') as f:
                 DICT_POS_NO_LOS = pickle.load(f)
         except:
             pass
@@ -70,7 +70,7 @@ except:
     except:
         try:
             with open(
-                    '../../../../../../קוד עם באג רשת מתכנסת ל-1/Common/Preprocessing/dictionary_dominating_points.pkl', 'rb') as f:
+                    '../Common/Preprocessing/dictionary_dominating_points.pkl', 'rb') as f:
                 DICT_DOMINATING_POINTS = pickle.load(f)
         except:
             pass
@@ -84,7 +84,7 @@ except:
             DICT_LOSE_POINTS = pickle.load(f)
     except:
         try:
-            with open('../../../../../../קוד עם באג רשת מתכנסת ל-1/Common/Preprocessing/dictionary_lose_points.pkl', 'rb') as f:
+            with open('../Common/Preprocessing/dictionary_lose_points.pkl', 'rb') as f:
                 DICT_LOSE_POINTS = pickle.load(f)
         except:
             pass
@@ -283,17 +283,17 @@ RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'Qtable/trained_agent
 USE_DISPLAY = True
 SHOW_EVERY = 500
 NUM_OF_EPISODES = 1_000_000
-SAVE_STATS_EVERY = 500
+SAVE_STATS_EVERY = 10000
 
 # params to evaluate trained models
 EVALUATE_SHOW_EVERY = 1
 EVALUATE_NUM_OF_EPISODES = 100
 EVALUATE_SAVE_STATS_EVERY = 100
 
-EVALUATE_PLAYERS_EVERY = 500
+EVALUATE_PLAYERS_EVERY = 1000
 
 # training mode
-IS_TRAINING = True
+IS_TRAINING = False
 UPDATE_RED_CONTEXT = True
 UPDATE_BLUE_CONTEXT = True
 
