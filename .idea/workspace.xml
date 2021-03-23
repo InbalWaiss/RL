@@ -2,23 +2,847 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="learning not to lose">
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_one_step_into_the_future.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_02_2021_09_48__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_02_2021_09_48__Default_Changelist_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_450001_  18.00max_  16.32avg_ -25.00min__1616509369.model" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/helper_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/helper_funcs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/AbsDecisionMaker.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/CState.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/Entity.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/Environment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/Observation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/Position.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/checkpoint" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/geometry.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/graphics.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/helper_funcs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/DSM_excel.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_dominating_points.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_lose_points.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_los.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_no_los.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/pre_los_calc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent_keras.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent_spatioalAttention.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent_temporalAttention.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQN_constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/core.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/dqn_keras.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/dqn_tf_spatialAt.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/dqn_tf_temporalAt.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/objectives.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/policy.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/preprocessors.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/dqn_atari.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/helper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/Greedy_player.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G_4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G_5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_player_episode.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/PPO1/defaults.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/PPO1/model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/PPO1/run.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/PPOAgent.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/dictionary_position_los.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/dictionary_position_no_los.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/ppo_cartpole/PPOAgent.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/ppo_cartpole/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/ppo_cartpole/ppo_torch.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/ppo_cartpole/tmp/ppo/actor_torch_ppo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/ppo_cartpole/tmp/ppo/critic_torch_ppo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO/ppo_torch.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/QPlayer_constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/Qtable_DecisionMaker.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/DQN_keras_1000000.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/basic_DQN_17500_blue.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/basic_DQN_20000_blue.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_10001_   0.00max_-102.18avg_-134.00min__1616153907.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_157501_ 120.00max_   4.80avg_   0.00min__1615952583.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_20001_  -4.00max_-113.77avg_-137.00min__1616155192.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_20001_ 116.00max_ -99.54avg_-135.00min__1616232409.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  98.56avg_-100.00min__1615828141.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  98.77avg_-100.00min__1615827044.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_400001_ 115.00max_  96.28avg_-132.00min__1616089826.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_450001_ 115.00max_ 101.00avg_-131.00min__1616094541.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_550001_ 116.00max_ 107.56avg_-139.00min__1616106644.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_800001_ 116.00max_  -6.80avg_-361.00min__1616132768.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/qtable_blue-1000000_penalty_move_-1.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/qtable_red-1000000_penalty_move_-1.pickle" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/preprocessors.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/preprocessors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/QPlayer_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/QPlayer_constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/Qtable_DecisionMaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/Qtable_DecisionMaker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_semi_simultaneous_steps.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_semi_simultaneous_steps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/azure_installation.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pics/dominated_points_10_12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pics/dominated_points_10_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pics/dominating_points.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pics/dominating_points_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pics/dominating_points_10_12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pics/dominating_points_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pics/dominating_points_5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pics/dominating_points_6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pics/dominating_points_no_7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pics/dominating_points_no_points.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_only_blue.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_only_blue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pandas/core/ops/docstrings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/app/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/audio/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/autograph/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/bitwise/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/compat/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/config/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/data/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/debugging/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/distribute/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/distributions/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/dtypes/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/errors/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/experimental/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/feature_column/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/gfile/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/graph_util/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/image/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/initializers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/io/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/layers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/linalg/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/lite/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/logging/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/lookup/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/losses/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/manip/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/math/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/metrics/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/nest/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/nn/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/profiler/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/python_io/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/quantization/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/queue/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/ragged/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/random/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/raw_ops/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/resource_loader/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/saved_model/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/sets/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/signal/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/sparse/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/spectral/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/strings/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/summary/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/sysconfig/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/test/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/tpu/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/train/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/user_ops/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/version/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v1/xla/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/audio/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/autograph/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/bitwise/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/compat/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/config/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/data/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/debugging/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/distribute/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/dtypes/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/errors/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/experimental/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/feature_column/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/graph_util/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/image/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/io/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/linalg/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/lite/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/lookup/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/math/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/nest/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/nn/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/quantization/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/queue/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/ragged/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/random/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/raw_ops/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/saved_model/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/sets/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/signal/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/sparse/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/strings/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/summary/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/sysconfig/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/test/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/tpu/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/train/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/version/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/compat/v2/xla/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/_api/v1/lite/experimental/nn/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/compiler/xla/experimental/xla_sharding/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/compiler/xla/experimental/xla_sharding/xla_sharding.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/densenet/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/densenet/densenet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/gan/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/gan/mnist.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/l2hmc/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/l2hmc/l2hmc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/l2hmc/neural_nets.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/linear_regression/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/linear_regression/linear_regression.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/resnet50/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/resnet50/resnet50.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/revnet/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/revnet/blocks.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/revnet/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/revnet/ops.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/revnet/revnet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/rnn_colorbot/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/rnn_colorbot/rnn_colorbot.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/rnn_ptb/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/rnn_ptb/rnn_ptb.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/spinn/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/eager/python/examples/spinn/data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/estimator/python/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/estimator/python/gan_estimator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/estimator/python/gan_estimator_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/estimator/python/head.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/estimator/python/head_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/estimator/python/latent_gan_estimator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/estimator/python/latent_gan_estimator_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/estimator/python/stargan_estimator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/estimator/python/stargan_estimator_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/estimator/python/tpu_gan_estimator.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/estimator/python/tpu_gan_estimator_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/eval/python/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/eval/python/classifier_metrics.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/eval/python/classifier_metrics_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/eval/python/eval_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/eval/python/eval_utils_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/eval/python/sliced_wasserstein.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/eval/python/sliced_wasserstein_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/eval/python/summaries.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/eval/python/summaries_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/features/python/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/features/python/clip_weights.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/features/python/clip_weights_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/features/python/conditioning_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/features/python/conditioning_utils_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/features/python/random_tensor_pool.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/features/python/random_tensor_pool_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/features/python/spectral_normalization.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/features/python/spectral_normalization_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/features/python/virtual_batchnorm.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/features/python/virtual_batchnorm_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/losses/python/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/losses/python/losses_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/losses/python/losses_wargs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/losses/python/tuple_losses.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/gan/python/losses/python/tuple_losses_impl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/keras/api/keras/layers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/keras/api/keras/losses/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/keras/api/keras/models/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/keras/api/keras/utils/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/data/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/data/data_decoder.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/data/data_provider.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/data/dataset.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/data/dataset_data_provider.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/data/parallel_reader.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/data/prefetch_queue.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/data/test_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/data/tfexample_decoder.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/nets/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/nets/alexnet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/nets/inception.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/nets/inception_v1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/nets/inception_v2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/nets/inception_v3.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/nets/overfeat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/nets/resnet_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/nets/resnet_v1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/nets/resnet_v2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/contrib/slim/python/slim/nets/vgg.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/absl_py/absl/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/bitmap256.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/filtered_re2.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/prefilter.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/prefilter_tree.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/prog.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/re2.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/regexp.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/set.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/stringpiece.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/unicode_casefold.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/unicode_groups.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/re2/walker-inl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/util/flags.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/util/logging.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/util/mix.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/util/mutex.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/util/pod_array.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/util/sparse_array.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/util/sparse_set.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/util/strutil.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/util/utf.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/com_googlesource_code_re2/util/util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/double_conversion/double-conversion/bignum-dtoa.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/double_conversion/double-conversion/bignum.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/double_conversion/double-conversion/cached-powers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/double_conversion/double-conversion/diy-fp.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/double_conversion/double-conversion/double-conversion.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/double_conversion/double-conversion/fast-dtoa.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/double_conversion/double-conversion/fixed-dtoa.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/double_conversion/double-conversion/ieee.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/double_conversion/double-conversion/strtod.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/double_conversion/double-conversion/utils.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/Cholesky" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/CholmodSupport" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/Core" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/Dense" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/Eigenvalues" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/Geometry" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/Householder" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/Jacobi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/KLUSupport" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/LU" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/OrderingMethods" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/PaStiXSupport" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/PardisoSupport" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/QR" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/QtAlignedMalloc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/SPQRSupport" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/SVD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/SparseCore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/SparseQR" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/StdDeque" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/StdList" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/StdVector" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/SuperLUSupport" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/eigen_archive/Eigen/UmfPackSupport" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/farmhash_archive/src/farmhash.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/gif_archive/lib/gif_hash.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/gif_archive/lib/gif_lib.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/gif_archive/lib/gif_lib_private.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/gif_archive/windows/unistd.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/highwayhash/highwayhash/arch_specific.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/highwayhash/highwayhash/compiler_specific.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/highwayhash/highwayhash/endianess.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/highwayhash/highwayhash/sip_hash.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/highwayhash/highwayhash/state_helpers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/external/local_config_sycl/sycl/LICENSE.text" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/allocator_retry.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/base_collective_executor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/bfc_allocator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/buf_rendezvous.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/build_graph_options.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/collective_executor_mgr.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/collective_param_resolver_local.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/collective_rma_local.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/collective_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/colocation_graph.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/constant_folding.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/copy_tensor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/costmodel_manager.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/debugger_state_interface.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/device.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/device_factory.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/device_mgr.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/device_resolver_local.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/device_set.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/dma_helper.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/eval_const_tensor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/executor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/executor_factory.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/function.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/graph_execution_state.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/graph_optimizer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/graph_runner.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/hierarchical_tree_broadcaster.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/inspecting_placer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/isolate_placer_inspection_required_ops_pass.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/local_device.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/lower_function_call_op.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/lower_functional_ops.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/lower_if_op.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/lower_while_op.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/memory_types.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/metrics.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/mkl_cpu_allocator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/optimization_registry.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/partitioning_utils.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/pending_counts.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/placer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/placer_inspection_required_ops_utils.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/pool_allocator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/process_function_library_runtime.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/process_state.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/process_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/profile_handler.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/renamed_device.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/rendezvous_mgr.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/rendezvous_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/ring_alg.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/ring_gatherer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/ring_reducer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/scoped_allocator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/scoped_allocator_mgr.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/session_factory.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/shape_refiner.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/shared_counter.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/single_threaded_cpu_device.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/stats_publisher_interface.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/step_stats_collector.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/common_runtime/threadpool_device.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/example/example.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/example/example.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/example/example.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/example/example_parser_configuration.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/example/feature.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/example/feature.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/example/feature.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/example/feature_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/allocation_description.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/allocation_description.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/allocation_description.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/allocator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/allocator_registry.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/api_def.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/api_def.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/api_def.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/attr_value.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/attr_value.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/attr_value.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/attr_value_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/bfloat16.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/bounds_check.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/cancellation.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/collective.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/common_shape_fns.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/control_flow.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/cost_graph.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/cost_graph.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/cost_graph.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/dataset.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/dataset_stateful_op_whitelist.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/device_attributes.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/device_attributes.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/device_attributes.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/device_base.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/function.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/function.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/function.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/function.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/function_handle_cache.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/graph.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/graph.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/graph.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/graph_def_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/graph_to_functiondef.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/graph_transfer_info.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/graph_transfer_info.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/graph_transfer_info.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/kernel_def.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/kernel_def.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/kernel_def.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/kernel_def_builder.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/kernel_def_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/log_memory.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/log_memory.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/log_memory.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/log_memory.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/logging.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/lookup_interface.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/memory_types.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/model.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/node_def.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/node_def.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/node_def.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/node_def_builder.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/node_def_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/numeric_op.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/numeric_types.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/op.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/op_def.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/op_def.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/op_def.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/op_def_builder.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/op_def_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/op_kernel.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/op_segment.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/ops_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/partial_tensor_shape.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/queue_interface.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/reader_base.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/reader_base.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/reader_base.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/reader_interface.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/reader_op_kernel.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/register_types.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/register_types_traits.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/remote_fused_graph_execute_info.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/remote_fused_graph_execute_info.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/remote_fused_graph_execute_info.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/rendezvous.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/resource_handle.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/resource_handle.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/resource_handle.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/resource_handle.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/resource_mgr.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/resource_op_kernel.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/resource_var.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/run_handler.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/run_handler_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/selective_registration.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/session_state.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/shape_inference.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/stats_aggregator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/step_stats.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/step_stats.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/step_stats.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/summary.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/summary.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/summary.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_description.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_description.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_description.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_reference.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_shape.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_shape.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_shape.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_shape.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_slice.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_slice.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_slice.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_slice.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_types.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tensor_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/thread_factory.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/tracking_allocator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/type_index.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/type_traits.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/typed_allocator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/types.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/types.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/types.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/types.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/unique_tensor_references.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/variable.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/variable.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/variable.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/variant.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/variant_encode_decode.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/variant_op_registry.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/variant_tensor_data.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/versions.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/versions.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/versions.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/framework/versions.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/algorithm.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/collective_order.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/colors.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/control_flow.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/costmodel.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/default_device.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/edgeset.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/gradients.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/graph.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/graph_constructor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/graph_def_builder.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/graph_def_builder_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/graph_partition.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/mkl_layout_pass.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/mkl_tfconversion_pass.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/node_builder.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/optimizer_cse.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/quantize_training.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/subgraph.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/tensor_id.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/testlib.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/types.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/validate.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/graph/while_context.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/grappler/devices.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/grappler/graph_topology_view.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/grappler/graph_view.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/grappler/grappler_item.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/grappler/mutable_graph_view.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/grappler/op_types.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/grappler/utils.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/kernels/no_op.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/kernels/sendrecv_ops.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/abi.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/byte_order.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/context.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/cord.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/cpu_feature_guard.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/cpu_info.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/cuda.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/cuda_libdevice_path.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/demangle.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/denormal.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/dynamic_annotations.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/env.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/env_time.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/error.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/file_statistics.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/file_system.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/file_system_helper.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/fingerprint.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/grpc_services.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/host_info.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/human_readable_json.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/init_main.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/load_library.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/logger.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/logging.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/macros.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/mem.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/monitoring.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/mutex.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/net.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/notification.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/null_file_system.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/numa.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/platform.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/platform_strings.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/platform_strings_computed.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/prefetch.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/protobuf.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/protobuf_compiler.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/protobuf_internal.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/regexp.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/rocm.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/setround.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/snappy.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/stacktrace.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/stacktrace_handler.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/stream_executor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/stream_executor_no_cuda.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/strong_hash.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/subprocess.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/tensor_coding.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/thread_annotations.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/tracing.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/platform/types.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/autotuning.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/cluster.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/cluster.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/cluster.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/config.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/config.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/config.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/control_flow.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/conv_autotuning.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/debug.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/debug.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/debug.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/device_properties.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/device_properties.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/device_properties.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/graph_debug_info.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/graph_debug_info.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/graph_debug_info.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/meta_graph.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/named_tensor.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/queue_runner.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/queue_runner.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/queue_runner.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/rewriter_config.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/rewriter_config.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/rewriter_config.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/saved_model.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/saved_object_graph.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/saver.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/saver.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/saver.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/struct.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/tensor_bundle.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/tensor_bundle.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/tensor_bundle.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/tensorflow_server.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/trace_events.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/trace_events.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/trace_events.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/trackable_object_graph.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/transport_options.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/verifier_config.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/verifier_config.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/protobuf/verifier_config.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/public/session.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/public/session_options.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/public/version.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/activation_mode.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/batch_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/bcast.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/command_line_flags.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/device_name_utils.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/dump_graph.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/env_var.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/equal_graph_def.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/event.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/event.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/event.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/events_writer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/example_proto_fast_parsing.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/example_proto_helper.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/exec_on_stall.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/gpu_cuda_alias.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/gpu_device_functions.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/gpu_kernel_helper.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/gpu_launch_config.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/guarded_philox_random.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/matmul_autotune.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/matmul_bcast.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/memmapped_file_system.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/memmapped_file_system.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/memmapped_file_system.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/mirror_pad_mode.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/mkl_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/overflow.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/padding.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/permutation_input_iterator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/permutation_output_iterator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/port.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/presized_cuckoo_map.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/ptr_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/reffed_status_callback.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/saved_tensor_slice.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/saved_tensor_slice.pb_text-impl.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/saved_tensor_slice.pb_text.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/saved_tensor_slice_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/stat_summarizer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/stat_summarizer_options.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/stats_calculator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/stream_executor_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/strided_slice_op.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/tensor_format.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/tensor_ops_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/tensor_slice_reader.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/tensor_slice_reader_cache.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/tensor_slice_set.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/tensor_slice_util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/tensor_slice_writer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/test_log.pb.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/transform_output_iterator.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/use_cudnn.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/util.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/core/util/work_sharder.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_activation.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_blas.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_diagnostics.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_dnn.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_driver.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_event.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_fft.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_gpu_executor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_helpers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_kernel.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_platform.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_platform_id.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_rng.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_stream.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cuda_timer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/cuda/cudnn_version.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/gpu/gpu_activation.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/gpu/gpu_diagnostics.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/gpu/gpu_driver.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/gpu/gpu_event.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/gpu/gpu_executor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/gpu/gpu_helpers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/gpu/gpu_kernel.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/gpu/gpu_rng.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/gpu/gpu_stream.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/gpu/gpu_timer.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/gpu/gpu_types.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/host/host_platform_id.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/array_slice.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/demangle.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/env.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/error.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/human_readable.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/initialize.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/mathutil.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/numbers.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/path.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/process_state.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/stacktrace.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/static_threadlocal.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/status.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/status_macros.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/statusor.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/statusor_internals.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/thread_options.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/lib/threadpool.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/platform/dso_loader.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/platform/initialize.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/platform/logging.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/platform/platform.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/platform/port.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/platform/thread_annotations.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/tensorflow/stream_executor/rocm/rocm_platform_id.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/third_party/eigen3/Eigen/Cholesky" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/third_party/eigen3/Eigen/Core" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/third_party/eigen3/Eigen/Eigenvalues" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/third_party/eigen3/Eigen/LU" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/third_party/eigen3/Eigen/QR" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/include/third_party/eigen3/Eigen/SVD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/data/experimental/kernel_tests/serialization/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/data/experimental/kernel_tests/serialization/dataset_serialization_test_base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/_v1/keras/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/_v2/keras/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/activations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/applications/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/backend/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/callbacks/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/constraints/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/datasets/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/estimator/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/experimental/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/initializers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/layers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/losses/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/metrics/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/mixed_precision/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/models/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/optimizers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/preprocessing/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/regularizers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/utils/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/tensorflow/python/keras/api/keras/wrappers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/#steps_30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/Statistics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/qtable_red-30000.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/reward_statistics30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/rewards_BLUE30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/rewards_RED30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/win_statistics30059.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_True__RED_PLAYER_MOVES_False/#steps_30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_True__RED_PLAYER_MOVES_False/Statistics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_True__RED_PLAYER_MOVES_False/reward_statistics30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_True__RED_PLAYER_MOVES_False/rewards_BLUE30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_True__RED_PLAYER_MOVES_False/rewards_RED30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_False__FIXED_START_POINT_BLUE_True__RED_PLAYER_MOVES_False/win_statistics30051.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_True__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/#steps_30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_True__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/Statistics.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_True__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/qtable_red-30000.pickle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_True__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/reward_statistics30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_True__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/rewards_BLUE30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_True__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/rewards_RED30000.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/FIXED_START_POINT_RED_True__FIXED_START_POINT_BLUE_False__RED_PLAYER_MOVES_False/win_statistics30054.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/greedy_Vs_DQNkeras/Greedy(Red)_vs_Random(Blue).wmv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/greedy_Vs_DQNkeras/אימון עם רשת שהתכנסה עם אדום סטטי בנקודות משתנות, וכחול מתחיל בנקודות משתנות.wmv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/greedy_Vs_DQNkeras/תחילת אימון.wmv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/תוצאות/תוצאות ריצות בסיסיות/info.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +943,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_one_step_into_the_future" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
+    <configuration name="main_only_blue (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SingleAgentCombat-main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -127,11 +951,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/main_one_step_into_the_future.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_only_blue.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -183,19 +1007,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main_one_step_into_the_future" />
       <item itemvalue="Python.main_only_blue" />
       <item itemvalue="Python.main_only_blue_2" />
       <item itemvalue="Python.graphics" />
       <item itemvalue="Python.constants" />
+      <item itemvalue="Python.main_only_blue (1)" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main_only_blue" />
+        <item itemvalue="Python.main_only_blue (1)" />
         <item itemvalue="Python.constants" />
         <item itemvalue="Python.graphics" />
         <item itemvalue="Python.main_only_blue_2" />
-        <item itemvalue="Python.main_one_step_into_the_future" />
       </list>
     </recent_temporary>
   </component>
@@ -207,12 +1031,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1611132936949</updated>
-    </task>
-    <task id="LOCAL‎00015" summary="evaluation mode added">
-      <created>1612266769769</created>
-      <option name="number" value="LOCAL‎00015" />
-      <option name="presentableId" value="LOCAL‎00015" />
-      <updated>1612266769769</updated>
     </task>
     <task id="LOCAL‎00016" summary="evaluation mode added">
       <created>1612271683561</created>
@@ -502,7 +1320,13 @@
       <option name="presentableId" value="LOCAL‎00063" />
       <updated>1616160427960</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL‎00064" summary="DQN vs Greedy small DSM working">
+      <created>1616511925299</created>
+      <option name="number" value="LOCAL‎00064" />
+      <option name="presentableId" value="LOCAL‎00064" />
+      <updated>1616511925300</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -592,21 +1416,6 @@
           <line>122</line>
           <option name="timeStamp" value="386" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py</url>
-          <line>103</line>
-          <option name="timeStamp" value="556" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py</url>
-          <line>102</line>
-          <option name="timeStamp" value="557" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py</url>
-          <line>39</line>
-          <option name="timeStamp" value="562" />
-        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -620,6 +1429,7 @@
       <configuration name="PythonConfigurationType">
         <watch expression="q_values" language="Python" />
         <watch expression="np.max(next_qa_value)" language="Python" />
+        <watch expression="episode" />
       </configuration>
     </watches-manager>
   </component>

@@ -56,7 +56,7 @@ if __name__ == '__main__':
     #--Greedy:
     #blue_decision_maker = Greedy_player.Greedy_player()
     # --Qtable:
-    blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
+    #blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
     #blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker('qtable_blue-600000_penalty_move_-1.pickle')
     # --DQN Basic:
     #blue_decision_maker = DQNAgent.DQNAgent()
