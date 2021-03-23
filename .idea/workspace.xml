@@ -1,71 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="data">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/docs/episode_to_LOS/step1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/docs/episode_to_LOS/step2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/docs/episode_to_LOS/step3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/docs/episode_to_LOS/step4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/docs/episode_to_LOS/step5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/docs/episode_to_LOS/step6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/docs/episode_to_LOS/step7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/docs/episode_to_enemy/step_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/docs/~$greedy_player_episode.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/docs/מאומנת מצבים טרמינלים מול מאומנת קנס 0 על צעד.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_100001_   1.00max_  -0.88avg_  -4.20min__1616438528.model" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_450001_  18.00max_  16.32avg_ -25.00min__1616509369.model" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_12_16_Q_table_Greedy_player/#steps_100000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_12_16_Q_table_Greedy_player/Statistics.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_12_16_Q_table_Greedy_player/qtable_blue-100000.pickle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_12_16_Q_table_Greedy_player/reward_statistics100000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_12_16_Q_table_Greedy_player/rewards_BLUE100000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_12_16_Q_table_Greedy_player/rewards_RED100000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_12_16_Q_table_Greedy_player/win_statistics91428.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_12_16_Q_table_Greedy_player/win_statistics96257.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_22_54_DQN_keras_Greedy_player_35000/#steps_35000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_22_54_DQN_keras_Greedy_player_35000/Statistics.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_22_54_DQN_keras_Greedy_player_35000/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_35001_   0.30max_  -1.34avg_  -2.30min__1616446492.model" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_22_54_DQN_keras_Greedy_player_35000/reward_statistics35000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_22_54_DQN_keras_Greedy_player_35000/rewards_BLUE35000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_22_54_DQN_keras_Greedy_player_35000/rewards_RED35000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_22_54_DQN_keras_Greedy_player_35000/win_statistics41031.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/22_03_22_54_DQN_keras_Greedy_player_35000/אחרי 35000 איטרציות.wmv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/23_03_12_28_DQN_keras_Greedy_player/#steps_150000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/23_03_12_28_DQN_keras_Greedy_player/Statistics.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/23_03_12_28_DQN_keras_Greedy_player/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_150001_   1.00max_  -3.26avg_ -20.80min__1616502495.model" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/23_03_12_28_DQN_keras_Greedy_player/reward_statistics150000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/23_03_12_28_DQN_keras_Greedy_player/rewards_BLUE150000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/23_03_12_28_DQN_keras_Greedy_player/rewards_RED150000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/23_03_12_28_DQN_keras_Greedy_player/win_statistics201308.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move120_penalty5/#steps_300000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move120_penalty5/Statistics.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move120_penalty5/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_300001_  75.00max_-155.81avg_-170.00min__1616501386.model" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move120_penalty5/reward_statistics300000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move120_penalty5/rewards_BLUE300000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move120_penalty5/rewards_RED300000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move120_penalty5/win_statistics313532.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move20_penalty0.5/#steps_300000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move20_penalty0.5/Statistics.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move20_penalty0.5/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_300001_  18.00max_  15.18avg_ -24.00min__1616488268.model" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move20_penalty0.5/reward_statistics300000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move20_penalty0.5/rewards_BLUE300000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move20_penalty0.5/rewards_RED300000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_300000_move20_penalty0.5/win_statistics516707.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_450000_same_start_point/#steps_450000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_450000_same_start_point/Statistics.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_450000_same_start_point/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_450001_  18.00max_  16.32avg_ -25.00min__1616509369.model" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_450000_same_start_point/reward_statistics450000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_450000_same_start_point/rewards_BLUE450000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_450000_same_start_point/rewards_RED450000.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_450000_same_start_point/win_statistics811506.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/DQN_keras_Greedy_player_450000_same_start_point/אחרי 450000 איטרציות- התכנס!.wmv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/אחרי 35000 איטרציות.wmv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/אחרי 450000 איטרציות- התכנס!.wmv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/השפעת הפרס על ההתכנסות.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורניר מול גרידי/כשלא שמים את תנאי העצירה במקום הנכון....wmv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/טורנירים/16_03_15_52_Q_table_Q_table/#steps_3000000.png" beforeDir="false" />
-    </list>
+    <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="merge with alt-history" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -258,36 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1611132936949</updated>
-    </task>
-    <task id="LOCAL‎00019" summary="python ==3.7">
-      <created>1612279093552</created>
-      <option name="number" value="LOCAL‎00019" />
-      <option name="presentableId" value="LOCAL‎00019" />
-      <updated>1612279093552</updated>
-    </task>
-    <task id="LOCAL‎00020" summary="DQNAgent_temporalAttention working">
-      <created>1612327832282</created>
-      <option name="number" value="LOCAL‎00020" />
-      <option name="presentableId" value="LOCAL‎00020" />
-      <updated>1612327832283</updated>
-    </task>
-    <task id="LOCAL‎00021" summary="big DSM">
-      <created>1612380197113</created>
-      <option name="number" value="LOCAL‎00021" />
-      <option name="presentableId" value="LOCAL‎00021" />
-      <updated>1612380197113</updated>
-    </task>
-    <task id="LOCAL‎00022" summary="DQNAgent_spatioalAttention working">
-      <created>1612408706376</created>
-      <option name="number" value="LOCAL‎00022" />
-      <option name="presentableId" value="LOCAL‎00022" />
-      <updated>1612408706378</updated>
-    </task>
-    <task id="LOCAL‎00023" summary="training mode">
-      <created>1612725193473</created>
-      <option name="number" value="LOCAL‎00023" />
-      <option name="presentableId" value="LOCAL‎00023" />
-      <updated>1612725193473</updated>
     </task>
     <task id="LOCAL‎00024" summary="training mode">
       <created>1612792305164</created>
@@ -553,7 +459,37 @@
       <option name="presentableId" value="LOCAL‎00067" />
       <updated>1616524976903</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL‎00068" summary="data">
+      <created>1616527055109</created>
+      <option name="number" value="LOCAL‎00068" />
+      <option name="presentableId" value="LOCAL‎00068" />
+      <updated>1616527055109</updated>
+    </task>
+    <task id="LOCAL‎00069" summary="merge with alt-history">
+      <created>1616527206779</created>
+      <option name="number" value="LOCAL‎00069" />
+      <option name="presentableId" value="LOCAL‎00069" />
+      <updated>1616527206780</updated>
+    </task>
+    <task id="LOCAL‎00070" summary="merge with alt-history">
+      <created>1616527248278</created>
+      <option name="number" value="LOCAL‎00070" />
+      <option name="presentableId" value="LOCAL‎00070" />
+      <updated>1616527248278</updated>
+    </task>
+    <task id="LOCAL‎00071" summary="merge with alt-history">
+      <created>1616527375853</created>
+      <option name="number" value="LOCAL‎00071" />
+      <option name="presentableId" value="LOCAL‎00071" />
+      <updated>1616527375853</updated>
+    </task>
+    <task id="LOCAL‎00072" summary="merge with alt-history">
+      <created>1616527543391</created>
+      <option name="number" value="LOCAL‎00072" />
+      <option name="presentableId" value="LOCAL‎00072" />
+      <updated>1616527543391</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -587,7 +523,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="use danger zone in state" />
     <MESSAGE value="1. not sum zero game&#10;2. flag RED_PLAYER_MOVES&#10;3. less LOS calcs" />
     <MESSAGE value="save_win_statistics added" />
     <MESSAGE value="dominating points added to state" />
@@ -612,7 +547,8 @@
     <MESSAGE value="semi simultaneous steps" />
     <MESSAGE value="DQN vs Greedy small DSM working" />
     <MESSAGE value="data" />
-    <option name="LAST_COMMIT_MESSAGE" value="data" />
+    <MESSAGE value="merge with alt-history" />
+    <option name="LAST_COMMIT_MESSAGE" value="merge with alt-history" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
