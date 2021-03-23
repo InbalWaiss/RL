@@ -142,6 +142,7 @@ if __name__ == '__main__':
 
 
 
+
             reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
                                                                  current_episode.is_terminal,
                                                                  whos_turn=Color.Blue)
