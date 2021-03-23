@@ -118,6 +118,9 @@ class Environment(object):
         second_player = self.red_player
         win_status = WinEnum.NoWin
 
+        is_los_first_second = (second_player.x, second_player.y) in DICT_POS_LOS[(first_player.x, first_player.y)]
+        is_los_second_first = (first_player.x, first_player.y) in DICT_POS_LOS[(second_player.x, second_player.y)]
+        assert is_los_first_second==is_los_second_first
 
         is_los = (second_player.x, second_player.y) in DICT_POS_LOS[(first_player.x, first_player.y)]
         if not is_los:  # no LOS
@@ -201,11 +204,71 @@ class Environment(object):
         red_pos = Position(self.red_player.x, self.red_player.y)
         return State(my_pos=red_pos, enemy_pos=blue_pos)
 
+    def can_red_win(self):
+        blue_player = self.blue_player
+        red_player = self.red_player
+
+        org_cor_blue_player_x, org_cor_blue_player_y = blue_player.get_coordinates()
+        org_cor_red_player_x, org_cor_red_player_y = red_player.get_coordinates()
+
+        ret_val = False
+        winning_point_for_red = [-1, -1]
+        winning_state = self.get_observation_for_blue()
+
+        if not RED_PLAYER_MOVES:
+            return ret_val, winning_state
+
+        for action in range(0, NUMBER_OF_ACTIONS):
+
+            red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
+            red_player.action(action)
+            org_cor_blue_player_x, org_cor_blue_player_y = blue_player.get_coordinates()
+
+            is_los = (org_cor_blue_player_x, org_cor_blue_player_y) in DICT_POS_LOS[
+                (red_player.x, red_player.y)]
+
+
+            if is_los:
+                if FIRE_RANGE_FLAG:
+                    dist = np.linalg.norm(np.array([blue_player.x, blue_player.y]) - np.array([red_player.x, red_player.y]))
+                else:
+                    dist = -np.inf
+                if not FIRE_RANGE_FLAG or dist<=FIRE_RANGE:
+
+                    ret_val = True
+
+                    winning_point_for_red = (red_player.x, red_player.y)
+                    blue_pos = Position(blue_player.x, blue_player.y)
+                    red_pos = Position(winning_point_for_red[0], winning_point_for_red[1])
+                    winning_state = State(my_pos=blue_pos, enemy_pos=red_pos)
+                    # Red Takes winning move!!!
+                    return ret_val, winning_state
+
+        red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
+        if False:
+            red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
+            import matplotlib.pyplot as plt
+            blue_obs_satrt = self.get_observation_for_blue()
+            plt.matshow(blue_obs_satrt.img)
+            plt.show()
+
+            blue_pos = Position(blue_player.x, blue_player.y)
+            red_pos = Position(winning_point_for_red[0], winning_point_for_red[1])
+            winning_state = State(my_pos=blue_pos, enemy_pos=red_pos)
+            plt.matshow(winning_state.img)
+            plt.show()
+
+        return ret_val, winning_state
+
+
+
+
+
     def end_run(self):
         STATS_RESULTS_RELATIVE_PATH_THIS_RUN = os.path.join(self.path_for_run, STATS_RESULTS_RELATIVE_PATH)
         self.save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH_THIS_RUN,
                                      format(f"{str(time.strftime('%d'))}_{str(time.strftime('%m'))}_"
-                                            f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}_{Agent_type_str[self.blue_player._decision_maker.type()]}_{Agent_type_str[self.red_player._decision_maker.type()]}"))
+                                            f"{str(time.strftime('%H'))}_{str(time.strftime('%M'))}_{Agent_type_str[self.blue_player._decision_maker.type()]}_{Agent_type_str[self.red_player._decision_maker.type()]}_{str(STR_FOLDER_NAME)}"))
 
         # save info on run
         self.save_stats(self.save_folder_path)
@@ -261,6 +324,7 @@ class Environment(object):
                 f"EPSILONE_DECAY": [EPSILONE_DECAY],
                 f"LEARNING_RATE": [LEARNING_RATE],
                 f"DISCOUNT": [DISCOUNT],
+                f"IMG_STATE_MODE": [IMG_STATE_MODE],
                 f"ACTION_SPACE_9": [ACTION_SPACE_9],
                 f"DANGER_ZONE_IN_STATE": [DANGER_ZONE_IN_STATE],
                 f"DOMINATING_POINTS_IN_STATE": [DOMINATING_POINTS_IN_STATE],

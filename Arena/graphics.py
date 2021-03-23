@@ -39,37 +39,38 @@ def save_reward_stats(save_folder_path, plot_every,  win_array_blue, win_array_r
     fig, axs = plt.subplots(2, 2)
     fig.tight_layout()
     plt.subplots_adjust(hspace=.4, top=0.9)
+    moving_avg_blue = np.convolve(win_array_blue, np.ones((plot_every,)) / plot_every, mode='valid')
+    moving_avg_red = np.convolve(win_array_red, np.ones((plot_every,)) / plot_every, mode='valid')
+    reward_upper_bound = np.max([np.max(moving_avg_blue), np.max(moving_avg_red)])
+    reward_lower_bound = np.min([np.min(moving_avg_blue), np.min(moving_avg_red)])
     # Blue reward:
-    moving_avg = np.convolve(win_array_blue, np.ones((plot_every,)) / plot_every, mode='valid')
-    axs[0, 0].plot([i for i in range(len(moving_avg))], moving_avg)
-    axs[0, 0].set_title(f"Rewards per episode for BLUE player", fontsize=12, fontweight='bold', color='blue')
-    axs[0, 0].axis([0, len(win_array_blue), -WIN_REWARD - 50, WIN_REWARD + 50])
+    axs[0, 0].plot([i for i in range(len(moving_avg_blue))], moving_avg_blue)
+    axs[0, 0].set_title(f"Episode rewards BLUE player", fontsize=12, fontweight='bold', color='blue')
+    axs[0, 0].axis([0, len(win_array_blue), (reward_lower_bound + 10 / reward_lower_bound),
+                    (reward_upper_bound + 10 / reward_upper_bound)])
     axs[0, 0].set(xlabel="episode #", ylabel=f"Reward {SHOW_EVERY}ma")
-
     # Red reward:
-    moving_avg = np.convolve(win_array_red, np.ones((plot_every,)) / plot_every, mode='valid')
-    axs[0, 1].plot([i for i in range(len(moving_avg))], moving_avg)
-    axs[0, 1].set_title(f"Rewards per episode for RED player", fontsize=12, fontweight='bold', color='red')
-    axs[0, 1].axis([0, len(win_array_red), -WIN_REWARD - 50, WIN_REWARD + 50])
+    axs[0, 1].plot([i for i in range(len(moving_avg_red))], moving_avg_red)
+    axs[0, 1].set_title(f"Episode rewards Red player", fontsize=12, fontweight='bold', color='red')
+    axs[0, 1].axis([0, len(win_array_red), (reward_lower_bound + 10 / reward_lower_bound),
+                    int(reward_upper_bound + 10 / reward_upper_bound)])
     axs[0, 1].set(xlabel="episode #", ylabel=f"Reward {SHOW_EVERY}ma")
-
     # Steps:
     moving_avg = np.convolve(steps_per_episode, np.ones((plot_every,)) / plot_every, mode='valid')
     axs[1, 0].plot([i for i in range(len(moving_avg))], moving_avg)
-    axs[1, 0].set_title(f"Avg number of steps per episode", fontsize=12, fontweight='bold', color='black')
+    axs[1, 0].set_title(f"Avg episode number of steps", fontsize=12, fontweight='bold', color='black')
     axs[1, 0].axis([0, len(steps_per_episode), 0, MAX_STEPS_PER_EPISODE])
     axs[1, 0].set(xlabel="episode #", ylabel=f"steps per episode {SHOW_EVERY}ma")
-
     # Epsilon:
     moving_avg = np.convolve(blue_epsilon_values, np.ones((plot_every,)) / plot_every, mode='valid')
     axs[1, 1].plot([i for i in range(len(moving_avg))], moving_avg)
     axs[1, 1].set_title(f"Epsilon value per episode", fontsize=12, fontweight='bold', color='black')
-    axs[1, 1].axis([0, len(steps_per_episode),-0.1, 1.1])
+    axs[1, 1].axis([0, len(steps_per_episode), -0.1, 1.1])
     axs[1, 1].set(xlabel="episode", ylabel="epsilon")
 
-    plt.savefig(save_folder_path + os.path.sep + 'reward_statistics' + str(len(blue_epsilon_values) - 1))
+    plt.savefig(save_folder_path + os.path.sep + 'reward_statistics' + str(len(blue_epsilon_values)))
     plt.close()
-    # plt.show()
+    #plt.show()
 
 def save_win_statistics(win_array, save_folder_path, plot_every):
     win_array = np.array(win_array)
@@ -87,20 +88,20 @@ def save_win_statistics(win_array, save_folder_path, plot_every):
     plt.subplots_adjust(hspace=.4, top=0.9)
     axs[0, 0].plot(moving_avg_win_blue)
     axs[0, 0].set_title('%Blue_win', fontsize=12, fontweight='bold', color='blue')
-    axs[0, 0].axis([0, len(moving_avg_win_blue), 0, 100])
+    axs[0, 0].axis([0, len(moving_avg_win_blue), -5, 105])
 
     axs[0, 1].plot(moving_avg_win_red)
     axs[0, 1].set_title('%Red_win', fontsize=12, fontweight='bold', color='red')
-    axs[0, 1].axis([0, len(moving_avg_win_blue), 0, 100])
+    axs[0, 1].axis([0, len(moving_avg_win_blue), -5, 105])
 
     axs[1, 0].plot(moving_avg_win_NoWin)
     axs[1, 0].set_title('%Tie_max_num_steps', fontsize=12, fontweight='bold')
-    axs[1, 0].axis([0, len(moving_avg_win_blue), 0, 100])
+    axs[1, 0].axis([0, len(moving_avg_win_blue), 5, 105])
 
     axs[1, 1].plot(moving_avg_win_Tie)
     axs[1, 1].set_title('%Tie_LOS', fontsize=12, fontweight='bold')
-    axs[1, 1].axis([0, len(moving_avg_win_blue), 0, 100])
-    plt.savefig(save_folder_path + os.path.sep + 'win_statistics' + str(len(win_array) - 1))
+    axs[1, 1].axis([0, len(moving_avg_win_blue), -5, 105])
+    plt.savefig(save_folder_path + os.path.sep + 'win_statistics' + str(len(win_array)))
     plt.close()
     # plt.show()
 

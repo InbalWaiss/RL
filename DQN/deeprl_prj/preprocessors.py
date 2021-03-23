@@ -3,7 +3,7 @@
 import numpy as np
 from PIL import Image
 import Arena
-from Common.constants import SIZE_X, SIZE_Y, CLIP_REWARD_1
+from Common.constants import SIZE_X, SIZE_Y, CLIP_REWARD_1, IMG_STATE_MODE
 
 from DQN.deeprl_prj.core import Preprocessor
 
@@ -108,13 +108,45 @@ class AtariPreprocessor(Preprocessor):
         We recommend using the Python Image Library (PIL) to do the
         image conversions.
         """
-
+        org_state = state
         if type(state) == Arena.CState.State:
-            state = state.img
-        img = Image.fromarray(state).convert('L').resize((SIZE_X, SIZE_Y), Image.BILINEAR)
-        state = np.array(img)
+            org_state = state.img
 
-        return state
+        if IMG_STATE_MODE=='L':
+            # 'L': 8-bit pixels, black and white
+            state_for_network = np.array(Image.fromarray(org_state).convert('L').resize((SIZE_X, SIZE_Y)))
+
+        else: #IMG_STATE_MODE=='P'
+            # 'P': 8-bit pixels, mapped to any other mode using a color palette
+            state_for_network = np.array(Image.fromarray(org_state).convert('P').resize((SIZE_X, SIZE_Y)))
+
+
+
+        # org:
+        # img = Image.fromarray(org_state).convert('L').resize((SIZE_X, SIZE_Y), Image.BILINEAR)
+        # state_for_network = np.array(img)
+
+        if False:
+            import matplotlib.pyplot as plt
+            org_state = state
+            org_state1 = state
+            org_state2 = state
+            plt.matshow(org_state)
+            plt.show()
+            # Mode 1
+            img1 = np.array(Image.fromarray(org_state1).convert('L').resize((SIZE_X, SIZE_Y)))
+            # same as np.array(Image.fromarray(org_state2).convert('L').resize((SIZE_X, SIZE_Y), Image.BILINEAR))
+            # same as: np.array(Image.fromarray(org_state5).convert('L').resize((SIZE_X, SIZE_Y), Image.BICUBIC))
+            plt.matshow(img1)
+            plt.show()
+
+            # Mode 2
+            img2 = np.array(Image.fromarray(org_state2).convert('P').resize((SIZE_X, SIZE_Y)))
+            # same as np.array(Image.fromarray(org_state4).convert('P').resize((SIZE_X, SIZE_Y), Image.BILINEAR))
+            plt.matshow(img2)
+            plt.show()
+
+        return state_for_network
 
     def process_state_for_network(self, state):
         """Scale, convert to greyscale and store as float32.

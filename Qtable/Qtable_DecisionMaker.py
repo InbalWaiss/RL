@@ -47,7 +47,7 @@ class Qtable_DecisionMaker(AbsDecisionMaker):
 
         return q_table
 
-    def update_context(self, curr_state: State, action: AgentAction, new_state: State, reward, is_terminal, EVALUATE=True):
+    def update_context(self, curr_state: State, action: AgentAction, reward, new_state: State, is_terminal, EVALUATE=True):
         if self.UPDATE_CONTEXT and not EVALUATE:
             curr_state_entry = (curr_state.my_pos.get_tuple(), curr_state.enemy_pos.get_tuple())
             new_state_entry = (new_state.my_pos.get_tuple(), new_state.enemy_pos.get_tuple())
