@@ -203,12 +203,6 @@
       <option name="presentableId" value="Default" />
       <updated>1611132936949</updated>
     </task>
-    <task id="LOCAL‎00017" summary="evaluation mode added">
-      <created>1612272854079</created>
-      <option name="number" value="LOCAL‎00017" />
-      <option name="presentableId" value="LOCAL‎00017" />
-      <updated>1612272854079</updated>
-    </task>
     <task id="LOCAL‎00018" summary="DQN_basic and DQN_keras models for evaluation">
       <created>1612273943164</created>
       <option name="number" value="LOCAL‎00018" />
@@ -497,7 +491,13 @@
       <option name="presentableId" value="LOCAL‎00065" />
       <updated>1616521020574</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL‎00066" summary="data">
+      <created>1616524921511</created>
+      <option name="number" value="LOCAL‎00066" />
+      <option name="presentableId" value="LOCAL‎00066" />
+      <updated>1616524921511</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
