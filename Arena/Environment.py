@@ -207,6 +207,7 @@ class Environment(object):
     def can_red_win(self):
         blue_player = self.blue_player
         red_player = self.red_player
+        DEBUG=False
 
         org_cor_blue_player_x, org_cor_blue_player_y = blue_player.get_coordinates()
         org_cor_red_player_x, org_cor_red_player_y = red_player.get_coordinates()
@@ -245,7 +246,7 @@ class Environment(object):
                     return ret_val, winning_state
 
         red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
-        if False:
+        if DEBUG:
             red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
             import matplotlib.pyplot as plt
             blue_obs_satrt = self.get_observation_for_blue()

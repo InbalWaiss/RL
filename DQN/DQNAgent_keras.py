@@ -368,15 +368,6 @@ class decision_maker_DQN_keras:
                 self.episode_loss += loss
                 self.episode_target_value += target_value
 
-                if False:
-                    import matplotlib.pyplot as plt
-
-                    plt.matshow(last_frame_state)
-                    plt.show()
-
-                    plt.matshow(last_frame_new_state)
-                    plt.show()
-
             # update freq is based on train_freq
             if self.numberOfSteps % (self.train_freq * self.target_update_freq) == 0:
                 # target updates can have the option to be hard or soft
@@ -391,6 +382,16 @@ class decision_maker_DQN_keras:
 
         if is_terminal:
             self.episode_number += 1
+
+    def print_frames(self, last_frame_state, last_frame_new_state=None):
+        import matplotlib.pyplot as plt
+
+        plt.matshow(last_frame_state)
+        plt.show()
+
+        if last_frame_new_state is not None:
+            plt.matshow(last_frame_new_state)
+            plt.show()
 
     def update_policy(self, current_sample):
         """Update your policy.
@@ -455,7 +456,8 @@ class decision_maker_DQN_keras:
 
     def _get_action(self, current_state, evaluate=False, **kwargs):
         dqn_state = current_state.img
-        if False:
+        DEBUG=False
+        if DEBUG:
             plt.matshow(dqn_state)
             plt.show()
         """Select the action based on the current state.
@@ -470,7 +472,7 @@ class decision_maker_DQN_keras:
         action_state = self.history_processor.process_state_for_network(state_for_network)
 
         action = None
-        q_values = self.calc_q_values(action_state) #shuld be action_state
+        q_values = self.calc_q_values(action_state)
         if self.is_training and not evaluate:
             if policy_type == 'UniformRandomPolicy':
                 action= UniformRandomPolicy(NUMBER_OF_ACTIONS).select_action()

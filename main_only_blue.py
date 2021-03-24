@@ -70,8 +70,8 @@ if __name__ == '__main__':
     #blue_decision_maker = DQNAgent.DQNAgent()
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # --DQN Keras
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_100001_   1.00max_  -0.88avg_  -4.20min__1616438528.model')
+    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_500001_  18.00max_  16.34avg_ -35.50min__1616522209.model')
     #flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
     #                                                     path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_157501_ 120.00max_   4.80avg_   0.00min__1615952583.model')
@@ -135,15 +135,6 @@ if __name__ == '__main__':
                     assert reward_step_blue == -WIN_REWARD
                     blue_decision_maker.update_context(observation_for_blue_s0, action_blue, reward_step_blue, lossing_blue_state_obs,
                                                        can_red_win, EVALUATE)
-
-                    if False:
-                        import matplotlib.pyplot as plt
-
-                        plt.matshow(observation_for_blue_s0.img)
-                        plt.show()
-
-                        plt.matshow(lossing_blue_state_obs.img)
-                        plt.show()
 
                     current_episode.episode_reward_blue += reward_step_blue
 

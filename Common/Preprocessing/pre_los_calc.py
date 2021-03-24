@@ -110,13 +110,14 @@ def calc_and_save_lose_points():
 
 
 def find_dominating_point(x1, y1):
+    DEBUG=False
     point1 = (x1, y1)
     arr = DICT_POS_LOS[(x1, y1)]
     goal_points = []
     for p in arr:
         if can_escape_by_one_step(point1, p):
             goal_points.append(p)
-    if False:
+    if DEBUG:
         img_env = np.zeros((SIZE_X, SIZE_Y, 3), dtype=np.uint8)  # starts an rbg of small world
         points_in_LOS = DICT_POS_LOS[(x1, y1)]
         for point in points_in_LOS:
@@ -155,13 +156,14 @@ def can_escape_by_one_step(point1, point2):
 
 
 def find_lose_points(x1, y1):
+    DEBUG=False
     point1 = (x1, y1)
     arr = DICT_POS_LOS[(x1, y1)]
     goal_points = []
     for p in arr:
         if can_escape_by_one_step(p, point1):
             goal_points.append(p)
-    if False:
+    if DEBUG:
         img_env = np.zeros((SIZE_X, SIZE_Y, 3), dtype=np.uint8)  # starts an rbg of small world
         points_in_LOS = DICT_POS_LOS[(x1, y1)]
         for point in points_in_LOS:

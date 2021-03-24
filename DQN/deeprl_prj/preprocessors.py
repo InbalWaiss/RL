@@ -108,6 +108,7 @@ class AtariPreprocessor(Preprocessor):
         We recommend using the Python Image Library (PIL) to do the
         image conversions.
         """
+        DEBUG=False
         org_state = state
         if type(state) == Arena.CState.State:
             org_state = state.img
@@ -126,7 +127,7 @@ class AtariPreprocessor(Preprocessor):
         # img = Image.fromarray(org_state).convert('L').resize((SIZE_X, SIZE_Y), Image.BILINEAR)
         # state_for_network = np.array(img)
 
-        if False:
+        if DEBUG:
             import matplotlib.pyplot as plt
             org_state = state
             org_state1 = state

@@ -44,11 +44,11 @@ class State(object):
             for y in range(SIZE_Y):
                 if DSM[x][y] == 1.:
                     env[x][y] = dict_of_colors[GREY_N]
-        if False:
-            # print state for debug
-            import matplotlib.pyplot as plt
-            plt.matshow(env)
-            plt.show()
 
         return env
 
+def print_env(env):
+    # print state for debug
+    import matplotlib.pyplot as plt
+    plt.matshow(env)
+    plt.show()
