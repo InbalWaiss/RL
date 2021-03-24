@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="merge with alt-history">
+    <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="videos">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/AbsDecisionMaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/AbsDecisionMaker.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/helper_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/helper_funcs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/pre_los_calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/pre_los_calc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/preprocessors.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/preprocessors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/hallo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_one_step_into_the_future.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,23 +55,23 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/SingleAgentCombat-main/תוצאות/תוצאות ריצות בסיסיות/greedy_Vs_DQNkeras" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\תוצאות\תוצאות ריצות בסיסיות\greedy_Vs_DQNkeras" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Qtable\trained_agents" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Qtable" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\DQN\deeprl_prj" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Greedy" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\תוצאות" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Qtable\trained_agents" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\DQN" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Arena" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main_only_blue">
@@ -201,18 +205,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1611132936949</updated>
-    </task>
-    <task id="LOCAL‎00026">
-      <created>1613913241966</created>
-      <option name="number" value="LOCAL‎00026" />
-      <option name="presentableId" value="LOCAL‎00026" />
-      <updated>1613913241966</updated>
-    </task>
-    <task id="LOCAL‎00027" summary="packages">
-      <created>1613913272796</created>
-      <option name="number" value="LOCAL‎00027" />
-      <option name="presentableId" value="LOCAL‎00027" />
-      <updated>1613913272796</updated>
     </task>
     <task id="LOCAL‎00028" summary="networks">
       <created>1613981919862</created>
@@ -496,7 +488,19 @@
       <option name="presentableId" value="LOCAL‎00074" />
       <updated>1616528112377</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL‎00075" summary="merge with alt-history">
+      <created>1616529606414</created>
+      <option name="number" value="LOCAL‎00075" />
+      <option name="presentableId" value="LOCAL‎00075" />
+      <updated>1616529606414</updated>
+    </task>
+    <task id="LOCAL‎00076" summary="videos">
+      <created>1616556805859</created>
+      <option name="number" value="LOCAL‎00076" />
+      <option name="presentableId" value="LOCAL‎00076" />
+      <updated>1616556805859</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -530,7 +534,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="1. not sum zero game&#10;2. flag RED_PLAYER_MOVES&#10;3. less LOS calcs" />
     <MESSAGE value="save_win_statistics added" />
     <MESSAGE value="dominating points added to state" />
     <MESSAGE value="dominating_points pics" />
@@ -555,7 +558,8 @@
     <MESSAGE value="DQN vs Greedy small DSM working" />
     <MESSAGE value="data" />
     <MESSAGE value="merge with alt-history" />
-    <option name="LAST_COMMIT_MESSAGE" value="merge with alt-history" />
+    <MESSAGE value="videos" />
+    <option name="LAST_COMMIT_MESSAGE" value="videos" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
