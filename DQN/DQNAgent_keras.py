@@ -87,7 +87,7 @@ class decision_maker_DQN_keras:
         parser.add_argument('--learning_rate', default=0.0001, type=float, help='Learning rate')
         parser.add_argument('--initial_epsilon', default=1.0, type=float, help='Initial exploration probability in epsilon-greedy')
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
-        parser.add_argument('--exploration_steps', default=1000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
+        parser.add_argument('--exploration_steps', default=5000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
         parser.add_argument('--num_frames', default=1, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=SIZE_X, type=int, help='Resized frame width')
@@ -497,8 +497,6 @@ class decision_maker_DQN_keras:
         dqn_state = state.img
         state_for_network = self.atari_processor.process_state_for_network(dqn_state)
         action_state = self.history_processor.process_state_for_network(state_for_network)
-
-        # q_values = self.calc_q_values(action_state) #shold be action_state
 
         # save image
         plt.figure()

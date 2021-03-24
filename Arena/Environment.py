@@ -99,10 +99,10 @@ class Environment(object):
 
         if whos_turn==Color.Blue:
             reward_step_blue = WIN_REWARD
-            reward_step_red = -WIN_REWARD
+            reward_step_red = LOST_PENALTY
 
         elif whos_turn==Color.Red:
-            reward_step_blue = -WIN_REWARD
+            reward_step_blue = LOST_PENALTY
             reward_step_red = WIN_REWARD
 
         else:
@@ -215,15 +215,17 @@ class Environment(object):
         ret_val = False
         winning_point_for_red = [-1, -1]
         winning_state = self.get_observation_for_blue()
+        winning_action = AgentAction.Stay
 
         if not RED_PLAYER_MOVES:
-            return ret_val, winning_state
+            return ret_val, winning_state, winning_action
 
         for action in range(0, NUMBER_OF_ACTIONS):
 
             red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
             red_player.action(action)
             org_cor_blue_player_x, org_cor_blue_player_y = blue_player.get_coordinates()
+
 
             is_los = (org_cor_blue_player_x, org_cor_blue_player_y) in DICT_POS_LOS[
                 (red_player.x, red_player.y)]
@@ -243,7 +245,7 @@ class Environment(object):
                     red_pos = Position(winning_point_for_red[0], winning_point_for_red[1])
                     winning_state = State(my_pos=blue_pos, enemy_pos=red_pos)
                     # Red Takes winning move!!!
-                    return ret_val, winning_state
+                    return ret_val, winning_state, AgentAction(action)
 
         red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
         if DEBUG:
@@ -259,9 +261,64 @@ class Environment(object):
             plt.matshow(winning_state.img)
             plt.show()
 
-        return ret_val, winning_state
+        return ret_val, winning_state, winning_action
 
 
+    def can_blue_win(self):
+        blue_player = self.blue_player
+        red_player = self.red_player
+        DEBUG=False
+
+        org_cor_blue_player_x, org_cor_blue_player_y = blue_player.get_coordinates()
+        org_cor_red_player_x, org_cor_red_player_y = red_player.get_coordinates()
+
+        ret_val = False
+        winning_point_for_blue = [-1, -1]
+        winning_state = self.get_observation_for_red()
+        winning_action = AgentAction.Stay
+
+
+        for action in range(0, NUMBER_OF_ACTIONS):
+
+            blue_player.set_coordinatess(org_cor_blue_player_x, org_cor_blue_player_y)
+            blue_player.action(action)
+            org_cor_red_player_x, org_cor_red_player_y = red_player.get_coordinates()
+
+            is_los = (org_cor_red_player_x, org_cor_red_player_y) in DICT_POS_LOS[
+                (blue_player.x, blue_player.y)]
+
+
+            if is_los:
+                if FIRE_RANGE_FLAG:
+                    dist = np.linalg.norm(np.array([blue_player.x, blue_player.y]) - np.array([red_player.x, red_player.y]))
+                else:
+                    dist = -np.inf
+                if not FIRE_RANGE_FLAG or dist<=FIRE_RANGE:
+
+                    ret_val = True
+
+                    winning_point_for_blue = (blue_player.x, blue_player.y)
+                    red_pos = Position(red_player.x, red_player.y)
+                    blue_pos = Position(winning_point_for_blue[0], winning_point_for_blue[1])
+                    winning_state = State(my_pos=red_pos, enemy_pos=blue_pos)
+                    # Red Takes winning move!!!
+                    return ret_val, winning_state, AgentAction(action)
+
+        blue_player.set_coordinatess(org_cor_blue_player_x, org_cor_blue_player_y)
+        if DEBUG:
+            red_player.set_coordinatess(org_cor_red_player_x, org_cor_red_player_y)
+            import matplotlib.pyplot as plt
+            red_obs_satrt = self.get_observation_for_red()
+            plt.matshow(red_obs_satrt.img)
+            plt.show()
+
+            red_pos = Position(red_player.x, red_player.y)
+            blue_pos = Position(winning_point_for_blue[0], winning_point_for_blue[1])
+            winning_state = State(my_pos=blue_pos, enemy_pos=red_pos)
+            plt.matshow(winning_state.img)
+            plt.show()
+
+        return ret_val, winning_state, winning_action
 
 
 
@@ -402,7 +459,7 @@ class Episode():
         return img
 
 
-    def print_info_of_episode(self, env, steps_current_game, blue_epsilon):
+    def print_info_of_episode(self, env, steps_current_game, blue_epsilon, EVALUATE=False):
         if self.show:
             if len(env.episodes_rewards_blue)<env.SHOW_EVERY:
                 number_of_episodes = len(env.episodes_rewards_blue[-env.SHOW_EVERY:]) - 1
@@ -430,6 +487,11 @@ class Episode():
             print(f"mean rewards of all episodes for blue player: {np.mean(env.episodes_rewards_blue)}\n")
 
             self.print_episode(env, steps_current_game)
+
+        if EVALUATE:
+            print("\nEvaluation summury: num_episodes: ", self.episode_number, ", number of steps: ", steps_current_game)
+            print("reward for blue: ",  self.episode_reward_blue)
+            print("reward for red: ", self.episode_reward_red)
 
 
         if self.episode_number % SAVE_STATS_EVERY == 0:

@@ -117,7 +117,7 @@ if __name__ == '__main__':
                 env.blue_player.action(action_blue)  # take the action!
 
             if not End_Game_Flag:
-            # check if terminal. if true: reward_blue=win_reward, reward_red = -win_reward
+            # check if terminal. if true: reward_blue=win_reward, reward_red = LOST_PENALTY
                 current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Blue) is not WinEnum.NoWin)
                 if current_episode.is_terminal:
                     reward_step_blue, reward_step_red = env.handle_reward(steps_current_game, current_episode.is_terminal, whos_turn=Color.Blue)

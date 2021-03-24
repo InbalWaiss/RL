@@ -123,16 +123,17 @@ if __name__ == '__main__':
 
             current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Blue) is not WinEnum.NoWin)
 
-            #if not terminal: check if red can win in next state
-            if not current_episode.is_terminal:
-                can_red_win, lossing_blue_state_obs = env.can_red_win()
+            if current_episode.is_terminal:# Blue won the game!
+                blue_won_the_game=True
+            else: #if not terminal: check if red can win in next step
+                can_red_win, lossing_blue_state_obs, winning_action = env.can_red_win()
                 if can_red_win:
                     current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Red) is not WinEnum.NoWin) #to update env.win_status
                     reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
                                                                           can_red_win,
                                                                           whos_turn=Color.Red)
                     # Update model for Blue player
-                    assert reward_step_blue == -WIN_REWARD
+                    assert reward_step_blue == LOST_PENALTY
                     blue_decision_maker.update_context(observation_for_blue_s0, action_blue, reward_step_blue, lossing_blue_state_obs,
                                                        can_red_win, EVALUATE)
 
@@ -141,11 +142,6 @@ if __name__ == '__main__':
                     env.update_win_counters(steps_current_game, whos_turn=Color.Red)
                     current_episode.print_episode(env, steps_current_game)
                     break
-
-
-
-            if current_episode.is_terminal:# Blue won the game!
-                blue_won_the_game=True
 
 
             if not blue_won_the_game and RED_PLAYER_MOVES:
@@ -205,6 +201,9 @@ if __name__ == '__main__':
 
         # print info of episode:
         current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon())
+
+        if EVALUATE:
+            print("\nEvaluation summury: num_episodes: ", episode, ", reward for blue: ",  current_episode.episode_reward_blue, "after ", steps_current_game, "steps")
 
     env.end_run()
 

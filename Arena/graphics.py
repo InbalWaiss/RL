@@ -21,7 +21,7 @@ def print_stats(array_of_results, save_folder_path, plot_every, save_figure=True
         if save_figure:
             plt.savefig(save_folder_path + os.path.sep + '#steps_' + str(len(array_of_results) - 1))
     else:
-        plt.axis([0, len(array_of_results), -WIN_REWARD - 50, WIN_REWARD + 50])
+        plt.axis([0, len(array_of_results), LOST_PENALTY - 50, WIN_REWARD + 50])
         if player == Color.Blue:
             plt.suptitle(f"Rewards per episode for BLUE player")
         if player == Color.Red:
@@ -124,7 +124,7 @@ def print_stats_humna_player(array_of_results, save_folder_path, number_of_episo
             if save_figure:
                 plt.savefig(save_folder_path + os.path.sep + '#steps blue player')
     else:
-        plt.axis([0, len(array_of_results), -WIN_REWARD, WIN_REWARD])
+        plt.axis([0, len(array_of_results), LOST_PENALTY, WIN_REWARD])
         if red_player:  # reward figure for red player
             plt.suptitle(f"Reward for red player")
             plt.ylabel(f"Rewards")
