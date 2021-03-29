@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="load DSM from excel">
+    <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="main both players">
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_1050001_  18.00max_  15.60avg_ -26.50min__1616609908.model" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_850001_   1.00max_   0.26avg_  -2.40min__1616647723.model" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_900001_   1.00max_   0.23avg_  -3.20min__1616658260.model" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/DSM_excel.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/DSM_excel.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/QPlayer_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/QPlayer_constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/dqn_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/dqn_keras.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_both_players.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_both_players.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_simultaneous_steps_DQN.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,14 +56,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Qtable\trained_agents" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common\Preprocessing" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\תוצאות\תוצאות ריצות בסיסיות\greedy_Vs_DQNkeras" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Qtable\trained_agents" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Qtable" />
     </key>
@@ -73,7 +75,7 @@
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main_both_players">
+  <component name="RunManager" selected="Python.main_only_blue">
     <configuration name="constants" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SingleAgentCombat-main" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -188,9 +190,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main_both_players" />
-        <item itemvalue="Python.load_DSM_from_excel" />
         <item itemvalue="Python.main_only_blue" />
+        <item itemvalue="Python.load_DSM_from_excel" />
+        <item itemvalue="Python.main_both_players" />
         <item itemvalue="Python.main_only_blue (1)" />
         <item itemvalue="Python.constants" />
       </list>
@@ -204,12 +206,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1611132936949</updated>
-    </task>
-    <task id="LOCAL‎00030" summary="no clip reward">
-      <created>1614025739267</created>
-      <option name="number" value="LOCAL‎00030" />
-      <option name="presentableId" value="LOCAL‎00030" />
-      <updated>1614025739267</updated>
     </task>
     <task id="LOCAL‎00031" summary="change in reward">
       <created>1614077045089</created>
@@ -499,7 +495,13 @@
       <option name="presentableId" value="LOCAL‎00078" />
       <updated>1616581297300</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL‎00079" summary="main both players">
+      <created>1616598229281</created>
+      <option name="number" value="LOCAL‎00079" />
+      <option name="presentableId" value="LOCAL‎00079" />
+      <updated>1616598229281</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -533,7 +535,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="dominating_points pics" />
     <MESSAGE value="DQNkeras set_model_name" />
     <MESSAGE value="save_reward_stats" />
     <MESSAGE value="reward change" />
@@ -558,7 +559,8 @@
     <MESSAGE value="videos" />
     <MESSAGE value="remove &quot;if False&quot;" />
     <MESSAGE value="load DSM from excel" />
-    <option name="LAST_COMMIT_MESSAGE" value="load DSM from excel" />
+    <MESSAGE value="main both players" />
+    <option name="LAST_COMMIT_MESSAGE" value="main both players" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -583,6 +585,16 @@
           <url>file://$PROJECT_DIR$/SingleAgentCombat-main/main_semi_simultaneous_steps.py</url>
           <line>122</line>
           <option name="timeStamp" value="386" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/main_both_players.py</url>
+          <line>172</line>
+          <option name="timeStamp" value="576" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py</url>
+          <line>494</line>
+          <option name="timeStamp" value="580" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
