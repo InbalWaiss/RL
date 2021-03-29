@@ -53,24 +53,24 @@ if __name__ == '__main__':
     env = Environment(IS_TRAINING)
 
     ### Red Decision Maker
-    #red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
+    red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
     #red_decision_maker = Greedy_player.Greedy_player()
     #red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False , path_model_to_load="qtable_red-1000000_penalty_move_-1.pickle")
     #red_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=False,
     #                                                    path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__red_25001_  -6.00max_ -72.99avg_-100.00min__1615541339.model')
-    red_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    #red_decision_maker = DQNAgent_keras.DQNAgent_keras()
 
     ### Blue Decision Maker
     #--Greedy:
     #blue_decision_maker = Greedy_player.Greedy_player()
     # --Qtable:
-    #blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
+    blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
     #blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker('qtable_blue-600000_penalty_move_-1.pickle')
     # --DQN Basic:
     #blue_decision_maker = DQNAgent.DQNAgent()
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # --DQN Keras
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
     #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_500001_  18.00max_  16.34avg_ -35.50min__1616522209.model')
     #flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
@@ -169,6 +169,8 @@ if __name__ == '__main__':
                     env.update_win_counters(steps_current_game, whos_turn=Color.Red)
 
 
+            if not reward_step_red==-MOVE_PENALTY or reward_step_red==WIN_REWARD:
+                print("reward_step_red: ", reward_step_red)
 
             assert reward_step_red==-MOVE_PENALTY or reward_step_red==WIN_REWARD
             observation_for_red_s1: State = env.get_observation_for_blue()

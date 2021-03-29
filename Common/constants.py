@@ -30,7 +30,8 @@ CLIP_REWARD_1 = False
 IMG_STATE_MODE = 'L'
 #IMG_STATE_MODE= 'P'
 
-STR_FOLDER_NAME = ""
+FULLY_CONNECTED = False
+STR_FOLDER_NAME = "conv"
 
 try:
     with open('Common/Preprocessing/dictionary_position_los.pkl', 'rb') as f:
@@ -94,18 +95,10 @@ SIZE_Y = 15
 
 MOVE_PENALTY = 0.1
 WIN_REWARD = 20
-LOST_PENALTY = -5
+LOST_PENALTY = -1
 TIE = 0
 
-# MOVE_PENALTY = 0.1
-# WIN_REWARD = 1
-# LOST_PENALTY = -WIN_REWARD
-# TIE = 0
 
-# MOVE_PENALTY = 5
-# WIN_REWARD = 120
-# LOST_PENALTY = -WIN_REWARD
-# TIE = 0
 
 
 MAX_STEPS_PER_EPISODE = 100

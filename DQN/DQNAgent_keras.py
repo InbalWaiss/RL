@@ -87,7 +87,7 @@ class decision_maker_DQN_keras:
         parser.add_argument('--learning_rate', default=0.0001, type=float, help='Learning rate')
         parser.add_argument('--initial_epsilon', default=1.0, type=float, help='Initial exploration probability in epsilon-greedy')
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
-        parser.add_argument('--exploration_steps', default=5000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
+        parser.add_argument('--exploration_steps', default=3000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
         parser.add_argument('--num_frames', default=1, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=SIZE_X, type=int, help='Resized frame width')
@@ -101,8 +101,12 @@ class decision_maker_DQN_keras:
                             help='Number of steps to populate the replay memory before training starts')
         parser.add_argument('--load_network', default=False, action='store_true', help='Load trained mode')
         parser.add_argument('--load_network_path', default='', help='the path to the trained mode file')
-        #parser.add_argument('--net_mode', default='dqn', help='choose the mode of net, can be linear, dqn, duel')
-        parser.add_argument('--net_mode', default='linear', help='choose the mode of net, can be linear, dqn, duel')
+        if FULLY_CONNECTED:
+            parser.add_argument('--net_mode', default='linear', help='choose the mode of net, can be linear, dqn, duel')
+        else:
+            parser.add_argument('--net_mode', default='dqn', help='choose the mode of net, can be linear, dqn, duel')
+
+
         parser.add_argument('--max_episode_length', default = 10000, type=int, help = 'max length of each episode')
         parser.add_argument('--num_episodes_at_test', default = 20, type=int, help='Number of episodes the agent plays at test')
         parser.add_argument('--ddqn', default=True, dest='ddqn', action='store_true', help='enable ddqn')
@@ -237,9 +241,14 @@ class decision_maker_DQN_keras:
 
             else:
                 if not (args.recurrent):
-                    # version 1:
-                    h1 = Convolution2D(128, (8, 8), strides=1, activation="relu", name="conv1")(input_data)
-                    h2 = Convolution2D(256, (4, 4), strides=2, activation="relu", name="conv2")(h1)
+                    # # version 1:
+                    # h1 = Convolution2D(128, (4, 8), strides=1, activation="relu", name="conv1")(input_data)
+                    # h2 = Convolution2D(256, (4, 4), strides=2, activation="relu", name="conv2")(h1)
+                    # context = Flatten(name="flatten")(h2)
+
+                    # version 2:
+                    h1 = Convolution2D(128, (3, 3), strides=2, activation="relu", name="conv1")(input_data)
+                    h2 = Convolution2D(256, (3, 3), strides=1, activation="relu", name="conv2")(h1)
                     context = Flatten(name="flatten")(h2)
                 else:
                     print('>>>> Defining Recurrent Modules...')
@@ -279,7 +288,7 @@ class decision_maker_DQN_keras:
                         # print(context.shape)
 
                 if mode == "dqn":
-                    h4 = Dense(512, activation='relu', name="fc")(context)
+                    h4 = Dense(512, activation='elu', name="fc")(context)
                     output = Dense(num_actions, name="output")(h4)
                 elif mode == "duel":
                     value_hidden = Dense(512, activation='relu', name='value_fc')(context)

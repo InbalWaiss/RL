@@ -70,8 +70,8 @@ if __name__ == '__main__':
     #blue_decision_maker = DQNAgent.DQNAgent()
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # --DQN Keras
-    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_500001_  18.00max_  16.34avg_ -35.50min__1616522209.model')
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_850001_   1.00max_   0.26avg_  -2.40min__1616647723.model')
     #flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
     #                                                     path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_157501_ 120.00max_   4.80avg_   0.00min__1615952583.model')
@@ -200,10 +200,8 @@ if __name__ == '__main__':
         env.data_for_statistics(current_episode.episode_reward_blue, current_episode.episode_reward_red, steps_current_game, blue_decision_maker.get_epsolon())
 
         # print info of episode:
-        current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon())
+        current_episode.print_info_of_episode(env, steps_current_game, blue_decision_maker.get_epsolon(), EVALUATE)
 
-        if EVALUATE:
-            print("\nEvaluation summury: num_episodes: ", episode, ", reward for blue: ",  current_episode.episode_reward_blue, "after ", steps_current_game, "steps")
 
     env.end_run()
 
