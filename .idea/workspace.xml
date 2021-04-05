@@ -2,15 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="main both players">
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_1050001_  18.00max_  15.60avg_ -26.50min__1616609908.model" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_850001_   1.00max_   0.26avg_  -2.40min__1616647723.model" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_900001_   1.00max_   0.23avg_  -3.20min__1616658260.model" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/conv1(8_8_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_6927_  18.40max_  -1.99avg_ -25.00min__1617391986.model" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/conv1(8_8_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_8001_  19.10max_   0.33avg_  -9.30min__1617578351.model" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/DSM_excel.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/DSM_excel.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/dictionary_position_los.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/dictionary_position_los_15X15.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/dictionary_position_no_los.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/dictionary_position_no_los_15X15.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/load_DSM_from_excel.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/load_DSM_from_excel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/pre_los_calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/pre_los_calc.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/dqn_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/dqn_keras.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/preprocessors.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/preprocessors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_both_players.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_both_players.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" afterDir="false" />
     </list>
@@ -62,21 +70,21 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Qtable\trained_agents" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\RafaelPlayer\trained_agents" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common\maps\Berlin" />
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common\maps\Paris" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common\Preprocessing" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\תוצאות\תוצאות ריצות בסיסיות\greedy_Vs_DQNkeras" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Qtable" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common\maps\15X15" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common\Preprocessing" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\תוצאות" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Qtable\trained_agents" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\DQN" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main_only_blue">
-    <configuration name="constants" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="DQNAgent_keras" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SingleAgentCombat-main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -84,11 +92,32 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main/Common" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main/DQN" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Qtable_DecisionMaker" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SingleAgentCombat-main" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main/Qtable" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/Qtable_DecisionMaker.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -118,7 +147,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main_both_players" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
+    <configuration name="main_both_players" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SingleAgentCombat-main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -131,27 +160,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/main_both_players.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main_only_blue (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="SingleAgentCombat-main" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_only_blue.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -182,19 +190,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.main_only_blue" />
-      <item itemvalue="Python.constants" />
-      <item itemvalue="Python.main_only_blue (1)" />
+      <item itemvalue="Python.DQNAgent_keras" />
+      <item itemvalue="Python.Qtable_DecisionMaker" />
       <item itemvalue="Python.load_DSM_from_excel" />
       <item itemvalue="Python.main_both_players" />
+      <item itemvalue="Python.main_only_blue" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main_only_blue" />
-        <item itemvalue="Python.load_DSM_from_excel" />
+        <item itemvalue="Python.Qtable_DecisionMaker" />
         <item itemvalue="Python.main_both_players" />
-        <item itemvalue="Python.main_only_blue (1)" />
-        <item itemvalue="Python.constants" />
+        <item itemvalue="Python.DQNAgent_keras" />
+        <item itemvalue="Python.load_DSM_from_excel" />
       </list>
     </recent_temporary>
   </component>
@@ -206,12 +214,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1611132936949</updated>
-    </task>
-    <task id="LOCAL‎00031" summary="change in reward">
-      <created>1614077045089</created>
-      <option name="number" value="LOCAL‎00031" />
-      <option name="presentableId" value="LOCAL‎00031" />
-      <updated>1614077045089</updated>
     </task>
     <task id="LOCAL‎00032" summary="change DQNkeras network to be 1 layer">
       <created>1614197626813</created>
@@ -501,7 +503,13 @@
       <option name="presentableId" value="LOCAL‎00079" />
       <updated>1616598229281</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL‎00080" summary="main both players">
+      <created>1617001411048</created>
+      <option name="number" value="LOCAL‎00080" />
+      <option name="presentableId" value="LOCAL‎00080" />
+      <updated>1617001411048</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -587,14 +595,39 @@
           <option name="timeStamp" value="386" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/main_both_players.py</url>
-          <line>172</line>
-          <option name="timeStamp" value="576" />
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/load_DSM_from_excel.py</url>
+          <line>7</line>
+          <option name="timeStamp" value="598" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py</url>
-          <line>494</line>
-          <option name="timeStamp" value="580" />
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/load_DSM_from_excel.py</url>
+          <line>84</line>
+          <option name="timeStamp" value="619" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/pre_los_calc.py</url>
+          <line>195</line>
+          <option name="timeStamp" value="626" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py</url>
+          <line>350</line>
+          <option name="timeStamp" value="636" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/load_DSM_from_excel.py</url>
+          <line>74</line>
+          <option name="timeStamp" value="637" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py</url>
+          <line>354</line>
+          <option name="timeStamp" value="638" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py</url>
+          <line>357</line>
+          <option name="timeStamp" value="696" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -605,5 +638,10 @@
         </breakpoint>
       </default-breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="q_values" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
