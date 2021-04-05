@@ -187,8 +187,8 @@ class ReplayMemory:
         self.rewards = np.zeros(self.memory_size, dtype = np.int8)
         #self.screens = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype = np.uint8)
         #self.screens = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype=np.uint16)
-        self.state = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype=np.uint16)
-        self.new_state = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype=np.uint16)
+        self.state = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype=np.uint8)
+        self.new_state = np.zeros((self.memory_size, args.frame_height, args.frame_width), dtype=np.uint8)
         self.terminals = np.zeros(self.memory_size, dtype = np.bool)
         self.current = 0
 

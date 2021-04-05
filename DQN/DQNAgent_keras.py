@@ -87,7 +87,7 @@ class decision_maker_DQN_keras:
         parser.add_argument('--learning_rate', default=0.0001, type=float, help='Learning rate')
         parser.add_argument('--initial_epsilon', default=1.0, type=float, help='Initial exploration probability in epsilon-greedy')
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
-        parser.add_argument('--exploration_steps', default=3000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
+        parser.add_argument('--exploration_steps', default=1000000, type=int, help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
         parser.add_argument('--num_frames', default=1, type=int, help='Number of frames to feed to Q-Network')
         parser.add_argument('--frame_width', default=SIZE_X, type=int, help='Resized frame width')
@@ -101,6 +101,7 @@ class decision_maker_DQN_keras:
                             help='Number of steps to populate the replay memory before training starts')
         parser.add_argument('--load_network', default=False, action='store_true', help='Load trained mode')
         parser.add_argument('--load_network_path', default='', help='the path to the trained mode file')
+
         if FULLY_CONNECTED:
             parser.add_argument('--net_mode', default='linear', help='choose the mode of net, can be linear, dqn, duel')
         else:
@@ -241,63 +242,73 @@ class decision_maker_DQN_keras:
 
             else:
                 if not (args.recurrent):
-                    # # version 1:
-                    # h1 = Convolution2D(128, (4, 8), strides=1, activation="relu", name="conv1")(input_data)
-                    # h2 = Convolution2D(256, (4, 4), strides=2, activation="relu", name="conv2")(h1)
-                    # context = Flatten(name="flatten")(h2)
+                    # # # version 1:
+                    # h1 = Convolution2D(32, (8, 8), strides=4, activation="relu", name="conv1")(input_data)
+                    # h2 = Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2")(h1)
+                    # h3 = Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv3")(h2)
+                    # context = Flatten(name="flatten")(h3)
 
-                    # version 2:
-                    h1 = Convolution2D(128, (3, 3), strides=2, activation="relu", name="conv1")(input_data)
-                    h2 = Convolution2D(256, (3, 3), strides=1, activation="relu", name="conv2")(h1)
-                    context = Flatten(name="flatten")(h2)
-                else:
-                    print('>>>> Defining Recurrent Modules...')
-                    input_data_expanded = Reshape((input_shape[0], input_shape[1], input_shape[2], 1),
-                                                  input_shape=input_shape)(input_data)
-                    input_data_TimeDistributed = Permute((3, 1, 2, 4), input_shape=input_shape)(input_data_expanded)
-                    h1 = TimeDistributed(Convolution2D(32, (8, 8), strides=4, activation="relu", name="conv1"), \
-                                         input_shape=(args.num_frames, input_shape[0], input_shape[1], 1))(
-                        input_data_TimeDistributed)
-                    h2 = TimeDistributed(Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2"))(h1)
-                    h3 = TimeDistributed(Convolution2D(64, (2, 2), strides=1, activation="relu", name="conv3"))(h2)
-                    flatten_hidden = TimeDistributed(Flatten())(h3)
-                    hidden_input = TimeDistributed(Dense(512, activation='relu', name='flat_to_512'))(flatten_hidden)
-                    if not (args.a_t):
-                        context = LSTM(512, return_sequences=False, stateful=False, input_shape=(args.num_frames, 512))(
-                            hidden_input)
-                    else:
-                        if args.bidir:
-                            hidden_input = Bidirectional(
-                                LSTM(512, return_sequences=True, stateful=False, input_shape=(args.num_frames, 512)),
-                                merge_mode='sum')(hidden_input)
-                            all_outs = Bidirectional(
-                                LSTM(512, return_sequences=True, stateful=False, input_shape=(args.num_frames, 512)),
-                                merge_mode='sum')(hidden_input)
-                        else:
-                            all_outs = LSTM(512, return_sequences=True, stateful=False,
-                                            input_shape=(args.num_frames, 512))(hidden_input)
-                        # attention
-                        attention = TimeDistributed(Dense(1, activation='tanh'))(all_outs)
-                        # print(attention.shape)
-                        attention = Flatten()(attention)
-                        attention = Activation('softmax')(attention)
-                        attention = RepeatVector(512)(attention)
-                        attention = Permute([2, 1])(attention)
-                        sent_representation = merge([all_outs, attention], mode='mul')
-                        context = Lambda(lambda xin: K.sum(xin, axis=-2), output_shape=(512,))(sent_representation)
-                        # print(context.shape)
+                    # # version 2:
+                    # conv1 = Convolution2D(1, (5, 5), strides=1, activation="elu", name="conv1")(input_data)
+                    # flatten = Flatten(name="flatten")(conv1)
+                    # FC_2 = Dense(512, activation='elu', name='FC2-elu')(flatten)
+                    # context = Dense(512, activation='elu', name='FC4-elu')(FC_2)
+
+                    # version 3:
+                    conv1 = Convolution2D(32, (5, 5), strides=1, activation="relu", name="conv1")(input_data)
+                    flatten = Flatten(name="flatten")(conv1)
+                    FC_2 = Dense(512, activation='relu', name='FC2-relu')(flatten)
+                    FC_3 = Dense(512, activation='relu', name='FC3-relu')(FC_2)
+                    context = Dense(512, activation='elu', name='FC4-elu')(FC_3)
+
+                # else:
+                #     print('>>>> Defining Recurrent Modules...')
+                #     input_data_expanded = Reshape((input_shape[0], input_shape[1], input_shape[2], 1),
+                #                                   input_shape=input_shape)(input_data)
+                #     input_data_TimeDistributed = Permute((3, 1, 2, 4), input_shape=input_shape)(input_data_expanded)
+                #     h1 = TimeDistributed(Convolution2D(32, (8, 8), strides=4, activation="relu", name="conv1"), \
+                #                          input_shape=(args.num_frames, input_shape[0], input_shape[1], 1))(
+                #         input_data_TimeDistributed)
+                #     h2 = TimeDistributed(Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2"))(h1)
+                #     h3 = TimeDistributed(Convolution2D(64, (2, 2), strides=1, activation="relu", name="conv3"))(h2)
+                #     flatten_hidden = TimeDistributed(Flatten())(h3)
+                #     hidden_input = TimeDistributed(Dense(512, activation='relu', name='flat_to_512'))(flatten_hidden)
+                #     if not (args.a_t):
+                #         context = LSTM(512, return_sequences=False, stateful=False, input_shape=(args.num_frames, 512))(
+                #             hidden_input)
+                #     else:
+                #         if args.bidir:
+                #             hidden_input = Bidirectional(
+                #                 LSTM(512, return_sequences=True, stateful=False, input_shape=(args.num_frames, 512)),
+                #                 merge_mode='sum')(hidden_input)
+                #             all_outs = Bidirectional(
+                #                 LSTM(512, return_sequences=True, stateful=False, input_shape=(args.num_frames, 512)),
+                #                 merge_mode='sum')(hidden_input)
+                #         else:
+                #             all_outs = LSTM(512, return_sequences=True, stateful=False,
+                #                             input_shape=(args.num_frames, 512))(hidden_input)
+                #         # attention
+                #         attention = TimeDistributed(Dense(1, activation='tanh'))(all_outs)
+                #         # print(attention.shape)
+                #         attention = Flatten()(attention)
+                #         attention = Activation('softmax')(attention)
+                #         attention = RepeatVector(512)(attention)
+                #         attention = Permute([2, 1])(attention)
+                #         sent_representation = merge([all_outs, attention], mode='mul')
+                #         context = Lambda(lambda xin: K.sum(xin, axis=-2), output_shape=(512,))(sent_representation)
+                #         # print(context.shape)
 
                 if mode == "dqn":
                     h4 = Dense(512, activation='elu', name="fc")(context)
                     output = Dense(num_actions, name="output")(h4)
-                elif mode == "duel":
-                    value_hidden = Dense(512, activation='relu', name='value_fc')(context)
-                    value = Dense(1, name="value")(value_hidden)
-                    action_hidden = Dense(512, activation='relu', name='action_fc')(context)
-                    action = Dense(num_actions, name="action")(action_hidden)
-                    action_mean = Lambda(lambda x: tf.reduce_mean(x, axis=1, keep_dims=True), name='action_mean')(
-                        action)
-                    output = Lambda(lambda x: x[0] + x[1] - x[2], name='output')([action, value, action_mean])
+                # elif mode == "duel":
+                #     value_hidden = Dense(512, activation='relu', name='value_fc')(context)
+                #     value = Dense(1, name="value")(value_hidden)
+                #     action_hidden = Dense(512, activation='relu', name='action_fc')(context)
+                #     action = Dense(num_actions, name="action")(action_hidden)
+                #     action_mean = Lambda(lambda x: tf.reduce_mean(x, axis=1, keep_dims=True), name='action_mean')(
+                #         action)
+                #     output = Lambda(lambda x: x[0] + x[1] - x[2], name='output')([action, value, action_mean])
         model = Model(inputs=input_data, outputs=output)
         print(model.summary())
         return model
@@ -468,7 +479,7 @@ class decision_maker_DQN_keras:
         DEBUG=False
         if DEBUG:
             plt.matshow(dqn_state)
-            plt.show()
+        plt.show()
         """Select the action based on the current state.
 
         Returns
@@ -499,6 +510,7 @@ class decision_maker_DQN_keras:
         return action
 
     def print_model(self, state, episode_number, path_to_dir):
+        from keras import backend as K
         path = os.path.join(path_to_dir, str(episode_number))
         if not os.path.exists(path):
             os.makedirs(path)
@@ -521,7 +533,7 @@ class decision_maker_DQN_keras:
         t = (action_state)[np.newaxis, ...]
         layer_outs = functor([t, 1.])
 
-        num_of_conv_layers = 1
+        num_of_conv_layers = 2
 
         p_fram_number = os.path.join(path, 'frams')
         if not os.path.exists(p_fram_number):
@@ -532,22 +544,36 @@ class decision_maker_DQN_keras:
             fram_file_name = os.path.join(p_fram_number, 'filter_' + str(fram_ind) + '.png')
             plt.imsave(fram_file_name, fram, format='png')
 
-        for ind_layer in range(0, num_of_conv_layers+1):
+        for ind_layer in range(0, len(layer_outs)):
             p_ind_layer = os.path.join(path, 'layer_' + str(ind_layer))
             if not os.path.exists(p_ind_layer):
                 os.makedirs(p_ind_layer)
             layer = layer_outs[ind_layer]
-            for filter_index in range(layer.shape[-1]):
-                fram = layer[:, :, :, filter_index]
-                p_fram_number = os.path.join(p_ind_layer, 'fram_' + str(ind_layer))
-                if not os.path.exists(p_fram_number):
-                    os.makedirs(p_fram_number)
-                filter = fram[0, :]
-                file_name = os.path.join(p_fram_number, 'filter_' + str(filter_index) + '.png')
-                plt.imsave(file_name, filter, format='png')
+            if len(np.shape(layer))==4:
+                for filter_index in range(layer.shape[-1]):
+                    fram = layer[:, :, :, filter_index]
+                    p_fram_number = os.path.join(p_ind_layer, 'fram_' + str(ind_layer))
+                    if not os.path.exists(p_fram_number):
+                        os.makedirs(p_fram_number)
+                    filter = fram[0, :]
+                    file_name = os.path.join(p_fram_number, 'filter_' + str(filter_index) + '.png')
+                    plt.imsave(file_name, filter, format='png')
 
         plt.close()
 
+
+    def plot_cinv_weights(self):
+
+        W = self.target_network.get_layer(name="conv1").get_weights()[0]
+        if len(W.shape) == 4:
+            # W = np.squeeze(W1)
+            W1 = W.reshape((W.shape[0], W.shape[1], W.shape[2] * W.shape[3]))
+            fig, axs = plt.subplots(11, 11, figsize=(8, 8))
+            fig.subplots_adjust(hspace=.5, wspace=.001)
+            axs = axs.ravel()
+            for i in range(121):
+                axs[i].imshow(W1[:, :, i])
+                axs[i].set_title(str(i))
 
 
 # Agent class

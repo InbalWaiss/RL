@@ -151,9 +151,15 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
 
     # img = img.resize((600, 600))
 
-    const = 30
-    margin_x = 2
-    margin_y = 0
+    if SIZE_X<20:
+        const = 30
+        margin_x = 2
+        margin_y = 0
+
+    else:
+        const=5
+        margin_x = 8
+        margin_y = 0
 
     informative_env = np.zeros((const * (SIZE_X + margin_x * 2), const * (SIZE_X + margin_y * 2), 3), dtype=np.uint8)
 
@@ -163,11 +169,11 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
     for x in range(SIZE_X):
         for y in range(SIZE_Y):
             if DSM[x][y] == 1.:
-                only_env[x * const: x * const + const, y * const: + y * const + const] = dict_of_colors[GREY_N]
+                only_env[x * const: x * const + const, y * const: + y * const + const] = dict_of_colors_for_graphics[GREY_N]
 
     # add margins to print information on
-    informative_env[0:margin_x * const] = dict_of_colors[GREY_N]
-    informative_env[(margin_x + SIZE_X) * const:(2 * margin_x + SIZE_X) * const] = dict_of_colors[GREY_N]
+    informative_env[0:margin_x * const] = dict_of_colors_for_graphics[GREY_N]
+    informative_env[(margin_x + SIZE_X) * const:(2 * margin_x + SIZE_X) * const] = dict_of_colors_for_graphics[GREY_N]
     informative_env[margin_x * const: (margin_x + SIZE_X) * const,
     margin_y * const: (margin_y + SIZE_Y) * const] = only_env
 
@@ -175,19 +181,19 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
         points_in_enemy_los = DICT_POS_LOS[(red.x, red.y)]
         for point in points_in_enemy_los:
             informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
-            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors[BRIGHT_RED]
+            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors_for_graphics[BRIGHT_RED]
 
     if DOMINATING_POINTS_IN_STATE:
         points_dom_points = DICT_DOMINATING_POINTS[(red.x, red.y)]
         for point in points_dom_points:
             informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
-            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors[GREEN_N]
+            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors_for_graphics[GREEN_N]
 
     if LOSE_POINTS_IN_STATE:
         lose_points = DICT_LOSE_POINTS[(red.x, red.y)]
         for point in lose_points:
             informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
-            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors[DARK_RED_N]
+            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors_for_graphics[DARK_RED_N]
 
 
     points_in_LOS = []
@@ -196,7 +202,7 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
         _, points_in_LOS = check_if_LOS(blue.x, blue.y, red.x, red.y)
         for point in points_in_LOS:
             informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
-            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors[YELLOW_N]
+            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors_for_graphics[YELLOW_N]
 
     # set the players as circles
     radius = int(np.ceil(const / 2))
@@ -204,12 +210,12 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
     # set the red player
     center_cord_red_x = (red.x + margin_x) * const + radius
     center_cord_red_y = (red.y + margin_y) * const + radius
-    red_color = dict_of_colors[RED_N]
+    red_color = dict_of_colors_for_graphics[RED_N]
     cv2.circle(informative_env, (center_cord_red_y, center_cord_red_x), radius, red_color, thickness)
     # set the blue player
     center_cord_blue_x = (blue.x + margin_x) * const + radius
     center_cord_blue_y = (blue.y + margin_y) * const + radius
-    blue_color = dict_of_colors[BLUE_N]
+    blue_color = dict_of_colors_for_graphics[BLUE_N]
     cv2.circle(informative_env, (center_cord_blue_y, center_cord_blue_x), radius, blue_color, thickness)
 
     # add episode number at the bottom of the window
@@ -282,48 +288,48 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
         botoomLeftCornerOfText_steps = (int(np.floor(SIZE_Y / 2)) * const - 79, 55)
         if env.win_status == WinEnum.NoWin:
             botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 38, 30)
-            cv2.putText(informative_env, f"No Winner!", botoomLeftCornerOfText, font, fontScale, dict_of_colors[PURPLE_N],
+            cv2.putText(informative_env, f"No Winner!", botoomLeftCornerOfText, font, fontScale, dict_of_colors_for_graphics[PURPLE_N],
                         thickness, cv2.LINE_AA)
             cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
-                        dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
+                        dict_of_colors_for_graphics[PURPLE_N], 0, cv2.LINE_AA)
         elif env.win_status == WinEnum.Red:
             botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 55, 30)
-            cv2.putText(informative_env, f"RED WON!", botoomLeftCornerOfText, font, fontScale, dict_of_colors[RED_N],
+            cv2.putText(informative_env, f"RED WON!", botoomLeftCornerOfText, font, fontScale, dict_of_colors_for_graphics[RED_N],
                         thickness - 1, cv2.LINE_AA)
             cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
-                        dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
+                        dict_of_colors_for_graphics[PURPLE_N], 0, cv2.LINE_AA)
         elif env.win_status == WinEnum.Blue:
             botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 50, 30)
-            cv2.putText(informative_env, f"BLUE WON!", botoomLeftCornerOfText, font, fontScale, dict_of_colors[BLUE_N],
+            cv2.putText(informative_env, f"BLUE WON!", botoomLeftCornerOfText, font, fontScale, dict_of_colors_for_graphics[BLUE_N],
                         thickness - 1, cv2.LINE_AA)
             cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
-                        dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
+                        dict_of_colors_for_graphics[PURPLE_N], 0, cv2.LINE_AA)
         else:  # both lost...
             botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 60, 30)
             cv2.putText(informative_env, f"both lost...", botoomLeftCornerOfText, font, fontScale,
-                        dict_of_colors[PURPLE_N], thickness - 1, cv2.LINE_AA)
+                        dict_of_colors_for_graphics[PURPLE_N], thickness - 1, cv2.LINE_AA)
             cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
-                        dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
+                        dict_of_colors_for_graphics[PURPLE_N], 0, cv2.LINE_AA)
 
         cv2.waitKey(2)
 
     else:  # not terminal state
         botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 45, 20)
         cv2.putText(informative_env, f"steps: {number_of_steps}", botoomLeftCornerOfText, font, fontScale,
-                    dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
+                    dict_of_colors_for_graphics[PURPLE_N], 0, cv2.LINE_AA)
 
     # print number of wins
     botoomLeftCornerOfText = (5, 15)
     cv2.putText(informative_env, f"Blue wins: {wins_for_blue}", botoomLeftCornerOfText, font, fontScale,
-                dict_of_colors[BLUE_N], 0,
+                dict_of_colors_for_graphics[BLUE_N], 0,
                 cv2.LINE_AA)
     botoomLeftCornerOfText = (5, 35)
     cv2.putText(informative_env, f"Red wins: {wins_for_red}", botoomLeftCornerOfText, font, fontScale,
-                dict_of_colors[RED_N], 0,
+                dict_of_colors_for_graphics[RED_N], 0,
                 cv2.LINE_AA)
     botoomLeftCornerOfText = (5, 55)
     cv2.putText(informative_env, f"No Winner : {tie_count}", botoomLeftCornerOfText, font, fontScale,
-                dict_of_colors[PURPLE_N], 0,
+                dict_of_colors_for_graphics[PURPLE_N], 0,
                 cv2.LINE_AA)
 
     cv2.imshow("informative_env", np.array(informative_env))  # show it!

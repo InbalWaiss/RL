@@ -20,30 +20,30 @@ class State(object):
         if USE_LOS_IN_STATE:
             _, points_in_LOS = check_if_LOS(self.my_pos._x, self.my_pos._y, self.enemy_pos._x, self.enemy_pos._y)
             for point in points_in_LOS:
-                env[point[0]][point[1]]= dict_of_colors[GREEN_N]
+                env[point[0]][point[1]]= dict_of_colors_for_state[GREEN_N]
 
         if DANGER_ZONE_IN_STATE:
             points_in_enemy_los = DICT_POS_LOS[(self.enemy_pos._x, self.enemy_pos._y)]
             for point in points_in_enemy_los:
-                env[point[0]][point[1]] = dict_of_colors[DARK_RED_N]
+                env[point[0]][point[1]] = dict_of_colors_for_state[DARK_RED_N]
 
         if DOMINATING_POINTS_IN_STATE:
             dominating_points = DICT_DOMINATING_POINTS[(self.enemy_pos._x, self.enemy_pos._y)]
             for point in dominating_points:
-                env[point[0]][point[1]] = dict_of_colors[GREEN_N]
+                env[point[0]][point[1]] = dict_of_colors_for_state[GREEN_N]
 
         if LOSE_POINTS_IN_STATE:
             lose_points = DICT_LOSE_POINTS[(self.enemy_pos._x, self.enemy_pos._y)]
             for point in lose_points:
-                env[point[0]][point[1]] = dict_of_colors[DARK_RED_N]
+                env[point[0]][point[1]] = dict_of_colors_for_state[DARK_RED_N]
 
 
-        env[self.my_pos._x][self.my_pos._y] = dict_of_colors[BLUE_N]
-        env[self.enemy_pos._x][self.enemy_pos._y] = dict_of_colors[RED_N]
+        env[self.my_pos._x][self.my_pos._y] = dict_of_colors_for_state[BLUE_N]
+        env[self.enemy_pos._x][self.enemy_pos._y] = dict_of_colors_for_state[RED_N]
         for x in range(SIZE_X):
             for y in range(SIZE_Y):
                 if DSM[x][y] == 1.:
-                    env[x][y] = dict_of_colors[GREY_N]
+                    env[x][y] = dict_of_colors_for_state[GREY_N]
 
         return env
 

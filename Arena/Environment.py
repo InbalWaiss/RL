@@ -46,6 +46,8 @@ class Environment(object):
 
         self.create_path_for_statistics()
 
+        self.end_game_flag = False
+
     def create_path_for_statistics(self):
         save_folder_path = path.join(STATS_RESULTS_RELATIVE_PATH,
                                      format(f"{str(time.strftime('%d'))}_{str(time.strftime('%m'))}_"
@@ -53,6 +55,11 @@ class Environment(object):
         if not os.path.exists(save_folder_path):
             os.makedirs(save_folder_path)
         self.path_for_run = save_folder_path
+
+    def reset_game(self, episode_number):
+        self.end_game_flag=False
+        self.reset_players_positions(episode_number)
+        self.win_status: WinEnum = WinEnum.NoWin
 
     def reset_players_positions(self, episode_number):
 
@@ -75,35 +82,39 @@ class Environment(object):
             self.starts_at_win_in_last_SHOW_EVERY_games = 0
 
 
-    def update_win_counters(self, steps_current_game, whos_turn=None):
+    def update_win_counters(self, steps_current_game):
         if steps_current_game==MAX_STEPS_PER_EPISODE:
             self.win_array.append(WinEnum.Tie)
             self.tie_count+=1
             return
 
-        if whos_turn==Color.Blue:
-            self.wins_for_blue += 1
-            self.win_array.append(WinEnum.Blue)
-        elif whos_turn==Color.Red:
+        if not self.end_game_flag:
+            return
+
+        if self.win_status == WinEnum.Red:
             self.wins_for_red += 1
             self.win_array.append(WinEnum.Red)
+        elif self.win_status == WinEnum.Blue:
+            self.wins_for_blue += 1
+            self.win_array.append(WinEnum.Blue)
         else:
-            print("Bug in update_win_counters- WHOS TURN?")
+            print("Bug in update_win_counters")
 
 
-    def handle_reward(self, steps_current_game, is_terminal, whos_turn=None):
-        if not is_terminal or whos_turn==None or steps_current_game==MAX_STEPS_PER_EPISODE:
+    def handle_reward(self, steps_current_game):
+        if not self.end_game_flag or steps_current_game==MAX_STEPS_PER_EPISODE:
             reward_step_blue = -MOVE_PENALTY
             reward_step_red = -MOVE_PENALTY
             return reward_step_blue, reward_step_red
 
-        if whos_turn==Color.Blue:
-            reward_step_blue = WIN_REWARD
-            reward_step_red = LOST_PENALTY
-
-        elif whos_turn==Color.Red:
+        # Game has ended!
+        if self.win_status == WinEnum.Red:
             reward_step_blue = LOST_PENALTY
             reward_step_red = WIN_REWARD
+
+        elif self.win_status == WinEnum.Blue:
+            reward_step_blue = WIN_REWARD
+            reward_step_red = LOST_PENALTY
 
         else:
             reward_step_blue = 0
@@ -137,8 +148,10 @@ class Environment(object):
 
         if whos_turn == Color.Blue:
             win_status = WinEnum.Blue
+            self.end_game_flag = True
         elif whos_turn == Color.Red:
             win_status = WinEnum.Red
+            self.end_game_flag = True
         else:
             print("Bug in compute_terminal- whos turn???")
         self.win_status = win_status
@@ -178,19 +191,21 @@ class Environment(object):
 
         if can_first_escape_second and not can_second_escape_first:
             win_status = WinEnum.Blue
+            self.end_game_flag=True
 
         elif can_second_escape_first and not can_first_escape_second:
             win_status = WinEnum.Red
+            self.end_game_flag = True
 
         else:
             win_status = WinEnum.Tie
+            self.end_game_flag = True
 
         self.win_status = win_status
         return win_status
 
 
     def get_observation_for_blue(self)-> State:
-
         blue_pos = Position(self.blue_player.x, self.blue_player.y)
         red_pos = Position(self.red_player.x, self.red_player.y)
         ret_val = State(my_pos=blue_pos, enemy_pos=red_pos)
@@ -203,6 +218,16 @@ class Environment(object):
         blue_pos = Position(self.blue_player.x, self.blue_player.y)
         red_pos = Position(self.red_player.x, self.red_player.y)
         return State(my_pos=red_pos, enemy_pos=blue_pos)
+
+    def take_action(self, player_color, action):
+        if self.end_game_flag:
+            return
+
+        if player_color==Color.Red:
+            if RED_PLAYER_MOVES:
+                self.red_player.action(action)
+        else: #player_color==Color.Blue
+            self.blue_player.action(action)
 
     def can_red_win(self):
         blue_player = self.blue_player
@@ -388,7 +413,7 @@ class Environment(object):
                 f"DOMINATING_POINTS_IN_STATE": [DOMINATING_POINTS_IN_STATE],
                 f"FIRE_RANGE_FLAG": [FIRE_RANGE_FLAG],
                 f"FIRE_RANGE": [FIRE_RANGE],
-                f"ZERO_SUM_GAME": [ZERO_SUM_GAME],
+                f"DSM_NAME": [DSM_name],
                 f"RED_PLAYER_MOVES": [RED_PLAYER_MOVES],
                 f"FIXED_START_POINT_RED": [FIXED_START_POINT_RED],
                 f"FIXED_START_POINT_BLUE": [FIXED_START_POINT_BLUE],
@@ -444,15 +469,15 @@ class Episode():
     def get_image(self, env, image_for_red = False):
         image = np.zeros((SIZE_X, SIZE_Y, 3), dtype=np.uint8) # starts an rbg of small world
         if image_for_red: #switch the blue and red colors
-            image[env.red_player.x][env.red_player.y] = dict_of_colors[BLUE_N]
-            image[env.blue_player.x][env.blue_player.y] = dict_of_colors[RED_N]
+            image[env.red_player.x][env.red_player.y] = dict_of_colors_for_graphics[BLUE_N]
+            image[env.blue_player.x][env.blue_player.y] = dict_of_colors_for_graphics[RED_N]
         else:
-            image[env.blue_player.x][env.blue_player.y] = dict_of_colors[RED_N]
-            image[env.red_player.x][env.red_player.y] = dict_of_colors[BLUE_N]
+            image[env.blue_player.x][env.blue_player.y] = dict_of_colors_for_graphics[RED_N]
+            image[env.red_player.x][env.red_player.y] = dict_of_colors_for_graphics[BLUE_N]
         for x in range(SIZE_X):
             for y in range(SIZE_Y):
                 if DSM[x][y] == 1.:
-                    image[x][y] = dict_of_colors[GREY_N]
+                    image[x][y] = dict_of_colors_for_graphics[GREY_N]
         img = Image.fromarray(image, 'RGB')
         # img = img.resize((600, 600))
         # Image._show(img)

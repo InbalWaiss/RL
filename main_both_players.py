@@ -93,14 +93,14 @@ if __name__ == '__main__':
         current_episode = Episode(episode, show_always=False if IS_TRAINING else True)
 
         # set new start position for the players
-        env.reset_players_positions(episode)
+        env.reset_game(episode)
 
         # get observation
         observation_for_blue_s0: State = env.get_observation_for_blue()
         observation_for_red_s0: State = env.get_observation_for_red()
 
 
-        action_blue = -1#AgentAction(np.random.randint(0, NUMBER_OF_ACTIONS))
+        action_blue = -1
 
 
         # initialize the decision_makers for the players
@@ -120,7 +120,7 @@ if __name__ == '__main__':
             current_episode.print_episode(env, steps_current_game)
 
             action_blue: AgentAction = blue_decision_maker.get_action(observation_for_blue_s0, EVALUATE)
-            env.blue_player.action(action_blue)  # take the action!
+            env.take_action(Color.Blue, action_blue)  # take the action!
             current_episode.print_episode(env, steps_current_game)
 
             current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Blue) is not WinEnum.NoWin)
@@ -132,9 +132,7 @@ if __name__ == '__main__':
                 can_red_win, lossing_blue_state_obs, winning_red_action = env.can_red_win()
                 if can_red_win:
                     current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Red) is not WinEnum.NoWin) #to update env.win_status
-                    reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
-                                                                          can_red_win,
-                                                                          whos_turn=Color.Red)
+                    reward_step_blue, reward_step_red = env.handle_reward(steps_current_game)
 
                     assert reward_step_blue == LOST_PENALTY or (
                                 reward_step_blue == -MOVE_PENALTY and steps_current_game == MAX_STEPS_PER_EPISODE)
@@ -149,24 +147,12 @@ if __name__ == '__main__':
                     current_episode.episode_reward_blue += reward_step_blue
                     current_episode.episode_reward_red += reward_step_red
 
-                    env.update_win_counters(steps_current_game, whos_turn=Color.Red)
+
                     current_episode.print_episode(env, steps_current_game)
                     break
 
 
-            reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
-                                                                  current_episode.is_terminal)
-            if current_episode.is_terminal:
-                if blue_won_the_game:
-                    reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
-                                                                          current_episode.is_terminal,
-                                                                          whos_turn=Color.Blue)
-                    env.update_win_counters(steps_current_game, whos_turn=Color.Blue)
-                elif red_won_the_game:
-                    reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
-                                                                          current_episode.is_terminal,
-                                                                          whos_turn=Color.Red)
-                    env.update_win_counters(steps_current_game, whos_turn=Color.Red)
+            reward_step_blue, reward_step_red = env.handle_reward(steps_current_game)
 
 
             if not reward_step_red==-MOVE_PENALTY or reward_step_red==WIN_REWARD:
@@ -183,7 +169,7 @@ if __name__ == '__main__':
                 ##### Red's turn! #####
                 observation_for_red_s0: State = env.get_observation_for_red()
                 action_red: AgentAction = red_decision_maker.get_action(observation_for_red_s0, EVALUATE)
-                env.red_player.action(action_red)  # take the action!
+                env.take_action(Color.Red, action_red)  # take the action!
 
                 current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Red) is not WinEnum.NoWin)
                 if current_episode.is_terminal:
@@ -193,9 +179,8 @@ if __name__ == '__main__':
                     can_blue_win, lossing_red_state_obs, winning_blue_action = env.can_blue_win()
                     if can_blue_win:
                         current_episode.is_terminal = (env.compute_terminal(whos_turn=Color.Blue) is not WinEnum.NoWin) #to update env.win_status
-                        reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
-                                                                              can_blue_win,
-                                                                              whos_turn=Color.Blue)
+                        reward_step_blue, reward_step_red = env.handle_reward(steps_current_game)
+
                         # Update model for Blue player
                         assert reward_step_red == LOST_PENALTY or (reward_step_red==-MOVE_PENALTY and steps_current_game==MAX_STEPS_PER_EPISODE)
                         red_decision_maker.update_context(observation_for_red_s0, action_red, reward_step_red, lossing_red_state_obs,
@@ -209,27 +194,13 @@ if __name__ == '__main__':
                         current_episode.episode_reward_red += reward_step_red
                         current_episode.episode_reward_blue += reward_step_blue
 
-                        env.update_win_counters(steps_current_game, whos_turn=Color.Blue)
                         current_episode.print_episode(env, steps_current_game)
                         break
 
             current_episode.print_episode(env, steps_current_game)
 
 
-            reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
-                                                                  current_episode.is_terminal)
-            if current_episode.is_terminal:
-                if blue_won_the_game:
-                    reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
-                                                                          current_episode.is_terminal,
-                                                                          whos_turn=Color.Blue)
-                    env.update_win_counters(steps_current_game, whos_turn=Color.Blue)
-                elif red_won_the_game:
-                    reward_step_blue, reward_step_red = env.handle_reward(steps_current_game,
-                                                                          current_episode.is_terminal,
-                                                                          whos_turn=Color.Red)
-                    env.update_win_counters(steps_current_game, whos_turn=Color.Red)
-
+            reward_step_blue, reward_step_red = env.handle_reward(steps_current_game)
 
 
             assert reward_step_blue==-MOVE_PENALTY or reward_step_blue==WIN_REWARD
@@ -249,11 +220,11 @@ if __name__ == '__main__':
             if steps_current_game == MAX_STEPS_PER_EPISODE:
                 # if we exited the loop because we reached MAX_STEPS_PER_EPISODE
                 current_episode.is_terminal = True
-                env.update_win_counters(steps_current_game)
                 break
 
 
         # for statistics
+        env.update_win_counters(steps_current_game)
         env.data_for_statistics(current_episode.episode_reward_blue, current_episode.episode_reward_red, steps_current_game, blue_decision_maker.get_epsolon())
 
         # print info of episode:

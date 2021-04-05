@@ -3,6 +3,7 @@ from enum import IntEnum
 import numpy as np
 from os import path
 import pickle
+from Common.Preprocessing.load_DSM_from_excel import get_DSM_berlin, get_DSM_Boston, get_DSM_Paris
 
 PRINT_TILES_IN_LOS = False
 USE_BRESENHAM_LINE = False
@@ -17,81 +18,127 @@ if not ACTION_SPACE_9:
     ACTION_SPACE_4 = True
 
 RED_PLAYER_MOVES = True
-FIXED_START_POINT_RED = True
-FIXED_START_POINT_BLUE = True
+FIXED_START_POINT_RED = False
+FIXED_START_POINT_BLUE = False
 
 FIRE_RANGE_FLAG = True
 FIRE_RANGE = 7
-
-ZERO_SUM_GAME = False
-CLIP_REWARD_1 = False
 
 #image state mode
 IMG_STATE_MODE = 'L'
 #IMG_STATE_MODE= 'P'
 
 FULLY_CONNECTED = False
-STR_FOLDER_NAME = "conv"
+STR_FOLDER_NAME = "conv_Berlin"
+
+#1 is an obstacle
+DSM_names = {"15X15", "100X100_Berlin", "100X100_Paris", "100X100_Boston"}
+DSM_name = "100X100_Berlin"
+if DSM_name=="15X15":
+    DSM = np.array([
+        [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+        [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+        [0., 1., 1., 0., 0., 0., 1., 0., 0., 0., 0., 0., 1., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 1., 1., 0., 0., 0., 0., 1., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 1., 0., 0.],
+        [0., 0., 0., 0., 1., 1., 1., 0., 0., 0., 0., 0., 1., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 1., 1., 1., 0., 0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
+        [0., 1., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+        [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 1., 1., 0.],
+        [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+    ])
+    SIZE_X = 15
+    SIZE_Y = 15
+    MAX_STEPS_PER_EPISODE = 100
+
+elif DSM_name=="100X100_Berlin":
+    DSM = get_DSM_berlin()
+    SIZE_X=100
+    SIZE_Y=100
+    FIRE_RANGE = 15
+    MAX_STEPS_PER_EPISODE = 250
+
+elif DSM_name=="100X100_Paris":
+    DSM = get_DSM_Paris()
+    SIZE_X=100
+    SIZE_Y=100
+    FIRE_RANGE = 15
+    MAX_STEPS_PER_EPISODE = 250
+
+elif DSM_name=="100X100_Boston":
+    DSM = get_DSM_Boston()
+    SIZE_X=100
+    SIZE_Y=100
+    FIRE_RANGE = 15
+    MAX_STEPS_PER_EPISODE = 250
+# if False:
+#     import matplotlib.pyplot as plt
+#     plt.matshow(DSM)
+#     plt.show()
+
 
 try:
-    with open('Common/Preprocessing/dictionary_position_los.pkl', 'rb') as f:
+    with open('Common/Preprocessing/dictionary_position_los_'+DSM_name+'.pkl', 'rb') as f:
         DICT_POS_LOS = pickle.load(f)
 except:
     try:
-        with open('dictionary_position_los.pkl', 'rb') as f:
+        with open('dictionary_position_los_'+DSM_name+'.pkl', 'rb') as f:
             DICT_POS_LOS = pickle.load(f)
     except:
         try:
-            with open('../../../../../../קוד עם באג רשת מתכנסת ל-1/Common/Preprocessing/dictionary_position_los.pkl', 'rb') as f:
+            with open('../Common/Preprocessing/dictionary_position_los_'+DSM_name+'.pkl', 'rb') as f:
                 DICT_POS_LOS = pickle.load(f)
         except:
             pass
 
 try:
-    with open('Common/Preprocessing/dictionary_position_no_los.pkl', 'rb') as f:
+    with open('Common/Preprocessing/dictionary_position_no_los_' + DSM_name + '.pkl', 'rb') as f:
         DICT_POS_NO_LOS = pickle.load(f)
 except:
     try:
-        with open('dictionary_position_no_los.pkl', 'rb') as f:
+        with open('dictionary_position_no_los_' +DSM_name+ '.pkl', 'rb') as f:
             DICT_POS_NO_LOS = pickle.load(f)
     except:
         try:
-            with open('../../../../../../קוד עם באג רשת מתכנסת ל-1/Common/Preprocessing/dictionary_position_no_los.pkl', 'rb') as f:
+            with open('../Common/Preprocessing/dictionary_position_no_los_' +DSM_name+ '.pkl', 'rb') as f:
                 DICT_POS_NO_LOS = pickle.load(f)
         except:
             pass
 
 try:
-    with open('Common/Preprocessing/dictionary_dominating_points.pkl', 'rb') as f:
+    with open('Common/Preprocessing/dictionary_dominating_points_'+DSM_name+'.pkl', 'rb') as f:
         DICT_DOMINATING_POINTS = pickle.load(f)
 except:
     try:
-        with open('dictionary_dominating_points.pkl', 'rb') as f:
+        with open('dictionary_dominating_points_'+DSM_name+'.pkl', 'rb') as f:
             DICT_DOMINATING_POINTS = pickle.load(f)
     except:
         try:
-            with open(
-                    '../../../../../../קוד עם באג רשת מתכנסת ל-1/Common/Preprocessing/dictionary_dominating_points.pkl', 'rb') as f:
+            with open('../Common/Preprocessing/dictionary_dominating_points_'+DSM_name+'.pkl','rb') as f:
                 DICT_DOMINATING_POINTS = pickle.load(f)
         except:
             pass
 
 try:
-    with open('Common/Preprocessing/dictionary_lose_points.pkl', 'rb') as f:
+    with open('Common/Preprocessing/dictionary_lose_points_'+DSM_name+'.pkl', 'rb') as f:
         DICT_LOSE_POINTS = pickle.load(f)
 except:
     try:
-        with open('dictionary_lose_points.pkl', 'rb') as f:
+        with open('dictionary_lose_points_'+DSM_name+'.pkl', 'rb') as f:
             DICT_LOSE_POINTS = pickle.load(f)
     except:
         try:
-            with open('../../../../../../קוד עם באג רשת מתכנסת ל-1/Common/Preprocessing/dictionary_lose_points.pkl', 'rb') as f:
+            with open('../Common/Preprocessing/dictionary_lose_points_'+DSM_name+'.pkl', 'rb') as f:
                 DICT_LOSE_POINTS = pickle.load(f)
         except:
             pass
 
-SIZE_X = 15
-SIZE_Y = 15
+
 
 MOVE_PENALTY = 0.1
 WIN_REWARD = 20
@@ -99,9 +146,6 @@ LOST_PENALTY = -1
 TIE = 0
 
 
-
-
-MAX_STEPS_PER_EPISODE = 100
 NUMBER_OF_ACTIONS = 9
 
 BLUE_N = 1 #blue player key in dict
@@ -124,24 +168,12 @@ class WinEnum(IntEnum):
     NoWin = 3
     #Done = 4
 
-
-# dict_of_colors = {1: (255, 0, 0),  #blue
-#                   2: (230, 0, 0), #darker blue
-#                   3: (0, 0, 255), # red
-#                   4: (0, 0, 230), #dark red
-#                   5: (230, 100, 150), #purple
-#                   6: (60, 255, 255), #yellow
-#                   7: (100, 100, 100),#grey
-#                   8: (0, 255, 0),#green
-#                   9: (0, 0, 0), #black
-#                   10: (0, 0, 75), #bright red
-#                   11: (0, 0, 25) #bright bright red
-#                   }
-
-dict_of_colors = {1: (255, 0, 0),  #blue
-                  2: (175, 0, 0), #darker blue
-                  3: (0, 0, 255), # red
-                  4: (0, 0, 175), #dark red
+USE_OLD_COLORS = False
+# for better separation of colors
+dict_of_colors_for_state = {1: (0, 0, 255),  #blue
+                  2: (0, 0, 175), #darker blue
+                  3: (255, 0, 0), # red
+                  4: (175, 0, 0), #dark red
                   5: (230, 100, 150), #purple
                   6: (60, 255, 255), #yellow
                   7: (100, 100, 100),#grey
@@ -151,26 +183,25 @@ dict_of_colors = {1: (255, 0, 0),  #blue
                   11: (0, 0, 25) #bright bright red
                   }
 
+dict_of_colors_for_graphics = {1: (255, 0, 0),  #blue
+                               2: (175, 0, 0),  #darker blue
+                               3: (0, 0, 255),  # red
+                               4: (0, 0, 175),  #dark red
+                               5: (230, 100, 150),  #purple
+                               6: (60, 255, 255),  #yellow
+                               7: (100, 100, 100),  #grey
+                               8: (0, 255, 0),  #green
+                               9: (0, 0, 0),  #black
+                               10: (0, 0, 75),  #bright red
+                               11: (0, 0, 25)  #bright bright red
+                               }
+
 OBSTACLE = 1.
 
-#1 is an obstacle
-DSM = np.array([
-    [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
-    [0., 1., 1., 0., 0., 0., 1., 0., 0., 0., 0., 0., 1., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 1., 1., 0., 0., 0., 0., 1., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 1., 0., 0.],
-    [0., 0., 0., 0., 1., 1., 1., 0., 0., 0., 0., 0., 1., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 1., 1., 1., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0., 0.],
-    [0., 1., 1., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
-    [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 1., 1., 1., 0.],
-    [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
-])
+if USE_OLD_COLORS:
+    dict_of_colors_for_state = dict_of_colors_for_graphics
+
+
 
 
 
@@ -225,16 +256,16 @@ RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'Qtable/trained_agent
 
 
 USE_DISPLAY = True
-SHOW_EVERY = 100
-NUM_OF_EPISODES = 1_000_000
-SAVE_STATS_EVERY = 20000
+SHOW_EVERY =25
+NUM_OF_EPISODES = 3_000_000
+SAVE_STATS_EVERY = 2000
 
 # params to evaluate trained models
 EVALUATE_SHOW_EVERY = 1
 EVALUATE_NUM_OF_EPISODES = 100
 EVALUATE_SAVE_STATS_EVERY = 100
 
-EVALUATE_PLAYERS_EVERY = 100
+EVALUATE_PLAYERS_EVERY = 25
 
 # training mode
 IS_TRAINING = True

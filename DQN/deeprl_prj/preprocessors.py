@@ -3,7 +3,7 @@
 import numpy as np
 from PIL import Image
 import Arena
-from Common.constants import SIZE_X, SIZE_Y, CLIP_REWARD_1, IMG_STATE_MODE
+from Common.constants import SIZE_X, SIZE_Y, IMG_STATE_MODE
 
 from DQN.deeprl_prj.core import Preprocessor
 
@@ -186,10 +186,7 @@ class AtariPreprocessor(Preprocessor):
 
     def process_reward(self, reward):
         """Clip reward between -1 and 1."""
-        if CLIP_REWARD_1:
-            return np.clip(reward, -1, 1)
-        else:
-            return reward
+        return reward
     
     def reset(self):
         self.last_state = None
