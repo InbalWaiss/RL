@@ -27,13 +27,17 @@ FIRE_RANGE = 7
 #image state mode
 IMG_STATE_MODE = 'L'
 #IMG_STATE_MODE= 'P'
+BB_STATE = False
+BB_MARGIN = 3
+SIZE_X_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
+SIZE_Y_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
 
 FULLY_CONNECTED = False
-STR_FOLDER_NAME = "conv_Berlin"
+STR_FOLDER_NAME = "Berlin_BB_conv32(2X2)"
 
 #1 is an obstacle
 DSM_names = {"15X15", "100X100_Berlin", "100X100_Paris", "100X100_Boston"}
-DSM_name ="100X100_Berlin"
+DSM_name ="15X15" # "100X100_Berlin"
 if DSM_name=="15X15":
     DSM = np.array([
         [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
@@ -60,22 +64,28 @@ elif DSM_name=="100X100_Berlin":
     DSM = get_DSM_berlin()
     SIZE_X=100
     SIZE_Y=100
-    FIRE_RANGE = 15
+    FIRE_RANGE = 10
     MAX_STEPS_PER_EPISODE = 250
+    SIZE_X_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
+    SIZE_Y_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
 
 elif DSM_name=="100X100_Paris":
     DSM = get_DSM_Paris()
     SIZE_X=100
     SIZE_Y=100
-    FIRE_RANGE = 15
+    FIRE_RANGE = 10
     MAX_STEPS_PER_EPISODE = 250
+    SIZE_X_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
+    SIZE_Y_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
 
 elif DSM_name=="100X100_Boston":
     DSM = get_DSM_Boston()
     SIZE_X=100
     SIZE_Y=100
-    FIRE_RANGE = 15
+    FIRE_RANGE = 10
     MAX_STEPS_PER_EPISODE = 250
+    SIZE_X_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
+    SIZE_Y_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
 # if False:
 #     import matplotlib.pyplot as plt
 #     plt.matshow(DSM)
@@ -83,57 +93,57 @@ elif DSM_name=="100X100_Boston":
 
 
 try:
-    with open('Common/Preprocessing/dictionary_position_los_'+DSM_name+'.pkl', 'rb') as f:
+    with open('Common/Preprocessing/dictionary_position_los_'+DSM_name+'_'+str(FIRE_RANGE)+ '.pkl', 'rb') as f:
         DICT_POS_LOS = pickle.load(f)
 except:
     try:
-        with open('dictionary_position_los_'+DSM_name+'.pkl', 'rb') as f:
+        with open('dictionary_position_los_'+DSM_name+'_'+str(FIRE_RANGE)+'.pkl', 'rb') as f:
             DICT_POS_LOS = pickle.load(f)
     except:
         try:
-            with open('../Common/Preprocessing/dictionary_position_los_'+DSM_name+'.pkl', 'rb') as f:
+            with open('../Common/Preprocessing/dictionary_position_los_'+DSM_name+'_'+str(FIRE_RANGE)+'.pkl', 'rb') as f:
                 DICT_POS_LOS = pickle.load(f)
         except:
             pass
 
 try:
-    with open('Common/Preprocessing/dictionary_position_no_los_' + DSM_name + '.pkl', 'rb') as f:
+    with open('Common/Preprocessing/dictionary_position_no_los_' + DSM_name+ '_'+str(FIRE_RANGE)+ '.pkl', 'rb') as f:
         DICT_POS_NO_LOS = pickle.load(f)
 except:
     try:
-        with open('dictionary_position_no_los_' +DSM_name+ '.pkl', 'rb') as f:
+        with open('dictionary_position_no_los_' +DSM_name+'_'+str(FIRE_RANGE)+ '.pkl', 'rb') as f:
             DICT_POS_NO_LOS = pickle.load(f)
     except:
         try:
-            with open('../Common/Preprocessing/dictionary_position_no_los_' +DSM_name+ '.pkl', 'rb') as f:
+            with open('../Common/Preprocessing/dictionary_position_no_los_' +DSM_name+ '_'+str(FIRE_RANGE)+'.pkl', 'rb') as f:
                 DICT_POS_NO_LOS = pickle.load(f)
         except:
             pass
 
 try:
-    with open('Common/Preprocessing/dictionary_dominating_points_'+DSM_name+'.pkl', 'rb') as f:
+    with open('Common/Preprocessing/dictionary_dominating_points_'+DSM_name+'_'+str(FIRE_RANGE)+'.pkl', 'rb') as f:
         DICT_DOMINATING_POINTS = pickle.load(f)
 except:
     try:
-        with open('dictionary_dominating_points_'+DSM_name+'.pkl', 'rb') as f:
+        with open('dictionary_dominating_points_'+DSM_name+'_'+str(FIRE_RANGE)+'.pkl', 'rb') as f:
             DICT_DOMINATING_POINTS = pickle.load(f)
     except:
         try:
-            with open('../Common/Preprocessing/dictionary_dominating_points_'+DSM_name+'.pkl','rb') as f:
+            with open('../Common/Preprocessing/dictionary_dominating_points_'+DSM_name+'_'+str(FIRE_RANGE)+'.pkl','rb') as f:
                 DICT_DOMINATING_POINTS = pickle.load(f)
         except:
             pass
 
 try:
-    with open('Common/Preprocessing/dictionary_lose_points_'+DSM_name+'.pkl', 'rb') as f:
+    with open('Common/Preprocessing/dictionary_lose_points_'+DSM_name+'_'+str(FIRE_RANGE)+'.pkl', 'rb') as f:
         DICT_LOSE_POINTS = pickle.load(f)
 except:
     try:
-        with open('dictionary_lose_points_'+DSM_name+'.pkl', 'rb') as f:
+        with open('dictionary_lose_points_'+DSM_name+'_'+str(FIRE_RANGE)+'.pkl', 'rb') as f:
             DICT_LOSE_POINTS = pickle.load(f)
     except:
         try:
-            with open('../Common/Preprocessing/dictionary_lose_points_'+DSM_name+'.pkl', 'rb') as f:
+            with open('../Common/Preprocessing/dictionary_lose_points_'+DSM_name+'_'+str(FIRE_RANGE)+'.pkl', 'rb') as f:
                 DICT_LOSE_POINTS = pickle.load(f)
         except:
             pass
@@ -268,7 +278,7 @@ EVALUATE_SAVE_STATS_EVERY = 100
 EVALUATE_PLAYERS_EVERY = 25
 
 # training mode
-IS_TRAINING = True
+IS_TRAINING = False
 UPDATE_RED_CONTEXT = True
 UPDATE_BLUE_CONTEXT = True
 

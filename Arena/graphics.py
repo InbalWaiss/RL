@@ -3,8 +3,8 @@ import os
 import cv2
 import matplotlib.pyplot as plt
 
-from gym_combat.envs.Arena import Environment
-from gym_combat.envs.Arena.helper_funcs import *
+from Arena import Environment
+from Arena.helper_funcs import *
 from time import sleep
 
 
@@ -100,7 +100,7 @@ def save_win_statistics(win_array, blue_epsilon_values, save_folder_path, plot_e
     moving_avg = np.convolve(blue_epsilon_values, np.ones((plot_every,)) / plot_every, mode='valid')
     axs[1, 0].plot([i for i in range(len(moving_avg))], moving_avg)
     axs[1, 0].set_title(f"Epsilon value per episode", fontsize=12, fontweight='bold', color='black')
-    axs[1, 0].axis([0, len(steps_per_episode), -0.1, 1.1])
+    axs[1, 0].axis([0, len(moving_avg_win_blue), -0.1, 1.1])
     axs[1, 0].set(xlabel="episode", ylabel="epsilon")
 
     axs[1, 1].plot(moving_avg_win_Tie)
@@ -283,6 +283,28 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
     cv2.putText(informative_env, f"No Winner : {tie_count}", botoomLeftCornerOfText, font, fontScale,
                 dict_of_colors_for_graphics[PURPLE_N], 0,
                 cv2.LINE_AA)
+
+    if BB_STATE:
+        start_x = np.max([0,blue.x - FIRE_RANGE - BB_MARGIN])
+        end_x = np.min([blue.x + FIRE_RANGE + BB_MARGIN+1, SIZE_X])
+        start_y = np.max([0,blue.y - FIRE_RANGE - BB_MARGIN])
+        end_y = np.min([blue.y + FIRE_RANGE + BB_MARGIN+1, SIZE_Y])
+        informative_env[(start_x + margin_x) * const: (end_x + margin_x) * const + const,
+        (start_y + margin_y) * const: (end_y + margin_y) * const + const] += 100
+
+        # set the players as circles
+        radius = int(np.ceil(const / 2))
+        thickness = -1
+        # set the red player
+        center_cord_red_x = (red.x + margin_x) * const + radius
+        center_cord_red_y = (red.y + margin_y) * const + radius
+        red_color = dict_of_colors_for_graphics[RED_N]
+        cv2.circle(informative_env, (center_cord_red_y, center_cord_red_x), radius, red_color, thickness)
+        # set the blue player
+        center_cord_blue_x = (blue.x + margin_x) * const + radius
+        center_cord_blue_y = (blue.y + margin_y) * const + radius
+        blue_color = dict_of_colors_for_graphics[BLUE_N]
+        cv2.circle(informative_env, (center_cord_blue_y, center_cord_blue_x), radius, blue_color, thickness)
 
     cv2.imshow("informative_env", np.array(informative_env))  # show it!
     if write_file:

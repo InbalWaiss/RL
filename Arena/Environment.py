@@ -466,23 +466,6 @@ class Episode():
         if self.show and USE_DISPLAY:
             print_episode_graphics(env, self, last_step_number, save_file)
 
-    def get_image(self, env, image_for_red = False):
-        image = np.zeros((SIZE_X, SIZE_Y, 3), dtype=np.uint8) # starts an rbg of small world
-        if image_for_red: #switch the blue and red colors
-            image[env.red_player.x][env.red_player.y] = dict_of_colors_for_graphics[BLUE_N]
-            image[env.blue_player.x][env.blue_player.y] = dict_of_colors_for_graphics[RED_N]
-        else:
-            image[env.blue_player.x][env.blue_player.y] = dict_of_colors_for_graphics[RED_N]
-            image[env.red_player.x][env.red_player.y] = dict_of_colors_for_graphics[BLUE_N]
-        for x in range(SIZE_X):
-            for y in range(SIZE_Y):
-                if DSM[x][y] == 1.:
-                    image[x][y] = dict_of_colors_for_graphics[GREY_N]
-        img = Image.fromarray(image, 'RGB')
-        # img = img.resize((600, 600))
-        # Image._show(img)
-        return img
-
 
     def print_info_of_episode(self, env, steps_current_game, blue_epsilon, EVALUATE=False):
         if self.show:

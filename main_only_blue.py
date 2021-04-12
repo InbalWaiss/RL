@@ -72,12 +72,12 @@ if __name__ == '__main__':
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # --DQN Keras
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='conv1(8_8_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_2001_  18.60max_  -2.10avg_ -25.00min__1618193469.model')
-    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
-    #                                                     path_model_to_load='conv1(2_2_1_32)_flatten_FC2-relu_FC4-elu_fc__blue_305001_  20.00max_  18.00avg_  -1.60min__1618203251.model')
+    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='conv1(8_8_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_2001_  18.60max_  -2.10avg_ -25.00min__1618193469.model')
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
+                                                        path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_300001_  20.00max_  17.11avg_  -8.50min__1618249285.model')
 
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
-    #                                                     path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_1050001_  18.00max_  15.60avg_ -26.50min__1616609908.model')
+    #                                                     path_model_to_load='conv1(3_3_1_32)_flatten_FC2-relu_FC4-elu_fc__blue_302501_  20.00max_  17.10avg_  -1.90min__1618239857.model')
 
     #flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
@@ -168,7 +168,6 @@ if __name__ == '__main__':
             reward_step_blue, reward_step_red = env.handle_reward(steps_current_game)
 
 
-            assert reward_step_blue==-MOVE_PENALTY or reward_step_blue==WIN_REWARD
             observation_for_blue_s1: State = env.get_observation_for_blue()
             blue_decision_maker.update_context(observation_for_blue_s0, action_blue, reward_step_blue, observation_for_blue_s1,
                                                current_episode.is_terminal, EVALUATE)

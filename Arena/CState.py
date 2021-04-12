@@ -45,7 +45,46 @@ class State(object):
                 if DSM[x][y] == 1.:
                     env[x][y] = dict_of_colors_for_state[GREY_N]
 
+        if BB_STATE:
+            BB_env = np.zeros((SIZE_X_BB, SIZE_Y_BB, 3), dtype=np.uint8) * 1  # obs=1
+            start_x = np.max([0, self.my_pos._x - FIRE_RANGE - BB_MARGIN])
+            end_x = np.min([self.my_pos._x + FIRE_RANGE + BB_MARGIN + 1, SIZE_X])
+            start_y = np.max([0, self.my_pos._y - FIRE_RANGE - BB_MARGIN])
+            end_y = np.min([self.my_pos._y + FIRE_RANGE + BB_MARGIN + 1, SIZE_Y])
+
+            if (self.my_pos._x - FIRE_RANGE - BB_MARGIN) >= 0:
+                start_ind_x_BB = 0
+            else:
+                start_ind_x_BB = -(self.my_pos._x - FIRE_RANGE - BB_MARGIN)
+
+            if (self.my_pos._x + FIRE_RANGE + BB_MARGIN) >= SIZE_X:
+                end_ind_x_BB = (SIZE_X - 1) - (self.my_pos._x + FIRE_RANGE + BB_MARGIN)
+            else:
+                end_ind_x_BB = SIZE_X_BB
+
+            if (self.my_pos._y - FIRE_RANGE - BB_MARGIN) >= 0:
+                start_ind_y_BB = 0
+            else:
+                start_ind_y_BB = -(self.my_pos._y - FIRE_RANGE - BB_MARGIN)
+
+            if (self.my_pos._y + FIRE_RANGE + BB_MARGIN) >= SIZE_Y:
+                end_ind_y_BB = (SIZE_Y - 1) - (self.my_pos._y + FIRE_RANGE + BB_MARGIN)
+            else:
+                end_ind_y_BB = SIZE_Y_BB
+
+            BB_env[start_ind_x_BB:end_ind_x_BB, start_ind_y_BB:end_ind_y_BB] = env[start_x:end_x, start_y:end_y]
+
+            if False:
+                plt.matshow(env)
+                plt.show()
+                plt.matshow(BB_env)
+                plt.show()
+
+
+            env = BB_env
+
         return env
+
 
 def print_env(env):
     # print state for debug
