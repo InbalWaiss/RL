@@ -363,7 +363,7 @@ class Environment(object):
 
         save_reward_stats(self.save_folder_path, self.SHOW_EVERY, self.episodes_rewards_blue, self.episodes_rewards_red, self.steps_per_episode, self.blue_epsilon_values)
 
-        save_win_statistics(self.win_array, self.save_folder_path, self.SHOW_EVERY)
+        save_win_statistics(self.win_array,  self.blue_epsilon_values, self.save_folder_path, self.SHOW_EVERY)
 
     def data_for_statistics(self, episode_reward_blue, episode_reward_red, steps_current_game, blue_epsilon):
         self.episodes_rewards_blue.append(episode_reward_blue)

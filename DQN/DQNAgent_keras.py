@@ -232,21 +232,29 @@ class decision_maker_DQN_keras:
         with tf.variable_scope(model_name):
             input_data = Input(shape=input_shape, name="input")
             if mode == "linear":
+                # #version 4 elu:
+                # flatten_hidden = Flatten(name="flatten")(input_data)
+                # FC_1 = Dense(512, activation='elu', name='FC1-elu')(flatten_hidden)
+                # FC_2 = Dense(512, activation='elu', name='FC2-elu')(FC_1)
+                # FC_3 = Dense(512, activation='elu', name='FC3-elu')(FC_2)
+                # FC_4 = Dense(512, activation='elu', name='FC4-elu')(FC_3)
+                # output = Dense(num_actions, activation='elu', name="output")(FC_4)
+
                 #version 4 elu:
                 flatten_hidden = Flatten(name="flatten")(input_data)
-                FC_1 = Dense(512, activation='elu', name='FC1-elu')(flatten_hidden)
-                FC_2 = Dense(512, activation='elu', name='FC2-elu')(FC_1)
-                FC_3 = Dense(512, activation='elu', name='FC3-elu')(FC_2)
+                FC_1 = Dense(1024, activation='elu', name='FC1-elu')(flatten_hidden)
+                FC_2 = Dense(1024, activation='elu', name='FC2-elu')(FC_1)
+                FC_3 = Dense(1024, activation='elu', name='FC3-elu')(FC_2)
                 FC_4 = Dense(512, activation='elu', name='FC4-elu')(FC_3)
                 output = Dense(num_actions, activation='elu', name="output")(FC_4)
 
             else:
                 if not (args.recurrent):
-                    # # # version 1:
-                    # h1 = Convolution2D(32, (8, 8), strides=4, activation="relu", name="conv1")(input_data)
-                    # h2 = Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2")(h1)
-                    # h3 = Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv3")(h2)
-                    # context = Flatten(name="flatten")(h3)
+                    # # version 1:
+                    h1 = Convolution2D(32, (8, 8), strides=4, activation="relu", name="conv1")(input_data)
+                    h2 = Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2")(h1)
+                    h3 = Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv3")(h2)
+                    context = Flatten(name="flatten")(h3)
 
                     # # version 2:
                     # conv1 = Convolution2D(1, (5, 5), strides=1, activation="elu", name="conv1")(input_data)
@@ -255,11 +263,11 @@ class decision_maker_DQN_keras:
                     # context = Dense(512, activation='elu', name='FC4-elu')(FC_2)
 
                     # version 3:
-                    conv1 = Convolution2D(32, (5, 5), strides=1, activation="relu", name="conv1")(input_data)
-                    flatten = Flatten(name="flatten")(conv1)
-                    FC_2 = Dense(512, activation='relu', name='FC2-relu')(flatten)
-                    FC_3 = Dense(512, activation='relu', name='FC3-relu')(FC_2)
-                    context = Dense(512, activation='elu', name='FC4-elu')(FC_3)
+                    # conv1 = Convolution2D(32, (5, 5), strides=1, activation="relu", name="conv1")(input_data)
+                    # flatten = Flatten(name="flatten")(conv1)
+                    # FC_2 = Dense(512, activation='relu', name='FC2-relu')(flatten)
+                    # FC_3 = Dense(512, activation='relu', name='FC3-relu')(FC_2)
+                    # context = Dense(512, activation='elu', name='FC4-elu')(FC_3)
 
                 # else:
                 #     print('>>>> Defining Recurrent Modules...')

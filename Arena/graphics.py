@@ -3,8 +3,8 @@ import os
 import cv2
 import matplotlib.pyplot as plt
 
-from Arena import Environment
-from Arena.helper_funcs import *
+from gym_combat.envs.Arena import Environment
+from gym_combat.envs.Arena.helper_funcs import *
 from time import sleep
 
 
@@ -46,13 +46,13 @@ def save_reward_stats(save_folder_path, plot_every,  win_array_blue, win_array_r
     # Blue reward:
     axs[0, 0].plot([i for i in range(len(moving_avg_blue))], moving_avg_blue)
     axs[0, 0].set_title(f"Episode rewards BLUE player", fontsize=12, fontweight='bold', color='blue')
-    axs[0, 0].axis([0, len(win_array_blue), (reward_lower_bound + 10 / np.max([reward_lower_bound,1])),
+    axs[0, 0].axis([0, len(win_array_blue), (reward_lower_bound - 10 / np.max([reward_lower_bound,1])),
                     (reward_upper_bound + 10 / np.max([reward_upper_bound,1]))])
     axs[0, 0].set(xlabel="episode #", ylabel=f"Reward {SHOW_EVERY}ma")
     # Red reward:
     axs[0, 1].plot([i for i in range(len(moving_avg_red))], moving_avg_red)
     axs[0, 1].set_title(f"Episode rewards Red player", fontsize=12, fontweight='bold', color='red')
-    axs[0, 1].axis([0, len(win_array_red), (reward_lower_bound + 10 / np.max([reward_lower_bound,1])),
+    axs[0, 1].axis([0, len(win_array_red), (reward_lower_bound - 10 / np.max([reward_lower_bound,1])),
                     int(reward_upper_bound + 10 / np.max([reward_upper_bound,1]))])
     axs[0, 1].set(xlabel="episode #", ylabel=f"Reward {SHOW_EVERY}ma")
     # Steps:
@@ -72,7 +72,7 @@ def save_reward_stats(save_folder_path, plot_every,  win_array_blue, win_array_r
     plt.close()
     #plt.show()
 
-def save_win_statistics(win_array, save_folder_path, plot_every):
+def save_win_statistics(win_array, blue_epsilon_values, save_folder_path, plot_every):
     win_array = np.array(win_array)
     win_array_blue = (win_array == WinEnum.Blue) * 100
     moving_avg_win_blue = np.convolve(win_array_blue, np.ones((plot_every,)) / plot_every, mode='valid')
@@ -89,18 +89,24 @@ def save_win_statistics(win_array, save_folder_path, plot_every):
     axs[0, 0].plot(moving_avg_win_blue)
     axs[0, 0].set_title('%Blue_win', fontsize=12, fontweight='bold', color='blue')
     axs[0, 0].axis([0, len(moving_avg_win_blue), -5, 105])
+    axs[1, 1].set(xlabel="episode")
 
     axs[0, 1].plot(moving_avg_win_red)
     axs[0, 1].set_title('%Red_win', fontsize=12, fontweight='bold', color='red')
     axs[0, 1].axis([0, len(moving_avg_win_blue), -5, 105])
+    axs[1, 1].set(xlabel="episode")
 
-    axs[1, 0].plot(moving_avg_win_NoWin)
-    axs[1, 0].set_title('%Tie_max_num_steps', fontsize=12, fontweight='bold')
-    axs[1, 0].axis([0, len(moving_avg_win_blue), 5, 105])
+
+    moving_avg = np.convolve(blue_epsilon_values, np.ones((plot_every,)) / plot_every, mode='valid')
+    axs[1, 0].plot([i for i in range(len(moving_avg))], moving_avg)
+    axs[1, 0].set_title(f"Epsilon value per episode", fontsize=12, fontweight='bold', color='black')
+    axs[1, 0].axis([0, len(steps_per_episode), -0.1, 1.1])
+    axs[1, 0].set(xlabel="episode", ylabel="epsilon")
 
     axs[1, 1].plot(moving_avg_win_Tie)
-    axs[1, 1].set_title('%Tie_LOS', fontsize=12, fontweight='bold')
+    axs[1, 1].set_title('%Tie_max_num_steps', fontsize=12, fontweight='bold')
     axs[1, 1].axis([0, len(moving_avg_win_blue), -5, 105])
+    axs[1, 1].set(xlabel="episode")
     plt.savefig(save_folder_path + os.path.sep + 'win_statistics' + str(len(win_array)))
     plt.close()
     # plt.show()
@@ -227,62 +233,8 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
     cv2.putText(informative_env, f"episode #{game_number}", botoomLeftCornerOfText, font, 0.7, color, thickness,
                 cv2.LINE_AA)
 
-    # if env.win_status == WinEnum.NoWin:
-    #     # not terminal state
-    #     botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 45, 20)
-    #     cv2.putText(informative_env, f"steps: {number_of_steps}", botoomLeftCornerOfText, font, fontScale,
-    #                 dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
-    #
-    # elif env.win_status == WinEnum.Done:
-    #     # print who won
-    #     thickness = 2
-    #     botoomLeftCornerOfText_steps = (int(np.floor(SIZE_Y / 2)) * const - 79, 55)
-    #     if number_of_steps==MAX_STEPS_PER_EPISODE:
-    #         botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 60, 30)
-    #         cv2.putText(informative_env, f"both lost...", botoomLeftCornerOfText, font, fontScale,
-    #                     dict_of_colors[PURPLE_N], thickness - 1, cv2.LINE_AA)
-    #         cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
-    #                     dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
-    #     else:
-    #         whos_turn : Color = episode.whos_turn(number_of_steps)
-    #         if whos_turn == Color.Blue:
-    #             botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 50, 30)
-    #             cv2.putText(informative_env, f"BLUE WON!", botoomLeftCornerOfText, font, fontScale,
-    #                         dict_of_colors[BLUE_N],
-    #                         thickness - 1, cv2.LINE_AA)
-    #             cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
-    #                         dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
-    #         else: #reds turn:
-    #             botoomLeftCornerOfText = (int(np.floor(SIZE_Y / 2)) * const - 55, 30)
-    #             cv2.putText(informative_env, f"RED WON!", botoomLeftCornerOfText, font, fontScale,
-    #                         dict_of_colors[RED_N],
-    #                         thickness - 1, cv2.LINE_AA)
-    #             cv2.putText(informative_env, f"after {number_of_steps} steps", botoomLeftCornerOfText_steps, font, 0.7,
-    #                         dict_of_colors[PURPLE_N], 0, cv2.LINE_AA)
-    #     cv2.waitKey(2)
-    #
-    #
-    # else:
-    #     print("who won??")
-    #     print("env.win_status ==", env.win_status)
-
 
     if env.win_status != WinEnum.NoWin:
-    #     # print the dominating point
-    #
-    #     if env.win_status == WinEnum.Red:
-    #         ret_val, red_over_blue_point = can_escape(red, blue)
-    #         informative_env[
-    #         (red_over_blue_point[0] + margin_x) * const + 3: -3 + (red_over_blue_point[0] + margin_x) * const + const,
-    #         (red_over_blue_point[1] + margin_y) * const + 3: -3 + (red_over_blue_point[1] + margin_y) * const + const] = \
-    #         dict_of_colors[DARK_RED_N]
-    #     if env.win_status == WinEnum.Blue:
-    #         ret_val, blue_over_red_point = can_escape(blue, red)
-    #         informative_env[
-    #         (blue_over_red_point[0] + margin_x) * const + 3: -3 + (blue_over_red_point[0] + margin_x) * const + const,
-    #         (blue_over_red_point[1] + margin_y) * const + 3: -3 + (blue_over_red_point[1] + margin_y) * const + const] = \
-    #         dict_of_colors[DARK_BLUE_N]
-
         # print who won
         thickness = 2
         botoomLeftCornerOfText_steps = (int(np.floor(SIZE_Y / 2)) * const - 79, 55)
@@ -339,4 +291,4 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
     if is_terminal:
         sleep(1.2)
     else:
-        sleep(0.1)
+        sleep(0.2)

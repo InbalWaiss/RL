@@ -33,7 +33,7 @@ STR_FOLDER_NAME = "conv_Berlin"
 
 #1 is an obstacle
 DSM_names = {"15X15", "100X100_Berlin", "100X100_Paris", "100X100_Boston"}
-DSM_name = "100X100_Berlin"
+DSM_name ="100X100_Berlin"
 if DSM_name=="15X15":
     DSM = np.array([
         [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],

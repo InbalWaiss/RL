@@ -112,34 +112,13 @@ class Greedy_player(AbsDecisionMaker):
         closest_target = self.find_closest_point_in_enemy_LOS(my_pos, enemy_pos)
 
 
-        if closest_target is None:
+        if closest_target is None or closest_target == np.inf:
             # return random move
             a = AgentAction(np.random.randint(0, NUMBER_OF_ACTIONS))
             return a
 
         path_to_closest_target = self.find_path_to_closest_target(my_pos, closest_target)
 
-
-        # # get first step in path to closest_target
-        # if my_pos in self.all_pairs_shortest_path.keys():
-        #     if closest_target in self.all_pairs_shortest_path[my_pos]:
-        #         path_to_closest_target = self.all_pairs_shortest_path[my_pos][closest_target]
-        #     else:
-        #         if DSM[my_pos]==1 or DSM[closest_target]==1 or (not nx.has_path(self.G, my_pos, closest_target)):
-        #             self.all_pairs_shortest_path[my_pos][closest_target]=[]
-        #         else:
-        #             path_to_closest_target = nx.shortest_path(self.G, my_pos, closest_target)
-        #             self.all_pairs_shortest_path[my_pos][closest_target] = path_to_closest_target
-        # else:
-        #     self.all_pairs_shortest_path[my_pos]={}
-        #     print("first time calc:    my_pos: ",my_pos,  ", closest_target: ",  closest_target)
-        #     if DSM[my_pos] == 1 or DSM[closest_target] == 1 or (not nx.has_path(self.G, my_pos, closest_target)):
-        #         self.all_pairs_shortest_path[my_pos][closest_target] = []
-        #     else:
-        #         path_to_closest_target = nx.shortest_path(self.G, my_pos, closest_target)
-        #         self.all_pairs_shortest_path[my_pos][closest_target] = path_to_closest_target
-        #
-        #
 
 
         #path_to_closest_target = nx.shortest_path(self.G, my_pos, closest_target)
@@ -214,31 +193,6 @@ class Greedy_player(AbsDecisionMaker):
             else:
                 dist_me_point = self.all_pairs_distances[my_pos][point]
 
-        # for point in points_in_enemy_los:
-        #     if my_pos in self.all_pairs_distances.keys():
-        #         if point in self.all_pairs_distances[my_pos].keys():
-        #             dist_me_point = self.all_pairs_distances[my_pos][point]
-        #         else:
-        #             if DSM[my_pos] == 1 or DSM[point] == 1 or (not nx.has_path(self.G, my_pos, point)):
-        #                 dist_me_point = np.Inf
-        #                 self.all_pairs_distances[my_pos][point] = dist_me_point
-        #             else:
-        #                 dist_me_point = nx.shortest_path_length(self.G, my_pos, point)
-        #                 self.all_pairs_distances[my_pos][point] = dist_me_point
-        #             if not point in self.all_pairs_distances.keys():
-        #                 self.all_pairs_distances[point]={}
-        #             self.all_pairs_distances[point][my_pos]= dist_me_point
-        #     else:
-        #         self.all_pairs_distances[my_pos]={}
-        #         if DSM[my_pos] == 1 or DSM[point] == 1 or (not nx.has_path(self.G, my_pos, point)):
-        #             dist_me_point = np.Inf
-        #             self.all_pairs_distances[my_pos][point] = dist_me_point
-        #         else:
-        #             dist_me_point = nx.shortest_path_length(self.G, my_pos, point)
-        #             self.all_pairs_distances[my_pos][point] = dist_me_point
-        #         if not point in self.all_pairs_distances.keys():
-        #             self.all_pairs_distances[point] = {}
-        #         self.all_pairs_distances[point][my_pos] = dist_me_point
 
             if dist_me_point < best_distance:
                 best_distance = dist_me_point
@@ -268,26 +222,6 @@ class Greedy_player(AbsDecisionMaker):
             path_to_closest_target = nx.shortest_path(self.G, my_pos, closest_target)
             self.all_pairs_shortest_path[my_pos][closest_target] = path_to_closest_target
             self.add_to_all_pairs_shortest_path = True
-
-        #
-        #
-        # if my_pos in self.all_pairs_shortest_path.keys():
-        #     if closest_target in self.all_pairs_shortest_path[my_pos]:
-        #         path_to_closest_target = self.all_pairs_shortest_path[my_pos][closest_target]
-        #     else:
-        #         if DSM[my_pos]==1 or DSM[closest_target]==1 or (not nx.has_path(self.G, my_pos, closest_target)):
-        #             self.all_pairs_shortest_path[my_pos][closest_target]=[]
-        #         else:
-        #             path_to_closest_target = nx.shortest_path(self.G, my_pos, closest_target)
-        #             self.all_pairs_shortest_path[my_pos][closest_target] = path_to_closest_target
-        # else:
-        #     self.all_pairs_shortest_path[my_pos]={}
-        #     print("first time calc:    my_pos: ",my_pos,  ", closest_target: ",  closest_target)
-        #     if DSM[my_pos] == 1 or DSM[closest_target] == 1 or (not nx.has_path(self.G, my_pos, closest_target)):
-        #         self.all_pairs_shortest_path[my_pos][closest_target] = []
-        #     else:
-        #         path_to_closest_target = nx.shortest_path(self.G, my_pos, closest_target)
-        #         self.all_pairs_shortest_path[my_pos][closest_target] = path_to_closest_target
 
         return path_to_closest_target
 
