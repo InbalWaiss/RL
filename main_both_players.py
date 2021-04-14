@@ -64,7 +64,7 @@ if __name__ == '__main__':
     #--Greedy:
     #blue_decision_maker = Greedy_player.Greedy_player()
     # --Qtable:
-    blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
+    # blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
     #blue_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker('qtable_blue-600000_penalty_move_-1.pickle')
     # --DQN Basic:
     #blue_decision_maker = DQNAgent.DQNAgent()
@@ -73,8 +73,8 @@ if __name__ == '__main__':
     #blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
     #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_500001_  18.00max_  16.34avg_ -35.50min__1616522209.model')
     #flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123
-    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
-    #                                                     path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_157501_ 120.00max_   4.80avg_   0.00min__1615952583.model')
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
+                                                        path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_612501_  20.00max_  17.63avg_  -1.90min__1618295625.model')
 
     # --DQN Attention
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
@@ -158,9 +158,7 @@ if __name__ == '__main__':
             if not reward_step_red==-MOVE_PENALTY or reward_step_red==WIN_REWARD:
                 print("reward_step_red: ", reward_step_red)
 
-            assert reward_step_red==-MOVE_PENALTY or reward_step_red==WIN_REWARD
             observation_for_red_s1: State = env.get_observation_for_blue()
-            # should be if steps_current_game>1?
             red_decision_maker.update_context(observation_for_red_s0, action_blue, reward_step_blue, observation_for_red_s1,
                                                current_episode.is_terminal, EVALUATE)
 
