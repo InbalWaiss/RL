@@ -205,12 +205,6 @@
       <option name="presentableId" value="Default" />
       <updated>1611132936949</updated>
     </task>
-    <task id="LOCAL‎00035" summary="use danger zone in state">
-      <created>1614490240886</created>
-      <option name="number" value="LOCAL‎00035" />
-      <option name="presentableId" value="LOCAL‎00035" />
-      <updated>1614490240886</updated>
-    </task>
     <task id="LOCAL‎00036" summary="1. not sum zero game&#10;2. flag RED_PLAYER_MOVES&#10;3. less LOS calcs">
       <created>1614490823415</created>
       <option name="number" value="LOCAL‎00036" />
@@ -499,7 +493,13 @@
       <option name="presentableId" value="LOCAL‎00083" />
       <updated>1618252027883</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL‎00084" summary="Berlin DSM">
+      <created>1618371233214</created>
+      <option name="number" value="LOCAL‎00084" />
+      <option name="presentableId" value="LOCAL‎00084" />
+      <updated>1618371233218</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -533,7 +533,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="fire range" />
     <MESSAGE value="1.names of models" />
     <MESSAGE value="4 actions \ 9 actions" />
     <MESSAGE value="more flags" />
@@ -558,7 +557,8 @@
     <MESSAGE value="Greedy preprocess" />
     <MESSAGE value="graphics updated&#10;greedy clenup" />
     <MESSAGE value="BB state" />
-    <option name="LAST_COMMIT_MESSAGE" value="BB state" />
+    <MESSAGE value="Berlin DSM" />
+    <option name="LAST_COMMIT_MESSAGE" value="Berlin DSM" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
