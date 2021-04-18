@@ -1,6 +1,6 @@
 
 from Arena.AbsDecisionMaker import AbsDecisionMaker
-from Common.constants import np, SIZE_X, SIZE_Y, DSM, AgentAction, NUMBER_OF_ACTIONS
+from Common.constants import np, SIZE_X, SIZE_Y, DSM, AgentAction, NUMBER_OF_ACTIONS, FIRE_RANGE, BB_MARGIN
 
 
 class CPoint:
@@ -18,12 +18,12 @@ class Entity:
         self.y = -1
 
     def _choose_random_position(self):
-
         is_obs = True
         while is_obs:
             self.x = np.random.randint(0, SIZE_X)
             self.y = np.random.randint(0, SIZE_Y)
             is_obs = self.is_obs(self.x, self.y)
+
 
     def __str__(self):
         # for debugging purposes

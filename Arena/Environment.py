@@ -63,11 +63,16 @@ class Environment(object):
 
     def reset_players_positions(self, episode_number):
 
-        is_los = True
-        while is_los:
+        legal_start_points = False
+        while not legal_start_points:
             self.blue_player._choose_random_position()
-            self.red_player._choose_random_position()
-            is_los = (self.red_player.x, self.red_player.y) in DICT_POS_LOS[(self.blue_player.x, self.blue_player.y)]
+            if CLOSE_START_POSITION:
+                legal_start_points = self._choose_second_position()
+            else:
+                self.red_player._choose_random_position()
+                is_los = (self.red_player.x, self.red_player.y) in DICT_POS_LOS[
+                    (self.blue_player.x, self.blue_player.y)]
+                legal_start_points = not is_los
 
         if FIXED_START_POINT_RED:
             self.red_player.x = 10
@@ -81,6 +86,34 @@ class Environment(object):
         if self.SHOW_EVERY==1 or episode_number % (self.SHOW_EVERY-1) == 0:
             self.starts_at_win_in_last_SHOW_EVERY_games = 0
 
+    def _choose_second_position(self):
+        first_player_x = self.blue_player.x
+        first_player_y = self.blue_player.y
+        min_cord_x = np.min([np.max([0, first_player_x-2*(FIRE_RANGE + BB_MARGIN)]), SIZE_X ])
+        max_cord_x = np.max([0,  np.min([SIZE_X, first_player_x+2*(FIRE_RANGE + BB_MARGIN)])])
+
+        min_cord_y = np.min([np.max([0, first_player_y-2*(FIRE_RANGE + BB_MARGIN)]), SIZE_X])
+        max_cord_y = np.max([0, np.min([SIZE_Y, first_player_y+2*(FIRE_RANGE + BB_MARGIN)])])
+
+        is_obs = True
+        while is_obs:
+            self.red_player.x = np.random.randint(min_cord_x, max_cord_x)
+            self.red_player.y = np.random.randint(min_cord_y, max_cord_y)
+            is_obs = self.red_player.is_obs(self.red_player.x, self.red_player.y)
+
+        is_los = (self.red_player.x, self.red_player.y) in DICT_POS_LOS[(self.blue_player.x, self.blue_player.y)]
+        if is_los:
+            return False
+
+        has_path = False
+        if (first_player_x, first_player_y) in all_pairs_distances.keys():
+            if (self.red_player.x, self.red_player.y) in all_pairs_distances[(first_player_x, first_player_y)].keys():
+                dist = all_pairs_distances[(first_player_x, first_player_y)][(self.red_player.x, self.red_player.y)]
+                if dist>0:
+                    has_path = True
+        if has_path:
+            return True
+        return False
 
     def update_win_counters(self, steps_current_game):
         if steps_current_game==MAX_STEPS_PER_EPISODE:

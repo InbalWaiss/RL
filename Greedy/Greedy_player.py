@@ -53,8 +53,9 @@ class Greedy_player(AbsDecisionMaker):
         all_pairs_distances_path = './Greedy/all_pairs_distances_' + DSM_name + '___' +  '.pkl'
         if os.path.exists(all_pairs_distances_path):
             with open(all_pairs_distances_path, 'rb') as f:
-                self.all_pairs_distances = pickle.load(f)
-                print("Greedy: all_pairs_distances loaded")
+                # self.all_pairs_distances = pickle.load(f)
+                # print("Greedy: all_pairs_distances loaded")
+                self.all_pairs_distances = all_pairs_distances
 
         all_pairs_shortest_path_path = './Greedy/all_pairs_shortest_path_' + DSM_name + '___' + '.pkl'
         if os.path.exists(all_pairs_shortest_path_path):
@@ -287,15 +288,15 @@ class Greedy_player(AbsDecisionMaker):
     def save_model(self, episodes_rewards, save_folder_path, color):
         if self.add_to_all_pairs_distances:
             with open('./Greedy/all_pairs_distances_' + DSM_name + '_' + str(FIRE_RANGE) + '.pkl', 'wb') as f:
-                pickle.dump(self.all_pairs_distances, f, pickle.HIGHEST_PROTOCOL)
+                pickle.dump(self.all_pairs_distances, f,  protocol=2)
                 self.add_to_all_pairs_distances = False
         if self.add_to_all_pairs_shortest_path:
             with open('./Greedy/all_pairs_shortest_path_' + DSM_name + '_' + str(FIRE_RANGE) + '.pkl', 'wb') as f:
-                pickle.dump(self.all_pairs_shortest_path, f, pickle.HIGHEST_PROTOCOL)
+                pickle.dump(self.all_pairs_shortest_path, f,  protocol=2)
                 self.add_to_all_pairs_shortest_path = False
         if self.add_to_closest_target_dict:
             with open('./Greedy/closest_target_dict_' + DSM_name + '_' + str(FIRE_RANGE) + '.pkl', 'wb') as f:
-                pickle.dump(self.closest_target_dict, f, pickle.HIGHEST_PROTOCOL)
+                pickle.dump(self.closest_target_dict, f,  protocol=2)
                 self.add_to_closest_target_dict = False
 
     def calc_all_pairs_data(self, DSM):
@@ -328,14 +329,23 @@ class Greedy_player(AbsDecisionMaker):
         print("starting all_pairs_distances")
         all_pairs_distances = dict(nx.all_pairs_shortest_path_length(G))
 
-        sfile = bz2.BZ2File('all_pairs_distances_' + DSM_name + '___' + '.pkl', 'wb', 'w')
-        pickle.dump(all_pairs_distances, sfile)
+        with bz2.open('all_pairs_distances_' + DSM_name + '___' + '.pkl', "wb") as f:
+            f.write(all_pairs_distances)
+        # sfile = bz2.BZ2File('all_pairs_distances_' + DSM_name + '___' + '.pkl', 'wb', 'w')
+        # pickle.dump(all_pairs_distances, sfile)
         print("finished all_pairs_distances")
 
-        # print("starting all_pairs_shortest_path")
-        # all_pairs_shortest_path = dict(nx.all_pairs_dijkstra_path(G))
+        with bz2.open('all_pairs_distances_' + DSM_name + '___' + '.pkl', "rb") as f:
+            # Decompress data from file
+            content = f.read()
+        print("dist from (5,5) to (5,6) is: ", content[(5,5)][(5,5)])
+
+        # hugeData = {'key': {'x': 1, 'y': 2}}
+        # with contextlib.closing(bz2.BZ2File('data.json.bz2', 'wb')) as f:
+        #     json.dump(hugeData, f)
+        #
         # with open('all_pairs_shortest_path_' + DSM_name + '___' + '.pkl', 'wb') as f:
-        #     pickle.dump(all_pairs_shortest_path, f, pickle.HIGHEST_PROTOCOL)
+        #     pickle.dump(all_pairs_shortest_path, f, protocol=2)
         # print("finished all_pairs_shortest_path")
         #
         #
@@ -358,7 +368,7 @@ class Greedy_player(AbsDecisionMaker):
                     filtered_data[p1][p2] = all_pairs_distances[p1][p2]
 
         with open('all_pairs_distances_' + DSM_name + '___filtered' + '.pkl', 'wb') as f:
-            pickle.dump(filtered_data, f, pickle.HIGHEST_PROTOCOL)
+            pickle.dump(filtered_data, f,  protocol=2)
 
 
 
@@ -381,8 +391,8 @@ if __name__ == '__main__':
         plt.show(DSM)
 
     GP = Greedy_player()
-    GP.remove_data_obs(DSM)
-    #GP.calc_all_pairs_data(DSM)
+    #GP.remove_data_obs(DSM)
+    GP.calc_all_pairs_data(DSM)
 
     # blue_pos = Position(3, 10)
     # red_pos = Position(10, 3)

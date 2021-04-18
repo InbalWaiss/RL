@@ -99,11 +99,11 @@ class decision_maker_DQN_keras:
         else:
             parser.add_argument('--frame_width', default=SIZE_X, type=int, help='Resized frame width')
             parser.add_argument('--frame_height', default=SIZE_Y, type=int, help='Resized frame height')
-            parser.add_argument('--exploration_steps', default=1000000, type=int,
+            parser.add_argument('--exploration_steps', default=3000000, type=int,
                                 help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
 
 
-        parser.add_argument('--replay_memory_size', default=1000000, type=int, help='Number of replay memory the agent uses for training')
+        parser.add_argument('--replay_memory_size', default=500000, type=int, help='Number of replay memory the agent uses for training')
         parser.add_argument('--target_update_freq', default=10000, type=int, help='The frequency with which the target network is updated')
         parser.add_argument('--train_freq', default=1, type=int, help='The frequency of actions wrt Q-network update')
         parser.add_argument('--save_freq', default=50000, type=int, help='The frequency with which the network is saved')
@@ -253,19 +253,20 @@ class decision_maker_DQN_keras:
 
                 #version 4 elu:
                 flatten_hidden = Flatten(name="flatten")(input_data)
-                FC_1 = Dense(1024, activation='elu', name='FC1-elu')(flatten_hidden)
-                FC_2 = Dense(1024, activation='elu', name='FC2-elu')(FC_1)
-                FC_3 = Dense(1024, activation='elu', name='FC3-elu')(FC_2)
+                FC_1 = Dense(512, activation='elu', name='FC1-elu')(flatten_hidden)
+                FC_2 = Dense(512, activation='elu', name='FC2-elu')(FC_1)
+                FC_3 = Dense(512, activation='elu', name='FC3-elu')(FC_2)
                 FC_4 = Dense(512, activation='elu', name='FC4-elu')(FC_3)
                 output = Dense(num_actions, activation='elu', name="output")(FC_4)
 
             else:
                 if not (args.recurrent):
-                    # # # version 1:
-                    # h1 = Convolution2D(32, (8, 8), strides=4, activation="relu", name="conv1")(input_data)
-                    # h2 = Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2")(h1)
-                    # h3 = Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv3")(h2)
-                    # context = Flatten(name="flatten")(h3)
+                    # # version 1:
+                    #h1 = Convolution2D(32, (8, 8), strides=4, activation="relu", name="conv1")(input_data)
+                    h1 = Convolution2D(32, (6, 6), strides=3, activation="relu", name="conv1")(input_data)
+                    h2 = Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2")(h1)
+                    h3 = Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv3")(h2)
+                    context = Flatten(name="flatten")(h3)
 
                     # # version 2:
                     # conv1 = Convolution2D(1, (5, 5), strides=1, activation="elu", name="conv1")(input_data)
@@ -273,13 +274,19 @@ class decision_maker_DQN_keras:
                     # FC_2 = Dense(512, activation='elu', name='FC2-elu')(flatten)
                     # context = Dense(512, activation='elu', name='FC4-elu')(FC_2)
 
-                    # version 3:
-                    conv1 = Convolution2D(32, (2, 2), strides=1, activation="relu", name="conv1")(input_data)
-                    flatten = Flatten(name="flatten")(conv1)
-                    FC_2 = Dense(128, activation='relu', name='FC2-relu')(flatten)
-                    FC_3 = Dense(128, activation='relu', name='FC3-relu')(FC_2)
-                    context = Dense(128, activation='elu', name='FC4-elu')(FC_3)
+                    # # version 3:
+                    # conv1 = Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv1")(input_data)
+                    # flatten = Flatten(name="flatten")(conv1)
+                    # FC_2 = Dense(256, activation='relu', name='FC2-relu')(flatten)
+                    # FC_3 = Dense(256, activation='relu', name='FC3-relu')(FC_2)
+                    # context = Dense(256, activation='elu', name='FC4-elu')(FC_3)
 
+                    # # version 3:
+                    # conv1 = Convolution2D(64, (2, 2), strides=1, activation="relu", name="conv1")(input_data)
+                    # flatten = Flatten(name="flatten")(conv1)
+                    # FC_2 = Dense(256, activation='relu', name='FC2-relu')(flatten)
+                    # FC_3 = Dense(256, activation='relu', name='FC3-relu')(FC_2)
+                    # context = Dense(256, activation='elu', name='FC4-elu')(FC_3)
 
 
                 # else:

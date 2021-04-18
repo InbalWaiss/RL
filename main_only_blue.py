@@ -51,14 +51,6 @@ def print_states(observation_for_blue_s0, observation_for_blue_s1):
 if __name__ == '__main__':
 
     env = Environment(IS_TRAINING)
-    print("Starting red player")
-    ### Red Decision Maker
-    #red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker()
-    red_decision_maker = Greedy_player.Greedy_player()#path_model_to_load='Greedy_'+DSM_name+'.pkl')
-    #red_decision_maker = Qtable_DecisionMaker.Qtable_DecisionMaker(UPDATE_CONTEXT=False , path_model_to_load="qtable_red-1000000_penalty_move_-1.pickle")
-    #red_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=False,
-    #                                                    path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__red_25001_  -6.00max_ -72.99avg_-100.00min__1615541339.model')
-    #red_decision_maker = DQNAgent_keras.DQNAgent_keras()
 
     print("Starting Blue player")
     ### Blue Decision Maker
@@ -71,13 +63,13 @@ if __name__ == '__main__':
     #blue_decision_maker = DQNAgent.DQNAgent()
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # --DQN Keras
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
     #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='conv1(8_8_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_2001_  18.60max_  -2.10avg_ -25.00min__1618193469.model')
-    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
-    #                                                    path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_300001_  20.00max_  17.11avg_  -8.50min__1618249285.model')
-
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
-    #                                                     path_model_to_load='conv1(3_3_1_32)_flatten_FC2-relu_FC4-elu_fc__blue_302501_  20.00max_  17.10avg_  -1.90min__1618239857.model')
+    #                                                    path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_26001_  19.60max_   2.09avg_  -3.90min__1618579726.model')
+
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
+                                                        path_model_to_load='conv1(6_6_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_107501_  20.00max_   2.71avg_  -5.70min__1618548419.model')
 
     #flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
@@ -87,6 +79,12 @@ if __name__ == '__main__':
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention()
     # blue_decision_maker = DQNAgent_spatioalAttention.DQNAgent_spatioalAttention(UPDATE_CONTEXT=True, path_model_to_load='statistics/18_02_06_54_DQNAgent_spatioalAttention_Q_table_1000000/qnet1000000.cptk')
     # blue_decision_maker = DQNAgent_temporalAttention.DQNAgent_temporalAttention()
+
+
+    print("Starting red player")
+    ### Red Decision Maker
+    red_decision_maker = Greedy_player.Greedy_player()
+
 
 
     env.blue_player = Entity(blue_decision_maker)
@@ -190,7 +188,7 @@ if __name__ == '__main__':
         env.update_win_counters(steps_current_game)
         env.data_for_statistics(current_episode.episode_reward_blue, current_episode.episode_reward_red, steps_current_game, blue_decision_maker.get_epsolon())
         if current_episode.episode_number % SAVE_STATS_EVERY == 0:
-            if blue_decision_maker.type()== AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:
+            if False:#blue_decision_maker.type()== AgentType.DQN_keras or blue_decision_maker.type() == AgentType.DQN_basic:
                 blue_decision_maker._decision_maker.print_model(observation_for_blue_s0, episode, "conv")#env.save_folder_path)
 
 

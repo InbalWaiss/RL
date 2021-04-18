@@ -1,5 +1,5 @@
 from enum import IntEnum
-
+from PIL import Image
 import numpy as np
 from os import path
 import pickle
@@ -22,22 +22,25 @@ FIXED_START_POINT_RED = False
 FIXED_START_POINT_BLUE = False
 
 FIRE_RANGE_FLAG = True
-FIRE_RANGE = 7
 
 #image state mode
-IMG_STATE_MODE = 'L'
-#IMG_STATE_MODE= 'P'
-BB_STATE = True
-BB_MARGIN = 3
-SIZE_X_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
-SIZE_Y_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
+IMG_STATE_MODE = 'L' #'P'
+CLOSE_START_POSITION = True
 
-FULLY_CONNECTED = False
-STR_FOLDER_NAME = "Berlin_BB_conv32(2X2)"
+FULLY_CONNECTED = True
+STR_FOLDER_NAME = "Berlin_BB_FC512_FC512_FC512_FC512" #"Berlin_BB_conv32(2X2)"
 
 #1 is an obstacle
 DSM_names = {"15X15", "100X100_Berlin", "100X100_Paris", "100X100_Boston"}
 DSM_name = "100X100_Berlin"
+
+COMMON_PATH = path.dirname(path.realpath(__file__))
+MAIN_PATH = path.dirname(COMMON_PATH)
+OUTPUT_DIR = path.join(MAIN_PATH, 'Arena')
+STATS_RESULTS_RELATIVE_PATH = path.join(OUTPUT_DIR, '../Arena/statistics')
+RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'Qtable/trained_agents')
+
+
 if DSM_name=="15X15":
     DSM = np.array([
         [0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
@@ -58,16 +61,29 @@ if DSM_name=="15X15":
     ])
     SIZE_X = 15
     SIZE_Y = 15
+    FIRE_RANGE = 7
     MAX_STEPS_PER_EPISODE = 100
+    BB_STATE = False
 
 elif DSM_name=="100X100_Berlin":
+    # BERLIN_DSM_PATH_1 = path.join(MAIN_PATH, 'Common')
+    # BERLIN_DSM_PATH_2 = path.join(BERLIN_DSM_PATH_1, 'maps')
+    # BERLIN_DSM_PATH_3 = path.join(BERLIN_DSM_PATH_2, 'Berlin')
+    # BERLIN_DSM_PATH_4 = path.join(BERLIN_DSM_PATH_3, 'berlin_100_0_1_inflated.png')
     DSM = get_DSM_berlin()
     SIZE_X=100
     SIZE_Y=100
     FIRE_RANGE = 10
     MAX_STEPS_PER_EPISODE = 250
+    BB_STATE = True
+    BB_MARGIN = 3
     SIZE_X_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
     SIZE_Y_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
+    all_pairs_distances_path = './Greedy/all_pairs_distances_' + DSM_name + '___' + '.pkl'
+    if path.exists(all_pairs_distances_path):
+        with open(all_pairs_distances_path, 'rb') as f:
+            all_pairs_distances = pickle.load(f)
+            print("all_pairs_distances loaded")
 
 elif DSM_name=="100X100_Paris":
     DSM = get_DSM_Paris()
@@ -75,6 +91,8 @@ elif DSM_name=="100X100_Paris":
     SIZE_Y=100
     FIRE_RANGE = 10
     MAX_STEPS_PER_EPISODE = 250
+    BB_STATE = True
+    BB_MARGIN = 3
     SIZE_X_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
     SIZE_Y_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
 
@@ -84,6 +102,8 @@ elif DSM_name=="100X100_Boston":
     SIZE_Y=100
     FIRE_RANGE = 10
     MAX_STEPS_PER_EPISODE = 250
+    BB_STATE = True
+    BB_MARGIN = 3
     SIZE_X_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
     SIZE_Y_BB = 2 * FIRE_RANGE + 2 * BB_MARGIN + 1
 # if False:
@@ -258,11 +278,6 @@ class Color(IntEnum):
     Red = 2
 
 #save information
-COMMON_PATH = path.dirname(path.realpath(__file__))
-MAIN_PATH = path.dirname(COMMON_PATH)
-OUTPUT_DIR = path.join(MAIN_PATH, 'Arena')
-STATS_RESULTS_RELATIVE_PATH = path.join(OUTPUT_DIR, '../Arena/statistics')
-RELATIVE_PATH_HUMAN_VS_MACHINE_DATA = path.join(MAIN_PATH, 'Qtable/trained_agents')
 
 
 USE_DISPLAY = True
