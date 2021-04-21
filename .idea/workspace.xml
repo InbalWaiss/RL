@@ -2,17 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="main both players">
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/conv1(2_2_1_32)_flatten_FC2-relu_FC3-relu_FC4-elu_fc__blue_20001_  20.00max_   4.28avg_  -4.60min__1618433528.model" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_26001_  19.60max_   2.09avg_  -3.90min__1618579726.model" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/pre_pro.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/CState.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Entity.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/pre_pro.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/pre_pro.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,8 +186,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main_only_blue" />
-        <item itemvalue="Python.pre_los_calc" />
         <item itemvalue="Python.pre_pro" />
+        <item itemvalue="Python.pre_los_calc" />
         <item itemvalue="Python.Greedy_player" />
         <item itemvalue="Python.DQNAgent_keras" />
       </list>
@@ -206,12 +201,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1611132936949</updated>
-    </task>
-    <task id="LOCAL‎00037" summary="save_win_statistics added">
-      <created>1614504673409</created>
-      <option name="number" value="LOCAL‎00037" />
-      <option name="presentableId" value="LOCAL‎00037" />
-      <updated>1614504673409</updated>
     </task>
     <task id="LOCAL‎00038" summary="dominating points added to state">
       <created>1614605481546</created>
@@ -501,7 +490,13 @@
       <option name="presentableId" value="LOCAL‎00085" />
       <updated>1618371276062</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL‎00086" summary="Berlin DSM">
+      <created>1618765384413</created>
+      <option name="number" value="LOCAL‎00086" />
+      <option name="presentableId" value="LOCAL‎00086" />
+      <updated>1618765384417</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -635,6 +630,26 @@
           <url>file://$PROJECT_DIR$/SingleAgentCombat-main/pre_pro.py</url>
           <line>110</line>
           <option name="timeStamp" value="781" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/pre_pro.py</url>
+          <line>134</line>
+          <option name="timeStamp" value="829" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/pre_pro.py</url>
+          <line>187</line>
+          <option name="timeStamp" value="832" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py</url>
+          <line>226</line>
+          <option name="timeStamp" value="850" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py</url>
+          <line>545</line>
+          <option name="timeStamp" value="868" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
