@@ -241,8 +241,11 @@ class ReplayMemory:
 
         while len(indexes) < batch_size:
             index = np.random.randint(1, end)
-            if self.terminals[index-1] == True:
+            if self.terminals[index]==True and self.terminals[index+1] == False:
                 continue
+            if self.terminals[index]==True and self.terminals[index+1] == True:
+                if self.rewards[index]==0:
+                    continue
             indexes.append(index)
 
         counter=0

@@ -28,11 +28,11 @@ IMG_STATE_MODE = 'L' #'P'
 CLOSE_START_POSITION = True
 
 FULLY_CONNECTED = True
-STR_FOLDER_NAME = "Berlin_BB" #"15X15_FC512_FC512_FC512_FC512"
+STR_FOLDER_NAME =  "Berlin_BB" #"15X15_baselines"
 
 #1 is an obstacle
 DSM_names = {"15X15", "100X100_Berlin", "100X100_Paris", "100X100_Boston"}
-DSM_name = "100X100_Berlin"#"15X15"
+DSM_name = "100X100_Berlin" #"15X15"
 
 COMMON_PATH = path.dirname(path.realpath(__file__))
 MAIN_PATH = path.dirname(COMMON_PATH)

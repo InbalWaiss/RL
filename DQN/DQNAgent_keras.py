@@ -396,7 +396,7 @@ class decision_maker_DQN_keras:
             # adding last frame only to save last state
             last_frame_state = self.atari_processor.process_state_for_memory(state)
             last_frame_new_state = self.atari_processor.process_state_for_memory(new_state)
-            self.memory.append(last_frame_state, action, reward, last_frame_new_state, is_terminal)
+            #self.memory.append(last_frame_state, action, reward, last_frame_new_state, is_terminal)
             self.atari_processor.reset()
             self.history_processor.reset()
             if not self.burn_in:
@@ -484,7 +484,10 @@ class decision_maker_DQN_keras:
             states = np.stack([x.state for x in samples])
             actions = np.asarray([x.action for x in samples])
             action_mask = np.zeros((batch_size, self.num_actions))
-            action_mask[range(batch_size), actions] = 1.0
+            try:
+                action_mask[range(batch_size), actions] = 1.0
+            except:
+                print("WTF")
 
             next_states = np.stack([x.next_state for x in samples])
             mask = np.asarray([1 - int(x.is_terminal) for x in samples])
@@ -511,6 +514,8 @@ class decision_maker_DQN_keras:
     # (state, action, reward, new_state, is_terminal)
     def update_replay_memory(self, state, action, reward, new_state, is_terminal):
         self.memory.append(state, action, reward, new_state, is_terminal)
+        if is_terminal: # adding last frame only to save last frame
+            self.memory.append(new_state, action, 0, new_state, is_terminal)
 
 
 
@@ -644,12 +649,12 @@ class DQNAgent_keras:
         return AgentAction(action)
 
     def update_context(self, state, action, reward, new_state, is_terminal, EVALUATE=True):
+        previous_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(state)
+        new_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(new_state)
+        transition = (previous_state_for_network, action, reward, new_state_for_network, is_terminal)
+        self._decision_maker.update_replay_memory(previous_state_for_network, action, reward, new_state_for_network,
+                                                  is_terminal)
         if self.UPDATE_CONTEXT and not EVALUATE:
-            previous_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(state)
-            new_state_for_network = self._decision_maker.atari_processor.process_state_for_memory(new_state)
-            transition = (previous_state_for_network, action, reward, new_state_for_network, is_terminal)
-            self._decision_maker.update_replay_memory(previous_state_for_network, action, reward, new_state_for_network, is_terminal)
-
             self._decision_maker.train(state, action, reward, new_state, is_terminal)
 
 
