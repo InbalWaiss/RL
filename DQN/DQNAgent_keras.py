@@ -261,12 +261,18 @@ class decision_maker_DQN_keras:
 
             else:
                 if not (args.recurrent):
-                    # # version 1:
-                    #h1 = Convolution2D(32, (8, 8), strides=4, activation="relu", name="conv1")(input_data)
-                    h1 = Convolution2D(32, (6, 6), strides=3, activation="relu", name="conv1")(input_data)
-                    h2 = Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2")(h1)
-                    h3 = Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv3")(h2)
-                    context = Flatten(name="flatten")(h3)
+                    if DSM_name=="15X15":
+                        h1 = Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2")(input_data)
+                        h2 = Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv3")(h1)
+                        context = Flatten(name="flatten")(h2)
+
+                    else:
+                        # # version 1:
+                        #h1 = Convolution2D(32, (8, 8), strides=4, activation="relu", name="conv1")(input_data)
+                        h1 = Convolution2D(32, (6, 6), strides=3, activation="relu", name="conv1")(input_data)
+                        h2 = Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2")(h1)
+                        h3 = Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv3")(h2)
+                        context = Flatten(name="flatten")(h3)
 
                     # # version 2:
                     # conv1 = Convolution2D(1, (5, 5), strides=1, activation="elu", name="conv1")(input_data)
@@ -401,17 +407,21 @@ class decision_maker_DQN_keras:
 
         if not self.burn_in: # enough samples in replay buffer
             if self.numberOfSteps % self.train_freq == 0:
-                # action_state = self.history_processor.process_state_for_network(self.atari_processor.process_state_for_network(state))
-                # processed_reward = self.atari_processor.process_reward(reward)
-                # processed_next_state = self.atari_processor.process_state_for_network(new_state)
-                # action_next_state = np.dstack((action_state, processed_next_state))
-                # action_next_state = action_next_state[:, :, 1:]
-                # current_sample = Sample(action_state, int(action), processed_reward, action_next_state, is_terminal)
+                action_state = self.history_processor.process_state_for_network(self.atari_processor.process_state_for_network(state))
+                processed_reward = self.atari_processor.process_reward(reward)
+                processed_next_state = self.atari_processor.process_state_for_network(new_state)
+                action_next_state = np.dstack((action_state, processed_next_state))
+                action_next_state = action_next_state[:, :, 1:]
+                current_sample = Sample(action_state, int(action), processed_reward, action_next_state, is_terminal)
 
 
-                last_frame_state = self.atari_processor.process_state_for_memory(state)
-                last_frame_new_state = self.atari_processor.process_state_for_memory(new_state)
-                current_sample = Sample(last_frame_state, int(action), reward, last_frame_new_state, is_terminal)
+                # #inbal: before multi frams
+                # last_frame_state = self.atari_processor.process_state_for_memory(state)
+                # last_frame_new_state = self.atari_processor.process_state_for_memory(new_state)
+                # current_sample = Sample(last_frame_state, int(action), reward, last_frame_new_state, is_terminal)
+                #
+
+
                 loss, target_value = self.update_policy(current_sample)
                 self.episode_loss += loss
                 self.episode_target_value += target_value
@@ -489,6 +499,8 @@ class decision_maker_DQN_keras:
             qa_value = self.q_network.predict_on_batch(next_states)
             max_actions = np.argmax(qa_value, axis = 1)
             next_qa_value = next_qa_value[range(batch_size), max_actions]
+            # next_qa_value[np.where(next_qa_value>WIN_REWARD)]=WIN_REWARD
+            # next_qa_value[np.where(next_qa_value < LOST_PENALTY)] = LOST_PENALTY
         else:
             next_qa_value = np.max(next_qa_value, axis = 1)
         target = rewards + self.gamma * mask * next_qa_value

@@ -63,13 +63,13 @@ if __name__ == '__main__':
     #blue_decision_maker = DQNAgent.DQNAgent()
     # blue_decision_maker = DQNAgent.DQNAgent(UPDATE_CONTEXT=False, path_model_to_load='basic_DQN_17500_blue.model')
     # --DQN Keras
-    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
-    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='conv1(8_8_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_2001_  18.60max_  -2.10avg_ -25.00min__1618193469.model')
+    #blue_decision_maker = DQNAgent_keras.DQNAgent_keras()
+    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True, path_model_to_load='conv1(6_6_1_64)_conv2(4_4_64_64)_conv3(3_3_64_64)_flatten_fc__blue_125001_  19.90max_   2.85avg_  -6.00min__1618982110.model')
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
     #                                                    path_model_to_load='flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_26001_  19.60max_   2.09avg_  -3.90min__1618579726.model')
 
-    blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
-                                                        path_model_to_load='conv1(6_6_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_107501_  20.00max_   2.71avg_  -5.70min__1618548419.model')
+    # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,
+    #                                                     path_model_to_load='conv1(6_6_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_107501_  20.00max_   2.71avg_  -5.70min__1618548419.model')
 
     #flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_30001_ 120.00max_  97.59avg_-100.00min__1615828123
     # blue_decision_maker = DQNAgent_keras.DQNAgent_keras(UPDATE_CONTEXT=True,

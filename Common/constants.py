@@ -28,11 +28,11 @@ IMG_STATE_MODE = 'L' #'P'
 CLOSE_START_POSITION = True
 
 FULLY_CONNECTED = True
-STR_FOLDER_NAME = "Berlin_BB_FC512_FC512_FC512_FC512" #"Berlin_BB_conv32(2X2)"
+STR_FOLDER_NAME = "Berlin_BB" #"15X15_FC512_FC512_FC512_FC512"
 
 #1 is an obstacle
 DSM_names = {"15X15", "100X100_Berlin", "100X100_Paris", "100X100_Boston"}
-DSM_name = "100X100_Berlin"
+DSM_name = "100X100_Berlin"#"15X15"
 
 COMMON_PATH = path.dirname(path.realpath(__file__))
 MAIN_PATH = path.dirname(COMMON_PATH)
@@ -64,6 +64,15 @@ if DSM_name=="15X15":
     FIRE_RANGE = 7
     MAX_STEPS_PER_EPISODE = 100
     BB_STATE = False
+    CLOSE_START_POSITION = False
+    BB_MARGIN = 0
+    SIZE_X_BB = SIZE_X
+    SIZE_Y_BB = SIZE_Y
+    all_pairs_distances_path = './Greedy/all_pairs_distances_' + DSM_name + '___' + '.pkl'
+    if path.exists(all_pairs_distances_path):
+        with open(all_pairs_distances_path, 'rb') as f:
+            all_pairs_distances = pickle.load(f)
+            print("all_pairs_distances loaded")
 
 elif DSM_name=="100X100_Berlin":
     # BERLIN_DSM_PATH_1 = path.join(MAIN_PATH, 'Common')
