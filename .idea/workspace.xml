@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="main both players">
-      <change afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_baselines.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Common/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQN_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQN_constants.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_both_players.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/main_only_blue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +31,7 @@
         <entry key="$PROJECT_DIR$/SingleAgentCombat-main" value="master" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/SingleAgentCombat-main" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -71,29 +71,8 @@
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\DQN" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main_baselines">
-    <configuration name="Greedy_player" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="SingleAgentCombat-main" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main/Greedy" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main_baselines" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.pre_los_calc">
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SingleAgentCombat-main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -105,7 +84,28 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/main_baselines.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/SingleAgentCombat-main/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
+      <module name="SingleAgentCombat-main" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -180,17 +180,17 @@
     <list>
       <item itemvalue="Python.main_only_blue" />
       <item itemvalue="Python.pre_los_calc" />
-      <item itemvalue="Python.Greedy_player" />
       <item itemvalue="Python.pre_pro" />
       <item itemvalue="Python.main_baselines" />
+      <item itemvalue="Python.main (1)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main_baselines" />
-        <item itemvalue="Python.main_only_blue" />
-        <item itemvalue="Python.pre_pro" />
         <item itemvalue="Python.pre_los_calc" />
-        <item itemvalue="Python.Greedy_player" />
+        <item itemvalue="Python.main_baselines" />
+        <item itemvalue="Python.main (1)" />
+        <item itemvalue="Python.pre_pro" />
+        <item itemvalue="Python.main_only_blue" />
       </list>
     </recent_temporary>
   </component>
@@ -202,12 +202,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1611132936949</updated>
-    </task>
-    <task id="LOCAL‎00039" summary="dominating_points pics">
-      <created>1614680929414</created>
-      <option name="number" value="LOCAL‎00039" />
-      <option name="presentableId" value="LOCAL‎00039" />
-      <updated>1614680929414</updated>
     </task>
     <task id="LOCAL‎00040" summary="dominating_points pics">
       <created>1614681251785</created>
@@ -497,7 +491,13 @@
       <option name="presentableId" value="LOCAL‎00087" />
       <updated>1618983782264</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL‎00088" summary="screens array">
+      <created>1619006664760</created>
+      <option name="number" value="LOCAL‎00088" />
+      <option name="presentableId" value="LOCAL‎00088" />
+      <updated>1619006664761</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -531,7 +531,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="4 actions \ 9 actions" />
     <MESSAGE value="more flags" />
     <MESSAGE value="&quot;&quot;" />
     <MESSAGE value="azure installation" />
@@ -556,14 +555,15 @@
     <MESSAGE value="BB state" />
     <MESSAGE value="Berlin DSM" />
     <MESSAGE value="before changing observation" />
-    <option name="LAST_COMMIT_MESSAGE" value="before changing observation" />
+    <MESSAGE value="screens array" />
+    <option name="LAST_COMMIT_MESSAGE" value="screens array" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/pre_los_calc.py</url>
-          <line>157</line>
+          <line>158</line>
           <option name="timeStamp" value="68" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
@@ -573,7 +573,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/pre_los_calc.py</url>
-          <line>190</line>
+          <line>191</line>
           <option name="timeStamp" value="282" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -583,12 +583,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Common/Preprocessing/pre_los_calc.py</url>
-          <line>195</line>
+          <line>196</line>
           <option name="timeStamp" value="626" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py</url>
-          <line>392</line>
+          <line>408</line>
           <option name="timeStamp" value="739" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -610,12 +610,6 @@
           <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py</url>
           <line>369</line>
           <option name="timeStamp" value="749" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <condition expression="x&gt;=100 or y&gt;=100" language="Python" />
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/Arena/Entity.py</url>
-          <line>83</line>
-          <option name="timeStamp" value="762" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SingleAgentCombat-main/pre_pro.py</url>
@@ -643,20 +637,19 @@
           <option name="timeStamp" value="832" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py</url>
-          <line>472</line>
-          <option name="timeStamp" value="889" />
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/pre_pro.py</url>
+          <line>211</line>
+          <option name="timeStamp" value="927" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <condition expression="action==10" language="Python" />
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py</url>
-          <line>194</line>
-          <option name="timeStamp" value="902" />
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/pre_pro.py</url>
+          <line>169</line>
+          <option name="timeStamp" value="929" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py</url>
-          <line>489</line>
-          <option name="timeStamp" value="906" />
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/pre_pro.py</url>
+          <line>175</line>
+          <option name="timeStamp" value="930" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
