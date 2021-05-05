@@ -40,21 +40,23 @@ def save_reward_stats(save_folder_path, plot_every,  win_array_blue, win_array_r
     fig.tight_layout()
     plt.subplots_adjust(hspace=.4, top=0.9)
     moving_avg_blue = np.convolve(win_array_blue, np.ones((plot_every,)) / plot_every, mode='valid')
-    moving_avg_red = np.convolve(win_array_red, np.ones((plot_every,)) / plot_every, mode='valid')
-    reward_upper_bound = np.max([np.max(moving_avg_blue), np.max(moving_avg_red)])
-    reward_lower_bound = np.min([np.min(moving_avg_blue), np.min(moving_avg_red)])
+    #moving_avg_red = np.convolve(win_array_red, np.ones((plot_every,)) / plot_every, mode='valid')
+    # reward_upper_bound = np.max([np.max(moving_avg_blue), np.max(moving_avg_red)])
+    # reward_lower_bound = np.min([np.min(moving_avg_blue), np.min(moving_avg_red)])
+    reward_upper_bound = np.max(moving_avg_blue)
+    reward_lower_bound = np.min(moving_avg_blue)
     # Blue reward:
     axs[0, 0].plot([i for i in range(len(moving_avg_blue))], moving_avg_blue)
     axs[0, 0].set_title(f"Episode rewards BLUE player", fontsize=12, fontweight='bold', color='blue')
     axs[0, 0].axis([0, len(win_array_blue), (reward_lower_bound - 10 / np.max([reward_lower_bound,1])),
                     (reward_upper_bound + 10 / np.max([reward_upper_bound,1]))])
     axs[0, 0].set(xlabel="episode #", ylabel=f"Reward {SHOW_EVERY}ma")
-    # Red reward:
-    axs[0, 1].plot([i for i in range(len(moving_avg_red))], moving_avg_red)
-    axs[0, 1].set_title(f"Episode rewards Red player", fontsize=12, fontweight='bold', color='red')
-    axs[0, 1].axis([0, len(win_array_red), (reward_lower_bound - 10 / np.max([reward_lower_bound,1])),
-                    int(reward_upper_bound + 10 / np.max([reward_upper_bound,1]))])
-    axs[0, 1].set(xlabel="episode #", ylabel=f"Reward {SHOW_EVERY}ma")
+    # # Red reward:
+    # axs[0, 1].plot([i for i in range(len(moving_avg_red))], moving_avg_red)
+    # axs[0, 1].set_title(f"Episode rewards Red player", fontsize=12, fontweight='bold', color='red')
+    # axs[0, 1].axis([0, len(win_array_red), (reward_lower_bound - 10 / np.max([reward_lower_bound,1])),
+    #                 int(reward_upper_bound + 10 / np.max([reward_upper_bound,1]))])
+    # axs[0, 1].set(xlabel="episode #", ylabel=f"Reward {SHOW_EVERY}ma")
     # Steps:
     moving_avg = np.convolve(steps_per_episode, np.ones((plot_every,)) / plot_every, mode='valid')
     axs[1, 0].plot([i for i in range(len(moving_avg))], moving_avg)
@@ -89,12 +91,12 @@ def save_win_statistics(win_array, blue_epsilon_values, save_folder_path, plot_e
     axs[0, 0].plot(moving_avg_win_blue)
     axs[0, 0].set_title('%Blue_win', fontsize=12, fontweight='bold', color='blue')
     axs[0, 0].axis([0, len(moving_avg_win_blue), -5, 105])
-    axs[1, 1].set(xlabel="episode")
+    axs[0, 0].set(xlabel="episode")
 
     axs[0, 1].plot(moving_avg_win_red)
     axs[0, 1].set_title('%Red_win', fontsize=12, fontweight='bold', color='red')
     axs[0, 1].axis([0, len(moving_avg_win_blue), -5, 105])
-    axs[1, 1].set(xlabel="episode")
+    axs[0, 1].set(xlabel="episode")
 
 
     moving_avg = np.convolve(blue_epsilon_values, np.ones((plot_every,)) / plot_every, mode='valid')
@@ -111,6 +113,56 @@ def save_win_statistics(win_array, blue_epsilon_values, save_folder_path, plot_e
     plt.close()
     # plt.show()
 
+def save_evaluation_data(evaluation__number_of_steps, evaluation__win_array_blue, evaluation__rewards_for_blue, evaluation__win_array_tie, evaluation__epsilon_value, save_folder_path):
+    plot_every = 1
+    win_array_blue = np.array(evaluation__win_array_blue)
+    moving_avg_win_blue = np.convolve(win_array_blue, np.ones((plot_every,)) / plot_every, mode='valid')
+    win_array_Tie = evaluation__win_array_tie
+    moving_avg_win_Tie = np.convolve(win_array_Tie, np.ones((plot_every,)) / plot_every, mode='valid')
+    moving_avg_win_red = 100-win_array_blue
+
+
+    fig, axs = plt.subplots(2, 3)
+    fig.tight_layout()
+    plt.subplots_adjust(hspace=.4, top=0.9)
+    axs[0, 0].plot(moving_avg_win_blue)
+    axs[0, 0].set_title('%Blue_win', fontsize=10, fontweight='bold', color='blue')
+    axs[0, 0].axis([0, len(moving_avg_win_blue), -5, 105])
+
+    axs[0, 1].plot(moving_avg_win_red)
+    axs[0, 1].set_title('%Red_win', fontsize=10, fontweight='bold', color='red')
+    axs[0, 1].axis([0, len(moving_avg_win_blue), -5, 105])
+
+
+    moving_avg = np.convolve(evaluation__epsilon_value, np.ones((plot_every,)) / plot_every, mode='valid')
+    axs[1, 0].plot([i for i in range(len(moving_avg))], moving_avg)
+    axs[1, 0].set_title(f"Epsilon value per episode", fontsize=10, fontweight='bold', color='black')
+    axs[1, 0].axis([0, len(moving_avg_win_blue), -0.1, 1.1])
+
+    axs[1, 1].plot(moving_avg_win_Tie)
+    axs[1, 1].set_title('%Tie_max_num_steps', fontsize=10, fontweight='bold')
+    axs[1, 1].axis([0, len(moving_avg_win_blue), -5, 105])
+
+    # Steps:
+    moving_avg = np.convolve(evaluation__number_of_steps, np.ones((plot_every,)) / plot_every, mode='valid')
+    axs[0, 2].plot([i for i in range(len(moving_avg))], moving_avg)
+    axs[0, 2].set_title(f"Avg number of steps", fontsize=10, fontweight='bold', color='black')
+    axs[0, 2].axis([0, len(evaluation__number_of_steps), 0, MAX_STEPS_PER_EPISODE])
+    # blue reward
+
+    moving_avg_blue = np.convolve(evaluation__rewards_for_blue, np.ones((plot_every,)) / plot_every, mode='valid')
+    reward_upper_bound = np.max(moving_avg_blue)
+    reward_lower_bound = np.min(moving_avg_blue)
+    # Blue reward:
+    axs[1, 2].plot([i for i in range(len(moving_avg_blue))], moving_avg_blue)
+    axs[1, 2].set_title(f"rewards BLUE player", fontsize=10, fontweight='bold', color='blue')
+    axs[1, 2].axis([0, len(win_array_blue), (reward_lower_bound - 10 / np.max([reward_lower_bound,1])),
+                    (reward_upper_bound + 10 / np.max([reward_upper_bound,1]))])
+
+
+    plt.savefig(save_folder_path + os.path.sep + 'evaluation_statistics' + str(len(evaluation__number_of_steps*EVALUATE_PLAYERS_EVERY)))
+    plt.close()
+    # plt.show()
 
 def print_stats_humna_player(array_of_results, save_folder_path, number_of_episodes, save_figure=True, steps=False,
                              red_player=False):
@@ -183,46 +235,36 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
     informative_env[margin_x * const: (margin_x + SIZE_X) * const,
     margin_y * const: (margin_y + SIZE_Y) * const] = only_env
 
-    if DANGER_ZONE_IN_STATE:
-        points_in_enemy_los = DICT_POS_LOS[(red.x, red.y)]
-        for point in points_in_enemy_los:
-            informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
-            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors_for_graphics[BRIGHT_RED]
-
-    if DOMINATING_POINTS_IN_STATE:
-        points_dom_points = DICT_DOMINATING_POINTS[(red.x, red.y)]
-        for point in points_dom_points:
-            informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
-            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors_for_graphics[GREEN_N]
-
-    if LOSE_POINTS_IN_STATE:
-        lose_points = DICT_LOSE_POINTS[(red.x, red.y)]
-        for point in lose_points:
-            informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
-            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors_for_graphics[DARK_RED_N]
-
-
-    points_in_LOS = []
-    # paint the tiles in line from blue to red in yellow
-    if PRINT_TILES_IN_LOS:
-        _, points_in_LOS = check_if_LOS(blue.x, blue.y, red.x, red.y)
-        for point in points_in_LOS:
-            informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
-            (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors_for_graphics[YELLOW_N]
-
-    # set the players as circles
     radius = int(np.ceil(const / 2))
     thickness = -1
-    # set the red player
-    center_cord_red_x = (red.x + margin_x) * const + radius
-    center_cord_red_y = (red.y + margin_y) * const + radius
-    red_color = dict_of_colors_for_graphics[RED_N]
-    cv2.circle(informative_env, (center_cord_red_y, center_cord_red_x), radius, red_color, thickness)
-    # set the blue player
-    center_cord_blue_x = (blue.x + margin_x) * const + radius
-    center_cord_blue_y = (blue.y + margin_y) * const + radius
-    blue_color = dict_of_colors_for_graphics[BLUE_N]
-    cv2.circle(informative_env, (center_cord_blue_y, center_cord_blue_x), radius, blue_color, thickness)
+    if env.win_status!=WinEnum.Blue:
+        if LOS_PENALTY_FLAG:
+            points_dom_points = DICT_POS_LOS[(red.x, red.y)]
+            for point in points_dom_points:
+                informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
+                (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors_for_graphics[DARK_DARK_RED_N]
+
+
+        if DANGER_ZONE_IN_STATE:
+            points_in_enemy_los = DICT_POS_FIRE_RANGE[(red.x, red.y)]
+            for point in points_in_enemy_los:
+                informative_env[(point[0] + margin_x) * const: (point[0] + margin_x) * const + const,
+                (point[1] + margin_y) * const: (point[1] + margin_y) * const + const] = dict_of_colors_for_graphics[BRIGHT_RED]
+
+
+        # set the players as circles
+        # set the red player
+        center_cord_red_x = (red.x + margin_x) * const + radius
+        center_cord_red_y = (red.y + margin_y) * const + radius
+        red_color = dict_of_colors_for_graphics[RED_N]
+        cv2.circle(informative_env, (center_cord_red_y, center_cord_red_x), radius, red_color, thickness)
+
+    if env.win_status != WinEnum.Red:
+        # set the blue player
+        center_cord_blue_x = (blue.x + margin_x) * const + radius
+        center_cord_blue_y = (blue.y + margin_y) * const + radius
+        blue_color = dict_of_colors_for_graphics[BLUE_N]
+        cv2.circle(informative_env, (center_cord_blue_y, center_cord_blue_x), radius, blue_color, thickness)
 
     # add episode number at the bottom of the window
     font = cv2.FONT_HERSHEY_SIMPLEX
@@ -295,16 +337,18 @@ def print_episode_graphics(env: Environment, episode, last_step_number, write_fi
         # set the players as circles
         radius = int(np.ceil(const / 2))
         thickness = -1
-        # set the red player
-        center_cord_red_x = (red.x + margin_x) * const + radius
-        center_cord_red_y = (red.y + margin_y) * const + radius
-        red_color = dict_of_colors_for_graphics[RED_N]
-        cv2.circle(informative_env, (center_cord_red_y, center_cord_red_x), radius, red_color, thickness)
-        # set the blue player
-        center_cord_blue_x = (blue.x + margin_x) * const + radius
-        center_cord_blue_y = (blue.y + margin_y) * const + radius
-        blue_color = dict_of_colors_for_graphics[BLUE_N]
-        cv2.circle(informative_env, (center_cord_blue_y, center_cord_blue_x), radius, blue_color, thickness)
+        if env.win_status != WinEnum.Blue:
+            # set the red player
+            center_cord_red_x = (red.x + margin_x) * const + radius
+            center_cord_red_y = (red.y + margin_y) * const + radius
+            red_color = dict_of_colors_for_graphics[RED_N]
+            cv2.circle(informative_env, (center_cord_red_y, center_cord_red_x), radius, red_color, thickness)
+        if env.win_status != WinEnum.Red:
+            # set the blue player
+            center_cord_blue_x = (blue.x + margin_x) * const + radius
+            center_cord_blue_y = (blue.y + margin_y) * const + radius
+            blue_color = dict_of_colors_for_graphics[BLUE_N]
+            cv2.circle(informative_env, (center_cord_blue_y, center_cord_blue_x), radius, blue_color, thickness)
 
     cv2.imshow("informative_env", np.array(informative_env))  # show it!
     if write_file:

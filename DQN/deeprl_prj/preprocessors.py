@@ -53,6 +53,16 @@ class HistoryPreprocessor(Preprocessor):
             self.past_states_ori = np.zeros((row, col, channel, self.history_length))
         history = np.concatenate((self.past_states_ori, np.expand_dims(state, -1)), axis=3)
         self.past_states_ori = history[:, :, :, 1:]
+        if False:
+            import matplotlib.pyplot as plt
+            plt.matshow(history[:, :, 0:1])
+            plt.show()
+
+            plt.matshow(history[:, :, 1:2])
+            plt.show()
+
+            plt.matshow(history[:, :, 2:3])
+            plt.show()
         return history
 
     def reset(self):

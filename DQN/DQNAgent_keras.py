@@ -51,7 +51,7 @@ class decision_maker_DQN_keras:
     def __init__(self, path_model_to_load=None):
         self._previous_stats = {}
 
-        self._epsilon = epsilon
+        self._epsilon = START_EPSILON
         self.model = None
         self.target_model = None
 
@@ -85,21 +85,22 @@ class decision_maker_DQN_keras:
         parser.add_argument('--gamma', default=0.99, type=float, help='Discount factor')
         parser.add_argument('--batch_size', default=32, type=int, help='Minibatch size')
         parser.add_argument('--learning_rate', default=0.0001, type=float, help='Learning rate')
+
         parser.add_argument('--initial_epsilon', default=1.0, type=float, help='Initial exploration probability in epsilon-greedy')
         parser.add_argument('--final_epsilon', default=0.05, type=float, help='Final exploration probability in epsilon-greedy')
 
         parser.add_argument('--num_samples', default=100000000, type=int, help='Number of training samples from the environment in training')
-        parser.add_argument('--num_frames', default=1, type=int, help='Number of frames to feed to Q-Network')
+        parser.add_argument('--num_frames', default=NUM_FRAMES, type=int, help='Number of frames to feed to Q-Network')
 
         if BB_STATE:
             parser.add_argument('--frame_width', default=SIZE_X_BB, type=int, help='Resized frame width')
             parser.add_argument('--frame_height', default=SIZE_Y_BB, type=int, help='Resized frame height')
-            parser.add_argument('--exploration_steps', default=3000000, type=int,
+            parser.add_argument('--exploration_steps', default=7000000, type=int,
                                 help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
         else:
             parser.add_argument('--frame_width', default=SIZE_X, type=int, help='Resized frame width')
             parser.add_argument('--frame_height', default=SIZE_Y, type=int, help='Resized frame height')
-            parser.add_argument('--exploration_steps', default=3000000, type=int,
+            parser.add_argument('--exploration_steps', default=7000000, type=int,
                                 help='Number of steps over which the initial value of epsilon is linearly annealed to its final value')
 
 
@@ -243,15 +244,7 @@ class decision_maker_DQN_keras:
         with tf.variable_scope(model_name):
             input_data = Input(shape=input_shape, name="input")
             if mode == "linear":
-                # #version 4 elu:
-                # flatten_hidden = Flatten(name="flatten")(input_data)
-                # FC_1 = Dense(512, activation='elu', name='FC1-elu')(flatten_hidden)
-                # FC_2 = Dense(512, activation='elu', name='FC2-elu')(FC_1)
-                # FC_3 = Dense(512, activation='elu', name='FC3-elu')(FC_2)
-                # FC_4 = Dense(512, activation='elu', name='FC4-elu')(FC_3)
-                # output = Dense(num_actions, activation='elu', name="output")(FC_4)
 
-                #version 4 elu:
                 flatten_hidden = Flatten(name="flatten")(input_data)
                 FC_1 = Dense(512, activation='elu', name='FC1-elu')(flatten_hidden)
                 FC_2 = Dense(512, activation='elu', name='FC2-elu')(FC_1)
@@ -269,30 +262,10 @@ class decision_maker_DQN_keras:
                     else:
                         # # version 1:
                         #h1 = Convolution2D(32, (8, 8), strides=4, activation="relu", name="conv1")(input_data)
-                        h1 = Convolution2D(32, (6, 6), strides=3, activation="relu", name="conv1")(input_data)
-                        h2 = Convolution2D(64, (4, 4), strides=2, activation="relu", name="conv2")(h1)
-                        h3 = Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv3")(h2)
+                        h1 = Convolution2D(256, (6, 6), strides=3, activation="relu", name="conv1")(input_data)
+                        h2 = Convolution2D(128, (4, 4), strides=2, activation="relu", name="conv2")(h1)
+                        h3 = Convolution2D(128, (3, 3), strides=1, activation="relu", name="conv3")(h2)
                         context = Flatten(name="flatten")(h3)
-
-                    # # version 2:
-                    # conv1 = Convolution2D(1, (5, 5), strides=1, activation="elu", name="conv1")(input_data)
-                    # flatten = Flatten(name="flatten")(conv1)
-                    # FC_2 = Dense(512, activation='elu', name='FC2-elu')(flatten)
-                    # context = Dense(512, activation='elu', name='FC4-elu')(FC_2)
-
-                    # # version 3:
-                    # conv1 = Convolution2D(64, (3, 3), strides=1, activation="relu", name="conv1")(input_data)
-                    # flatten = Flatten(name="flatten")(conv1)
-                    # FC_2 = Dense(256, activation='relu', name='FC2-relu')(flatten)
-                    # FC_3 = Dense(256, activation='relu', name='FC3-relu')(FC_2)
-                    # context = Dense(256, activation='elu', name='FC4-elu')(FC_3)
-
-                    # # version 3:
-                    # conv1 = Convolution2D(64, (2, 2), strides=1, activation="relu", name="conv1")(input_data)
-                    # flatten = Flatten(name="flatten")(conv1)
-                    # FC_2 = Dense(256, activation='relu', name='FC2-relu')(flatten)
-                    # FC_3 = Dense(256, activation='relu', name='FC3-relu')(FC_2)
-                    # context = Dense(256, activation='elu', name='FC4-elu')(FC_3)
 
 
                 # else:
@@ -394,11 +367,11 @@ class decision_maker_DQN_keras:
 
         if is_terminal:
             # adding last frame only to save last state
-            last_frame_state = self.atari_processor.process_state_for_memory(state)
-            last_frame_new_state = self.atari_processor.process_state_for_memory(new_state)
+            # last_frame_state = self.atari_processor.process_state_for_memory(state)
+            # last_frame_new_state = self.atari_processor.process_state_for_memory(new_state)
             #self.memory.append(last_frame_state, action, reward, last_frame_new_state, is_terminal)
-            self.atari_processor.reset()
-            self.history_processor.reset()
+            # self.atari_processor.reset()
+            # self.history_processor.reset()
             if not self.burn_in:
                 self.episode_reward = .0
                 self.episode_raw_reward = .0
@@ -407,12 +380,12 @@ class decision_maker_DQN_keras:
 
         if not self.burn_in: # enough samples in replay buffer
             if self.numberOfSteps % self.train_freq == 0:
-                action_state = self.history_processor.process_state_for_network(self.atari_processor.process_state_for_network(state))
-                processed_reward = self.atari_processor.process_reward(reward)
-                processed_next_state = self.atari_processor.process_state_for_network(new_state)
-                action_next_state = np.dstack((action_state, processed_next_state))
-                action_next_state = action_next_state[:, :, 1:]
-                current_sample = Sample(action_state, int(action), processed_reward, action_next_state, is_terminal)
+                # action_state = self.history_processor.process_state_for_network(self.atari_processor.process_state_for_network(state))
+                # processed_reward = self.atari_processor.process_reward(reward)
+                # processed_next_state = self.atari_processor.process_state_for_network(new_state)
+                # action_next_state = np.dstack((action_state, processed_next_state))
+                # action_next_state = action_next_state[:, :, 1:]
+                # current_sample = Sample(action_state, int(action), processed_reward, action_next_state, is_terminal)
 
 
                 # #inbal: before multi frams
@@ -421,7 +394,7 @@ class decision_maker_DQN_keras:
                 # current_sample = Sample(last_frame_state, int(action), reward, last_frame_new_state, is_terminal)
                 #
 
-
+                current_sample = []
                 loss, target_value = self.update_policy(current_sample)
                 self.episode_loss += loss
                 self.episode_target_value += target_value
@@ -484,10 +457,7 @@ class decision_maker_DQN_keras:
             states = np.stack([x.state for x in samples])
             actions = np.asarray([x.action for x in samples])
             action_mask = np.zeros((batch_size, self.num_actions))
-            try:
-                action_mask[range(batch_size), actions] = 1.0
-            except:
-                print("WTF")
+            action_mask[range(batch_size), actions] = 1.0
 
             next_states = np.stack([x.next_state for x in samples])
             mask = np.asarray([1 - int(x.is_terminal) for x in samples])
@@ -502,8 +472,7 @@ class decision_maker_DQN_keras:
             qa_value = self.q_network.predict_on_batch(next_states)
             max_actions = np.argmax(qa_value, axis = 1)
             next_qa_value = next_qa_value[range(batch_size), max_actions]
-            # next_qa_value[np.where(next_qa_value>WIN_REWARD)]=WIN_REWARD
-            # next_qa_value[np.where(next_qa_value < LOST_PENALTY)] = LOST_PENALTY
+
         else:
             next_qa_value = np.max(next_qa_value, axis = 1)
         target = rewards + self.gamma * mask * next_qa_value
@@ -514,8 +483,10 @@ class decision_maker_DQN_keras:
     # (state, action, reward, new_state, is_terminal)
     def update_replay_memory(self, state, action, reward, new_state, is_terminal):
         self.memory.append(state, action, reward, new_state, is_terminal)
-        if is_terminal: # adding last frame only to save last frame
-            self.memory.append(new_state, action, 0, new_state, is_terminal)
+        # if is_terminal: # adding last frame only to save last frame
+        #     self.memory.append(new_state, action, CONST_LAST_FRAME_REWARD, new_state, is_terminal)
+        #     self.atari_processor.reset()
+        #     self.history_processor.reset()
 
 
 
@@ -524,7 +495,11 @@ class decision_maker_DQN_keras:
         DEBUG=False
         if DEBUG:
             plt.matshow(dqn_state)
-        plt.show()
+            plt.matshow(action_state)
+            plt.matshow(action_state[:, :, 0])
+            plt.matshow(action_state[:, :, 1])
+            plt.matshow(action_state[:, :, 2])
+
         """Select the action based on the current state.
 
         Returns
@@ -613,10 +588,10 @@ class decision_maker_DQN_keras:
         if len(W.shape) == 4:
             # W = np.squeeze(W1)
             W1 = W.reshape((W.shape[0], W.shape[1], W.shape[2] * W.shape[3]))
-            fig, axs = plt.subplots(11, 11, figsize=(8, 8))
+            fig, axs = plt.subplots(8, 8, figsize=(8, 8))
             fig.subplots_adjust(hspace=.5, wspace=.001)
             axs = axs.ravel()
-            for i in range(121):
+            for i in range(64):
                 axs[i].imshow(W1[:, :, i])
                 axs[i].set_title(str(i))
 

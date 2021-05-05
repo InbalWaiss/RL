@@ -2,13 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="main both players">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_02_2021_09_48__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_02_2021_09_48__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/Environment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Arena/graphics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQN_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQN_constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/DQN/deeprl_prj/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/SingleAgentCombat-main/Greedy/Greedy_player.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/CState.py" beforeDir="false" afterPath="$PROJECT_DIR$/Arena/CState.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/Arena/Environment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/graphics.py" beforeDir="false" afterPath="$PROJECT_DIR$/Arena/graphics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/helper_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/Arena/helper_funcs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/pre_los_calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Preprocessing/pre_los_calc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/Common/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/DQN/DQNAgent_keras.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent_keras_old.py" beforeDir="false" afterPath="$PROJECT_DIR$/DQN/DQNAgent_keras_old.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQN_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/DQN/DQN_constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/DQN/deeprl_prj/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/preprocessors.py" beforeDir="false" afterPath="$PROJECT_DIR$/DQN/deeprl_prj/preprocessors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pre_pro.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_pro.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +78,7 @@
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\DQN" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.pre_los_calc">
+  <component name="RunManager" selected="Python.main (2)">
     <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SingleAgentCombat-main" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -93,7 +100,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
+    <configuration name="main (2)" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
       <module name="SingleAgentCombat-main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -101,11 +108,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/SingleAgentCombat-main" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -181,13 +188,13 @@
       <item itemvalue="Python.main_only_blue" />
       <item itemvalue="Python.pre_los_calc" />
       <item itemvalue="Python.pre_pro" />
-      <item itemvalue="Python.main_baselines" />
       <item itemvalue="Python.main (1)" />
+      <item itemvalue="Python.main (2)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main (2)" />
         <item itemvalue="Python.pre_los_calc" />
-        <item itemvalue="Python.main_baselines" />
         <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.pre_pro" />
         <item itemvalue="Python.main_only_blue" />
@@ -532,7 +539,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="more flags" />
-    <MESSAGE value="&quot;&quot;" />
     <MESSAGE value="azure installation" />
     <MESSAGE value="FC red not moving" />
     <MESSAGE value="before changing game to be turn by turn, and terminal state to be only LOS" />
@@ -556,7 +562,8 @@
     <MESSAGE value="Berlin DSM" />
     <MESSAGE value="before changing observation" />
     <MESSAGE value="screens array" />
-    <option name="LAST_COMMIT_MESSAGE" value="screens array" />
+    <MESSAGE value="&quot;&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;&quot;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

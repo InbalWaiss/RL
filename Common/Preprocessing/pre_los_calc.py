@@ -29,8 +29,8 @@ def creat_and_save_dictionaries():
                             no_los_from_pos[(x1, y1)].append((x2, y2))
 
             print("finished ", x1, y1)
-    save_obj(los_from_pos, "dictionary_position_los_"+DSM_name+'_'+str(FIRE_RANGE))
-    save_obj(no_los_from_pos, "dictionary_position_no_los_"+DSM_name+'_'+str(FIRE_RANGE))
+    save_obj(los_from_pos, "dictionary_position_los_"+DSM_name)
+    save_obj(no_los_from_pos, "dictionary_position_no_los_"+DSM_name)
 
 
 def show_LOS_from_point(x1,y1):

@@ -35,7 +35,7 @@ def can_escape(first_player, second_player):
         first_player.action(action)
         first_player_after_action_x, first_player_after_action_y = first_player.get_coordinates()
 
-        is_los = (org_cor_second_player_x, org_cor_second_player_y) in DICT_POS_LOS[(first_player.x, first_player.y)]
+        is_los = (org_cor_second_player_x, org_cor_second_player_y) in DICT_POS_FIRE_RANGE[(first_player.x, first_player.y)]
 
         if not is_los:
             ret_val = True

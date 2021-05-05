@@ -150,43 +150,6 @@ class Greedy_player(AbsDecisionMaker):
             pickle.dump(filtered_data, f,  protocol=2)
 
 
-    def remove_data_long_paths(self, DSM):
-        # all_pairs_distances_path = 'all_pairs_distances_100X100_Berlin___.pkl'
-        # if os.path.exists(all_pairs_distances_path):
-        #     with open(all_pairs_distances_path, 'rb') as f:
-        #         all_pairs_distances = pickle.load(f)
-        #         print("Greedy: all_pairs_distances_100X100_Berlin___ loaded")
-        #
-        # filtered_data = {}
-        # for p1 in all_pairs_distances.keys():
-        #     for p2 in all_pairs_distances[p1].keys():
-        #         if DSM[p1]==0 and DSM[p2]==0:
-        #             if not p1 in filtered_data.keys():
-        #                 filtered_data[p1]={}
-        #             filtered_data[p1][p2] = all_pairs_distances[p1][p2]
-
-
-
-        all_pairs_shortest_path_path = './Greedy/all_pairs_shortest_path_' + DSM_name + '___' + '.pkl'
-        if os.path.exists(all_pairs_shortest_path_path):
-            with open(all_pairs_shortest_path_path, 'rb') as f:
-                self.all_pairs_shortest_path = pickle.load(f)
-                print("Greedy: all_pairs_shortest_path loaded")
-
-        short_pathes = {}
-        counter=0
-        for (x1,y1) in all_pairs_distances.keys():
-            for (x2, y2) in all_pairs_distances[(x1,y1)].keys():
-                dist = all_pairs_distances[(x1,y1)][(x2, y2)]
-                if dist<FIRE_RANGE*4:
-                    if not (x1,y1) in short_pathes.keys():
-                        short_pathes[(x1,y1)]={}
-                    short_pathes[(x1, y1)][(x2, y2)]=self.all_pairs_shortest_path.keys()
-                else:
-                    counter+=1
-
-        with open('./Greedy/all_pairs_shortest_path_' + DSM_name + '___filtered_long_paths' + '.pkl', 'wb') as f:
-            pickle.dump(short_pathes, f,  protocol=2)
 
 if __name__ == '__main__':
     #PRINT_FLAG = True
@@ -207,10 +170,8 @@ if __name__ == '__main__':
         plt.show(DSM)
 
     GP = Greedy_player()
-    # GP.calc_all_pairs_data(DSM)
-    # GP.remove_data_obs(DSM)
-    GP.remove_data_long_paths(DSM)
-
+    #GP.remove_data_obs(DSM)
+    GP.calc_all_pairs_data(DSM)
 
     # blue_pos = Position(3, 10)
     # red_pos = Position(10, 3)
