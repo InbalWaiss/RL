@@ -2,20 +2,95 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="19617cd5-27af-4f97-9b0e-ec6f2ed2f11c" name="Default Changelist" comment="main both players">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_02_2021_09_48__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_02_2021_09_48__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arena/CState.py" beforeDir="false" afterPath="$PROJECT_DIR$/Arena/CState.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arena/Environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/Arena/Environment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arena/graphics.py" beforeDir="false" afterPath="$PROJECT_DIR$/Arena/graphics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Arena/helper_funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/Arena/helper_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/pre_los_calc.py" beforeDir="false" afterPath="$PROJECT_DIR$/Common/Preprocessing/pre_los_calc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Common/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/Common/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/DQN/DQNAgent_keras.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent_keras_old.py" beforeDir="false" afterPath="$PROJECT_DIR$/DQN/DQNAgent_keras_old.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DQN/DQN_constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/DQN/DQN_constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/DQN/deeprl_prj/core.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/preprocessors.py" beforeDir="false" afterPath="$PROJECT_DIR$/DQN/deeprl_prj/preprocessors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pre_pro.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_pro.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/AbsDecisionMaker.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/CState.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/Entity.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/Environment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/Observation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/Position.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/checkpoint" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/geometry.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/graphics.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Arena/helper_funcs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/DSM_excel.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/DSM_excel_small.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_dominating_points.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_lose_points.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_los.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_los_100X100_Berlin.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_los_100X100_Berlin_10.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_los_100X100_Berlin_15.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_los_100X100_Berlin_20.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_los_100X100_Berlin_25.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_los_100X100_Berlin_30.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_los_15X15.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_los_15X15_14.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_los_15X15_7.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_no_los.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_no_los_100X100_Berlin.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_no_los_100X100_Berlin_10.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_no_los_100X100_Berlin_15.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_no_los_15X15.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_no_los_15X15_14.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/dictionary_position_no_los_15X15_7.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/load_DSM_from_excel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/Preprocessing/pre_los_calc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Common/constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent_keras.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent_keras_old.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent_spatioalAttention.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQNAgent_temporalAttention.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/DQN_constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/core.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/core_one_screen_array.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/core_two_arrays.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/dqn_keras.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/dqn_tf_spatialAt.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/dqn_tf_temporalAt.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/objectives.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/policy.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/preprocessors.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/deeprl_prj/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/dqn_atari.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DQN/helper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/Greedy_player.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/episode_to_LOS/step1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/episode_to_LOS/step2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/episode_to_LOS/step3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/episode_to_LOS/step4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/episode_to_LOS/step5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/episode_to_LOS/step6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/episode_to_LOS/step7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/episode_to_enemy/step_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G_4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_G_5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/greedy_player_episode.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/~$greedy_player_episode.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy/docs/מאומנת מצבים טרמינלים מול מאומנת קנס 0 על צעד.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Greedy_player.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/QPlayer_constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/Qtable_DecisionMaker.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/conv1(2_2_1_32)_flatten_FC2-relu_FC3-relu_FC4-elu_fc__blue_20001_  20.00max_   4.28avg_  -4.60min__1618433528.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/conv1(8_8_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_20001_  18.30max_  -0.82avg_ -25.00min__1618148679.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/conv1(8_8_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_2001_  18.60max_  -2.10avg_ -25.00min__1618193469.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/conv1(8_8_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_6927_  18.40max_  -1.99avg_ -25.00min__1617391986.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/conv1(8_8_1_32)_conv2(4_4_32_64)_conv3(3_3_64_64)_flatten_fc__blue_8001_  19.10max_   0.33avg_  -9.30min__1617578351.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_1050001_  18.00max_  15.60avg_ -26.50min__1616609908.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_26001_  19.60max_   2.09avg_  -3.90min__1618579726.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_850001_   1.00max_   0.26avg_  -2.40min__1616647723.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qtable/trained_agents/flatten_FC1-elu_FC2-elu_FC3-elu_FC4-elu__blue_900001_   1.00max_   0.23avg_  -3.20min__1616658260.model" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluation_statistics/evaluation_statistics199000_berlin_FC.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluation_statistics/evaluation_statistics87000_berlin_conv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/evaluation_statistics/evaluation_statistics997000_15X15.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pre_pro.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,15 +146,15 @@
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\RafaelPlayer\trained_agents" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\evaluation_statistics" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common\maps\15X15" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Common\Preprocessing" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\תוצאות" />
       <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\Qtable\trained_agents" />
-      <recent name="C:\Users\inbalw\Downloads\SingleAgentCombat-main\SingleAgentCombat-main\DQN" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main (2)">
-    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.main (1)">
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" singleton="false" temporary="true" nameIsGenerated="true">
       <module name="SingleAgentCombat-main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -185,17 +260,17 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.main (1)" />
+      <item itemvalue="Python.main (2)" />
       <item itemvalue="Python.main_only_blue" />
       <item itemvalue="Python.pre_los_calc" />
       <item itemvalue="Python.pre_pro" />
-      <item itemvalue="Python.main (1)" />
-      <item itemvalue="Python.main (2)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.main (2)" />
         <item itemvalue="Python.pre_los_calc" />
-        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.pre_pro" />
         <item itemvalue="Python.main_only_blue" />
       </list>
@@ -209,24 +284,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1611132936949</updated>
-    </task>
-    <task id="LOCAL‎00040" summary="dominating_points pics">
-      <created>1614681251785</created>
-      <option name="number" value="LOCAL‎00040" />
-      <option name="presentableId" value="LOCAL‎00040" />
-      <updated>1614681251785</updated>
-    </task>
-    <task id="LOCAL‎00041" summary="DQNkeras set_model_name">
-      <created>1614843909698</created>
-      <option name="number" value="LOCAL‎00041" />
-      <option name="presentableId" value="LOCAL‎00041" />
-      <updated>1614843909699</updated>
-    </task>
-    <task id="LOCAL‎00042" summary="save_reward_stats">
-      <created>1614853353211</created>
-      <option name="number" value="LOCAL‎00042" />
-      <option name="presentableId" value="LOCAL‎00042" />
-      <updated>1614853353211</updated>
     </task>
     <task id="LOCAL‎00043" summary="reward change">
       <created>1614860904298</created>
@@ -504,7 +561,25 @@
       <option name="presentableId" value="LOCAL‎00088" />
       <updated>1619006664761</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL‎00089" summary="&quot;&quot;">
+      <created>1620198619998</created>
+      <option name="number" value="LOCAL‎00089" />
+      <option name="presentableId" value="LOCAL‎00089" />
+      <updated>1620198620000</updated>
+    </task>
+    <task id="LOCAL‎00090" summary="&quot;&quot;">
+      <created>1620198790779</created>
+      <option name="number" value="LOCAL‎00090" />
+      <option name="presentableId" value="LOCAL‎00090" />
+      <updated>1620198790779</updated>
+    </task>
+    <task id="LOCAL‎00091" summary="&quot;&quot;">
+      <created>1620198823089</created>
+      <option name="number" value="LOCAL‎00091" />
+      <option name="presentableId" value="LOCAL‎00091" />
+      <updated>1620198823089</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -657,6 +732,12 @@
           <url>file://$PROJECT_DIR$/SingleAgentCombat-main/pre_pro.py</url>
           <line>175</line>
           <option name="timeStamp" value="930" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <condition expression="np.max(target)&gt;1.2" language="Python" />
+          <url>file://$PROJECT_DIR$/SingleAgentCombat-main/DQN/DQNAgent_keras.py</url>
+          <line>428</line>
+          <option name="timeStamp" value="947" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
